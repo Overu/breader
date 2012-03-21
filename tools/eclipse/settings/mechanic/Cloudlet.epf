@@ -1,0 +1,33 @@
+# @title Project-specific configuration
+# @description cloudlet project settings
+# @audit_type RECONCILE
+#
+# Created by the Workspace Mechanic Preference Recorder
+#Sun Oct 30 14:34:28 CST 2011
+file_export_version=3.0
+# Google App Engine
+# /project/org.cloudlet.web.runtime/com.google.appengine.eclipse.core/gaeHrdEnabled=true
+# /project/org.cloudlet.web.runtime/com.google.appengine.eclipse.core/ormEnhancementInclusions=src/main/java/org/cloudlet/web/**/domain/*.java
+
+# Annotation Processing Tool
+/project/org.cloudlet.web.runtime/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.debug.localVariable=generate
+/project/org.cloudlet.web.runtime/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.codegen.unusedLocal=preserve
+/project/org.cloudlet.web.runtime/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.processAnnotations=enabled
+/project/org.cloudlet.web.runtime/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.aptEnabled=true
+/project/org.cloudlet.web.runtime/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.reconcileEnabled=true
+/project/org.cloudlet.web.runtime/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.debug.lineNumber=generate
+/project/org.cloudlet.web.runtime/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.debug.sourceFile=generate
+/project/org.cloudlet.web.runtime/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.genSrcDir=target/generated-sources/apt
+
+/project/org.cloudlet.web.mvp/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.processAnnotations=enabled
+/project/org.cloudlet.web.mvp/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.aptEnabled=true
+/project/org.cloudlet.web.mvp/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.reconcileEnabled=true
+/project/org.cloudlet.web.mvp/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.genSrcDir=target/generated-sources/apt
+
+/project/com.retech.reader.web/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.processAnnotations=enabled
+/project/com.retech.reader.web/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.aptEnabled=true
+/project/com.retech.reader.web/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.reconcileEnabled=true
+/project/com.retech.reader.web/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.genSrcDir=target/generated-sources/apt
+
+# /project/org.cloudlet.web.runtime/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.processorOptions/enhanceAPI=JPA
+# /project/org.cloudlet.web.runtime/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.processorOptions/verbose=true
