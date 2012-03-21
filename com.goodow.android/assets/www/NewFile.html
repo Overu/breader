@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File System Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>
+    <script type="text/javascript" charset="utf-8">
+
+    // Wait for PhoneGap to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // PhoneGap is ready
+    //
+    function onDeviceReady() {
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+    }
+
+    function onFileSystemSuccess(fileSystem) {
+        alert(fileSystem.name);
+        alert(fileSystem.root.name);
+    }
+
+    function fail(evt) {
+        alert(ect);
+    }
+    
+    
+    
+    function success(metadata) {
+    	alert("Last Modified: " + metadata.modificationTime);
+    }
+
+    function fail(error) {
+        alert(error.code);
+    }
+
+    // Request the metadata object for this entry
+    entry.getMetadata(success, fail);
+
+    </script>
+  </head>
+  <body>
+    <h1>Example11</h1>
+    <p>File System</p>
+  </body>
+</html>
