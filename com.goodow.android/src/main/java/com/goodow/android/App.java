@@ -8,15 +8,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class App extends DroidGap {
 	// monitor platform changes
 	private IntentFilter mNetworkStateChangedFilter;
 	private BroadcastReceiver mNetworkStateIntentReceiver;
 	//default assign cache size 8MB
-	private final int CACHE_SIZE = 1024 * 1024 * 8;
+	private final int CACHE_SIZE = 1024 * 1024 * 5;
 
 	@Override 
 	public void onCreate(final Bundle arg0) {
@@ -26,7 +28,7 @@ public class App extends DroidGap {
 		String cachePath = this.getApplicationContext().getDir("cache", Context.MODE_PRIVATE).getPath(); 
 		
 		this.loadUrlTimeoutValue = 0;
-		this.loadUrl("http://dev.goodow.com/"); 
+		super.loadUrl("http://dev.goodow.com/"); 
 		
 		WebView view = this.appView;
 		view.getSettings().setAppCacheEnabled(true); 
@@ -36,9 +38,11 @@ public class App extends DroidGap {
 		
 //		WebView view = new WebView(this);
 //		WebSettings settings = view.getSettings(); 
-//
-//		settings.setJavaScriptEnabled(true);
-//		settings.setAppCacheEnabled(true);
+
+//		view.getSettings().setJavaScriptEnabled(true);
+//		view.getSettings().setAppCacheEnabled(true);
+//		
+//		WebChromeClient chromeClient = new WebChromeClient();
 //		view.setWebChromeClient(new WebChromeClient());
 //		view.setWebViewClient(new WebViewClient());  
 //		view.setNetworkAvailable(true); 
