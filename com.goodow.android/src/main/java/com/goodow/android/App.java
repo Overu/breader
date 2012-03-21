@@ -39,15 +39,15 @@ public class App extends DroidGap {
 //		WebView view = new WebView(this);
 //		WebSettings settings = view.getSettings(); 
 
-//		view.getSettings().setJavaScriptEnabled(true);
-//		view.getSettings().setAppCacheEnabled(true);
+		view.getSettings().setJavaScriptEnabled(true);
+		view.getSettings().setAppCacheEnabled(true);
 //		
 //		WebChromeClient chromeClient = new WebChromeClient();
-//		view.setWebChromeClient(new WebChromeClient());
-//		view.setWebViewClient(new WebViewClient());  
-//		view.setNetworkAvailable(true); 
+		view.setWebChromeClient(new WebChromeClient());
+		view.setWebViewClient(new WebViewClient());  
+		view.setNetworkAvailable(true); 
 //
-//		registratNetworkChanges(view); 
+		registratNetworkChanges(view); 
 //
 //		view.loadUrl("file:///android_asset/www/NewFile.html");
 //		this.setContentView(view);
