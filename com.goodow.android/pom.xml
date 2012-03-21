@@ -7,7 +7,7 @@
     <artifactId>org.cloudlet.web</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <groupId>com.retech.reader</groupId>
+  <groupId>com.goodow</groupId>
   <artifactId>com.goodow.android</artifactId>
   <packaging>apk</packaging>
 
@@ -40,14 +40,12 @@
         <artifactId>maven-android-plugin</artifactId>
         <version>3.0.0-alpha-2</version>
         <configuration>
-          <androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
-          <assetsDirectory>${project.basedir}/assets</assetsDirectory>
-          <resourceDirectory>${project.basedir}/res</resourceDirectory>
-          <nativeLibrariesDirectory>${project.basedir}/src/main/native</nativeLibrariesDirectory>
+          <!-- <androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile> <assetsDirectory>${project.basedir}/assets</assetsDirectory> 
+            <resourceDirectory>${project.basedir}/res</resourceDirectory> <nativeLibrariesDirectory>${project.basedir}/src/main/native</nativeLibrariesDirectory> -->
           <sdk>
-            <platform>4</platform>
+            <platform>8</platform>
           </sdk>
-          <deleteConflictingFiles>true</deleteConflictingFiles>
+          <!-- <deleteConflictingFiles>true</deleteConflictingFiles> -->
           <undeployBeforeDeploy>true</undeployBeforeDeploy>
         </configuration>
         <extensions>true</extensions>
