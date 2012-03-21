@@ -1,15 +1,14 @@
 package com.goodow.android.activity;
 
-import com.goodow.android.persist.Persistor;
-import com.google.inject.Inject;
-
-import com.retech.reader.chassis.R;
-
+import roboguice.activity.RoboActivity;
 import android.os.Bundle;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import roboguice.activity.RoboActivity;
+
+import com.goodow.android.R;
+import com.goodow.android.persist.Persistor;
+import com.google.inject.Inject;
 
 public class MainActivity extends RoboActivity {
 
@@ -22,7 +21,7 @@ public class MainActivity extends RoboActivity {
     setContentView(R.layout.main);
     WebView webView = (WebView) findViewById(R.id.webview);
     WebSettings webSettings = webView.getSettings();
-    webSettings.setJavaScriptEnabled(true);
+    webSettings.setJavaScriptEnabled(true); 
     webView.setWebChromeClient(new WebChromeClient());
     webView.addJavascriptInterface(persistor, "Persistor");
     webView
