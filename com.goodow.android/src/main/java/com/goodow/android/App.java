@@ -43,9 +43,9 @@ public class App extends DroidGap {
 		view.getSettings().setAppCacheEnabled(true);
 //		
 //		WebChromeClient chromeClient = new WebChromeClient();
-		view.setWebChromeClient(new WebChromeClient());
-		view.setWebViewClient(new WebViewClient());  
-		view.setNetworkAvailable(true); 
+//		view.setWebChromeClient(new WebChromeClient());
+//		view.setWebViewClient(new WebViewClient());  
+//		view.setNetworkAvailable(true); 
 //
 		registratNetworkChanges(view); 
 //
