@@ -67,7 +67,7 @@ public class App extends DroidGap {
 						ConnectivityManager.CONNECTIVITY_ACTION)) {
 					boolean down = intent.getBooleanExtra(
 							ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
-					view.setNetworkAvailable(down);
+					view.setNetworkAvailable(!down);
 				}
 			}
 		};
