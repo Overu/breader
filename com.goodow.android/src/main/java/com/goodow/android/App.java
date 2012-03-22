@@ -1,6 +1,7 @@
 package com.goodow.android;
 
 import org.apache.cordova.DroidGap;
+import org.apache.cordova.PreferenceNode;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,6 +13,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 
 public class App extends DroidGap {
 	// monitor platform changes
@@ -20,32 +23,34 @@ public class App extends DroidGap {
 	// default assign cache size 8MB
 	private final int CACHE_SIZE = 1024 * 1024 * 5;
 	private WebView view = null;
-
+ 
 	@Override
 	public void onCreate(final Bundle arg0) {
 		super.onCreate(arg0);
-		// setting full screnn
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//		// setting full screnn
+//		requestWindowFeature(Window.FEATURE_NO_TITLE);
+//		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		// setting the cache path
 		String cachePath = this.getApplicationContext()
 				.getDir("cache", Context.MODE_PRIVATE).getPath();
 
 		this.loadUrlTimeoutValue = 0;
 		super.loadUrl("http://dev.goodow.com/");
-
+		
+		
 		view = this.appView;
 		view.getSettings().setAppCacheEnabled(true);
 		view.getSettings().setAppCacheMaxSize(CACHE_SIZE);
 		view.getSettings().setAppCachePath(cachePath);
 		view.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-		
-		
-		String dir = this.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();   
-		view.getSettings().setDatabaseEnabled(true);     
-		view.getSettings().setDatabasePath(dir);   
-		view.getSettings().setDomStorageEnabled(true);   
+
+		String dir = this.getApplicationContext()
+				.getDir("database", Context.MODE_PRIVATE).getPath();
+		view.getSettings().setDatabaseEnabled(true);
+		view.getSettings().setDatabasePath(dir);
+		view.getSettings().setDomStorageEnabled(true);
+		view.getSettings().setLoadWithOverviewMode(true);
 
 		// WebView view = new WebView(this);
 		// WebSettings settings = view.getSettings();
