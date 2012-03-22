@@ -2,4 +2,5 @@
 <cordova>
     <access origin="http://127.0.0.1*"/>
     <log level="DEBUG"/>
+    <preference name="fullscreen" value="true"/>
 </cordova>
