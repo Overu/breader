@@ -38,7 +38,61 @@
 <!-- If you add any GWT meta tags, they must   -->
 <!-- be added before this line.                -->
 <!--                                           -->
-<script type="text/javascript" language="javascript" src="web/web.nocache.js"></script>
+<script type="text/javascript" src="web/web.nocache.js"></script>
+<style type="text/css">
+#loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background-color: white;
+}
+
+#loading,#stb {
+  background-color: whiteSmoke;
+}
+
+.cmsg {
+  margin: 1em;
+}
+
+.msg {
+  margin-top: 150px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.lpb {
+  text-align: center;
+  width: 320px;
+  border: 1px solid #999;
+  padding: 1px;
+  height: 8px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#lpt {
+  width: 0;
+  height: 100%;
+  background-color: #6188F5;
+  background-repeat: repeat-x;
+  background-position: 0 0;
+  background-size: 16px 8px;
+  background-image: -webkit-linear-gradient(315deg, transparent, transparent 33%, rgba(0, 0, 0, 0.12)
+    33%, rgba(0, 0, 0, 0.12) 66%, transparent 66%, transparent );
+  -webkit-animation: pb 0.8s linear 0 infinite;
+}
+
+@-webkit-keyframes pb {
+  0% {
+    background-position:0 0; 
+  }
+  100% {
+    background-position:-16px 0; 
+  }
+}
+</style>
 </head>
 
 <!--                                           -->
@@ -60,8 +114,13 @@
       correctly.</div>
   </noscript>
 
-  <span id='loading'
-    style="margin-left: 10px; font-size: 12px; padding: 10px; font-family: Helvetica; background-color: #e5edf9; border: 2px solid #96a2b5;">
-    loading… </span>
+  <div id="loading">
+    <div class="cmsg">
+      <div class="msg">Loading…</div>
+      <div class="lpb">
+        <div id="lpt" style="width: 90%;"></div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
