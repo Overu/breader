@@ -1,4 +1,4 @@
-package com.goodow.android.ioc;
+package com.goodow.web.android.ioc;
 
 import com.google.inject.Module;
 
