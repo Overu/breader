@@ -12,7 +12,7 @@
     Larry Tin
   </author>
 
-  <icon src="icon.png" gap:role="default" />
+  <icon src="icon.png" />
 
   <feature name="http://api.phonegap.com/1.0/network" />
   <feature name="http://api.phonegap.com/1.0/file"/>
@@ -21,4 +21,5 @@
 
   <preference name="orientation" value="default" />
   <preference name="fullscreen" value="true" />
+  <preference name="stay-in-webview" value="true" />
 </widget>
