@@ -1,7 +1,6 @@
-package com.goodow.android;
+package com.goodow.web.android;
 
 import org.apache.cordova.DroidGap;
-import org.apache.cordova.PreferenceNode;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,12 +8,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 
 public class App extends DroidGap {
 	// monitor platform changes

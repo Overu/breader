@@ -1,4 +1,4 @@
-package com.goodow.android.persist;
+package com.goodow.web.android.persist;
 
 public interface Persistor {
 

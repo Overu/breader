@@ -1,7 +1,7 @@
-package com.goodow.android.ioc;
+package com.goodow.web.android.ioc;
 
-import com.goodow.android.persist.DatabasePersistor;
-import com.goodow.android.persist.Persistor;
+import com.goodow.web.android.persist.DatabasePersistor;
+import com.goodow.web.android.persist.Persistor;
 
 import roboguice.config.AbstractAndroidModule;
 

@@ -1,4 +1,4 @@
-package com.goodow.android.persist;
+package com.goodow.web.android.persist;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
