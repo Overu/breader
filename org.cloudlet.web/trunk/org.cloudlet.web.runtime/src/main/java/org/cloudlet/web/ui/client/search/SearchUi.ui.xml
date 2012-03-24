@@ -1,0 +1,57 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.banner {
+			background-color: black;
+			height: 40px;
+			background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(71, 71, 71)
+				), to(rgb(17, 17, 17) ) );
+			color: white;
+			padding: 0px 20px;
+		}
+		
+		.banner .logo {
+			float: left;
+			padding: 10px 40px 10px 60px;
+			font-size: 18px;
+			background: url(../images/logo.gif) 0px 10px no-repeat;
+		}
+		
+		.banner .nav {
+			float: left;
+		}
+		
+		.banner .item {
+			float: left;
+			padding: 12px 10px;
+		}
+		
+		.banner .userInfo {
+			float: right;
+		}
+		
+		.separator {
+			border-top: 1px solid #4691B9;
+			border-bottom: 1px solid #0F91C3;
+			background: #096CA2;
+			padding: 1px 0px 2px 0px;
+		}
+	</ui:style>
+	<g:HTMLPanel>
+		<g:HTMLPanel styleName="{style.banner}">
+			<g:Label styleName="{style.logo}">睿泰大学</g:Label>
+			<g:HTMLPanel styleName="{style.nav}">
+				<g:Label styleName="{style.item}">个人主页</g:Label>
+				<g:Label styleName="{style.item}">人际网络</g:Label>
+				<g:Label styleName="{style.item}">组织结构</g:Label>
+				<g:Label styleName="{style.item}">电子课件</g:Label>
+				<g:Label styleName="{style.item}">更多应用</g:Label>
+			</g:HTMLPanel>
+			<g:HTMLPanel styleName="{style.userInfo}">
+				<g:Label styleName="{style.item}">管理员</g:Label>
+				<g:Label styleName="{style.item}">帮助</g:Label>
+			</g:HTMLPanel>
+		</g:HTMLPanel>
+		<div class="{style.separator}"></div>
+	</g:HTMLPanel>
+</ui:UiBinder> 
