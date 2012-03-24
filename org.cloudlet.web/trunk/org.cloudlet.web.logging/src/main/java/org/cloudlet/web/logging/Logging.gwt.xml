@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <source path="client" />
+  <source path="shared" />
+
+  <!-- Use GWT's java.util.logging emulation -->
+  <inherits name="org.cloudlet.web.offline.Offline" />
+  <inherits name="com.google.gwt.logging.Logging" />
+  <inherits name="com.google.gwt.appengine.channel.Channel"/>
+  <!-- Turn off the popup log handler, which is on by default to make sure people are very aware that 
+    they are including the logging code -->
+  <set-property name="gwt.logging.enabled" value="TRUE" />
+  <set-property name="gwt.logging.logLevel" value="INFO" />
+  <set-property name="gwt.logging.consoleHandler" value="ENABLED" />
+  <set-property name="gwt.logging.developmentModeHandler" value="DISABLED" />
+  <set-property name="gwt.logging.firebugHandler" value="DISABLED" />
+  <set-property name="gwt.logging.hasWidgetsHandler" value="DISABLED" />
+  <set-property name="gwt.logging.popupHandler" value="DISABLED" />
+  <set-property name="gwt.logging.systemHandler" value="ENABLED" />
+  <set-property name="gwt.logging.simpleRemoteHandler" value="DISABLED" />
+
+  <!-- <set-property name="compiler.stackMode" value="emulated" />
+  <set-configuration-property name="compiler.emulatedStack.recordLineNumbers"
+    value="true" /> -->
+
+  <extend-configuration-property name="client.ioc.ginModules"
+    value="org.cloudlet.web.logging.client.ioc.LoggingGinModule" />
+</module>

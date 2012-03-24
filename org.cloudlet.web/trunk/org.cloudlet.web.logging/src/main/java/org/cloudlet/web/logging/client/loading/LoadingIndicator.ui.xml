@@ -1,0 +1,28 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder">
+  <ui:image field="loadingImage" src="loading.gif"></ui:image>
+  <ui:style>
+.loading {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  /* top: 5px; */
+  left: 0;
+  right: 0;
+  color: #666;
+  z-index: 990;
+}
+
+@noflip {
+  @sprite .loadingImage {
+    gwt-image: 'loadingImage';
+    margin: auto;  /* Horizontally centered. */
+    padding: initial;
+  }
+}
+</ui:style>
+  <div class='{style.loading}' ui:field='loading'>
+    <div class='{style.loadingImage} gwt-PopupPanel' />
+    <!-- <div>加载中</div> -->
+  </div>
+</ui:UiBinder>
