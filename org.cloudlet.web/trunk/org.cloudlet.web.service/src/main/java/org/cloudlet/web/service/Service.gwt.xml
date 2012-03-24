@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='boot'>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='org.cloudlet.web.boot.Boot'/>
+  <inherits name='org.cloudlet.web.logging.Logging'/>
+      
+  <!-- Specify the paths for translatable code                    -->
+  <source path="" includes="*.java" />
+  <source path='client' />
+  <source path='shared' />
+  
+  <extend-configuration-property name="client.ioc.ginModules"
+    value="org.cloudlet.web.service.client.ioc.ServiceGinModule" />
+</module>
