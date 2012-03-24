@@ -169,8 +169,7 @@
               </execution>
             </executions>
             <configuration>
-              <!-- <executable>${project.build.scriptSourceDirectory}/mobile.sh</executable> -->
-              <executable>pwd</executable>
+              <executable>${project.build.scriptSourceDirectory}/mobile.sh</executable>
             </configuration>
           </plugin>
         </plugins>
