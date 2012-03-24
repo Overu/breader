@@ -5,7 +5,6 @@ import com.google.gwt.appengine.channel.client.ChannelFactory;
 import com.google.gwt.appengine.channel.client.ChannelFactory.ChannelCreatedCallback;
 import com.google.gwt.appengine.channel.client.SocketError;
 import com.google.gwt.appengine.channel.client.SocketListener;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -15,7 +14,6 @@ import com.google.web.bindery.requestfactory.shared.Receiver;
 
 import org.cloudlet.web.logging.client.LogHandler;
 import org.cloudlet.web.logging.shared.rpc.ChannelContextProvider;
-import org.cloudlet.web.offline.client.Connectivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,7 +38,8 @@ public class LoggingGinModule extends AbstractGinModule {
       rootLogger.addHandler(new RequestFactoryLogHandler(loggingRequestProvider, Level.WARNING,
           ignoredLoggerNames));
 
-      if (GWT.isProdMode() && Connectivity.isOnline()) {
+      // if (GWT.isProdMode() && Connectivity.isOnline()) {
+      if (false) {
         logger.finest("request token");
         channelContextProvider.channelContext().getToken("logging." + new Date().toString()).fire(
             new Receiver<String>() {
