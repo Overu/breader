@@ -28,6 +28,13 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.cloudlet.web</groupId>
+      <artifactId>org.cloudlet.web.logging</artifactId>
+      <version>${project.version}</version>
+      <classifier>client</classifier>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-dev</artifactId>
     </dependency>
