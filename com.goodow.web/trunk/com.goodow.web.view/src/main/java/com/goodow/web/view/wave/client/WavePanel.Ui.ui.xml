@@ -1,0 +1,52 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:wave="urn:import:com.goodow.web.view.wave.client">
+  <ui:style>
+    .wave {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-border-radius: 5px;
+      -webkit-box-shadow: 3px 3px 6px #aaa;
+      margin: 0 7px 7px 0;
+    }
+    
+    .wave>*:first-child {
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-top-right-radius: 5px;
+    }
+    
+    .wave>*:last-child {
+      -webkit-border-bottom-left-radius: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+    }
+    
+    .waveHeader {
+      background-color: rgb(201, 226, 252);
+      border-left: 1px solid rgb(228, 241, 254);
+    }
+    
+    .waveFooter {
+      overflow: hidden;
+      background-color: rgb(201, 226, 252);
+      border-top: 1px solid rgb(184, 198, 217);
+      border-left: 1px solid rgb(228, 241, 254);
+    }
+    
+    .waveContent {
+      background: white;
+      -webkit-box-flex: 1;
+      -webkit-border-bottom-left-radius: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      overflow: hidden;
+      position: relative;
+    }
+  </ui:style>
+  <g:HTMLPanel addStyleNames="{style.wave}">
+    <wave:WaveTitle ui:field="title"></wave:WaveTitle>
+    <g:SimplePanel ui:field="header" addStyleNames="{style.waveHeader}"></g:SimplePanel>
+    <wave:WaveToolbar ui:field="toolbar" visible="false"></wave:WaveToolbar>
+    <g:SimplePanel ui:field="content" addStyleNames="{style.waveContent}"></g:SimplePanel>
+    <g:SimplePanel ui:field="footer" addStyleNames="{style.waveFooter}"></g:SimplePanel>
+    <!-- <tool:Toolbar ui:field="tool"></tool:Toolbar> -->
+  </g:HTMLPanel>
+</ui:UiBinder> 

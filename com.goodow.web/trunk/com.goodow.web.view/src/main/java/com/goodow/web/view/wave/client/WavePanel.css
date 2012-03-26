@@ -1,0 +1,26 @@
+@CHARSET "UTF-8";
+
+.wave {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-border-radius: 5px;
+  -webkit-box-shadow: 3px 3px 6px #aaa;
+  margin: 0 7px 7px 0;
+}
+
+.wave>*:first-child {
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+}
+
+.wave>*:last-child {
+  -webkit-border-bottom-left-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+}
+
+.waveContent {
+  background: white;
+  -webkit-box-flex: 1;
+  overflow: hidden;
+  position: relative;
+}

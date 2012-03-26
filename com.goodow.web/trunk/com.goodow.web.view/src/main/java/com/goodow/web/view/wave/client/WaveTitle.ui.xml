@@ -1,0 +1,102 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:with field='res' type='com.retech.reader.web.client.style.ReaderResources' />
+  <ui:style>
+    .waveTitle {
+      background-color: rgb(85, 144, 210);
+      height: 1.9em;
+      color: white;
+      line-height: 2;
+      padding-left: 7px;
+      border-left: 1px solid rgb(134, 183, 237);
+      background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
+        from(rgb(97, 167, 242) ), to(rgb(85, 144, 210) ) );
+      position: relative;
+    }
+    
+    .waveTitle>*:first-child {
+      position: absolute;
+    }
+    
+    .waveTitle>*:last-child {
+      position: absolute;
+      right: 0;
+      margin: 5px;
+    }
+    
+    .waveTitle>*:last-child>* {
+      float: left;
+      margin: 0 0 0 5px;
+      cursor: pointer;
+    }
+    
+    @sprite .waveTitleClose {
+      gwt-image: "waveTitleClose";
+    }
+    
+    @sprite .waveTitleClose:hover {
+      gwt-image: "waveTitleCloseHover";
+    }
+    
+    @sprite .waveTitleClose:active {
+      gwt-image: "waveTitleCloseActive";
+    }
+    
+    @sprite .waveTitleMaximize {
+      gwt-image: "waveTitleMaximize";
+    }
+    
+    @sprite .waveTitleMaximize:hover {
+      gwt-image: "waveTitleMaximizeHover";
+    }
+    
+    @sprite .waveTitleMaximize:active {
+      gwt-image: "waveTitleMaximizeActive";
+    }
+    
+    @sprite .waveTitleMinimize {
+      gwt-image: "waveTitleMinimize";
+    }
+    
+    @sprite .waveTitleMinimize:hover {
+      gwt-image: "waveTitleMinimizeHover";
+    }
+    
+    @sprite .waveTitleMinimize:active {
+      gwt-image: "waveTitleMinimizeActive";
+    }
+    
+    @sprite .waveTitleRestore {
+      gwt-image: "waveTitleRestore";
+    }
+    
+    @sprite .waveTitleRestore:hover {
+      gwt-image: "waveTitleRestoreHover";
+    }
+    
+    @sprite .waveTitleRestore:active {
+      gwt-image: "waveTitleRestoreActive";
+    }
+  </ui:style>
+  <ui:image field="waveTitleClose" src="waveTitleClose.png"></ui:image>
+  <ui:image field="waveTitleCloseHover" src="waveTitleCloseHover.png"></ui:image>
+  <ui:image field="waveTitleCloseActive" src="waveTitleCloseActive.png"></ui:image>
+  <ui:image field="waveTitleMaximize" src="waveTitleMaximize.png"></ui:image>
+  <ui:image field="waveTitleMaximizeHover" src="waveTitleMaximizeHover.png"></ui:image>
+  <ui:image field="waveTitleMaximizeActive" src="waveTitleMaximizeActive.png"></ui:image>
+  <ui:image field="waveTitleMinimize" src="waveTitleMinimize.png"></ui:image>
+  <ui:image field="waveTitleMinimizeHover" src="waveTitleMinimizeHover.png"></ui:image>
+  <ui:image field="waveTitleMinimizeActive" src="waveTitleMinimizeActive.png"></ui:image>
+  <ui:image field="waveTitleRestore" src="waveTitleRestore.png"></ui:image>
+  <ui:image field="waveTitleRestoreHover" src="waveTitleRestoreHover.png"></ui:image>
+  <ui:image field="waveTitleRestoreActive" src="waveTitleRestoreActive.png"></ui:image>
+  <g:HTMLPanel addStyleNames="{style.waveTitle}">
+    <div ui:field="text"></div>
+    <div ui:field="icons">
+      <div class="{style.waveTitleMinimize}"></div>
+      <div class="{style.waveTitleRestore}"></div>
+      <div class="{style.waveTitleMaximize}"></div>
+      <div class="{style.waveTitleClose}"></div>
+    </div>
+  </g:HTMLPanel>
+</ui:UiBinder> 
