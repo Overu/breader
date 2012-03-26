@@ -18,6 +18,5 @@
     <module>org.cloudlet.web.service</module>
     <module>org.cloudlet.web.security</module>
     <module>org.cloudlet.web.mvp</module>
-    <module>org.cloudlet.web.runtime</module>
   </modules>
 </project>
