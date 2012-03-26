@@ -46,6 +46,10 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
           return;
         }
         for (AbstractRequestContext ctx : toFires) {
+          if (ctx.isLocked()) {
+            logger.fine("AbstractRequestContext.fire() should have been a no-op");
+            continue;
+          }
           ctx.setFireDisabled(false);
           ctx.fire();
         }
