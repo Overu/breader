@@ -1,4 +1,4 @@
 pwd
-svn rm https://goodow.googlecode.com/svn/com.goodow.web/trunk/com.goodow.web.mobile/ -m "" --username ${username.subversion.mobile} --password ${password.subversion.mobile} --force
-svn import mobile https://goodow.googlecode.com/svn/com.goodow.web/trunk/com.goodow.web.mobile/ -m "" --username ${username.subversion.mobile} --password ${password.subversion.mobile} --force
+svn rm https://goodow.googlecode.com/svn/com.goodow.web/trunk/com.goodow.web.mobile/ -m "" --username ${username_subversion_mobile} --password ${password_subversion_mobile} --force
+svn import mobile https://goodow.googlecode.com/svn/com.goodow.web/trunk/com.goodow.web.mobile/ -m "" --username ${username_subversion_mobile} --password ${password_subversion_mobile} --force
 rm -rf mobile
