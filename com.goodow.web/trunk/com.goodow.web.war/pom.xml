@@ -171,8 +171,8 @@
             <configuration>
               <executable>${project.build.scriptSourceDirectory}/mobile.sh</executable>
               <environmentVariables>
-                <username.subversion.mobile>${username.subversion.mobile}</username.subversion.mobile>
-                <password.subversion.mobile>${password.subversion.mobile}</password.subversion.mobile>
+                <username_subversion_mobile>${username.subversion.mobile}</username_subversion_mobile>
+                <password_subversion_mobile>${password.subversion.mobile}</password_subversion_mobile>
               </environmentVariables>
             </configuration>
           </plugin>
