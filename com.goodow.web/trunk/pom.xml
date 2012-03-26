@@ -3,8 +3,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.cloudlet.web</groupId>
-  <artifactId>org.cloudlet.web</artifactId>
+  <groupId>com.goodow.web</groupId>
+  <artifactId>com.goodow.web</artifactId>
   <packaging>pom</packaging>
   <version>1.0.0-SNAPSHOT</version>
 
@@ -797,14 +797,4 @@
       </build>
     </profile>
   </profiles>
-
-  <modules>
-    <module>org.cloudlet.web.boot</module>
-    <module>org.cloudlet.web.test</module>
-    <module>org.cloudlet.web.logging</module>
-    <module>org.cloudlet.web.service</module>
-    <module>org.cloudlet.web.security</module>
-    <module>org.cloudlet.web.mvp</module>
-    <module>org.cloudlet.web.runtime</module>
-  </modules>
 </project>
