@@ -44,34 +44,18 @@
 </script>
 <script type="text/javascript" src="web/web.nocache.js"></script>
 <style type="text/css">
-body {
-  margin: 0px;
-}
-#loading {
+.loading {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
-  background-color: white;
-}
-
-#loading,#stb {
-  background-color: whiteSmoke;
-}
-
-.cmsg {
-  margin: 1em;
-}
-
-.msg {
-  font-family: arial, sans-serif;
-  margin-top: 150px;
   text-align: center;
+  top: 50%;
+  left: 0;
+  right: 0;
+}
+.loading>*:first-child {
+  font-family: arial, sans-serif;
   font-weight: bold;
 }
-
-.lpb {
-  text-align: center;
+.loading>*:last-child {
   width: 320px;
   border: 1px solid #999;
   padding: 1px;
@@ -79,19 +63,6 @@ body {
   margin-right: auto;
   margin-left: auto;
 }
-
-#lpt {
-  width:90%;
-  height: 100%;
-  background-color: #6188F5;
-  background-repeat: repeat-x;
-  background-position: 0 0;
-  background-size: 16px 8px;
-  background-image: -webkit-linear-gradient(315deg, transparent, transparent 33%, rgba(0, 0, 0, 0.12)
-    33%, rgba(0, 0, 0, 0.12) 66%, transparent 66%, transparent );
-  -webkit-animation: bk 0.8s linear 0 infinite, fw 3s ease;
-}
-
 @-webkit-keyframes bk {
   0% {
     background-position:0 0; 
@@ -108,6 +79,18 @@ body {
     width:90%;
   }
 }
+#animal {
+  width:90%;
+  height: 100%;
+  background-color: #6188F5;
+  background-repeat: repeat-x;
+  background-position: 0 0;
+  background-size: 16px 8px;
+  background-image: -webkit-linear-gradient(315deg, transparent, transparent 33%, rgba(0, 0, 0, 0.12)
+    33%, rgba(0, 0, 0, 0.12) 66%, transparent 66%, transparent );
+  -webkit-animation: bk 0.8s linear 0 infinite, fw 2s ease;
+}
+
 </style>
 </head>
 
@@ -130,12 +113,10 @@ body {
       correctly.</div>
   </noscript>
 
-  <div id="loading">
-    <div class="cmsg">
-      <div class="msg">Loading…</div>
-      <div class="lpb">
-        <div id="lpt"></div>
-      </div>
+  <div class='loading'>
+    <div>Loading…</div>
+    <div>
+      <div id="animal"></div>
     </div>
   </div>
 </body>
