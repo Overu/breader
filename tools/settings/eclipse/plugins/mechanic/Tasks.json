@@ -8,6 +8,7 @@
   tasks: [
     'Cloudlet.epf',
     'CodeStyle.epf',
+    'CodeTemplates.epf',
     'CompilerWarnings.epf',
     'Css.epf',
     'Encoding.epf',
