@@ -797,4 +797,8 @@
       </build>
     </profile>
   </profiles>
+  
+  <modules>
+    <module>com.goodow.web.view</module>
+  </modules>
 </project>
