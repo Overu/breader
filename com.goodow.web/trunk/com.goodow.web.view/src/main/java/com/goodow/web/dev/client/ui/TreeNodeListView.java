@@ -1,4 +1,4 @@
-package org.cloudlet.web.dev.client.ui;
+package com.goodow.web.dev.client.ui;
 
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;

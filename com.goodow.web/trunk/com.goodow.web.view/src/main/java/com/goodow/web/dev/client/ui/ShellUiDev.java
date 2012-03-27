@@ -1,4 +1,4 @@
-package org.cloudlet.web.dev.client.ui;
+package com.goodow.web.dev.client.ui;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.dom.client.Document;

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 0.0.999//EN" "http://google-web-toolkit.googlecode.com/svn/tags/0.0.999/distro-source/core/src/gwt-module.dtd">
 <module rename-to="web">
   <inherits name="org.cloudlet.web.boot.Boot" />
   <inherits name="org.cloudlet.web.logging.Logging" />
   <inherits name="org.cloudlet.web.service.Service" />
   <inherits name="org.cloudlet.web.mvp.Mvp" />
+  <inherits name='com.google.gwt.modernizr.Gwtmodernizr'/>
+  <inherits name='com.goodow.web.view.wave.Wave'/>
 
   <source path="client" />
   <source path="shared" />
 
   <extend-configuration-property name="client.ioc.ginModules"
-    value="org.cloudlet.web.dev.client.ioc.DevGinModule" />
+    value="com.goodow.web.dev.client.ioc.DevGinModule" />
 
-  <define-linker name="appcachelinker" class="org.cloudlet.web.dev.rebind.AppCacheLinker" />
+  <define-linker name="appcachelinker" class="com.goodow.web.dev.rebind.AppCacheLinker" />
   <add-linker name="appcachelinker" />
 </module>

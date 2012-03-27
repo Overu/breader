@@ -1,4 +1,8 @@
-package org.cloudlet.web.dev.client.ioc;
+package com.goodow.web.dev.client.ioc;
+
+import com.goodow.web.dev.client.ui.ShellUiDev;
+import com.goodow.web.dev.client.ui.TreeNodeEditor;
+import com.goodow.web.dev.client.ui.TreeNodeListView;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -9,9 +13,6 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import org.cloudlet.web.boot.shared.MapBinder;
-import org.cloudlet.web.dev.client.ui.ShellUiDev;
-import org.cloudlet.web.dev.client.ui.TreeNodeEditor;
-import org.cloudlet.web.dev.client.ui.TreeNodeListView;
 import org.cloudlet.web.mvp.shared.tree.TreeNodeProxy;
 
 import java.util.logging.Logger;

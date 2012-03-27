@@ -1,4 +1,4 @@
-package org.cloudlet.web.dev.rebind;
+package com.goodow.web.dev.rebind;
 
 import com.google.gwt.core.ext.linker.Shardable;
 
