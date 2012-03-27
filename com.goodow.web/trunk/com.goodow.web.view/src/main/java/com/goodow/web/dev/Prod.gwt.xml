@@ -3,6 +3,6 @@
 <module rename-to="web">
   <inherits name="org.cloudlet.web.boot.Boot" />
   <inherits name="org.cloudlet.web.logging.Logging" />
-  <inherits name="org.cloudlet.web.ui.Ui" />
+  <inherits name="com.goodow.web.ui.Ui" />
 
 </module>
