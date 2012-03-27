@@ -6,7 +6,6 @@
     contact: 'i@goodow.com'
   },  
   tasks: [
-    'Cloudlet.epf',
     'CodeStyle.epf',
     'CodeTemplates.epf',
     'CompilerWarnings.epf',
@@ -17,6 +16,7 @@
     'MembersSortOrder.epf',
     'Navigate.epf',
     'OutputFiltering.epf',
+    'Projects.epf',
     'RemoteSystems.epf',
     'SaveActions.epf',
     'Spelling.epf',
