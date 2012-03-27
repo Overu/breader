@@ -6,6 +6,7 @@
   -webkit-border-radius: 5px;
   -webkit-box-shadow: 3px 3px 6px #aaa;
   margin: 0 7px 7px 0;
+  box-sizing: border-box;
 }
 
 .wave>*:first-child {
