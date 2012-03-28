@@ -39,6 +39,9 @@ public class WaveToolbar extends FlowPanel {
    */
   public ToolbarClickButton addClickButton() {
     ToolbarClickButton toolbarClickButton = new ToolbarClickButton();
+    if (super.getWidgetCount() == 0) {
+      toolbarClickButton.setShowDivider(false);
+    }
     this.add(toolbarClickButton);
     return toolbarClickButton;
   }
