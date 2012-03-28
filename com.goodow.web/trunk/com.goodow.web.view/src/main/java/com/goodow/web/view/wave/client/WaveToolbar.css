@@ -1,0 +1,10 @@
+@CHARSET "utf-8";
+
+@sprite .waveToolbar {
+  gwt-image: "waveToolbarEmpty";
+  z-index: 0;
+}
+
+@sprite .waveToolbar>div:active {
+  gwt-image: "waveToolbarActive";
+}
