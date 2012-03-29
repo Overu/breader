@@ -15,6 +15,6 @@ package com.goodow.web.dev.client;
 
 public class FeatureDetection {
   public static native boolean mobile() /*-{
-                                        return $wnd.cordova == undefined;
+                                        return $wnd.cordova != undefined;
                                         }-*/;
 }
