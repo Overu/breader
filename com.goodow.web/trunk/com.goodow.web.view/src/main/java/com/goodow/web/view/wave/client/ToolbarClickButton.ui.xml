@@ -17,8 +17,13 @@
       margin-top: 1px;
     }
     
+    .waveToolbarVisualElement>img {
+      height: 100%;
+      background-position: center;
+    }
+    
     .waveTextElement {
-      margin-top: 6px;
+      margin-top: 4px;
       float: left;
       margin-left: 4px;
       display: none;
@@ -37,8 +42,8 @@
       width: 1px;
       position: absolute;
       left: 0;
-      top:0;
-      bottom:0;
+      top: 0;
+      bottom: 0;
     }
     
     .overlay {
