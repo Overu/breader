@@ -143,12 +143,7 @@
                   <outputDirectory>${basedir}/mobile</outputDirectory>
                   <resources>
                     <resource>
-                      <directory>${project.build.directory}/${project.build.finalName}</directory>
-                      <excludes>
-                        <exclude>extra/**</exclude>
-                        <exclude>WEB-INF/**</exclude>
-                        <exclude>index.html</exclude>
-                      </excludes>
+                      <directory>${project.build.directory}/${project.build.finalName}/web/</directory>
                     </resource>
                   </resources>
                 </configuration>
