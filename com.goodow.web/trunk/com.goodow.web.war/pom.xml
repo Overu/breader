@@ -4,11 +4,10 @@
   <!-- POM file generated with GWT webAppCreator -->
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.cloudlet.web</groupId>
-    <artifactId>org.cloudlet.web</artifactId>
+    <groupId>com.goodow.web</groupId>
+    <artifactId>com.goodow.web</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <groupId>com.goodow.web</groupId>
   <artifactId>com.goodow.web.war</artifactId>
   <packaging>war</packaging>
   <dependencies>
