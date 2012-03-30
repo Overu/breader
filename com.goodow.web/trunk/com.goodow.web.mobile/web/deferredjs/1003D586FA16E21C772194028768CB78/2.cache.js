@@ -1,1 +1,0 @@
-C0(1285,1,GBc);_.Gc=function Osc(){puc(this.c,tpc(this.b.b))};JBc(nm)(2);
