@@ -22,63 +22,49 @@
       
     }
     
+      .coverflowTitle {
+        position: relative;
+        width: 100%; /*
+          list-style: none; 5
+          margin: 0px auto;
+          border: 1px solid; */
+        -webkit-transform-style: preserve-3d;
+        height: 200px;
+        display: -webkit-box;
+        -webkit-perspective: 1200;
+      }
+    
     @if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
-      .coverflow {
-        position: relative;
-        width: 100%; /*
-          list-style: none; 5
-          margin: 0px auto;
-          border: 1px solid; */
-        -webkit-transform-style: preserve-3d;
-        display: -webkit-box;
-        height: 100%;
-        -webkit-perspective: 1200;
+      .coverflowTitle>div>img {
+      	border-radius: 10px 10px;
+      	-webkit-box-reflect: below 20px -webkit-gradient(linear, literal("left top"), literal("left bottom"), from(transparent), color-stop(0.8, transparent), to(rgba(255, 255, 255, 0.5) ) );
       }
     }
     @else {
-  	  .coverflow {
-        position: relative;
-        width: 100%; /*
-          list-style: none; 5
-          margin: 0px auto;
-          border: 1px solid; */
-        -webkit-transform-style: preserve-3d;
-        display: -webkit-box;
-        height: 100%;
-        -webkit-perspective: 1200;
+  	  .coverflowTitle>div>img {
+      	border-radius: 10px 10px;
+      	-webkit-box-reflect: below 20px;
       }
     }
     
-    @if (com.google.gwt.modernizr.client.Modernizr.cssReflections()) {
-      .coverflow>div>img {
-      	border-radius: 10px 10px;
-      	-webkit-box-reflect: below 20px -webkit-gradient(linear, literal("left top"), literal("left bottom"), from(transparent), color-stop(0.8, transparent), to(rgba(255, 255, 255, 0.1) ) );
-      }
-    }
-    @else {
-  	  .coverflow>div>img {
-      	border-radius: 10px 10px;
-      }
-    }
-    
-    .coverflow>div {
-      height: 100%;
+    .coverflowTitle>div {
+      height: 700px;
       position: absolute;
-      /*-webkit-transition: all 0.5s ease-out;*/
-      -webkit-transition: -webkit-transform 0.5s ease-out, left 0.5s ease-out,z-index 0.5s ease-out, -webkit-opacity 0.5s ease-out;
+      -webkit-transition: all 0.4s ease-out;
+      /*-webkit-transition: -webkit-transform 0.5s ease-out, left 0.5s ease-out,z-index 0.5s ease-out, -webkit-opacity 0.5s ease-out;*/
       cursor: pointer;
       width: 33%; /*
           border: 1px solid;
           */
     }
 
-    .coverflow>div>div {
+    .coverflowTitle>div>div {
       display: -webkit-box;
       -webkit-box-align: center;
       -webkit-box-pack: center;
     }
     
-    .coverflow>div>div>span {
+    .coverflowTitle>div>div>span {
       border: 1px solid rgb(85, 144, 210);;
       -webkit-border-radius: 20px;
       text-align: center;
@@ -86,13 +72,15 @@
     }
   </ui:style>
 
-  <g:HTMLPanel ui:field="bookFlip" styleName="{style.coverflow}">
-      <div class="{coverflow.coverflow_3}"></div>
-      <div class="{coverflow.coverflow_2}"></div>
-      <div class="{coverflow.coverflow_1}"></div>
-      <div class="{coverflow.coverflow0}"></div>
-      <div class="{coverflow.coverflow1}"></div>
-      <div class="{coverflow.coverflow2}"></div>
-      <div class="{coverflow.coverflow3}"></div>
+  <g:HTMLPanel ui:field="container">
+  <g:HTMLPanel ui:field="bookFlip" styleName="{style.coverflowTitle}">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+  </g:HTMLPanel>
   </g:HTMLPanel>
 </ui:UiBinder>
