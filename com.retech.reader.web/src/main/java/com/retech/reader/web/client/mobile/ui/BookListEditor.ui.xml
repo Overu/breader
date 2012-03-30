@@ -1,0 +1,43 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:c='urn:import:com.google.gwt.user.cellview.client' xmlns:s="urn:import:org.cloudlet.web.mvp.shared.rpc">
+  <ui:with field='res' type='com.retech.reader.web.client.style.ReaderResources' />
+  <ui:style>
+    .scrollable {
+      height: 300px;
+      text-align: left;
+    }
+    
+    .strata {
+      height: 100%;
+      display: -webkit-box;
+    }
+    
+    .vbox {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      height: 100%;
+      position: absolute;
+      width: 100%;
+      -webkit-box-flex: 1;
+    }
+    
+    .center {
+      -webkit-box-flex: 1;
+    }
+    
+    .center>div {
+      height: 100%;
+      overflow: hidden;
+    }
+  </ui:style>
+  <g:HTMLPanel>
+    <div class="{style.strata}">
+      <div class="{style.vbox}">
+        <g:SimplePanel addStyleNames="{style.center}" ui:field="simplePanel">
+          <s:ShowMorePagerPanel addStyleNames='{style.scrollable}' ui:field='pagerPanel' />
+        </g:SimplePanel>
+      </div>
+    </div>
+  </g:HTMLPanel>
+</ui:UiBinder>

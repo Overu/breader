@@ -1,0 +1,98 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:c='urn:import:com.google.gwt.user.cellview.client' xmlns:s="urn:import:org.cloudlet.web.mvp.shared.rpc">
+
+  <ui:style field='coverflow' src='BookFlip.coverflow.css' type='com.retech.reader.web.client.home.BookFlip.Style' />
+    
+  <ui:style>
+    .container { /*
+          position: relative;
+          left: 0px;
+          right: 0px;
+          top: 0px;
+          bottom: 0px;
+          height: 200px;
+          width: 100%;
+          display: -webkit-box; 
+          -webkit-perspective: 700;
+          margin: auto;
+          max-height: 50%;
+          max-width: 50%;
+          */
+      
+    }
+    
+    @if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
+      .coverflow {
+        position: relative;
+        width: 100%; /*
+          list-style: none; 5
+          margin: 0px auto;
+          border: 1px solid; */
+        -webkit-transform-style: preserve-3d;
+        display: -webkit-box;
+        height: 100%;
+        -webkit-perspective: 1200;
+      }
+    }
+    @else {
+  	  .coverflow {
+        position: relative;
+        width: 100%; /*
+          list-style: none; 5
+          margin: 0px auto;
+          border: 1px solid; */
+        -webkit-transform-style: preserve-3d;
+        display: -webkit-box;
+        height: 100%;
+        -webkit-perspective: 1200;
+      }
+    }
+    
+    @if (com.google.gwt.modernizr.client.Modernizr.cssReflections()) {
+      .coverflow>div>img {
+      	border-radius: 10px 10px;
+      	-webkit-box-reflect: below 20px -webkit-gradient(linear, literal("left top"), literal("left bottom"), from(transparent), color-stop(0.8, transparent), to(rgba(255, 255, 255, 0.1) ) );
+      }
+    }
+    @else {
+  	  .coverflow>div>img {
+      	border-radius: 10px 10px;
+      }
+    }
+    
+    .coverflow>div {
+      height: 100%;
+      position: absolute;
+      /*-webkit-transition: all 0.5s ease-out;*/
+      -webkit-transition: -webkit-transform 0.5s ease-out, left 0.5s ease-out,z-index 0.5s ease-out, -webkit-opacity 0.5s ease-out;
+      cursor: pointer;
+      width: 33%; /*
+          border: 1px solid;
+          */
+    }
+
+    .coverflow>div>div {
+      display: -webkit-box;
+      -webkit-box-align: center;
+      -webkit-box-pack: center;
+    }
+    
+    .coverflow>div>div>span {
+      border: 1px solid rgb(85, 144, 210);;
+      -webkit-border-radius: 20px;
+      text-align: center;
+      padding: 2px 15px 2px;
+    }
+  </ui:style>
+
+  <g:HTMLPanel ui:field="bookFlip" styleName="{style.coverflow}">
+      <div class="{coverflow.coverflow_3}"></div>
+      <div class="{coverflow.coverflow_2}"></div>
+      <div class="{coverflow.coverflow_1}"></div>
+      <div class="{coverflow.coverflow0}"></div>
+      <div class="{coverflow.coverflow1}"></div>
+      <div class="{coverflow.coverflow2}"></div>
+      <div class="{coverflow.coverflow3}"></div>
+  </g:HTMLPanel>
+</ui:UiBinder>

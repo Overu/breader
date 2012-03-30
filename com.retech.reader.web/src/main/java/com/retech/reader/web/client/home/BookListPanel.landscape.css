@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+
+.root {
+  overflow: auto;
+}
+
+.root>* {
+  width: 50%;
+  float: left;
+  /* -webkit-transition: all 0.5s ease-in-out; */
+  /* -webkit-transform: translate3d(0,0,0); */
+}

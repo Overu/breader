@@ -1,0 +1,114 @@
+@CHARSET "UTF-8";
+
+@if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
+  .coverflow_3 {
+    -webkit-transform: rotateY(50deg) translate(0, 30px);
+    -webkit-opacity: 0.0;
+    left: -10%;
+    position: relative!important;
+    margin: 30px 0 20px 0px;
+  }
+}
+@else {
+  .coverflow_3 {
+    -webkit-transform: translate(0, 50px);
+    -webkit-opacity: 0.0;
+    left: -10%;
+    position: relative!important;
+    margin: 30px 0 20px 0px;
+  }
+}
+
+@if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
+  .coverflow_2 {
+    -webkit-transform: rotateY(50deg) translate(0px, 35px);
+    -webkit-opacity: 0.3;
+    left: 1%;
+    z-index: 1;
+  }
+}
+@else {
+  .coverflow_2 {
+    -webkit-transform: translate(0px, 35px);
+    -webkit-opacity: 0.3;
+    left: 1%;
+    z-index: 1;
+  }
+}
+
+@if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
+  .coverflow_1 {
+    -webkit-transform: rotateY(50deg) translate(0px, 20px);
+    left: 10%;
+    z-index: 3;
+  }
+}
+@else {
+  .coverflow_1 {
+    -webkit-transform: translate(0px, 20px);
+    left: 10%;
+    z-index: 3;
+  }
+}
+
+@if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
+  .coverflow0 {
+    -webkit-transform: rotateY(0deg) scale(1.05) translate(0px, 10px);
+    left: 34%;
+    z-index: 10;
+  }
+}
+@else {
+  .coverflow0 {
+    -webkit-transform: translate(0px, 10px);
+    left: 34%;
+    z-index: 10;
+  }
+}
+
+@if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
+  .coverflow1 {
+    -webkit-transform: rotateY(-50deg) translate(0px, 20px);
+    left: 58%;
+    z-index: 3;
+  }
+}
+@else {
+  .coverflow1 {
+    -webkit-transform: translate(0px, 20px);
+    left: 58%;
+    z-index: 3;
+  }
+}
+
+@if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
+  .coverflow2 {
+    -webkit-transform: rotateY(-50deg) translate(0px, 35px);
+    -webkit-opacity: 0.3;
+    left: 67%;
+    z-index: 1;
+  }
+}
+@else {
+  .coverflow2 {
+    -webkit-transform: translate(0px, 35px);
+    -webkit-opacity: 0.3;
+    left: 67%;
+    z-index: 1;
+  }
+}
+
+@if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
+  .coverflow3 {
+    -webkit-transform: rotateY(-50deg) translate(0, 30px);
+    -webkit-opacity: 0.0;
+    left: 78%;
+  }
+}
+@else {
+  .coverflow3 {
+    -webkit-transform: translate(0, 30px);
+    -webkit-opacity: 0.0;
+    left: 78%;
+  }
+}
