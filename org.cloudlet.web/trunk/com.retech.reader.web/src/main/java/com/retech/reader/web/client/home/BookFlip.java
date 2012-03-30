@@ -92,6 +92,8 @@ public class BookFlip extends WavePanel implements ActivityAware {
 
   @UiField
   HTMLPanel bookFlip;
+  @UiField
+  HTMLPanel container;
 
   @UiField
   Style coverflow;
@@ -182,6 +184,7 @@ public class BookFlip extends WavePanel implements ActivityAware {
 
       @Override
       public void onSuccessAndCached(final ResourceProxy response) {
+        int clientWidth = Window.getClientWidth();
         SafeHtml image =
             template.img(UriUtils.fromTrustedString("data:" + response.getMimeType().getType()
                 + ";base64," + response.getDataString()), proxy.getTitle());
@@ -204,7 +207,12 @@ public class BookFlip extends WavePanel implements ActivityAware {
             }
           }
         });
-        // logger.info(String.valueOf(Element.as(div.getChild(0)).getClientWidth()));
+        if (Window.getClientWidth() >= 1024) {
+          container.setHeight(String.valueOf(clientWidth * 0.33 * 0.5 * 2) + "px");
+        } else {
+          container.setHeight(String.valueOf(clientWidth * 0.33 * 2) + "px");
+        }
+        // bookFlip.setHeight(String.valueOf(Window.getClientHeight()) + "px");
       }
 
       @Override
