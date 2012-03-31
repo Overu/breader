@@ -5,34 +5,25 @@
       font-size: 8pt;
       margin-right: -1px;
       position: relative;
-      float: left;
-      padding: 0 12px;
       cursor: pointer;
-      height: 100%;
       overflow: hidden;
-    }
-    
-    .waveToolbarVisualElement {
-      float: left;
-      margin-top: 1px;
+      -webkit-box-flex:1;
+      min-width: 100%;
+      white-space: nowrap;
+      padding: 0 4px;
     }
     
     .waveToolbarVisualElement>img {
-      height: 100%;
-      background-position: center;
+      vertical-align: middle;
     }
     
     .waveTextElement {
-      margin-top: 4px;
-      float: left;
       margin-left: 4px;
       display: none;
     }
     
     @sprite .waveToolbarDropDownArrow {
       gwt-image: "waveToolbarDropDownArrow";
-      float: left;
-      margin-top: 10px;
       margin-left: 5px;
       display: none;
     }
