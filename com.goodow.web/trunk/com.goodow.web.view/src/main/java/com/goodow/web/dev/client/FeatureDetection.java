@@ -19,13 +19,16 @@ public class FeatureDetection {
   }
 
   public static DevicePlatform devicePlatform() {
-    String devicePlatform = devicePlatformCordova();
-    if (DevicePlatform.Android.equals(devicePlatform)) {
-      return DevicePlatform.Android;
-    } else if (DevicePlatform.iOS.equals(devicePlatform)) {
-      return DevicePlatform.iOS;
+    if (!mobile()) {
+      return DevicePlatform.Desktop;
     }
-    return DevicePlatform.Desktop;
+    String devicePlatform = devicePlatformCordova();
+    for (DevicePlatform p : DevicePlatform.values()) {
+      if (p.name().equals(devicePlatform)) {
+        return p;
+      }
+    }
+    return null;
   }
 
   public static native boolean mobile() /*-{
