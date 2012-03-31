@@ -95,7 +95,7 @@ public class BookListPanel extends Composite implements ActivityAware {
     searchButton.setVisualElement(createIcon(res.search()));
     initWidget(binder.createAndBindUi(this));
     String portraitCss =
-        "@media only screen and (max-width: 1000px) {" + bundle.portrait().getText() + "}";
+        "@media only screen and (max-width: 900px) {" + bundle.portrait().getText() + "}";
     StyleInjector.injectAtEnd(portraitCss);
 
     settingButton.addClickHandler(new ClickHandler() {
