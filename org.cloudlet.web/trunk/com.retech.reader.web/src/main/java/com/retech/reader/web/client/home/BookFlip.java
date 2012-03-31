@@ -128,6 +128,7 @@ public class BookFlip extends WavePanel implements ActivityAware {
 
   public native void addEventListener(OnStartDefaultDeviceReady oddr)/*-{
                                                                      $wnd.document.addEventListener("deviceready", function(e) {
+                                                                     alert("deviceready");
                                                                      oddr.@com.retech.reader.web.client.home.BookFlip.OnStartDefaultDeviceReady::deviceReady()();
                                                                      }, false);
                                                                      }-*/;
