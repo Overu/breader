@@ -2,9 +2,16 @@
 
 @sprite .waveToolbar {
   gwt-image: "waveToolbarEmpty";
+  display: -webkit-box;
   z-index: 0;
 }
 
 @sprite .waveToolbar>div:active {
   gwt-image: "waveToolbarActive";
+}
+
+.waveToolbar>* {
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
 }
