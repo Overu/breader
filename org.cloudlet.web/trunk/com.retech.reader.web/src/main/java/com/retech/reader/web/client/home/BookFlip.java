@@ -207,12 +207,13 @@ public class BookFlip extends WavePanel implements ActivityAware {
             }
           }
         });
-        if (Window.getClientWidth() >= 1024) {
-          container.setHeight(String.valueOf(clientWidth * 0.33 * 0.5 * 2) + "px");
-        } else {
-          container.setHeight(String.valueOf(clientWidth * 0.33 * 2) + "px");
+        if (divIdx == 0 || isFlip) {
+          if (Window.getClientWidth() >= 1024) {
+            container.setHeight(String.valueOf(clientWidth * 0.33 * 0.5 * 2) + "px");
+          } else {
+            container.setHeight(String.valueOf(clientWidth * 0.33 * 2) + "px");
+          }
         }
-        // bookFlip.setHeight(String.valueOf(Window.getClientHeight()) + "px");
       }
 
       @Override
@@ -291,6 +292,37 @@ public class BookFlip extends WavePanel implements ActivityAware {
             }
           }
         }, DragStartEvent.getType());
+
+        // bookFlip.addDomHandler(new DragOverHandler() {
+        // boolean isChange = true;
+        // int i = 7000;
+        //
+        // @Override
+        // public void onDragOver(final DragOverEvent event) {
+        // if (event.getNativeEvent().getClientX() % 20 == 0 && isChange) {
+        // isChange = false;
+        // Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
+        //
+        // @Override
+        // public boolean execute() {
+        // if (!isAttached()) {
+        // return false;
+        // }
+        // move(i++, true);
+        // isChange = true;
+        // return !isChange;
+        // }
+        // }, 500);
+        // bookFlip.addDomHandler(new DragLeaveHandler() {
+        //
+        // @Override
+        // public void onDragLeave(final DragLeaveEvent event) {
+        // isChange = true;
+        // }
+        // }, DragLeaveEvent.getType());
+        // }
+        // }
+        // }, DragOverEvent.getType());
 
         // bookFlip.addDomHandler(new TouchEndHandler() {
         // int i = 7000;
