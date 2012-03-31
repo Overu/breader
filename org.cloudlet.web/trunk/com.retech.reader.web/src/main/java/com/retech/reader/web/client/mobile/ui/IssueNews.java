@@ -19,7 +19,6 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -65,66 +64,44 @@ public class IssueNews extends BaseEditor<IssueProxy> {
   @UiField
   DivElement detail;
   @UiField
-  DivElement datetimas;
+  DivElement datetime;
   @UiField
   DivElement viewcount;
   @UiField
-  DivElement categorys;
-  @UiField
-  SimplePanel toolbar;
+  DivElement category;
+  @UiField(provided = true)
+  WaveToolbar waveToolbar;
 
   private static Resources res = GWT.create(Resources.class);
   private static Binder binder = GWT.create(Binder.class);
   private static Driver driver = GWT.create(Driver.class);
   private final DateTimeFormat dateFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_LONG);
-  private List<IssueProxy> issueBook;
   private ReaderFactory f;
-  private final Provider<BasePlace> places;
   private final WavePanel wavePanel;
+  private EntityProxyId<IssueProxy> issueId;
+  private ToolbarClickButton addButton;
+  private IssueProxy proxy;
 
   @Inject
   public IssueNews(final ReaderFactory f, final Provider<BasePlace> places,
-      final WavePanel wavePanel) {
+      final WavePanel wavePanel, final WaveToolbar waveToolbar) {
     this.f = f;
-    this.places = places;
     this.wavePanel = wavePanel;
+    this.waveToolbar = waveToolbar;
     // super.initEditor();
-    wavePanel.setContent(binder.createAndBindUi(this));
-    initWidget(wavePanel);
-
-  }
-
-  /**
-   * Creates an icon Element.
-   */
-  public Element createIcon(final ImageResource imageResource) {
-    return AbstractImagePrototype.create(imageResource).createElement();
-  }
-
-  @Override
-  public void onStart(final ActivityState state) {
-
-    toolbar.clear();
-    WaveToolbar waveToolbar = new WaveToolbar();
     final ToolbarClickButton readButton = waveToolbar.addClickButton();
     readButton.setText("在线阅读");
     readButton.setVisualElement(createIcon(res.issueRead()));
-
     final ToolbarClickButton sectionButton = waveToolbar.addClickButton();
     sectionButton.setText("目录");
     sectionButton.setVisualElement(createIcon(res.issueSection()));
-
-    final ToolbarClickButton addButton = waveToolbar.addClickButton();
+    addButton = waveToolbar.addClickButton();
     addButton.setText("收藏");
     addButton.setVisualElement(createIcon(res.issueAdd()));
 
     final ToolbarClickButton downloadButton = waveToolbar.addClickButton();
     downloadButton.setText("下载");
     downloadButton.setVisualElement(createIcon(res.issueDownload()));
-    toolbar.add(waveToolbar);
-
-    BasePlace place = (BasePlace) placeController.getWhere();
-    final EntityProxyId<IssueProxy> issueId = place.getParam(IssueProxy.class);
     readButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(final ClickEvent event) {
@@ -139,41 +116,67 @@ public class IssueNews extends BaseEditor<IssueProxy> {
             issueId));
       }
     });
+    addButton.addClickHandler(new ClickHandler() {
+      @Override
+      public void onClick(final ClickEvent event) {
+        List<IssueProxy> issueBook = storage.get(IssueProxy.MY_ISSUES, IssueProxy.class);
+        if (issueBook == null) {
+          issueBook = new ArrayList<IssueProxy>();
+        }
+        if (!issueBook.contains(proxy)) {
+          issueBook.add(proxy);
+          logger.info("已收藏");
+          addButton.setState(State.DISABLED);
+        }
+        storage.put(IssueProxy.MY_ISSUES, issueBook);
+      }
+    });
     downloadButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(final ClickEvent event) {
         logger.info("开发中");
       }
     });
+    wavePanel.setContent(binder.createAndBindUi(this));
+    initWidget(wavePanel);
+  }
+
+  /**
+   * Creates an icon Element.
+   */
+  public Element createIcon(final ImageResource imageResource) {
+    return AbstractImagePrototype.create(imageResource).createElement();
+  }
+
+  @Override
+  public void onStart(final ActivityState state) {
+
+    // toolbar.add(waveToolbar);
+
+    BasePlace place = (BasePlace) placeController.getWhere();
+    issueId = place.getParam(IssueProxy.class);
+
     /**
      * 获取书籍详情
      */
     new BaseReceiver<IssueProxy>() {
-
       @Override
       public void onSuccessAndCached(final IssueProxy proxy) {
-        datetimas.setInnerHTML(dateFormat.format(proxy.getCreateTime()));
+        IssueNews.this.proxy = proxy;
+        datetime.setInnerHTML(dateFormat.format(proxy.getCreateTime()));
         viewcount.setInnerHTML(String.valueOf(proxy.getViewCount()));
         wavePanel.title().setText(proxy.getTitle());
         detail.setInnerHTML(proxy.getDetail());
+        List<IssueProxy> issueBook = storage.get(IssueProxy.MY_ISSUES, IssueProxy.class);
+        if (issueBook == null) {
+          issueBook = new ArrayList<IssueProxy>();
+        }
+        if (!issueBook.contains(proxy)) {
+          addButton.setState(State.ENABLED);
+        } else {
+          addButton.setState(State.DISABLED);
+        }
 
-        issueBook = storage.get(IssueProxy.MY_ISSUES, IssueProxy.class);
-        addButton.addClickHandler(new ClickHandler() {
-          @Override
-          public void onClick(final ClickEvent event) {
-
-            if (issueBook == null) {
-              issueBook = new ArrayList<IssueProxy>();
-            }
-
-            if (!issueBook.contains(proxy)) {
-              issueBook.add(proxy);
-              logger.info("已收藏");
-              addButton.setState(State.DISABLED);
-            }
-            storage.put(IssueProxy.MY_ISSUES, issueBook);
-          }
-        });
         new BaseReceiver<ResourceProxy>() {
           @Override
           public void onSuccessAndCached(final ResourceProxy response) {
@@ -192,7 +195,7 @@ public class IssueNews extends BaseEditor<IssueProxy> {
         new BaseReceiver<CategoryProxy>() {
           @Override
           public void onSuccessAndCached(final CategoryProxy response) {
-            categorys.setInnerHTML(response.getTitle());
+            category.setInnerHTML(response.getTitle());
           }
 
           @Override

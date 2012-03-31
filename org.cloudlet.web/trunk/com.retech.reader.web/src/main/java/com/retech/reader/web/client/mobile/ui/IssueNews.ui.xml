@@ -1,7 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
-  xmlns:app="urn:import:com.retech.reader.web.client.mobile.ui">
-  <ui:with field='res' type='com.retech.reader.web.client.style.ReaderResources' />
+  xmlns:w="urn:import:com.goodow.web.view.wave.client">
   <ui:style>
     .label {
       color: #666;
@@ -26,10 +25,6 @@
     .div_intro {
       -webkit-box-flex: 1;
       margin: 0 0 5px 5px;
-    }
-    
-    .toolbar {
-      padding: 10px 0 10px 0;
     }
     
     .button {
@@ -58,15 +53,14 @@
       </div>
       <div class="{style.div_intro}">
         <div class="{style.label}">更新时间</div>
-        <div ui:field="datetimas"></div>
+        <div ui:field="datetime"></div>
         <div class="{style.label}">浏览次数</div>
         <div ui:field="viewcount" class="{style.div_viewcount}"></div>
         <div class="{style.label}">书目分类</div>
-        <div ui:field="categorys" class="{style.div_margin}"></div>
+        <div ui:field="category" class="{style.div_margin}"></div>
       </div>
     </div>
-    <g:SimplePanel addStyleNames="{style.toolbar}" ui:field="toolbar">
-    </g:SimplePanel>
+    <w:WaveToolbar ui:field="waveToolbar"></w:WaveToolbar>
     <div>
       <div class="{style.label}">简介</div>
       <div ui:field="detail" class="{style.div_intro}"></div>
