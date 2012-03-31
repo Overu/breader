@@ -14,7 +14,25 @@
 package com.goodow.web.dev.client;
 
 public class FeatureDetection {
+  public static enum DevicePlatform {
+    Android, iOS, Desktop
+  }
+
+  public static DevicePlatform devicePlatform() {
+    String devicePlatform = devicePlatformCordova();
+    if (DevicePlatform.Android.equals(devicePlatform)) {
+      return DevicePlatform.Android;
+    } else if (DevicePlatform.iOS.equals(devicePlatform)) {
+      return DevicePlatform.iOS;
+    }
+    return DevicePlatform.Desktop;
+  }
+
   public static native boolean mobile() /*-{
                                         return $wnd.cordova != undefined;
                                         }-*/;
+
+  private static native String devicePlatformCordova()/*-{
+                                                      return $wnd.device.platform;
+                                                      }-*/;
 }
