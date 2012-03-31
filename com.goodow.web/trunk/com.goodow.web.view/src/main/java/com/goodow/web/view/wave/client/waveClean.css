@@ -3,6 +3,8 @@
 @sprite body {
   gwt-image: "bodyBackgroundTop";
   background-color: rgb(216, 220, 224);
+  overflow: auto;
+  margin: 7px 0 0 7px;
 }
 
 .gwt-Button {
