@@ -1,19 +1,21 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
   xmlns:w="urn:import:com.google.gwt.widget.client" xmlns:c="urn:import:com.google.gwt.user.cellview.client"
-  xmlns:app="urn:import:com.retech.reader.web.client.home">
-  <ui:style field='landscape' src='BookListPanel.landscape.css'
-    type='com.retech.reader.web.client.home.BookListPanel.Style'>
-      
-    </ui:style>
-  <ui:style>
+  xmlns:app="urn:import:com.retech.reader.web.client.home" xmlns:wave="urn:import:com.goodow.web.view.wave.client">
+  <ui:style field='landscape' src='BookListPanel.landscape.css' type='com.retech.reader.web.client.home.BookListPanel.Style'>
     
   </ui:style>
 
   <g:HTMLPanel addStyleNames="{landscape.root}">
-  
-    <div><app:BookFlip ui:field="bookFlipOfBookListPanel"></app:BookFlip></div>
-    <div><app:LibraryView ui:field="libraryView"></app:LibraryView></div>
+    <div>
+      <app:BookFlip ui:field="bookFlipOfBookListPanel"></app:BookFlip>
+    </div>
+    <div>
+      <app:LibraryView ui:field="libraryView"></app:LibraryView>
+    </div>
+    <div>
+      <wave:WavePanel ui:field="waveToolbar"></wave:WavePanel>
+    </div>
   </g:HTMLPanel>
 
 </ui:UiBinder> 
