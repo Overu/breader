@@ -55,7 +55,7 @@ public class BookListPanel extends Composite implements ActivityAware {
     this.libraryView = libraryView;
     initWidget(binder.createAndBindUi(this));
     String portraitCss =
-        "@media only screen and (max-width: 1023px) {" + bundle.portrait().getText() + "}";
+        "@media only screen and (max-width: 1000px) {" + bundle.portrait().getText() + "}";
     StyleInjector.injectAtEnd(portraitCss);
 
   }
