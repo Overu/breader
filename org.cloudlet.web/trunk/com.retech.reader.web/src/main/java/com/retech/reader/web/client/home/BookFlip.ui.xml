@@ -31,19 +31,19 @@
         -webkit-transform-style: preserve-3d;
         height: 200px;
         display: -webkit-box;
-        -webkit-perspective: 1200;
+        -webkit-perspective: 700;
       }
     
     @if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
       .coverflowTitle>div>img {
       	border-radius: 10px 10px;
-      	-webkit-box-reflect: below 20px -webkit-gradient(linear, literal("left top"), literal("left bottom"), from(transparent), color-stop(0.8, transparent), to(rgba(255, 255, 255, 0.5) ) );
+      	-webkit-box-reflect: below 25px -webkit-gradient(linear, literal("left top"), literal("left bottom"), from(transparent), color-stop(0.8, transparent), to(rgba(255, 255, 255, 0.6) ) );
       }
     }
     @else {
   	  .coverflowTitle>div>img {
       	border-radius: 10px 10px;
-      	-webkit-box-reflect: below 20px;
+      	-webkit-box-reflect: below 25px;
       }
     }
     
@@ -57,11 +57,12 @@
           border: 1px solid;
           */
     }
-
+    
     .coverflowTitle>div>div {
       display: -webkit-box;
       -webkit-box-align: center;
       -webkit-box-pack: center;
+      visibility: hidden;
     }
     
     .coverflowTitle>div>div>span {
