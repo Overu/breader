@@ -41,7 +41,7 @@ public class TalkView extends Composite {
     // initWidget(uiBinder.createAndBindUi(this));
     wavePanel.setContent(uiBinder.createAndBindUi(this));
     initWidget(wavePanel);
-    wavePanel.title().setText("Talk");
+    wavePanel.title().setText("分享");
   }
 
   @UiHandler("send")
