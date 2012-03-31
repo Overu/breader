@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 
- @sprite body {
+@sprite body {
   gwt-image: "bodyBackgroundTop";
   background-color: rgb(216, 220, 224);
 }
@@ -28,6 +28,7 @@
   background: white;
 }
 
+/*
 ::-webkit-scrollbar-track-piece {
   background-color: #fff;
   -webkit-border-radius: 0;
@@ -50,7 +51,7 @@
   background-color: #9f9f9f;
   -webkit-border-radius: 4px;
 }
-
+*/
 .gwt-PopupPanel {
   border: 1px solid rgb(85, 144, 210);
   -webkit-border-radius: 5px;
