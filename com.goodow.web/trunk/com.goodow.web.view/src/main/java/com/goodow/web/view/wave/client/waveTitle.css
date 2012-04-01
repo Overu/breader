@@ -24,23 +24,13 @@
   background-color: rgb(24, 116, 205);
 }
 
-.waveTitle>div.waveTitleText {
+.waveTitle>span {
   display: -webkit-box;
+  -webkit-box-flex: 1;
   -webkit-box-pack: center;
   -webkit-box-align: center;
-  -webkit-box-flex: 1;
-  white-space: nowrap;
   min-width: 100%;
-  padding: 0;
-  cursor: default;
-}
-
-.waveTitle>div.waveTitleText:active {
-  background: inherit;
-}
-
-.waveTitle>div.waveTitleText:hover {
-  background: inherit;
+  white-space: nowrap;
 }
 
 .waveTitle>div>img {

@@ -21,8 +21,6 @@ public class WaveTitle extends FlowPanel {
   }
   interface Style extends CssResource {
     String waveTitle();
-
-    String waveTitleText();
   }
 
   private static final Resources res = GWT.create(Resources.class);
@@ -54,9 +52,8 @@ public class WaveTitle extends FlowPanel {
    * set the title bar title
    */
   public void setText(final String text) {
-    Element element = DOM.createDiv();
+    Element element = DOM.createSpan();
     element.setInnerText(text);
-    element.addClassName(res.style().waveTitleText());
     this.getElement().appendChild(element);
   }
 }
