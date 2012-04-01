@@ -71,7 +71,7 @@ public class BookFlip extends WavePanel implements ActivityAware {
   }
 
   interface Template extends SafeHtmlTemplates {
-    @SafeHtmlTemplates.Template("<img src=\"{0}\" width='100%' ><div><span>{1}</span></div>")
+    @SafeHtmlTemplates.Template("<img src=\"{0}\" width='100%' ><div>{1}</div>")
     SafeHtml img(SafeUri image, String title);
   }
 
@@ -133,7 +133,7 @@ public class BookFlip extends WavePanel implements ActivityAware {
 
   @Override
   public void onStart(final ActivityState state) {
-    if (FeatureDetection.mobile()) {
+    if (FeatureDetection.devicePlatform().equals(FeatureDetection.DevicePlatform.Android)) {
       addEventListener(new OnStartDefaultDeviceReady() {
 
         @Override
