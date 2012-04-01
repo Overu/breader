@@ -1,5 +1,6 @@
 package org.cloudlet.web.logging.client;
 
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.inject.Inject;
@@ -78,5 +79,6 @@ public final class LogHandler extends Handler {
     popup.center();
     popup.setPopupPosition(popup.getPopupLeft(), 0);
     popup.show();
+    popup.getElement().getStyle().setPosition(Position.FIXED);
   }
 }
