@@ -79,23 +79,31 @@ public class DomainTest extends BaseTest {
   @Test
   public void testInsertData() throws IOException {
     em.get().getTransaction().begin();
-    Category c1 = categories.get().setTitle("科技");
+    Category c1 = categories.get().setTitle("搜索");
     categoryService.put(c1);
-    Category c2 = categories.get().setTitle("生活");
+    Category c2 = categories.get().setTitle("特色");
     categoryService.put(c2);
-    Category c3 = categories.get().setTitle("旅游");
+    Category c3 = categories.get().setTitle("推荐");
     categoryService.put(c3);
-    Category c4 = categories.get().setTitle("时尚");
+    Category c4 = categories.get().setTitle("科技");
     categoryService.put(c4);
-    Category c5 = categories.get().setTitle("体育");
+    Category c5 = categories.get().setTitle("生活");
     categoryService.put(c5);
+    Category c6 = categories.get().setTitle("旅游");
+    categoryService.put(c6);
+    Category c7 = categories.get().setTitle("时尚");
+    categoryService.put(c7);
+    Category c8 = categories.get().setTitle("体育");
+    categoryService.put(c8);
+    Category c9 = categories.get().setTitle("我的图书");
+    categoryService.put(c9);
     for (int c = 1; c < 2; c++) {
       Issue i1 =
           issues
               .get()
               .setImage(
                   resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(1, 1)))
-              .setCategory(c1)
+              .setCategory(c4)
               .setTitle("图说天下")
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
               .setDetail(
@@ -127,7 +135,7 @@ public class DomainTest extends BaseTest {
           issues.get().setImage(
               resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(2, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
-              .setCategory(c2).setTitle("影资讯").setDetail("“筷子兄弟”新作受好评 《父亲》引爆亲情共鸣");
+              .setCategory(c5).setTitle("影资讯").setDetail("“筷子兄弟”新作受好评 《父亲》引爆亲情共鸣");
       issueService.put(i2);
       int sequence = 1;
       int pageCount = 1;
@@ -144,7 +152,7 @@ public class DomainTest extends BaseTest {
           issues.get().setImage(
               resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(3, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
-              .setCategory(c2).setTitle("选购指南").setDetail("简约之美 主流一体机电脑推荐");
+              .setCategory(c5).setTitle("选购指南").setDetail("简约之美 主流一体机电脑推荐");
       issueService.put(issue);
       int sequence = 1;
       int pageCount = 1;
@@ -161,7 +169,7 @@ public class DomainTest extends BaseTest {
           issues.get().setImage(
               resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(4, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
-              .setCategory(c3).setTitle("新旅行").setDetail(
+              .setCategory(c6).setTitle("新旅行").setDetail(
                   "坐在美国盐湖城山谷雪场的缆车上，刚刚过了一个山头，下边是黑压压的松树，缆车下行，然后上行，阳光真好，晒在人身上暖洋洋的，也无风，所以一点都不觉得冷。");
       issueService.put(issue);
       int sequence = 1;
@@ -181,7 +189,7 @@ public class DomainTest extends BaseTest {
           issues.get().setImage(
               resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(5, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
-              .setCategory(c5).setTitle("超体育").setDetail("西班牙德比：巴塞罗那胜皇家马德里");
+              .setCategory(c8).setTitle("超体育").setDetail("西班牙德比：巴塞罗那胜皇家马德里");
       issueService.put(issue);
       int sequence = 1;
       int pageCount = 1;
@@ -201,7 +209,7 @@ public class DomainTest extends BaseTest {
               .setImage(
                   resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(6, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
-              .setCategory(c3)
+              .setCategory(c6)
               .setTitle("游遍天下")
               .setDetail(
                   "这期《游遍天下》是2011年的收官之作，回想一年的工作历程，编辑部某位风华绝代之人爆料了一件真事：朋友的孩子高一地理年级第一，因为喜欢看《游遍天下》，所以喜欢上了地理，孩子的书架上整齐地码着几十本《游遍天下》。我不善于煽情，也不屑于别人的这种表达，但那刻，我很感动，我们的工作有了更深的意义。");
@@ -224,7 +232,7 @@ public class DomainTest extends BaseTest {
               .setImage(
                   resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(7, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
-              .setCategory(c4)
+              .setCategory(c7)
               .setTitle("银幕小生")
               .setDetail(
                   "近几年电影界风生水起，异常红火，于是有N多新鲜肉小生盯上了电影这块大阵地，向大银幕发起了猛烈攻击！一时之间，银幕上的新鲜小生空降兵攻城略地，看得我们眼花缭乱。");
@@ -247,7 +255,7 @@ public class DomainTest extends BaseTest {
               .setImage(
                   resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(8, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
-              .setCategory(c1)
+              .setCategory(c4)
               .setTitle("当月潮流")
               .setDetail(
                   "记忆中，一进入腊月，大人们就要开始忙活了。每当我们从外边带着浑身的雪花跑进屋时，总是能看到大人们在灶头忙碌的背影，从腊月到正月，也总是能够把家乡的小吃全部吃个遍。如今长大了，为了生存漂泊在外，每年进入腊月，最想家乡的小吃，总能让人魂牵梦绕！");
@@ -268,7 +276,7 @@ public class DomainTest extends BaseTest {
           issues.get().setImage(
               resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(9, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
-              .setCategory(c4).setTitle("B&G").setDetail("美女学英语");
+              .setCategory(c7).setTitle("B&G").setDetail("美女学英语");
       issueService.put(issue);
       int sequence = 1;
       int pageCount = 1;
@@ -286,7 +294,7 @@ public class DomainTest extends BaseTest {
           issues.get().setImage(
               resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(10, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
-              .setCategory(c4).setTitle("TREND").setDetail(
+              .setCategory(c7).setTitle("TREND").setDetail(
                   "谁说皮草只是女性的时尚独享？本季秋冬也让皮草陪型男们过个美丽的圣诞节，让皮草的奢华之风与男性的阳刚之气制造出最in的混搭潮流。");
       issueService.put(issue);
       int sequence = 1;
