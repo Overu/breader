@@ -77,6 +77,7 @@ public class BookListPanel extends Composite implements ActivityAware {
     this.libraryView = libraryView;
     this.waveToolbar = waveToolbar;
     toolbar = waveToolbar.toolbar();
+    initWidget(binder.createAndBindUi(this));
 
     ToolbarClickButton settingButton = toolbar.addClickButton();
     settingButton.setText("设置");
@@ -93,7 +94,6 @@ public class BookListPanel extends Composite implements ActivityAware {
     ToolbarClickButton searchButton = toolbar.addClickButton();
     searchButton.setText("搜索");
     searchButton.setVisualElement(createIcon(res.search()));
-    initWidget(binder.createAndBindUi(this));
     String portraitCss =
         "@media only screen and (max-width: 900px) {" + bundle.portrait().getText() + "}";
     StyleInjector.injectAtEnd(portraitCss);
