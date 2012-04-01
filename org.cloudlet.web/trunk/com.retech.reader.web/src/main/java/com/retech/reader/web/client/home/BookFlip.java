@@ -133,6 +133,7 @@ public class BookFlip extends WavePanel implements ActivityAware {
 
   @Override
   public void onStart(final ActivityState state) {
+    bookFlipHeight();
     logger.info("clientWidth:" + Window.getClientWidth() + ";clientHeight:"
         + Window.getClientHeight());
     if (FeatureDetection.devicePlatform().equals(FeatureDetection.DevicePlatform.Android)) {
@@ -165,6 +166,15 @@ public class BookFlip extends WavePanel implements ActivityAware {
     return binder;
   }
 
+  private void bookFlipHeight() {
+    int clientWidth = Window.getClientWidth();
+    if (Window.getClientWidth() >= 1024) {
+      container.setHeight(String.valueOf(clientWidth * 0.33 * 0.5 * 2) + "px");
+    } else {
+      container.setHeight(String.valueOf(clientWidth * 0.33 * 2) + "px");
+    }
+  }
+
   private int computeIdx(final long offset, final int length) {
     if (offset >= 0) {
       return (int) (offset % length);
@@ -185,7 +195,6 @@ public class BookFlip extends WavePanel implements ActivityAware {
 
       @Override
       public void onSuccessAndCached(final ResourceProxy response) {
-        int clientWidth = Window.getClientWidth();
         SafeHtml image =
             template.img(UriUtils.fromTrustedString("data:" + response.getMimeType().getType()
                 + ";base64," + response.getDataString()), proxy.getTitle());
@@ -208,19 +217,14 @@ public class BookFlip extends WavePanel implements ActivityAware {
             }
           }
         });
-        if (divIdx == 0 || isFlip) {
-          if (Window.getClientWidth() >= 1024) {
-            container.setHeight(String.valueOf(clientWidth * 0.33 * 0.5 * 2) + "px");
-          } else {
-            container.setHeight(String.valueOf(clientWidth * 0.33 * 2) + "px");
-          }
-        }
+        bookFlipHeight();
       }
 
       @Override
       public Request<ResourceProxy> provideRequest() {
         return f.resource().getImage(proxy);
       }
+
     }.setKeyForProxy(proxy.stableId(), ResourceProxy.class.getName()).fire();
   }
 
@@ -341,7 +345,7 @@ public class BookFlip extends WavePanel implements ActivityAware {
         // }
         // }
         // }, TouchEndEvent.getType());
-      };
+      }
 
       @Override
       public Request<List<IssueProxy>> provideRequest() {
