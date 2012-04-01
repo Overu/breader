@@ -1,12 +1,13 @@
 package org.cloudlet.web.service.client.rpc;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.gwt.client.DefaultRequestTransport;
@@ -26,7 +27,9 @@ public class BaseRequestTransport extends DefaultRequestTransport implements Sch
   @Inject
   BaseRequestTransport(final LoadingIndicator loadingIndicator) {
     loading = loadingIndicator.getElement();
-    super.setRequestUrl("http://dev.goodow.com/" + DefaultRequestTransport.URL);
+    if (GWT.isProdMode()) {
+      super.setRequestUrl("http://dev.goodow.com/" + DefaultRequestTransport.URL);
+    }
   }
 
   @Override
@@ -35,7 +38,7 @@ public class BaseRequestTransport extends DefaultRequestTransport implements Sch
     if (inProcessReqs == 0) {
       loading.removeFromParent();
     } else if (inProcessReqs > 0 && loading.getParentElement() == null) {
-      RootLayoutPanel.get().getElement().appendChild(loading);
+      RootPanel.get().getElement().appendChild(loading);
     }
   }
 
