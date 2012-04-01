@@ -3,7 +3,7 @@
   <ui:image field="loadingImage" src="loading.gif"></ui:image>
   <ui:style>
 .loading {
-  position: absolute;
+  position: fixed;
   text-align: center;
   top: 50%;
   /* top: 5px; */
