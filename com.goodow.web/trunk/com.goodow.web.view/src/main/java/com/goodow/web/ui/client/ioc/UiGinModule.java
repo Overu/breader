@@ -9,7 +9,7 @@ import com.goodow.web.ui.client.shell.ShellUi;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.view.client.AbstractDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
@@ -57,7 +57,7 @@ public final class UiGinModule extends AbstractGinModule {
     @Override
     public Binder get() {
       logger.finest("EagerSingleton start");
-      RootLayoutPanel.get().getElement().appendChild(loadingIndicator.getElement());
+      RootPanel.get().getElement().appendChild(loadingIndicator.getElement());
 
       // 注册默认视图
       isWidgetMapBinder.addBinding(Search.KEY).toAsyncProvider(defaultSearchUi);
