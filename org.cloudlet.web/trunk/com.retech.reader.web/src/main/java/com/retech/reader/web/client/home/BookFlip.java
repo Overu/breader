@@ -126,7 +126,6 @@ public class BookFlip extends WavePanel implements ActivityAware {
 
   public native void addEventListener(OnStartDefaultDeviceReady oddr)/*-{
                                                                      $wnd.document.addEventListener("deviceready", function(e) {
-                                                                     alert("deviceready");
                                                                      oddr.@com.retech.reader.web.client.home.BookFlip.OnStartDefaultDeviceReady::deviceReady()();
                                                                      }, false);
                                                                      }-*/;
@@ -240,7 +239,6 @@ public class BookFlip extends WavePanel implements ActivityAware {
   }
 
   private void onStartDefault() {
-    Window.alert("onStartDefault");
     final IssueContext ctx = provideRequestContext();
     // if (proxys == null) {
     // proxys = storage.get(IssueProxy.ISSUES, IssueProxy.class);
