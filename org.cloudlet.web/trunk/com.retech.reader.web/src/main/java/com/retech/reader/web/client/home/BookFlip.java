@@ -4,6 +4,8 @@ import com.goodow.web.dev.client.FeatureDetection;
 import com.goodow.web.view.wave.client.WavePanel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.DragStartEvent;
 import com.google.gwt.event.dom.client.DragStartHandler;
@@ -135,25 +137,25 @@ public class BookFlip extends WavePanel implements ActivityAware {
     bookFlipHeight();
     logger.info("clientWidth:" + Window.getClientWidth() + ";clientHeight:"
         + Window.getClientHeight());
-    if (FeatureDetection.devicePlatform().equals(FeatureDetection.DevicePlatform.Android)) {
-      addEventListener(new OnStartDefaultDeviceReady() {
+    if (FeatureDetection.mobileNative()) {
+      Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
 
         @Override
-        public void deviceReady() {
+        public boolean execute() {
           onStartDefault();
+          return false;
         }
-      });
+      }, 5000);
+      // addEventListener(new OnStartDefaultDeviceReady() {
+      //
+      // @Override
+      // public void deviceReady() {
+      // onStartDefault();
+      // }
+      // });
     } else {
       onStartDefault();
     }
-    // Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
-    //
-    // @Override
-    // public boolean execute() {
-    // onStartDefault();
-    // return false;
-    // }
-    // }, 10000);
     // bookFlip.setHeight(String.valueOf(Window.getClientHeight()) + "px");
   }
 
@@ -268,18 +270,18 @@ public class BookFlip extends WavePanel implements ActivityAware {
           proxyCount = proxys.size();
         }
         displayImages(0);
-        // Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
-        // long i = 7001;
-        //
-        // @Override
-        // public boolean execute() {
-        // if (!isAttached()) {
-        // return false;
-        // }
-        // move(i++, true);
-        // return true;
-        // }
-        // }, 4000);
+        Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
+          long i = 7001;
+
+          @Override
+          public boolean execute() {
+            if (!isAttached()) {
+              return false;
+            }
+            move(i++, true);
+            return true;
+          }
+        }, 4000);
 
         bookFlip.addDomHandler(new DragStartHandler() {
           int i = 7000;
