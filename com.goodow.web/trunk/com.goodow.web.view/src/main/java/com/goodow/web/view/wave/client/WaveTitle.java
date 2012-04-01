@@ -24,6 +24,7 @@ public class WaveTitle extends FlowPanel {
   }
 
   private static final Resources res = GWT.create(Resources.class);
+  private Element text;
   static {
     res.style().ensureInjected();
   }
@@ -39,6 +40,9 @@ public class WaveTitle extends FlowPanel {
         History.back();
       }
     });
+
+    text = DOM.createSpan();
+    this.getElement().appendChild(text);
   }
 
   public IconButtonTemplate addIconClickButton() {
@@ -52,8 +56,6 @@ public class WaveTitle extends FlowPanel {
    * set the title bar title
    */
   public void setText(final String text) {
-    Element element = DOM.createSpan();
-    element.setInnerText(text);
-    this.getElement().appendChild(element);
+    this.text.setInnerText(text);
   }
 }
