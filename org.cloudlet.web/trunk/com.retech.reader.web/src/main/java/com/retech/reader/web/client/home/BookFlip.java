@@ -281,7 +281,7 @@ public class BookFlip extends WavePanel implements ActivityAware {
             move(i++, true);
             return true;
           }
-        }, 4000);
+        }, 1000);
 
         bookFlip.addDomHandler(new DragStartHandler() {
           int i = 7000;
