@@ -133,6 +133,8 @@ public class BookFlip extends WavePanel implements ActivityAware {
 
   @Override
   public void onStart(final ActivityState state) {
+    logger.info("clientWidth:" + Window.getClientWidth() + ";clientHeight:"
+        + Window.getClientHeight());
     if (FeatureDetection.devicePlatform().equals(FeatureDetection.DevicePlatform.Android)) {
       addEventListener(new OnStartDefaultDeviceReady() {
 
@@ -234,6 +236,7 @@ public class BookFlip extends WavePanel implements ActivityAware {
   }
 
   private void onStartDefault() {
+    Window.alert("onStartDefault");
     final IssueContext ctx = provideRequestContext();
     // if (proxys == null) {
     // proxys = storage.get(IssueProxy.ISSUES, IssueProxy.class);
