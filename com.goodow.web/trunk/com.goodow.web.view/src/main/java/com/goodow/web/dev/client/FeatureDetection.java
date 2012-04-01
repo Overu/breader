@@ -19,7 +19,7 @@ public class FeatureDetection {
   }
 
   public static DevicePlatform devicePlatform() {
-    if (!mobile()) {
+    if (!mobileNative()) {
       return DevicePlatform.Desktop;
     }
     String devicePlatform = devicePlatformCordova();
@@ -31,7 +31,7 @@ public class FeatureDetection {
     return null;
   }
 
-  public static native boolean mobile() /*-{
+  public static native boolean mobileNative() /*-{
                                         return $wnd.cordova != undefined;
                                         }-*/;
 
