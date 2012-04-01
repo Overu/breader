@@ -63,6 +63,9 @@
       -webkit-box-align: center;
       -webkit-box-pack: center;
       visibility: hidden;
+      border: 1px solid rgb(85, 144, 210);;
+      -webkit-border-radius: 20px;
+      width: 100%;
     }
     
     .coverflowTitle>div>div>span {
