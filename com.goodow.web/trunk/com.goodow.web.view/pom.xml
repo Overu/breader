@@ -16,19 +16,19 @@
   <dependencies>
     <!-- RequestFactory server -->
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.mvp</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.mvp</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.logging</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
