@@ -145,7 +145,7 @@ public class BookFlip extends WavePanel implements ActivityAware {
           onStartDefault();
           return false;
         }
-      }, 5000);
+      }, 500);
       // addEventListener(new OnStartDefaultDeviceReady() {
       //
       // @Override
@@ -281,7 +281,7 @@ public class BookFlip extends WavePanel implements ActivityAware {
             move(i++, true);
             return true;
           }
-        }, 1000);
+        }, 5000);
 
         bookFlip.addDomHandler(new DragStartHandler() {
           int i = 7000;
