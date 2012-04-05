@@ -141,6 +141,9 @@
             <goals>
               <goal>sign</goal>
             </goals>
+            <configuration>
+              <keyname>dev.goodow.com</keyname>
+            </configuration>
           </execution>
         </executions>
       </plugin>
