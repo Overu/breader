@@ -15,7 +15,7 @@ package com.goodow.web.dev.client;
 
 public class FeatureDetection {
   public static enum DevicePlatform {
-    Android, iOS, Desktop
+    Android, iOS, Desktop,
   }
 
   public static DevicePlatform devicePlatform() {
@@ -31,9 +31,26 @@ public class FeatureDetection {
     return null;
   }
 
+  public static boolean isConectionOnlineByMobile() {
+    if (!mobileNative()) {
+      return conectionOnlineWeb();
+    } else {
+      String connectionType = conectionOnlineCordova();
+      return connectionType != null && !"none".equals(connectionType.toLowerCase());
+    }
+  }
+
   public static native boolean mobileNative() /*-{
-                                        return $wnd.cordova != undefined;
-                                        }-*/;
+                                              return $wnd.cordova != undefined;
+                                              }-*/;
+
+  private static native String conectionOnlineCordova() /*-{
+                                                        $wnd.navigator.network.connection.type;
+                                                        }-*/;
+
+  private static native boolean conectionOnlineWeb() /*-{
+                                                     return $wnd.navigator.onLine;
+                                                     }-*/;
 
   private static native String devicePlatformCordova()/*-{
                                                       return $wnd.device.platform;
