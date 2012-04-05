@@ -12,33 +12,33 @@
   <packaging>war</packaging>
   <dependencies>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.boot</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.logging</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.service</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.security</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.security</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
@@ -57,7 +57,7 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.mvp</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
