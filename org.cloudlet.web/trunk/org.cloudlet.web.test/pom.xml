@@ -4,8 +4,8 @@
 
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.cloudlet.web</groupId>
-    <artifactId>org.cloudlet.web</artifactId>
+    <groupId>com.goodow.web</groupId>
+    <artifactId>com.goodow.web</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>org.cloudlet.web.test</artifactId>
@@ -16,7 +16,7 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.boot</artifactId>
       <version>${project.version}</version>
     </dependency>
