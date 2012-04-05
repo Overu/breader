@@ -3,6 +3,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
   <groupId>com.goodow.web</groupId>
   <artifactId>com.goodow.web</artifactId>
   <packaging>pom</packaging>
@@ -31,19 +36,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
-
-  <distributionManagement>
-    <repository>
-      <id>repo-releases</id>
-      <name>Nexus Release Repository</name>
-      <url>http://dev.retechcorp.com:8081/nexus/content/repositories/releases/</url>
-    </repository>
-    <snapshotRepository>
-      <id>repo-snapshots</id>
-      <name>Nexus Snapshots Repository</name>
-      <url>http://dev.retechcorp.com:8081/nexus/content/repositories/snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
 
   <dependencyManagement>
     <dependencies>
@@ -797,7 +789,7 @@
       </build>
     </profile>
   </profiles>
-  
+
   <modules>
     <module>com.goodow.web.view</module>
   </modules>
