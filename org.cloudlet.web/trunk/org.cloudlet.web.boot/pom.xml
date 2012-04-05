@@ -8,7 +8,6 @@
     <artifactId>com.goodow.web</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <groupId>org.cloudlet.web</groupId>
   <artifactId>org.cloudlet.web.boot</artifactId>
 
   <properties>
