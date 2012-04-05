@@ -4,8 +4,8 @@
 
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.cloudlet.web</groupId>
-    <artifactId>org.cloudlet.web</artifactId>
+    <groupId>com.goodow.web</groupId>
+    <artifactId>com.goodow.web</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>org.cloudlet.web.service</artifactId>
@@ -16,24 +16,24 @@
   <dependencies>
     <!-- RequestFactory server -->
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.boot</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.boot</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.logging</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.logging</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
@@ -145,7 +145,7 @@
 
     <!-- test -->
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.test</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
