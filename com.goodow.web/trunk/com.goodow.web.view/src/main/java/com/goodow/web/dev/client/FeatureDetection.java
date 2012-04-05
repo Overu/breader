@@ -18,6 +18,15 @@ public class FeatureDetection {
     Android, iOS, Desktop,
   }
 
+  public static boolean connectionOffline() {
+    if (!mobileNative()) {
+      return connectionOfflineWeb();
+    } else {
+      String connectionType = connectionTypeCordova();
+      return connectionType != null && "none".equals(connectionType.toLowerCase());
+    }
+  }
+
   public static DevicePlatform devicePlatform() {
     if (!mobileNative()) {
       return DevicePlatform.Desktop;
@@ -31,26 +40,17 @@ public class FeatureDetection {
     return null;
   }
 
-  public static boolean isConectionOnlineByMobile() {
-    if (!mobileNative()) {
-      return conectionOnlineWeb();
-    } else {
-      String connectionType = conectionOnlineCordova();
-      return connectionType != null && !"none".equals(connectionType.toLowerCase());
-    }
-  }
-
   public static native boolean mobileNative() /*-{
                                               return $wnd.cordova != undefined;
                                               }-*/;
 
-  private static native String conectionOnlineCordova() /*-{
-                                                        $wnd.navigator.network.connection.type;
-                                                        }-*/;
+  private static native boolean connectionOfflineWeb() /*-{
+                                                       return !$wnd.navigator.onLine;
+                                                       }-*/;
 
-  private static native boolean conectionOnlineWeb() /*-{
-                                                     return $wnd.navigator.onLine;
-                                                     }-*/;
+  private static native String connectionTypeCordova() /*-{
+                                                         $wnd.navigator.network.connection.type;
+                                                         }-*/;
 
   private static native String devicePlatformCordova()/*-{
                                                       return $wnd.device.platform;
