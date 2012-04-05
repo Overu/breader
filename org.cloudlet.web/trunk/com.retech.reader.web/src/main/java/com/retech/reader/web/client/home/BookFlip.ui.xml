@@ -50,7 +50,7 @@
     .coverflowTitle>div {
       height: 700px;
       position: absolute;
-      -webkit-transition: all 0.4s ease-out;
+      -webkit-transition: all 0.5s ease-out;
       /*-webkit-transition: -webkit-transform 0.5s ease-out, left 0.5s ease-out,z-index 0.5s ease-out, -webkit-opacity 0.5s ease-out;*/
       cursor: pointer;
       width: 33%; /*
