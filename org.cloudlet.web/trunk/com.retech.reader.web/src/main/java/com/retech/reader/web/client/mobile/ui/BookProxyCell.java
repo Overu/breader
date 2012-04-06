@@ -17,7 +17,7 @@ import com.retech.reader.web.shared.proxy.ResourceProxy;
 /**
  * A {@link com.google.gwt.cell.client.Cell} used to render a {@link IssueProxy}.
  */
-class BookProxyCell extends AbstractCell<IssueProxy> {
+public class BookProxyCell extends AbstractCell<IssueProxy> {
 
   /**
    * The template used by this cell.
