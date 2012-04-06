@@ -2,10 +2,9 @@ package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.web.view.wave.client.WavePanel;
 
-import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.user.cellview.client.CellBrowser;
+import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -18,7 +17,6 @@ import com.retech.reader.web.shared.rpc.ReaderFactory;
 import org.cloudlet.web.mvp.shared.ActivityAware;
 import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.BasePlace;
-import org.cloudlet.web.service.shared.rpc.BaseContext;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 @Singleton
@@ -44,11 +42,9 @@ public class SectionBrowserView extends WavePanel implements ActivityAware {
   public void onStart(final ActivityState state) {
     BasePlace place = (BasePlace) placeController.getWhere();
     final EntityProxyId<IssueProxy> issueId = place.getParam(IssueProxy.class);
-    CellBrowser cellBrowser = new CellBrowser(sectionTreeViewModel, null);
-    cellBrowser.setDefaultColumnWidth(300);
-    cellBrowser.setAnimationEnabled(true);
-    cellBrowser.getElement().getStyle().setPosition(Position.STATIC);
-    setContent(cellBrowser);
+    CellTree cellTree = new CellTree(sectionTreeViewModel, null);
+    cellTree.setAnimationEnabled(true);
+    setContent(cellTree);
 
     BaseReceiver<IssueProxy> baseReceiver = new BaseReceiver<IssueProxy>() {
 
@@ -64,9 +60,4 @@ public class SectionBrowserView extends WavePanel implements ActivityAware {
     };
     baseReceiver.setKeyForProxy(issueId).fire();
   }
-
-  protected BaseContext provideRequestContext() {
-    return f.issue();
-  }
-
 }
