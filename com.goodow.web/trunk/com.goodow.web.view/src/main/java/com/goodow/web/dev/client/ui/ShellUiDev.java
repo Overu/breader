@@ -3,6 +3,7 @@ package com.goodow.web.dev.client.ui;
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -22,6 +23,7 @@ public class ShellUiDev extends SimplePanel {
     logger.finest("init start");
     ActivityManager activityManager = new ActivityManager(centerActivityMapper, eventBus);
     this.ensureDebugId("root");
+    getElement().getStyle().setOverflowY(Overflow.SCROLL);
     activityManager.setDisplay(this);
     logger.finest("init end");
   }
