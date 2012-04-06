@@ -3,7 +3,7 @@
 @sprite body {
   gwt-image: "bodyBackgroundTop";
   background-color: rgb(216, 220, 224);
-  overflow: auto;
+  overflow-y: scroll;
   margin: 7px 0 0 7px;
 }
 
