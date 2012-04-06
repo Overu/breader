@@ -3,7 +3,6 @@ package com.retech.reader.web.client.mobile.ui;
 import com.goodow.web.view.wave.client.WavePanel;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -57,8 +56,6 @@ public class ContentEditor extends BaseEditor<PageProxy> {
     Widget createAndBindUi = binder.createAndBindUi(this);
     wavePanel.setContent(createAndBindUi);
     wavePanel.title();
-    createAndBindUi.getParent().getElement().getStyle().setOverflow(Overflow.VISIBLE);
-    createAndBindUi.getParent().getParent().getElement().getStyle().setOverflow(Overflow.AUTO);
     initWidget(wavePanel);
 
     html.addClickHandler(new ClickHandler() {
