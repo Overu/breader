@@ -45,12 +45,12 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>com.retech.reader</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>com.retech.reader.web</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.retech.reader</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>com.retech.reader.web</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>

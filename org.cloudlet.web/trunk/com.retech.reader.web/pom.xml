@@ -22,21 +22,21 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.security</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.logging</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.service</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
@@ -51,7 +51,7 @@
 
     <!-- test -->
     <dependency>
-      <groupId>org.cloudlet.web</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>org.cloudlet.web.test</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
