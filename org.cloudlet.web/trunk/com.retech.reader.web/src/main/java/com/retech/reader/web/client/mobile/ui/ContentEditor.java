@@ -2,16 +2,12 @@ package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.web.view.wave.client.WavePanel;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.google.web.bindery.requestfactory.gwt.client.RequestFactoryEditorDriver;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.Request;
 
@@ -19,44 +15,34 @@ import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.PageProxy;
 import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.proxy.SectionProxy;
-import com.retech.reader.web.shared.rpc.PageContext;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
+import org.cloudlet.web.mvp.shared.ActivityAware;
 import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.BasePlace;
-import org.cloudlet.web.mvp.shared.rpc.BaseEditor;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Singleton
-public class ContentEditor extends BaseEditor<PageProxy> {
-  interface Binder extends UiBinder<Widget, ContentEditor> {
-  }
-  interface Driver extends RequestFactoryEditorDriver<PageProxy, ContentEditor> {
-  }
+public class ContentEditor extends WavePanel implements ActivityAware {
 
-  private static Binder binder = GWT.create(Binder.class);
-  private static Driver driver = GWT.create(Driver.class);
-  @UiField
-  @Ignore
-  HTML html;
-
+  private static final Logger logger = Logger.getLogger(ContentEditor.class.getName());
   private final ReaderFactory f;
-
   private List<PageProxy> contents;
   private List<SectionProxy> sections;
-
   private int sectionIndex;
+  private final PlaceController placeController;
+  private PageProxy proxy;
+  private final HTML html;
 
   @Inject
-  ContentEditor(final ReaderFactory f, final WavePanel wavePanel) {
+  ContentEditor(final ReaderFactory f, final PlaceController placeController) {
+    html = new HTML();
     this.f = f;
-    // super.initEditor();
-    Widget createAndBindUi = binder.createAndBindUi(this);
-    wavePanel.setContent(createAndBindUi);
-    wavePanel.title();
-    initWidget(wavePanel);
+    this.placeController = placeController;
+    this.setContent(html);
 
     html.addClickHandler(new ClickHandler() {
 
@@ -87,28 +73,13 @@ public class ContentEditor extends BaseEditor<PageProxy> {
     findPageByPageProxy(pageEntityId);
   }
 
-  @Override
-  protected RequestFactoryEditorDriver<PageProxy, ContentEditor> provideEditorDriver() {
-    return driver;
-  }
-
-  @Override
-  protected PageContext provideRequestContext() {
-    return f.pageContext();
-  }
-
-  @Override
-  protected UiBinder provideUiBinder() {
-    return binder;
-  }
-
   private void display(final PageProxy proxy) {
     this.proxy = proxy;
-    // provideEditorDriver().display(proxy);
     new BaseReceiver<ResourceProxy>() {
 
       @Override
       public void onSuccessAndCached(final ResourceProxy response) {
+        ContentEditor.this.title().setText(proxy.getTitle());
         html.setHTML(response.getDataString());
       }
 
@@ -139,7 +110,7 @@ public class ContentEditor extends BaseEditor<PageProxy> {
 
       @Override
       public Request<List<PageProxy>> provideRequest() {
-        return provideRequestContext().findPagesBySection(sectionProxy);
+        return f.pageContext().findPagesBySection(sectionProxy);
       }
     }.setKeyForList(sectionProxy.stableId(), PageProxy.class.getName()).fire();
   }
@@ -205,7 +176,7 @@ public class ContentEditor extends BaseEditor<PageProxy> {
 
           @Override
           public Request<PageProxy> provideRequest() {
-            return provideRequestContext().findFirstPageByIssue(issueProxy).with(PageProxy.WITH);
+            return f.pageContext().findFirstPageByIssue(issueProxy).with(PageProxy.WITH);
           }
         }.setKeyForProxy(issueProxy.stableId(), PageProxy.class.getName()).fire();
       }
