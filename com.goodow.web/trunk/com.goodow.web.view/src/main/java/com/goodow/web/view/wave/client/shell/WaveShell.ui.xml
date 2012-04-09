@@ -1,9 +1,24 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
   <ui:style>
+    .topBar {
+      height: 40px;
+      display: -webkit-box;
+    }
     
+    .topBar>*:first-child {
+      -webkit-box-flex: 1;
+    }
+    .topBar>*:last-child {
+      line-height: 33px;
+      border-right: 10px solid transparent;
+    }
   </ui:style>
   <g:HTMLPanel>
-  <g:SimplePanel ui:field="content"></g:SimplePanel>
+    <div class="{style.topBar}">
+      <div></div>
+      <div>Help</div>
+    </div>
+    <g:SimplePanel ui:field="content"></g:SimplePanel>
   </g:HTMLPanel>
 </ui:UiBinder> 

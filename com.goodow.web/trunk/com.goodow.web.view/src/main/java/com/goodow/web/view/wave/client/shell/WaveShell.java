@@ -42,6 +42,7 @@ public class WaveShell extends Composite {
     initWidget(uiBinder.createAndBindUi(this));
     Style style = getElement().getStyle();
     style.setOverflowY(Overflow.AUTO);
+    style.setMarginTop(2, Unit.PX);
     style.setMarginLeft(7, Unit.PX);
     Element loading = Document.get().getElementById("loading");
     if (loading != null) {
