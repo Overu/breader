@@ -18,6 +18,8 @@ public class WavePanel extends FlowPanel {
     String wave();
 
     String waveContent();
+
+    String waveWarning();
   }
 
   private static Bundle BUNDLE = GWT.create(Bundle.class);
