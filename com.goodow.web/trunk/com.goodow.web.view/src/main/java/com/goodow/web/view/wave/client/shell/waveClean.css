@@ -3,8 +3,8 @@
 @sprite body {
   gwt-image: "bodyBackgroundTop";
   background-color: rgb(216, 220, 224);
-  overflow-y: scroll;
-  margin: 7px 0 0 7px;
+  overflow-y: auto;
+  margin: 0;
 }
 
 .gwt-Button {

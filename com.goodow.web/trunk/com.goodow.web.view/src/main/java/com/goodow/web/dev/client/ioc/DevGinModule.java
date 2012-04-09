@@ -6,7 +6,6 @@ import com.goodow.web.dev.client.ui.TreeNodeListView;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.AsyncProvider;
-import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -44,18 +43,12 @@ public final class DevGinModule extends AbstractGinModule {
       return null;
     }
   }
-  public static interface CellListResources extends CellList.Resources {
-    @Override
-    @Source({CellList.Style.DEFAULT_CSS, "MobileCellList.css"})
-    CellList.Style cellListStyle();
-  }
 
   private final Logger logger = Logger.getLogger(getClass().getName());
 
   @Override
   protected void configure() {
     bind(Binder.class).toProvider(BinderProvider.class).asEagerSingleton();
-    bind(CellList.Resources.class).to(CellListResources.class).in(Singleton.class);
     bind(ShellUiDev.class).asEagerSingleton();
   }
 

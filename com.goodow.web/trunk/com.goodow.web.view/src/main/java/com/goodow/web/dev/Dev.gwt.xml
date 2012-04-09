@@ -10,9 +10,6 @@
   <source path="client" />
   <source path="shared" />
 
-  <extend-configuration-property name="client.ioc.ginModules"
-    value="com.goodow.web.dev.client.ioc.DevGinModule" />
-
   <define-linker name="appcachelinker" class="com.goodow.web.dev.rebind.AppCacheLinker" />
   <add-linker name="appcachelinker" />
 </module>
