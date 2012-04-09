@@ -1,7 +1,0 @@
-<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
-  xmlns:c='urn:import:com.google.gwt.user.cellview.client' xmlns:s="urn:import:org.cloudlet.web.mvp.shared.rpc">
-  <g:HTMLPanel>
-    <s:ShowMorePagerPanel ui:field='pagerPanel' />
-  </g:HTMLPanel>
-</ui:UiBinder>
