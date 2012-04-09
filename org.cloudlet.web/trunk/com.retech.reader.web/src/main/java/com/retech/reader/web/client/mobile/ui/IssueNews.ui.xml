@@ -39,14 +39,9 @@
       margin-left: 25px;
       -webkit-box-flex: 1;
     }
-    
-    .div_styleauto {
-      overflow: auto;
-    }
   </ui:style>
 
-  <g:HTMLPanel addStyleNames="{style.div_styleauto}">
-
+  <g:HTMLPanel>
     <div class="{style.div_news}">
       <div class="{style.div_image}">
         <g:Image ui:field="image" width="100%"></g:Image>
@@ -65,6 +60,5 @@
       <div class="{style.label}">简介</div>
       <div ui:field="detail" class="{style.div_intro}"></div>
     </div>
-
   </g:HTMLPanel>
 </ui:UiBinder>
