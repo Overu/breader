@@ -15,6 +15,6 @@ import com.google.gwt.core.ext.linker.Shardable;
 public class AppCacheLinker extends BaseAppCacheLinker {
   @Override
   protected String[] otherCachedFiles() {
-    return new String[] {"/index.html", "/favicon.ico", "/icon.png",};
+    return new String[] {"/index.html", "/icons/favicon.ico", "/icons/icon.png",};
   }
 }
