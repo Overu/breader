@@ -3,10 +3,12 @@
   <ui:style>
     .topBar {
       display: -webkit-box;
+      height: 100%;
     }
     
     .topBar>*:first-child {
       -webkit-box-flex: 1;
+      padding: 3px;
     }
     
     .topBar>*:last-child {
