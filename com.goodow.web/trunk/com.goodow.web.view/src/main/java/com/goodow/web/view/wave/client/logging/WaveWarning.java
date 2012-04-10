@@ -18,14 +18,14 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
-public class LoggingView extends Composite {
+public class WaveWarning extends Composite {
 
-  interface LoggingViewUiBinder extends UiBinder<Widget, LoggingView> {
+  interface WaveWarningUiBinder extends UiBinder<Widget, WaveWarning> {
   }
 
-  private static LoggingViewUiBinder uiBinder = GWT.create(LoggingViewUiBinder.class);
+  private static WaveWarningUiBinder uiBinder = GWT.create(WaveWarningUiBinder.class);
 
-  public LoggingView() {
+  public WaveWarning() {
     initWidget(uiBinder.createAndBindUi(this));
   }
 
