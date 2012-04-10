@@ -13,6 +13,8 @@
  */
 package com.goodow.web.view.wave.client.shell;
 
+import com.goodow.web.view.wave.client.logging.WaveWarning;
+
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -23,6 +25,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -45,14 +48,18 @@ public class WaveShell extends Composite {
   private static WaveShellUiBinder uiBinder = GWT.create(WaveShellUiBinder.class);
   @UiField
   SimplePanel content;
+  @UiField
+  FlowPanel topBar;
   static {
     WaveBundle.INSTANCE.clean().ensureInjected();
   }
 
   @Inject
-  WaveShell(@Default final SimpleActivityMapper centerActivityMapper, final EventBus eventBus) {
+  WaveShell(@Default final SimpleActivityMapper centerActivityMapper, final EventBus eventBus,
+      final WaveWarning waveWarning) {
     logger.finest("init start");
     initWidget(uiBinder.createAndBindUi(this));
+    topBar.add(waveWarning);
     Style style = getElement().getStyle();
     style.setOverflowY(Overflow.AUTO);
     style.setMarginTop(2, Unit.PX);
@@ -67,6 +74,10 @@ public class WaveShell extends Composite {
     activityManager.setDisplay(content);
 
     logger.finest("init end");
+  }
+
+  public FlowPanel getTopBar() {
+    return topBar;
   }
 
 }

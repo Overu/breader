@@ -2,7 +2,7 @@
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
   <ui:style>
     .root {
-      position: fixed;
+      position: absolute;
       left: 0;
       right: 0;
       top: 0;
@@ -47,7 +47,7 @@
   <ui:image field="closeActive" />
   <g:HTMLPanel addStyleNames="{style.root}">
     <div>
-      <span>Google Wave is now read-only.</span>
+      <span>Retech Reader is now demo-only.</span>
       <div class="{style.close}" title="Close"></div>
     </div>
   </g:HTMLPanel>

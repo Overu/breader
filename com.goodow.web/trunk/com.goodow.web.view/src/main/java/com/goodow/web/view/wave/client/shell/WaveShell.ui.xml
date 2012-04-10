@@ -3,21 +3,12 @@
   <ui:style>
     .topBar {
       height: 40px;
-      display: -webkit-box;
-    }
-    
-    .topBar>*:first-child {
-      -webkit-box-flex: 1;
-    }
-    
-    .topBar>*:last-child {
-      line-height: 33px;
-      border-right: 10px solid transparent;
     }
     
     .container {
       -webkit-perspective: 800;
     }
+    
     .container>*:only-child {
       -webkit-transform-style: preserve-3d;
       -webkit-transition: all 5s;
@@ -26,10 +17,8 @@
     }
   </ui:style>
   <g:HTMLPanel>
-    <div class="{style.topBar}">
-      <div></div>
-      <div>Help</div>
-    </div>
+    <g:FlowPanel addStyleNames='{style.topBar}' ui:field="topBar">
+    </g:FlowPanel>
     <g:SimplePanel ui:field="content" addStyleNames='{style.container}'></g:SimplePanel>
   </g:HTMLPanel>
 </ui:UiBinder> 
