@@ -2,10 +2,12 @@ package com.retech.reader.web.client.home;
 
 import com.goodow.web.view.wave.client.WavePanel;
 
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
@@ -17,6 +19,7 @@ import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.gwt.safehtml.shared.UriUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -36,8 +39,6 @@ import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.rpc.IssueContext;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.service.shared.LocalStorage;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
@@ -45,7 +46,7 @@ import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 import java.util.List;
 
 @Singleton
-public class LibraryView extends WavePanel implements ActivityAware {
+public class LibraryView extends WavePanel implements Activity {
 
   interface Binder extends UiBinder<Widget, LibraryView> {
   }
@@ -94,7 +95,20 @@ public class LibraryView extends WavePanel implements ActivityAware {
   }
 
   @Override
-  public void onStart(final ActivityState state) {
+  public String mayStop() {
+    return null;
+  }
+
+  @Override
+  public void onCancel() {
+  }
+
+  @Override
+  public void onStop() {
+  }
+
+  @Override
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
 
     List<IssueProxy> myIssues = storage.get(IssueProxy.MY_ISSUES, IssueProxy.class);
 

@@ -3,12 +3,14 @@ package com.retech.reader.web.client.home;
 import com.goodow.web.dev.client.FeatureDetection;
 import com.goodow.web.view.wave.client.WavePanel;
 
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.DragStartEvent;
 import com.google.gwt.event.dom.client.DragStartHandler;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
@@ -21,6 +23,7 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -35,8 +38,6 @@ import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.rpc.IssueContext;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.service.shared.LocalStorage;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
@@ -47,7 +48,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 @Singleton
-public class BookFlip extends WavePanel implements ActivityAware {
+public class BookFlip extends WavePanel implements Activity {
 
   interface Binder extends UiBinder<Widget, BookFlip> {
   }
@@ -133,7 +134,20 @@ public class BookFlip extends WavePanel implements ActivityAware {
                                                                      }-*/;
 
   @Override
-  public void onStart(final ActivityState state) {
+  public String mayStop() {
+    return null;
+  }
+
+  @Override
+  public void onCancel() {
+  }
+
+  @Override
+  public void onStop() {
+  }
+
+  @Override
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     bookFlipHeight();
     logger.info("clientWidth:" + Window.getClientWidth() + ";clientHeight:"
         + Window.getClientHeight());

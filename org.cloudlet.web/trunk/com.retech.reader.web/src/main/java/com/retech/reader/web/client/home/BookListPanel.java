@@ -4,6 +4,7 @@ import com.goodow.web.view.wave.client.ToolbarClickButton;
 import com.goodow.web.view.wave.client.WavePanel;
 import com.goodow.web.view.wave.client.WaveToolbar;
 
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.StyleInjector;
@@ -26,14 +27,15 @@ import com.google.inject.Singleton;
 import com.retech.reader.web.client.mobile.ui.bar.SettingsView;
 import com.retech.reader.web.client.mobile.ui.talk.TalkView;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.BasePlace;
+import org.cloudlet.web.mvp.shared.ProvideActivities;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Singleton
-public class BookListPanel extends Composite implements ActivityAware {
+public class BookListPanel extends Composite implements ProvideActivities {
 
   interface Binder extends UiBinder<Widget, BookListPanel> {
   }
@@ -136,9 +138,8 @@ public class BookListPanel extends Composite implements ActivityAware {
   }
 
   @Override
-  public void onStart(final ActivityState state) {
-    bookFlipOfBookListPanel.onStart(state);
-    libraryView.onStart(state);
+  public List<Activity> provideActivities() {
+    return Arrays.<Activity> asList(bookFlipOfBookListPanel, libraryView);
   }
 
 }
