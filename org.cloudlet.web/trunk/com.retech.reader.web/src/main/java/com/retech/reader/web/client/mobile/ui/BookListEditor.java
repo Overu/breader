@@ -2,9 +2,12 @@ package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.web.view.wave.client.WavePanel;
 
+import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.CellList.Resources;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
@@ -18,8 +21,6 @@ import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.rpc.BookDataProvider;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
@@ -27,7 +28,7 @@ import org.cloudlet.web.service.shared.rpc.BaseReceiver;
  * View used to display the list of Books.
  */
 @Singleton
-public class BookListEditor extends WavePanel implements ActivityAware {
+public class BookListEditor extends WavePanel implements Activity {
   /**
    * The UiBinder interface.
    */
@@ -67,7 +68,22 @@ public class BookListEditor extends WavePanel implements ActivityAware {
   }
 
   @Override
-  public void onStart(final ActivityState state) {
+  public String mayStop() {
+    return null;
+  }
+
+  @Override
+  public void onCancel() {
+
+  }
+
+  @Override
+  public void onStop() {
+
+  }
+
+  @Override
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     selectionModel = new NoSelectionModel<IssueProxy>();
     selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
       @Override

@@ -5,11 +5,13 @@ import com.goodow.web.view.wave.client.ToolbarClickButton.State;
 import com.goodow.web.view.wave.client.WavePanel;
 import com.goodow.web.view.wave.client.WaveToolbar;
 
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
 import com.google.gwt.resources.client.ClientBundle;
@@ -18,6 +20,7 @@ import com.google.gwt.safehtml.shared.UriUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -33,7 +36,6 @@ import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.rpc.IssueContext;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.mvp.shared.rpc.BaseEditor;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
@@ -42,7 +44,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
-public class IssueNews extends BaseEditor<IssueProxy> {
+public class IssueNews extends BaseEditor<IssueProxy> implements Activity {
   interface Binder extends UiBinder<Widget, IssueNews> {
 
   }
@@ -149,7 +151,21 @@ public class IssueNews extends BaseEditor<IssueProxy> {
   }
 
   @Override
-  public void onStart(final ActivityState state) {
+  public String mayStop() {
+    return null;
+  }
+
+  @Override
+  public void onCancel() {
+
+  }
+
+  @Override
+  public void onStop() {
+  }
+
+  @Override
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
 
     // toolbar.add(waveToolbar);
 
@@ -227,4 +243,5 @@ public class IssueNews extends BaseEditor<IssueProxy> {
   protected UiBinder provideUiBinder() {
     return binder;
   }
+
 }

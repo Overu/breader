@@ -2,15 +2,18 @@ package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.web.view.wave.client.WavePanel;
 
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.gwt.safehtml.shared.UriUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -24,14 +27,13 @@ import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.rpc.IssueContext;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.mvp.shared.rpc.BaseEditor;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 import java.util.List;
 
-public class IssueListImage extends BaseEditor<IssueProxy> {
+public class IssueListImage extends BaseEditor<IssueProxy> implements Activity {
   interface Binder extends UiBinder<Widget, IssueListImage> {
   }
 
@@ -62,7 +64,21 @@ public class IssueListImage extends BaseEditor<IssueProxy> {
   }
 
   @Override
-  public void onStart(final ActivityState state) {
+  public String mayStop() {
+    return null;
+  }
+
+  @Override
+  public void onCancel() {
+  }
+
+  @Override
+  public void onStop() {
+
+  }
+
+  @Override
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     final IssueContext ctx = provideRequestContext();
     BasePlace place = (BasePlace) placeController.getWhere();
     final EntityProxyId<IssueProxy> issueId = place.getParam(IssueProxy.class);

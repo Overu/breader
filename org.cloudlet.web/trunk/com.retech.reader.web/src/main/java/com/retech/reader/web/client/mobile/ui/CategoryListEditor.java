@@ -2,8 +2,11 @@ package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.web.view.wave.client.WavePanel;
 
+import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
@@ -13,12 +16,10 @@ import com.google.inject.Singleton;
 import com.retech.reader.web.shared.proxy.CategoryProxy;
 import com.retech.reader.web.shared.rpc.CategoryDataProvider;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.BasePlace;
 
 @Singleton
-public class CategoryListEditor extends WavePanel implements ActivityAware {
+public class CategoryListEditor extends WavePanel implements Activity {
 
   private final CellList<CategoryProxy> cellList;
   private final NoSelectionModel<CategoryProxy> selectionModel;
@@ -49,7 +50,20 @@ public class CategoryListEditor extends WavePanel implements ActivityAware {
   }
 
   @Override
-  public void onStart(final ActivityState state) {
+  public String mayStop() {
+    return null;
+  }
+
+  @Override
+  public void onCancel() {
+  }
+
+  @Override
+  public void onStop() {
+  }
+
+  @Override
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     if (!categoryDataProvider.getDataDisplays().contains(cellList)) {
       categoryDataProvider.addDataDisplay(cellList);
     }
