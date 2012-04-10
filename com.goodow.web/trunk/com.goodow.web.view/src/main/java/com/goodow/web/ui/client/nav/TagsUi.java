@@ -1,3 +1,16 @@
+/*
+ * Copyright 2012 Goodow.com
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.goodow.web.ui.client.nav;
 
 import com.google.gwt.core.client.Scheduler;
@@ -71,9 +84,9 @@ public class TagsUi extends Composite implements ActivityAware {
   private final PlaceController placeController;
 
   @Inject
-  private TagsUi(NavTreeViewModel treeViewModel,
+  private TagsUi(final NavTreeViewModel treeViewModel,
       final SingleSelectionModel<org.cloudlet.web.mvp.shared.tree.TreeNodeProxy> selectionModel,
-      Resources resources, final PlaceController placeController,
+      final Resources resources, final PlaceController placeController,
       final Provider<TreeNodePlace> placeProvider) {
     this.placeController = placeController;
     logger.finest("init start");
@@ -84,7 +97,8 @@ public class TagsUi extends Composite implements ActivityAware {
     // Listen for selection. We need to add this handler before the CellBrowser
     // adds its own handler.
     this.selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-      public void onSelectionChange(SelectionChangeEvent event) {
+      @Override
+      public void onSelectionChange(final SelectionChangeEvent event) {
         org.cloudlet.web.mvp.shared.tree.TreeNodeProxy lastSelected =
             selectionModel.getSelectedObject();
 
@@ -105,7 +119,7 @@ public class TagsUi extends Composite implements ActivityAware {
   }
 
   @Override
-  public void onStart(ActivityState state) {
+  public void onStart(final ActivityState state) {
     treeViewModel.onStart(state);
 
     Place where = placeController.getWhere();
@@ -128,7 +142,7 @@ public class TagsUi extends Composite implements ActivityAware {
   /**
    * Create the {@link CellTree}.
    */
-  private CellTree createTree(org.cloudlet.web.mvp.shared.tree.TreeNodeProxy root) {
+  private CellTree createTree(final org.cloudlet.web.mvp.shared.tree.TreeNodeProxy root) {
     tree = new CellTree(treeViewModel, root, resources);
     tree.setAnimationEnabled(true);
     layout.clear();
@@ -136,7 +150,7 @@ public class TagsUi extends Composite implements ActivityAware {
     return tree;
   }
 
-  private void openTreeNodeWhenSelected(TreeNode parent, String path) {
+  private void openTreeNodeWhenSelected(final TreeNode parent, final String path) {
     logger.finest("openTreeNodeWhenSelected");
     for (int i = 0, len = parent.getChildCount(); i < len; i++) {
       org.cloudlet.web.mvp.shared.tree.TreeNodeProxy childNode =

@@ -1,3 +1,16 @@
+/*
+ * Copyright 2012 Goodow.com
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.goodow.web.ui.client.nav;
 
 import com.google.gwt.logging.client.LogConfiguration;
@@ -11,8 +24,8 @@ import com.google.inject.Singleton;
 
 import org.cloudlet.web.mvp.shared.ActivityAware;
 import org.cloudlet.web.mvp.shared.ActivityState;
-import org.cloudlet.web.mvp.shared.Default;
 import org.cloudlet.web.mvp.shared.BasePlace;
+import org.cloudlet.web.mvp.shared.Default;
 import org.cloudlet.web.mvp.shared.tree.TreeNodePlace;
 import org.cloudlet.web.mvp.shared.tree.TreeNodeProxy;
 import org.cloudlet.web.mvp.shared.tree.event.RefreshEvent;
@@ -32,8 +45,8 @@ public class MenuBarUi extends Composite implements ActivityAware {
   private final TreeNodeProxy root;
 
   @Inject
-  MenuBarUi(Provider<TreeNodePlace> placeProvider, PlaceController placeController,
-      @Default TreeNodeProxy root) {
+  MenuBarUi(final Provider<TreeNodePlace> placeProvider, final PlaceController placeController,
+      @Default final TreeNodeProxy root) {
     this.root = root;
     logger.finest("init start");
 
@@ -51,11 +64,11 @@ public class MenuBarUi extends Composite implements ActivityAware {
   }
 
   @Override
-  public void onStart(ActivityState state) {
+  public void onStart(final ActivityState state) {
     RefreshEvent.Handler<TreeNodeProxy> handler = new RefreshEvent.Handler<TreeNodeProxy>() {
 
       @Override
-      public void onRefresh(RefreshEvent<TreeNodeProxy> event) {
+      public void onRefresh(final RefreshEvent<TreeNodeProxy> event) {
         TreeNodeProxy parent = event.getValue();
         if (BasePlace.PATH_SEPARATOR.equals(parent.getPath())) {
           setMenuData(bar, parent);
@@ -73,7 +86,7 @@ public class MenuBarUi extends Composite implements ActivityAware {
 
   }
 
-  private void setMenuData(MenuBar parentBar, TreeNodeProxy parentNode) {
+  private void setMenuData(final MenuBar parentBar, final TreeNodeProxy parentNode) {
     List<TreeNodeProxy> childNodes = parentNode.getChildren();
     if (childNodes == null) {
       return;
@@ -81,6 +94,7 @@ public class MenuBarUi extends Composite implements ActivityAware {
     parentBar.clearItems();
     for (final TreeNodeProxy childNode : childNodes) {
       Command command = new Command() {
+        @Override
         public void execute() {
           TreeNodePlace place = placeProvider.get().setPath(childNode.getPath());
           placeController.goTo(place);

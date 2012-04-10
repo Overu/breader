@@ -1,3 +1,16 @@
+/*
+ * Copyright 2012 Goodow.com
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.goodow.web.ui.client.shell;
 
 import com.goodow.web.ui.client.help.KeyboardShortcuts;
@@ -83,11 +96,11 @@ public final class ShellUi extends ResizeComposite {
    * @param treeModel the treeModel that backs the main menu
    */
   @Inject
-  public ShellUi(@Default SimpleActivityMapper centerActivityMapper,
-      @Search SimpleActivityMapper searchActivityMapper,
-      @Nav SimpleActivityMapper navActivityMapper,
-      @Footer SimpleActivityMapper footerActivityMapper, EventBus eventBus,
-      AsyncProvider<KeyboardShortcuts> keyboardShortcutsProvider) {
+  public ShellUi(@Default final SimpleActivityMapper centerActivityMapper,
+      @Search final SimpleActivityMapper searchActivityMapper,
+      @Nav final SimpleActivityMapper navActivityMapper,
+      @Footer final SimpleActivityMapper footerActivityMapper, final EventBus eventBus,
+      final AsyncProvider<KeyboardShortcuts> keyboardShortcutsProvider) {
     this.searchActivityMapper = searchActivityMapper;
     this.navActivityMapper = navActivityMapper;
     this.footerActivityMapper = footerActivityMapper;
@@ -97,7 +110,8 @@ public final class ShellUi extends ResizeComposite {
     this.keyboardShortcutsProvider = keyboardShortcutsProvider;
 
     center = new SimpleLayoutPanel() {
-      public void setWidget(IsWidget w) {
+      @Override
+      public void setWidget(final IsWidget w) {
         ensureAttached(w);
         super.setWidget(w);
       };
@@ -118,7 +132,7 @@ public final class ShellUi extends ResizeComposite {
     NativePreviewHandler handler = new NativePreviewHandler() {
 
       @Override
-      public void onPreviewNativeEvent(NativePreviewEvent event) {
+      public void onPreviewNativeEvent(final NativePreviewEvent event) {
 
         int typeInt = event.getTypeInt();
         if (typeInt != Event.ONKEYPRESS) {
@@ -149,7 +163,7 @@ public final class ShellUi extends ResizeComposite {
   private void createNullableLayout() {
     search = new SimplePanel() {
       @Override
-      public void setWidget(IsWidget w) {
+      public void setWidget(final IsWidget w) {
         ensureAttached(w);
         hasSearch = w != null;
         setSearchVisible(hasSearch);
@@ -163,7 +177,7 @@ public final class ShellUi extends ResizeComposite {
     // 页脚
     footer = new SimplePanel() {
       @Override
-      public void setWidget(IsWidget w) {
+      public void setWidget(final IsWidget w) {
         ensureAttached(w);
         hasFooter = w != null;
         setFooterVisible(hasFooter);
@@ -177,7 +191,7 @@ public final class ShellUi extends ResizeComposite {
     // 左侧竖排导航栏
     nav = new SimplePanel() {
       @Override
-      public void setWidget(IsWidget w) {
+      public void setWidget(final IsWidget w) {
         ensureAttached(w);
         hasNav = w != null;
         setNavVisible(hasNav);
@@ -189,7 +203,7 @@ public final class ShellUi extends ResizeComposite {
     navActivityManager.setDisplay(nav);
   }
 
-  private void ensureAttached(IsWidget w) {
+  private void ensureAttached(final IsWidget w) {
     if (this.isAttached()) {
       return;
     }
@@ -200,7 +214,7 @@ public final class ShellUi extends ResizeComposite {
     RootLayoutPanel.get().add(this);
   }
 
-  private void setFooterVisible(boolean visible) {
+  private void setFooterVisible(final boolean visible) {
     if (!visible ^ footer.isAttached()) {
       // 同或, 当前状态与期望状态一致
       return;
@@ -216,7 +230,7 @@ public final class ShellUi extends ResizeComposite {
     }
   }
 
-  private void setNavVisible(boolean visible) {
+  private void setNavVisible(final boolean visible) {
     if (!visible ^ nav.isAttached()) {
       // 同或, 当前状态与期望状态一致
       return;
@@ -232,7 +246,7 @@ public final class ShellUi extends ResizeComposite {
     }
   }
 
-  private void setSearchVisible(boolean visible) {
+  private void setSearchVisible(final boolean visible) {
     if (!visible ^ search.isAttached()) {
       // 同或, 当前状态与期望状态一致
       return;
@@ -248,7 +262,7 @@ public final class ShellUi extends ResizeComposite {
     }
   }
 
-  private void toggleFullScreen(boolean fullScreen) {
+  private void toggleFullScreen(final boolean fullScreen) {
     if (fullScreen) {
       logger.info("全屏(F)");
 
@@ -268,14 +282,14 @@ public final class ShellUi extends ResizeComposite {
     keyboardShortcutsProvider.get(new AsyncCallback<KeyboardShortcuts>() {
 
       @Override
-      public void onFailure(Throwable caught) {
+      public void onFailure(final Throwable caught) {
         if (LogConfiguration.loggingIsEnabled()) {
           logger.log(Level.WARNING, "加载失败, 请重试", caught);
         }
       }
 
       @Override
-      public void onSuccess(KeyboardShortcuts result) {
+      public void onSuccess(final KeyboardShortcuts result) {
         result.toggleVisible();
       }
     });

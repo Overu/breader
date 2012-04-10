@@ -1,3 +1,16 @@
+/*
+ * Copyright 2012 Goodow.com
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.goodow.web.ui.client.nav;
 
 import com.google.gwt.place.shared.Place;
@@ -34,8 +47,8 @@ public class TreeNodeDataProvider extends AsyncDataProvider<TreeNodeProxy> imple
   private final PlaceController placeController;
 
   @Inject
-  private TreeNodeDataProvider(Provider<TagsUi> tree, EventBus eventBus,
-      PlaceController placeController) {
+  private TreeNodeDataProvider(final Provider<TagsUi> tree, final EventBus eventBus,
+      final PlaceController placeController) {
     this.tree = tree;
     this.eventBus = eventBus;
     this.placeController = placeController;
@@ -47,11 +60,11 @@ public class TreeNodeDataProvider extends AsyncDataProvider<TreeNodeProxy> imple
   }
 
   @Override
-  public void onStart(ActivityState state) {
+  public void onStart(final ActivityState state) {
     RefreshEvent.Handler<TreeNodeProxy> handler = new RefreshEvent.Handler<TreeNodeProxy>() {
 
       @Override
-      public void onRefresh(RefreshEvent<TreeNodeProxy> event) {
+      public void onRefresh(final RefreshEvent<TreeNodeProxy> event) {
         TreeNodeProxy parentNode = event.getValue();
         if (parentNode != null && parentNode.equals(parent)) {
           refresh(parentNode);
@@ -73,7 +86,7 @@ public class TreeNodeDataProvider extends AsyncDataProvider<TreeNodeProxy> imple
 
   }
 
-  public boolean refresh(TreeNodeProxy parent) {
+  public boolean refresh(final TreeNodeProxy parent) {
     if (parent == null) {
       return false;
     }
@@ -90,12 +103,12 @@ public class TreeNodeDataProvider extends AsyncDataProvider<TreeNodeProxy> imple
   }
 
   @Override
-  public void setValue(TreeNodeProxy value) {
+  public void setValue(final TreeNodeProxy value) {
     this.parent = value;
   }
 
   @Override
-  protected void onRangeChanged(HasData<TreeNodeProxy> view) {
+  protected void onRangeChanged(final HasData<TreeNodeProxy> view) {
     boolean success = refresh(parent);
     if (!success && parent != null) {
       RefreshRequestEvent<String> refreshRequestEvent = new RefreshRequestEvent<String>();
