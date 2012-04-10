@@ -1,10 +1,13 @@
 package com.retech.reader.web.client.mobile.ui;
 
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AbstractDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
@@ -22,7 +25,7 @@ import org.cloudlet.web.mvp.shared.rpc.RangeLabelPager;
 import org.cloudlet.web.mvp.shared.rpc.ShowMorePagerPanel;
 
 @Singleton
-public class SectionListEditor extends BaseListEditor<SectionProxy> {
+public class SectionListEditor extends BaseListEditor<SectionProxy> implements Activity {
   interface Binder extends UiBinder<Widget, SectionListEditor> {
   }
 
@@ -63,6 +66,26 @@ public class SectionListEditor extends BaseListEditor<SectionProxy> {
         placeController.goTo(place);
       }
     });
+  }
+
+  @Override
+  public String mayStop() {
+    return null;
+  }
+
+  @Override
+  public void onCancel() {
+
+  }
+
+  @Override
+  public void onStop() {
+
+  }
+
+  @Override
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
+
   }
 
   @Override
