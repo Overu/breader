@@ -4,5 +4,5 @@
 	font-weight: bold;
 	background: black none repeat scroll 0;
 	opacity: .85;
-	border-radius: 10px;
+	-webkit-border-radius: 10px;
 }
