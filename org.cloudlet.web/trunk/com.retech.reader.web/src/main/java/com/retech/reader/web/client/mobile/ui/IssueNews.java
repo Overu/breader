@@ -14,6 +14,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.DateTimeFormat.PredefinedFormat;
+import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.shared.UriUtils;
@@ -26,31 +27,30 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.google.web.bindery.requestfactory.gwt.client.RequestFactoryEditorDriver;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.Request;
 
 import com.retech.reader.web.shared.proxy.CategoryProxy;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.ResourceProxy;
-import com.retech.reader.web.shared.rpc.IssueContext;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
 import org.cloudlet.web.mvp.shared.BasePlace;
-import org.cloudlet.web.mvp.shared.rpc.BaseEditor;
+import org.cloudlet.web.service.shared.LocalStorage;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Singleton
-public class IssueNews extends BaseEditor<IssueProxy> implements Activity {
+public class IssueNews extends WavePanel implements Activity {
   interface Binder extends UiBinder<Widget, IssueNews> {
 
   }
-  interface Driver extends RequestFactoryEditorDriver<IssueProxy, IssueNews> {
-
-  }
+  // interface Driver extends RequestFactoryEditorDriver<IssueProxy, IssueNews> {
+  //
+  // }
   interface Resources extends ClientBundle {
     ImageResource issueAdd();
 
@@ -71,32 +71,38 @@ public class IssueNews extends BaseEditor<IssueProxy> implements Activity {
   DivElement viewcount;
   @UiField
   DivElement category;
-  @UiField(provided = true)
+  @UiField
   WaveToolbar waveToolbar;
 
   private static Resources res = GWT.create(Resources.class);
   private static Binder binder = GWT.create(Binder.class);
-  private static Driver driver = GWT.create(Driver.class);
+  private static final Logger logger = Logger.getLogger(IssueNews.class.getName());
+  // private static Driver driver = GWT.create(Driver.class);
   private final DateTimeFormat dateFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_LONG);
   private ReaderFactory f;
-  private final WavePanel wavePanel;
   private EntityProxyId<IssueProxy> issueId;
   private ToolbarClickButton addButton;
   private IssueProxy proxy;
+  private final PlaceController placeController;
+  private final LocalStorage storage;
 
   @Inject
   public IssueNews(final ReaderFactory f, final Provider<BasePlace> places,
-      final WavePanel wavePanel, final WaveToolbar waveToolbar) {
+      final PlaceController placeController, final LocalStorage storage) {
     this.f = f;
-    this.wavePanel = wavePanel;
-    this.waveToolbar = waveToolbar;
-    // super.initEditor();
+    this.placeController = placeController;
+    this.storage = storage;
+
+    this.setContent(binder.createAndBindUi(this));
+
     final ToolbarClickButton readButton = waveToolbar.addClickButton();
     readButton.setText("在线阅读");
     readButton.setVisualElement(createIcon(res.issueRead()));
+
     final ToolbarClickButton sectionButton = waveToolbar.addClickButton();
     sectionButton.setText("目录");
     sectionButton.setVisualElement(createIcon(res.issueSection()));
+
     addButton = waveToolbar.addClickButton();
     addButton.setText("收藏");
     addButton.setVisualElement(createIcon(res.issueAdd()));
@@ -139,8 +145,6 @@ public class IssueNews extends BaseEditor<IssueProxy> implements Activity {
         logger.info("开发中");
       }
     });
-    wavePanel.setContent(binder.createAndBindUi(this));
-    initWidget(wavePanel);
   }
 
   /**
@@ -181,7 +185,7 @@ public class IssueNews extends BaseEditor<IssueProxy> implements Activity {
         IssueNews.this.proxy = proxy;
         datetime.setInnerHTML(dateFormat.format(proxy.getCreateTime()));
         viewcount.setInnerHTML(String.valueOf(proxy.getViewCount()));
-        wavePanel.title().setText(proxy.getTitle());
+        title().setText(proxy.getTitle());
         detail.setInnerHTML(proxy.getDetail());
         List<IssueProxy> issueBook = storage.get(IssueProxy.MY_ISSUES, IssueProxy.class);
         if (issueBook == null) {
@@ -228,20 +232,4 @@ public class IssueNews extends BaseEditor<IssueProxy> implements Activity {
       }
     }.setKeyForProxy(issueId).fire();
   }
-
-  @Override
-  protected RequestFactoryEditorDriver<IssueProxy, IssueNews> provideEditorDriver() {
-    return driver;
-  }
-
-  @Override
-  protected IssueContext provideRequestContext() {
-    return f.issue();
-  }
-
-  @Override
-  protected UiBinder provideUiBinder() {
-    return binder;
-  }
-
 }
