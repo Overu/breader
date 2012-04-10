@@ -1,5 +1,7 @@
 package com.retech.reader.web.client.mobile.ioc;
 
+import com.goodow.web.view.wave.client.shell.WaveShell;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -30,7 +32,7 @@ import com.retech.reader.web.client.mobile.ui.SectionListEditor;
 import com.retech.reader.web.client.mobile.ui.TestEditor;
 import com.retech.reader.web.client.mobile.ui.bar.SettingsView;
 import com.retech.reader.web.client.mobile.ui.talk.TalkView;
-import com.retech.reader.web.client.style.ReaderResources;
+import com.retech.reader.web.client.topbar.TopBar;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.rpc.FinalRequestFactory;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
@@ -88,11 +90,15 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
     private AsyncProvider<IssueNews> issueNews;
     @Inject
     private AsyncProvider<TestEditor> testEditor;
+    @Inject
+    private WaveShell shell;
+    @Inject
+    private TopBar topBar;
 
     @Override
     public Binder get() {
       Window.setTitle("睿泰阅读");
-      ReaderResources.INSTANCE();
+      shell.getTopBar().add(topBar);
       logger.finest("EagerSingleton begin");
       isWidgetMapBinder.addBinding("/").toAsyncProvider(bookListPanel);
       isWidgetMapBinder.addBinding(BookListEditor.class.getName()).toAsyncProvider(bookListEditor);

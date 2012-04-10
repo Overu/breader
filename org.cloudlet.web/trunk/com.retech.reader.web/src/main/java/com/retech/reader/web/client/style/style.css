@@ -1,17 +1,2 @@
 @CHARSET "UTF-8";
 
-@sprite .settings {
-  gwt-image: "settings";
-}
-
-@sprite .refresh {
-  gwt-image: "refresh";
-}
-
-@sprite .share {
-  gwt-image: "share";
-}
-
-@sprite .search {
-  gwt-image: "search";
-}
