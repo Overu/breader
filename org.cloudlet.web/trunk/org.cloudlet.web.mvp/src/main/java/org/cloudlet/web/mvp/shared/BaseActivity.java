@@ -42,7 +42,7 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, Acti
       @RequestParameters final Provider<Map<String, String[]>> params) {
     this.isWidgetMapBinder = isWidgetMapBinder;
     this.params = params;
-    ViewBundle.INSTANCE.view().ensureInjected();
+    ViewBundle.INSTANCE.style().ensureInjected();
   }
 
   @Override
@@ -131,7 +131,7 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, Acti
       }
       activity.onStop();
     }
-    widget.removeStyleName(ViewBundle.INSTANCE.view().viewTransition());
+    widget.removeStyleName(ViewBundle.INSTANCE.style().viewTransition());
   }
 
   @Override
@@ -184,7 +184,7 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, Acti
 
           @Override
           public void execute() {
-            widget.addStyleName(ViewBundle.INSTANCE.view().viewTransition());
+            widget.addStyleName(ViewBundle.INSTANCE.style().viewTransition());
           }
         });
         containerWidget.setWidget(result);

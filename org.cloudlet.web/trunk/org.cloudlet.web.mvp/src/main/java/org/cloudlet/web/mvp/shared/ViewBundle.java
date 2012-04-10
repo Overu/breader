@@ -26,6 +26,6 @@ public interface ViewBundle extends ClientBundle {
   ViewBundle INSTANCE = GWT.create(ViewBundle.class);
 
   @NotStrict
-  @Source("view.css")
-  Style view();
+  @Source("style.css")
+  Style style();
 }
