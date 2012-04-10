@@ -16,6 +16,8 @@ import com.google.web.bindery.requestfactory.shared.EntityProxy;
 
 import org.cloudlet.web.boot.shared.MapBinder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +26,7 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, Acti
 
   private final Logger logger = Logger.getLogger(getClass().getName());
   private BasePlace place;
-  private Activity wrappedActivity;
+  private List<Activity> wrappedActivities;
   private final MapBinder<String, IsWidget> isWidgetMapBinder;
   private String name;
   private String viewId;
@@ -85,23 +87,44 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, Acti
 
   @Override
   public String mayStop() {
-    if (wrappedActivity != null) {
-      return wrappedActivity.mayStop();
+    if (wrappedActivities == null || wrappedActivities.isEmpty()) {
+      return null;
+    }
+    for (Activity activity : wrappedActivities) {
+      if (activity == null) {
+        continue;
+      }
+      String toReturn = activity.mayStop();
+      if (toReturn != null) {
+        return toReturn;
+      }
     }
     return null;
   }
 
   @Override
   public void onCancel() {
-    if (wrappedActivity != null) {
-      wrappedActivity.onCancel();
+    if (wrappedActivities == null || wrappedActivities.isEmpty()) {
+      return;
+    }
+    for (Activity activity : wrappedActivities) {
+      if (activity == null) {
+        continue;
+      }
+      activity.onCancel();
     }
   }
 
   @Override
   public void onStop() {
-    if (wrappedActivity != null) {
-      wrappedActivity.mayStop();
+    if (wrappedActivities == null || wrappedActivities.isEmpty()) {
+      return;
+    }
+    for (Activity activity : wrappedActivities) {
+      if (activity == null) {
+        continue;
+      }
+      activity.onStop();
     }
   }
 
@@ -152,12 +175,30 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, Acti
       public void onSuccess(final IsWidget result) {
         containerWidget.setWidget(result);
         if (result instanceof Activity) {
-          wrappedActivity = (Activity) result;
-          wrappedActivity.start(containerWidget, eventBus);
+          ensureWrappedActivities();
+          wrappedActivities.add((Activity) result);
+        }
+        if (result instanceof ProvideActivities) {
+          ensureWrappedActivities();
+          wrappedActivities.addAll(((ProvideActivities) result).provideActivities());
+        }
+        if (wrappedActivities == null || wrappedActivities.isEmpty()) {
+          return;
+        }
+        for (Activity activity : wrappedActivities) {
+          if (activity == null) {
+            continue;
+          }
+          activity.start(containerWidget, eventBus);
         }
       }
     });
 
   }
 
+  private void ensureWrappedActivities() {
+    if (wrappedActivities == null) {
+      wrappedActivities = new ArrayList<Activity>();
+    }
+  }
 }
