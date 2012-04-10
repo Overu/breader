@@ -2,9 +2,12 @@ package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.web.view.wave.client.WavePanel;
 
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -17,8 +20,6 @@ import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.proxy.SectionProxy;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
@@ -26,7 +27,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Singleton
-public class ContentEditor extends WavePanel implements ActivityAware {
+public class ContentEditor extends WavePanel implements Activity {
 
   private static final Logger logger = Logger.getLogger(ContentEditor.class.getName());
   private final ReaderFactory f;
@@ -56,8 +57,20 @@ public class ContentEditor extends WavePanel implements ActivityAware {
   }
 
   @Override
-  public void onStart(final ActivityState state) {
+  public String mayStop() {
+    return null;
+  }
 
+  @Override
+  public void onCancel() {
+  }
+
+  @Override
+  public void onStop() {
+  }
+
+  @Override
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     html.setHTML("");
     final EntityProxyId<IssueProxy> issueEntityId =
         ((BasePlace) placeController.getWhere()).getParam(IssueProxy.class);
