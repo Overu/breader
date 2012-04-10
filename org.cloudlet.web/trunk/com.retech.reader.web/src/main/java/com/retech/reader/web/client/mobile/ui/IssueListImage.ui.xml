@@ -17,7 +17,7 @@
     .div_imagery>div>img {
       width: 100%;
       height: auto;
-      max-height: 200px;
+      max-height: 260px;
       max-width: 200px;
     }
     
