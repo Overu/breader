@@ -1,6 +1,6 @@
 package org.cloudlet.web.mvp.shared;
 
-import com.google.gwt.activity.shared.AbstractActivity;
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.logging.client.LogConfiguration;
 import com.google.gwt.user.client.TakesValue;
@@ -20,12 +20,11 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class BaseActivity extends AbstractActivity implements TakesValue<BasePlace>,
-    ActivityState, HasName {
+public final class BaseActivity implements Activity, TakesValue<BasePlace>, ActivityState, HasName {
 
   private final Logger logger = Logger.getLogger(getClass().getName());
   private BasePlace place;
-
+  private Activity realActivity;
   private final MapBinder<String, IsWidget> isWidgetMapBinder;
   private String name;
   private String viewId;
@@ -85,6 +84,28 @@ public final class BaseActivity extends AbstractActivity implements TakesValue<B
   }
 
   @Override
+  public String mayStop() {
+    if (realActivity != null) {
+      return realActivity.mayStop();
+    }
+    return null;
+  }
+
+  @Override
+  public void onCancel() {
+    if (realActivity != null) {
+      realActivity.onCancel();
+    }
+  }
+
+  @Override
+  public void onStop() {
+    if (realActivity != null) {
+      realActivity.mayStop();
+    }
+  }
+
+  @Override
   public void setName(final String name) {
     this.name = name;
   }
@@ -119,6 +140,7 @@ public final class BaseActivity extends AbstractActivity implements TakesValue<B
     }
 
     asyncProvider.get(new AsyncCallback<IsWidget>() {
+
       @Override
       public void onFailure(final Throwable caught) {
         if (LogConfiguration.loggingIsEnabled()) {
@@ -128,10 +150,11 @@ public final class BaseActivity extends AbstractActivity implements TakesValue<B
 
       @Override
       public void onSuccess(final IsWidget result) {
-        if (result instanceof ActivityAware) {
-          ((ActivityAware) result).onStart(BaseActivity.this);
-        }
         containerWidget.setWidget(result);
+        if (result instanceof Activity) {
+          realActivity = (Activity) result;
+          realActivity.start(containerWidget, eventBus);
+        }
       }
     });
 
