@@ -24,7 +24,7 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, Acti
 
   private final Logger logger = Logger.getLogger(getClass().getName());
   private BasePlace place;
-  private Activity realActivity;
+  private Activity wrappedActivity;
   private final MapBinder<String, IsWidget> isWidgetMapBinder;
   private String name;
   private String viewId;
@@ -85,23 +85,23 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, Acti
 
   @Override
   public String mayStop() {
-    if (realActivity != null) {
-      return realActivity.mayStop();
+    if (wrappedActivity != null) {
+      return wrappedActivity.mayStop();
     }
     return null;
   }
 
   @Override
   public void onCancel() {
-    if (realActivity != null) {
-      realActivity.onCancel();
+    if (wrappedActivity != null) {
+      wrappedActivity.onCancel();
     }
   }
 
   @Override
   public void onStop() {
-    if (realActivity != null) {
-      realActivity.mayStop();
+    if (wrappedActivity != null) {
+      wrappedActivity.mayStop();
     }
   }
 
@@ -152,8 +152,8 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, Acti
       public void onSuccess(final IsWidget result) {
         containerWidget.setWidget(result);
         if (result instanceof Activity) {
-          realActivity = (Activity) result;
-          realActivity.start(containerWidget, eventBus);
+          wrappedActivity = (Activity) result;
+          wrappedActivity.start(containerWidget, eventBus);
         }
       }
     });
