@@ -17,6 +17,6 @@ import com.google.gwt.activity.shared.Activity;
 
 import java.util.List;
 
-public interface ProvideActivites {
+public interface ProvideActivities {
   List<Activity> provideActivities();
 }
