@@ -31,6 +31,10 @@ public class WavePanelResources {
 
     String waveContent();
 
+    String waveFooter();
+
+    String waveHeader();
+
     String waveWarning();
   }
 

@@ -26,6 +26,16 @@
   position: relative;
 }
 
+.waveHeader .waveFooter{
+  background-color: rgb(201, 226, 252);
+  border-left: 1px solid rgb(228, 241, 254);
+  overflow: hidden;
+}
+
+.waveFooter {
+  border-top: 1px solid rgb(184, 198, 217);
+}
+
 .waveWarning {
   overflow: hidden;
   background: #FEFDD5;
