@@ -1,0 +1,40 @@
+@CHARSET "UTF-8";
+
+.waveTitle {
+  background-color: rgb(85, 144, 210);
+  height: 1.9em;
+  color: white;
+  border-left: 1px solid rgb(134, 183, 237);
+  background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
+    from(rgb(97, 167, 242) ), to(rgb(85, 144, 210) ) );
+  display: -webkit-box;
+  overflow: hidden;
+}
+
+.waveTitle>div {
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.waveTitle>div:hover {
+  background-color: rgb(94, 140, 245);
+}
+
+.waveTitle>div:active {
+  background-color: rgb(24, 116, 205);
+}
+
+.waveTitle>span {
+  display: -webkit-box;
+  -webkit-box-flex: 1;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  min-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.waveTitle>div>img {
+  height: 100% !important;
+  background-position: center !important;
+}
