@@ -1,6 +1,6 @@
 package com.retech.reader.web.client.mobile.ui;
 
-import com.goodow.web.view.wave.client.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
@@ -57,8 +57,8 @@ public class IssueListImage extends WavePanel implements Activity {
     this.f = f;
     this.places = places;
     this.placeController = placeController;
-    this.setContent(binder.createAndBindUi(this));
-    this.title().setText("相关推荐");
+    this.setWaveContent(binder.createAndBindUi(this));
+    this.getWaveTitle().setText("相关推荐");
   }
 
   @Override

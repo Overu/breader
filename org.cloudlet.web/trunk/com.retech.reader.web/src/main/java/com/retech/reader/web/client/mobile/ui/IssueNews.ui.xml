@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
-  xmlns:w="urn:import:com.goodow.web.view.wave.client">
+  xmlns:wave="urn:import:com.goodow.web.view.wave.client">
   <ui:style>
     .label {
       color: #666;
@@ -55,7 +55,7 @@
         <div ui:field="category" class="{style.div_margin}"></div>
       </div>
     </div>
-    <w:WaveToolbar ui:field="waveToolbar"></w:WaveToolbar>
+    <wave:WaveToolbar ui:field="waveToolbar"></wave:WaveToolbar>
     <div>
       <div class="{style.label}">简介</div>
       <div ui:field="detail" class="{style.div_intro}"></div>

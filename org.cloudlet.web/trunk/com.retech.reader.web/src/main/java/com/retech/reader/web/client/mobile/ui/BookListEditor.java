@@ -1,6 +1,6 @@
 package com.retech.reader.web.client.mobile.ui;
 
-import com.goodow.web.view.wave.client.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.event.shared.EventBus;
@@ -95,7 +95,7 @@ public class BookListEditor extends WavePanel implements Activity {
 
     cellList = new CellList<IssueProxy>(cell, resources);
     cellList.setSelectionModel(selectionModel);
-    this.setContent(cellList);
+    this.setWaveContent(cellList);
 
     if (!dataProvider.getDataDisplays().contains(cellList)) {
       dataProvider.addDataDisplay(cellList);
@@ -107,7 +107,7 @@ public class BookListEditor extends WavePanel implements Activity {
 
       @Override
       public void onSuccessAndCached(final CategoryProxy response) {
-        BookListEditor.this.title().setText(response.getTitle());
+        BookListEditor.this.getWaveTitle().setText(response.getTitle());
       }
 
       @Override

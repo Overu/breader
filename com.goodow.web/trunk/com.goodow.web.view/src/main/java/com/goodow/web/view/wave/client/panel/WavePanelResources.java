@@ -11,16 +11,15 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client;
+package com.goodow.web.view.wave.client.panel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.Widget;
 
-public class WavePanel extends FlowPanel {
+import java.util.logging.Logger;
+
+public class WavePanelResources {
 
   interface Bundle extends ClientBundle {
     @Source("WavePanel.css")
@@ -35,35 +34,23 @@ public class WavePanel extends FlowPanel {
     String waveWarning();
   }
 
-  private static Bundle BUNDLE = GWT.create(Bundle.class);
+  private static Bundle INSTANCE;
+  private static Logger logger = Logger.getLogger(WavePanelResources.class.getName());
+
   static {
-    BUNDLE.style().ensureInjected();
-  }
-  private WaveTitle waveTitle;
+    logger.finest("static init start");
 
-  public WavePanel() {
-    addStyleName(BUNDLE.style().wave());
-  }
+    INSTANCE = GWT.create(Bundle.class);
+    INSTANCE.style().ensureInjected();
 
-  public void setContent(final Widget content) {
-    SimplePanel simplePanel = new SimplePanel();
-    simplePanel.addStyleName(BUNDLE.style().waveContent());
-    simplePanel.add(content);
-    this.add(simplePanel);
+    logger.finest("static init end");
   }
 
-  public WaveTitle title() {
-    if (waveTitle == null) {
-      waveTitle = new WaveTitle();
-      insert(waveTitle, 0);
-    }
-    return waveTitle;
+  public static Bundle instance() {
+    return INSTANCE;
   }
 
-  public WaveToolbar toolbar() {
-    WaveToolbar waveToolbar = new WaveToolbar();
-    this.add(waveToolbar);
-    return waveToolbar;
+  public static Style style() {
+    return INSTANCE.style();
   }
-
 }

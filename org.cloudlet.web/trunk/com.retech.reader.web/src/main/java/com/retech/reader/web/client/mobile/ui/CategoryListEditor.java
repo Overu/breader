@@ -1,6 +1,6 @@
 package com.retech.reader.web.client.mobile.ui;
 
-import com.goodow.web.view.wave.client.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.event.shared.EventBus;
@@ -36,8 +36,8 @@ public class CategoryListEditor extends WavePanel implements Activity {
     selectionModel = new NoSelectionModel<CategoryProxy>();
     cellList.setSelectionModel(selectionModel);
 
-    setContent(cellList);
-    title().setText("类别");
+    setWaveContent(cellList);
+    getWaveTitle().setText("类别");
 
     selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
 

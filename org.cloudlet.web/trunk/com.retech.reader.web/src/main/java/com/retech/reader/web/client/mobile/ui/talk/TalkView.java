@@ -1,6 +1,6 @@
 package com.retech.reader.web.client.mobile.ui.talk;
 
-import com.goodow.web.view.wave.client.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -39,9 +39,9 @@ public class TalkView extends Composite {
   TalkView(final ReaderFactory f, final WavePanel wavePanel) {
     this.f = f;
     // initWidget(uiBinder.createAndBindUi(this));
-    wavePanel.setContent(uiBinder.createAndBindUi(this));
+    wavePanel.setWaveContent(uiBinder.createAndBindUi(this));
     initWidget(wavePanel);
-    wavePanel.title().setText("分享");
+    wavePanel.getWaveTitle().setText("分享");
   }
 
   @UiHandler("send")

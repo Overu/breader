@@ -13,15 +13,17 @@
  */
 package com.goodow.web.view.wave.client;
 
+import com.goodow.web.view.wave.client.panel.WavePanel;
+
 import com.google.gwt.user.client.ui.Label;
 
 public class WaveTest extends WavePanel {
 
   public WaveTest() {
-    title().setText("test title");
+    getWaveTitle().setText("test title");
     // wave.setHeader(new Label("test header"));
-    setContent(new Label("test content"));
-    ToolbarClickButton btn = toolbar().addClickButton();
+    setWaveContent(new Label("test content"));
+    ToolbarClickButton btn = addWaveToolbar().addClickButton();
     btn.setText("test");
     // wave.setFooter(new Label("test footer"));
     // ToolbarClickButton clickButton = wave.toolbar().addClickButton();

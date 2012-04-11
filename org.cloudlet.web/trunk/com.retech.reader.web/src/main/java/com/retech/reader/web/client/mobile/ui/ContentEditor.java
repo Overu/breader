@@ -1,6 +1,6 @@
 package com.retech.reader.web.client.mobile.ui;
 
-import com.goodow.web.view.wave.client.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -43,7 +43,7 @@ public class ContentEditor extends WavePanel implements Activity {
     html = new HTML();
     this.f = f;
     this.placeController = placeController;
-    this.setContent(html);
+    this.setWaveContent(html);
 
     html.addClickHandler(new ClickHandler() {
 
@@ -92,7 +92,7 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onSuccessAndCached(final ResourceProxy response) {
-        ContentEditor.this.title().setText(proxy.getTitle());
+        ContentEditor.this.getWaveTitle().setText(proxy.getTitle());
         html.setHTML(response.getDataString());
       }
 

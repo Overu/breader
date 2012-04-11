@@ -1,7 +1,7 @@
 package com.retech.reader.web.client.home;
 
 import com.goodow.web.feature.client.FeatureDetection;
-import com.goodow.web.view.wave.client.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
@@ -113,8 +113,8 @@ public class BookFlip extends WavePanel implements Activity {
     this.placeController = placeController;
     // StyleInjector.injectAtEnd(coverflow.getText());
     this.storage = storage;
-    title().setText("最热门");
-    setContent(binder.createAndBindUi(this));
+    getWaveTitle().setText("最热门");
+    setWaveContent(binder.createAndBindUi(this));
     cssMap = new HashMap<Integer, String>();
     cssMap.put(0, coverflow.coverflow0());
     cssMap.put(1, coverflow.coverflow1());

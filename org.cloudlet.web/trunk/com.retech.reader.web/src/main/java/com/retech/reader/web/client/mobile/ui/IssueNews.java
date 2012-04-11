@@ -2,7 +2,7 @@ package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.web.view.wave.client.ToolbarClickButton;
 import com.goodow.web.view.wave.client.ToolbarClickButton.State;
-import com.goodow.web.view.wave.client.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanel;
 import com.goodow.web.view.wave.client.WaveToolbar;
 
 import com.google.gwt.activity.shared.Activity;
@@ -93,7 +93,7 @@ public class IssueNews extends WavePanel implements Activity {
     this.placeController = placeController;
     this.storage = storage;
 
-    this.setContent(binder.createAndBindUi(this));
+    this.setWaveContent(binder.createAndBindUi(this));
 
     final ToolbarClickButton readButton = waveToolbar.addClickButton();
     readButton.setText("在线阅读");
@@ -184,7 +184,7 @@ public class IssueNews extends WavePanel implements Activity {
         IssueNews.this.proxy = proxy;
         datetime.setInnerHTML(dateFormat.format(proxy.getCreateTime()));
         viewcount.setInnerHTML(String.valueOf(proxy.getViewCount()));
-        title().setText(proxy.getTitle());
+        getWaveTitle().setText(proxy.getTitle());
         detail.setInnerHTML(proxy.getDetail());
         List<IssueProxy> issueBook = storage.get(IssueProxy.MY_ISSUES, IssueProxy.class);
         if (issueBook == null) {

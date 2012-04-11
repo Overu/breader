@@ -1,6 +1,6 @@
 package com.retech.reader.web.client.mobile.ui.bar;
 
-import com.goodow.web.view.wave.client.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.cell.client.ClickableTextCell;
@@ -67,9 +67,9 @@ public class SettingsView extends Composite implements Activity {
     });
     cellTable.addColumn(column, "");
     dataProvider.addDataDisplay(cellTable);
-    wavePanel.setContent(uiBinder.createAndBindUi(this));
+    wavePanel.setWaveContent(uiBinder.createAndBindUi(this));
     initWidget(wavePanel);
-    wavePanel.title().setText("相关操作");
+    wavePanel.getWaveTitle().setText("相关操作");
   }
 
   @Override

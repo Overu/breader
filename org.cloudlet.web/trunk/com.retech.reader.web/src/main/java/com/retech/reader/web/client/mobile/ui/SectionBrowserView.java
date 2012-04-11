@@ -1,6 +1,6 @@
 package com.retech.reader.web.client.mobile.ui;
 
-import com.goodow.web.view.wave.client.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.event.shared.EventBus;
@@ -58,13 +58,13 @@ public class SectionBrowserView extends WavePanel implements Activity {
     final EntityProxyId<IssueProxy> issueId = place.getParam(IssueProxy.class);
     CellTree cellTree = new CellTree(sectionTreeViewModel, null);
     cellTree.setAnimationEnabled(true);
-    setContent(cellTree);
+    setWaveContent(cellTree);
 
     BaseReceiver<IssueProxy> baseReceiver = new BaseReceiver<IssueProxy>() {
 
       @Override
       public void onSuccessAndCached(final IssueProxy proxy) {
-        title().setText(proxy.getTitle());
+        getWaveTitle().setText(proxy.getTitle());
       }
 
       @Override

@@ -1,6 +1,6 @@
 package com.retech.reader.web.client.home;
 
-import com.goodow.web.view.wave.client.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
@@ -89,9 +89,9 @@ public class LibraryView extends WavePanel implements Activity {
     this.places = places;
     this.storage = storage;
     this.placeController = placeController;
-    title().setText("我的藏书");
+    getWaveTitle().setText("我的藏书");
 
-    setContent(binder.createAndBindUi(this));
+    setWaveContent(binder.createAndBindUi(this));
   }
 
   @Override
