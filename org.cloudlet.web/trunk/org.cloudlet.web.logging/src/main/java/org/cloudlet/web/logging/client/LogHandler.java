@@ -55,7 +55,7 @@ public final class LogHandler extends Handler {
     // }
 
     if (record.getLevel().intValue() >= Level.SEVERE.intValue()) {
-      popup.setAutoHideEnabled(false);
+      // popup.setAutoHideEnabled(false);
     }
     if (record.getLevel().intValue() >= Level.WARNING.intValue()) {
       popup.setGlassEnabled(true);
