@@ -47,7 +47,7 @@
   <ui:image field="closeActive" />
   <g:HTMLPanel addStyleNames="{style.root}">
     <div>
-      <span>Retech Reader is now demo-only.</span>
+      <span>仅供内部测试.</span>
       <div class="{style.close}" title="Close"></div>
     </div>
   </g:HTMLPanel>
