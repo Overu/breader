@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
-  xmlns:wave="urn:import:com.goodow.web.view.wave.client.toolbar">
+  xmlns:wave="urn:import:com.goodow.web.view.wave.client.toolbar" xmlns:app="urn:import:com.retech.reader.web.client.mobile.ui">
   <ui:style>
     .label {
       color: #666;
@@ -42,6 +42,7 @@
   </ui:style>
 
   <g:HTMLPanel>
+  <app:UserStatus ui:field="users"></app:UserStatus>
     <div class="{style.div_news}">
       <div class="{style.div_image}">
         <g:Image ui:field="image" width="100%"></g:Image>
