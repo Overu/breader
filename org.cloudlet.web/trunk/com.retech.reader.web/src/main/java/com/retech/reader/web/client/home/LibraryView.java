@@ -33,7 +33,7 @@ import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.Request;
 
 import com.retech.reader.web.client.mobile.ui.CategoryListEditor;
-import com.retech.reader.web.client.mobile.ui.IssueEditor;
+import com.retech.reader.web.client.mobile.ui.IssueNews;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.rpc.IssueContext;
@@ -113,7 +113,6 @@ public class LibraryView extends WavePanel implements Activity {
     List<IssueProxy> myIssues = storage.get(IssueProxy.MY_ISSUES, IssueProxy.class);
 
     libPanel.clear();
-
     if (myIssues != null) {
       displayIssue(myIssues, false);
     }
@@ -142,14 +141,13 @@ public class LibraryView extends WavePanel implements Activity {
     for (final IssueProxy issue : proxys) {
       HTMLPanel issuePanel = new HTMLPanel("");
       final HTMLPanel imagePanel = new HTMLPanel("");
-
       issuePanel.add(imagePanel);
       issuePanel.add(new Label(issue.getTitle()));
       issuePanel.addDomHandler(new ClickHandler() {
         @Override
         public void onClick(final ClickEvent event) {
           EntityProxyId<IssueProxy> stableId = issue.stableId();
-          placeController.goTo(places.get().setPath(IssueEditor.class.getName()).setParameter(
+          placeController.goTo(places.get().setPath(IssueNews.class.getName()).setParameter(
               stableId));
         }
       }, ClickEvent.getType());
