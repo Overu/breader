@@ -59,8 +59,7 @@
       gwt-image: 'UserStatusMore';
     }
     
-    .box {
-      /*margin-left: -26px;*/
+    .box { /*margin-left: -26px;*/
       float: left;
     }
     
@@ -127,15 +126,16 @@
     </div>
     <div class="{style.box}">
       <div class="{style.box_font}">
-        <span class="{style.div_font}">
-          You can now add
-          <strong>
-            any
-            <br />
-            email address
-          </strong>
-          to a wave!
-        </span>
+<!--         <span> -->
+<!--           You can now add -->
+<!--           <strong> -->
+<!--             any -->
+<!--             <br /> -->
+<!--             email address -->
+<!--           </strong> -->
+<!--           to a wave! -->
+<!--         </span> -->
+        <span class="{style.div_font}">正在读此书</span>
       </div>
       <div class="{style.div_close}"></div>
     </div>
