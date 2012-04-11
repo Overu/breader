@@ -4,7 +4,7 @@
   <source path="shared" />
 
   <!-- Use GWT's java.util.logging emulation -->
-  <inherits name="org.cloudlet.web.offline.Offline" />
+  <inherits name="com.goodow.web.feature.Feature" />
   <inherits name="com.google.gwt.logging.Logging" />
   <inherits name="com.google.gwt.appengine.channel.Channel"/>
   <!-- Turn off the popup log handler, which is on by default to make sure people are very aware that 

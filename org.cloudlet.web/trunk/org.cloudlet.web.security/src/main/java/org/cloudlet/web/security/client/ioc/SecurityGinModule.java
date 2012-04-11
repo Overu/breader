@@ -1,5 +1,9 @@
 package org.cloudlet.web.security.client.ioc;
 
+import com.goodow.web.feature.client.ApplicationCache;
+import com.goodow.web.feature.client.Connectivity;
+import com.goodow.web.feature.client.Connectivity.Listener;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
 import com.google.gwt.inject.client.AbstractGinModule;
@@ -13,9 +17,6 @@ import com.google.inject.Singleton;
 
 import org.apache.shiro.authz.AuthorizationException;
 import org.cloudlet.web.mvp.shared.BasePlace;
-import org.cloudlet.web.offline.client.ApplicationCache;
-import org.cloudlet.web.offline.client.Connectivity;
-import org.cloudlet.web.offline.client.Connectivity.Listener;
 import org.cloudlet.web.security.shared.Auth;
 
 import java.util.logging.Level;

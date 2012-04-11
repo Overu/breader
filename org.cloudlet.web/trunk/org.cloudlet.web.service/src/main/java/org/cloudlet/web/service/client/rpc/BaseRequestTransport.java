@@ -1,5 +1,6 @@
 package org.cloudlet.web.service.client.rpc;
 
+import com.goodow.web.feature.client.FeatureDetection;
 import com.goodow.web.logging.client.loading.LoadingIndicator;
 
 import com.google.gwt.core.client.GWT;
@@ -13,8 +14,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.gwt.client.DefaultRequestTransport;
-
-import org.cloudlet.web.offline.client.Connectivity;
 
 import java.util.logging.Logger;
 
@@ -45,7 +44,7 @@ public class BaseRequestTransport extends DefaultRequestTransport implements Sch
 
   @Override
   public void send(final String payload, final TransportReceiver receiver) {
-    if (!Connectivity.isOnline()) {
+    if (FeatureDetection.connectionOffline()) {
       wireLogger.warning("请确保网络连接正常,然后重试");
       return;
     }

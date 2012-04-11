@@ -1,6 +1,6 @@
 package com.retech.reader.web.client.home;
 
-import com.goodow.web.dev.client.FeatureDetection;
+import com.goodow.web.feature.client.FeatureDetection;
 import com.goodow.web.view.wave.client.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;

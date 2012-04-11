@@ -1,4 +1,4 @@
-package org.cloudlet.web.offline.client;
+package com.goodow.web.feature.client;
 
 public class ApplicationCache {
   public interface Listener {
@@ -9,7 +9,7 @@ public class ApplicationCache {
                                                                 $wnd.applicationCache.addEventListener('updateready', function(e) {
                                                                 if ($wnd.applicationCache.status == $wnd.applicationCache.UPDATEREADY) {
                                                                 $wnd.applicationCache.swapCache();
-                                                                listener.@org.cloudlet.web.offline.client.ApplicationCache.Listener::updateReady()();
+                                                                listener.@com.goodow.web.feature.client.ApplicationCache.Listener::updateReady()();
                                                                 }
                                                                 }, false);
                                                                 }-*/;
