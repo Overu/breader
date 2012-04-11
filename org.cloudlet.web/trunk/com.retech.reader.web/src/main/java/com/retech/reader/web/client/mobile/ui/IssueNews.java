@@ -161,7 +161,6 @@ public class IssueNews extends WavePanel implements Activity {
 
   @Override
   public void onCancel() {
-
   }
 
   @Override

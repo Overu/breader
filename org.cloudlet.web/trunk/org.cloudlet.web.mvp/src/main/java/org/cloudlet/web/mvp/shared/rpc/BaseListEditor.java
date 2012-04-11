@@ -1,22 +1,23 @@
 package org.cloudlet.web.mvp.shared.rpc;
 
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardPagingPolicy.KeyboardPagingPolicy;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AbstractDataProvider;
 import com.google.gwt.view.client.NoSelectionModel;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.service.shared.rpc.BaseEntityProxy;
 
 public abstract class BaseListEditor<T extends BaseEntityProxy> extends Composite implements
-    ActivityAware {
+    Activity {
   /**
    * Resources used by the mobile CellList.
    */
@@ -49,7 +50,20 @@ public abstract class BaseListEditor<T extends BaseEntityProxy> extends Composit
   }
 
   @Override
-  public void onStart(final ActivityState state) {
+  public String mayStop() {
+    return null;
+  }
+
+  @Override
+  public void onCancel() {
+  }
+
+  @Override
+  public void onStop() {
+  }
+
+  @Override
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     if (!provideDataProvider().getDataDisplays().contains(cellList)) {
       provideDataProvider().addDataDisplay(cellList);
     }

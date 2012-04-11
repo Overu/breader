@@ -2,9 +2,12 @@ package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.web.view.wave.client.WavePanel;
 
+import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.cellview.client.CellTree;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -14,13 +17,11 @@ import com.google.web.bindery.requestfactory.shared.Request;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 @Singleton
-public class SectionBrowserView extends WavePanel implements ActivityAware {
+public class SectionBrowserView extends WavePanel implements Activity {
   interface Binder extends UiBinder<Widget, SectionBrowserView> {
   }
 
@@ -39,7 +40,20 @@ public class SectionBrowserView extends WavePanel implements ActivityAware {
   }
 
   @Override
-  public void onStart(final ActivityState state) {
+  public String mayStop() {
+    return null;
+  }
+
+  @Override
+  public void onCancel() {
+  }
+
+  @Override
+  public void onStop() {
+  }
+
+  @Override
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     BasePlace place = (BasePlace) placeController.getWhere();
     final EntityProxyId<IssueProxy> issueId = place.getParam(IssueProxy.class);
     CellTree cellTree = new CellTree(sectionTreeViewModel, null);

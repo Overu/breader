@@ -1,12 +1,15 @@
 package org.cloudlet.web.mvp.shared.rpc;
 
+import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.EditorContext;
 import com.google.gwt.editor.client.EditorVisitor;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -17,8 +20,6 @@ import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.google.web.bindery.requestfactory.shared.impl.SimpleProxyId;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.service.shared.LocalStorage;
 import org.cloudlet.web.service.shared.rpc.BaseContext;
@@ -31,7 +32,7 @@ import java.util.logging.Logger;
 import javax.validation.ConstraintViolation;
 
 public abstract class BaseEditor<T extends BaseEntityProxy> extends Composite implements Editor<T>,
-    ActivityAware {
+    Activity {
   @Inject
   protected PlaceController placeController;
   @Inject
@@ -44,7 +45,20 @@ public abstract class BaseEditor<T extends BaseEntityProxy> extends Composite im
   private RequestFactory f;
 
   @Override
-  public void onStart(final ActivityState state) {
+  public String mayStop() {
+    return null;
+  }
+
+  @Override
+  public void onCancel() {
+  }
+
+  @Override
+  public void onStop() {
+  }
+
+  @Override
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     // if (super.getWidget() == null) {
     // initEditor();
     // }

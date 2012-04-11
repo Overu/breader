@@ -14,7 +14,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.servlet.RequestParameters;
-import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.requestfactory.shared.EntityProxy;
 
 import org.cloudlet.web.boot.shared.MapBinder;
@@ -25,7 +24,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class BaseActivity implements Activity, TakesValue<BasePlace>, ActivityState, HasName {
+public final class BaseActivity implements Activity, TakesValue<BasePlace>, HasName {
 
   private final Logger logger = Logger.getLogger(getClass().getName());
   private BasePlace place;
@@ -34,7 +33,6 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, Acti
   private String name;
   private String viewId;
   private final Provider<Map<String, String[]>> params;
-  private EventBus eventBus;
   private Widget widget;
 
   @Inject
@@ -65,11 +63,6 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, Acti
       return false;
     }
     return true;
-  }
-
-  @Override
-  public EventBus getEventBus() {
-    return eventBus;
   }
 
   @Override
@@ -147,7 +140,6 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, Acti
   @Override
   public void start(final AcceptsOneWidget containerWidget,
       final com.google.gwt.event.shared.EventBus eventBus) {
-    this.eventBus = eventBus;
     AsyncProvider<IsWidget> asyncProvider = null;
     String[] values = params.get().get(name);
     if (values != null) {

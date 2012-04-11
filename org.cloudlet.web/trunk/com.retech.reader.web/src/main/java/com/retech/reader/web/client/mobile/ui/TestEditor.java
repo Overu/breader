@@ -5,8 +5,10 @@ import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Singleton;
@@ -14,7 +16,6 @@ import com.google.web.bindery.requestfactory.gwt.client.RequestFactoryEditorDriv
 
 import com.retech.reader.web.shared.proxy.IssueProxy;
 
-import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.rpc.BaseEditor;
 import org.cloudlet.web.service.shared.rpc.BaseContext;
 
@@ -42,7 +43,7 @@ public class TestEditor extends BaseEditor<IssueProxy> {
   }
 
   @Override
-  public void onStart(final ActivityState state) {
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     scrollBar.addDomHandler(new ClickHandler() {
 
       @Override

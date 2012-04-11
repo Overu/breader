@@ -7,11 +7,13 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.cellview.client.CellWidget;
+import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.widget.client.TextButton;
 import com.google.inject.Inject;
@@ -24,7 +26,6 @@ import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.rpc.IssueContext;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.mvp.shared.ActivityState;
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.mvp.shared.rpc.BaseEditor;
 import org.cloudlet.web.service.shared.rpc.BaseContext;
@@ -84,17 +85,17 @@ public class BookEditor extends BaseEditor<IssueProxy> implements ValueChangeHan
   }
 
   @Override
-  public void onStart(final ActivityState state) {
+  public void onValueChange(final ValueChangeEvent event) {
+    super.put(null);
+  }
+
+  @Override
+  public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     nameField.addValueChangeHandler(this);
     detailEditor.addValueChangeHandler(this);
     createTimeEditor.addValueChangeHandler(this);
 
-    super.onStart(state);
-  }
-
-  @Override
-  public void onValueChange(final ValueChangeEvent event) {
-    super.put(null);
+    super.start(panel, eventBus);
   }
 
   @Override
