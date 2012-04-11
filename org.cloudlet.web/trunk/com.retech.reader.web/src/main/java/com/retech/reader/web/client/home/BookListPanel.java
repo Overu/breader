@@ -1,8 +1,8 @@
 package com.retech.reader.web.client.home;
 
 import com.goodow.web.view.wave.client.panel.WavePanel;
-import com.goodow.web.view.wave.client.toolBar.ToolBarClickButton;
-import com.goodow.web.view.wave.client.toolBar.WaveToolBar;
+import com.goodow.web.view.wave.client.toolbar.ToolBarClickButton;
+import com.goodow.web.view.wave.client.toolbar.WaveToolBar;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
@@ -78,7 +78,7 @@ public class BookListPanel extends Composite implements ProvideActivities {
     this.bookFlipOfBookListPanel = bookFlipOfBookListPanel;
     this.libraryView = libraryView;
     this.waveToolbar = waveToolbar;
-    toolbar = waveToolbar.addWaveToolbar();
+    toolbar = waveToolbar.addWaveToolBar();
     initWidget(binder.createAndBindUi(this));
 
     ToolBarClickButton settingButton = toolbar.addClickButton();

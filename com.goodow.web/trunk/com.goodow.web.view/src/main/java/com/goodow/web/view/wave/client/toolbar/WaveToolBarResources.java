@@ -51,11 +51,11 @@ public class WaveToolBarResources {
     logger.finest("static init end");
   }
 
-  public static Bundle instance() {
+  public static Bundle image() {
     return INSTANCE;
   }
 
-  public static Style style() {
+  public static Style css() {
     return INSTANCE.style();
   }
 }
