@@ -39,6 +39,12 @@ public class WaveShellResources {
     @Source("waveClean.css")
     CssResource clean();
 
+    @Source("WaveShell.css")
+    Style style();
+  }
+
+  interface Style extends CssResource {
+    String widgetPrevious();
   }
 
   private static Bundle INSTANCE;
@@ -49,8 +55,13 @@ public class WaveShellResources {
 
     INSTANCE = GWT.create(Bundle.class);
     INSTANCE.clean().ensureInjected();
+    INSTANCE.style().ensureInjected();
 
     logger.finest("static init end");
+  }
+
+  public static Style css() {
+    return INSTANCE.style();
   }
 
   public static Bundle image() {
