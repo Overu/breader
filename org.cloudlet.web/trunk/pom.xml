@@ -14,7 +14,6 @@
   <modules>
     <module>org.cloudlet.web.boot</module>
     <module>org.cloudlet.web.test</module>
-    <module>org.cloudlet.web.logging</module>
     <module>org.cloudlet.web.service</module>
     <module>org.cloudlet.web.security</module>
     <module>org.cloudlet.web.mvp</module>
