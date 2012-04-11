@@ -8,7 +8,7 @@
     <artifactId>com.goodow.web</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>org.cloudlet.web.logging</artifactId>
+  <artifactId>com.goodow.web.logging</artifactId>
 
   <properties>
   </properties>

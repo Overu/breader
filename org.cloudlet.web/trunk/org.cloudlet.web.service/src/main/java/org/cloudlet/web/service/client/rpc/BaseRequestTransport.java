@@ -1,5 +1,7 @@
 package org.cloudlet.web.service.client.rpc;
 
+import com.goodow.web.logging.client.loading.LoadingIndicator;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -12,7 +14,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.gwt.client.DefaultRequestTransport;
 
-import org.cloudlet.web.logging.client.loading.LoadingIndicator;
 import org.cloudlet.web.offline.client.Connectivity;
 
 import java.util.logging.Logger;

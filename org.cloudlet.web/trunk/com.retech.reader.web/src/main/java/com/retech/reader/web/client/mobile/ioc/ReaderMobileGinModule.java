@@ -1,5 +1,6 @@
 package com.retech.reader.web.client.mobile.ioc;
 
+import com.goodow.web.logging.shared.rpc.ChannelContextProvider;
 import com.goodow.web.view.wave.client.shell.WaveShell;
 
 import com.google.gwt.core.client.GWT;
@@ -38,7 +39,6 @@ import com.retech.reader.web.shared.rpc.FinalRequestFactory;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
 import org.cloudlet.web.boot.shared.MapBinder;
-import org.cloudlet.web.logging.shared.rpc.ChannelContextProvider;
 import org.cloudlet.web.service.client.rpc.BaseRequestTransport;
 
 import java.util.logging.Logger;

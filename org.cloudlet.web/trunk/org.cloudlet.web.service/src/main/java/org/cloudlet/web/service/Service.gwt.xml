@@ -2,7 +2,7 @@
 <module rename-to='boot'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
   <inherits name='org.cloudlet.web.boot.Boot'/>
-  <inherits name='org.cloudlet.web.logging.Logging'/>
+  <inherits name='com.goodow.web.logging.Logging'/>
       
   <!-- Specify the paths for translatable code                    -->
   <source path="" includes="*.java" />
