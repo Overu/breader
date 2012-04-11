@@ -55,7 +55,7 @@
         <div ui:field="category" class="{style.div_margin}"></div>
       </div>
     </div>
-    <wave:WaveToolbar ui:field="waveToolbar"></wave:WaveToolbar>
+    <wave:WaveToolBar ui:field="waveToolbar"></wave:WaveToolBar>
     <div>
       <div class="{style.label}">简介</div>
       <div ui:field="detail" class="{style.div_intro}"></div>
