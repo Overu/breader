@@ -44,6 +44,8 @@ public class WaveShellResources {
   }
 
   interface Style extends CssResource {
+    String widgetCurrent();
+
     String widgetPrevious();
   }
 
