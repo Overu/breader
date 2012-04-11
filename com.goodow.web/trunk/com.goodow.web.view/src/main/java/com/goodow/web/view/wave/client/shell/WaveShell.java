@@ -51,6 +51,10 @@ public class WaveShell extends Composite {
   @UiField
   FlowPanel topBar;
 
+  static {
+    WaveShellResources.css();
+  }
+
   @Inject
   WaveShell(@Default final SimpleActivityMapper centerActivityMapper, final EventBus eventBus,
       final WaveWarning waveWarning) {
