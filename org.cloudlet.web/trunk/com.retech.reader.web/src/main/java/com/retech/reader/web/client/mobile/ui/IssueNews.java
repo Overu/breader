@@ -1,9 +1,9 @@
 package com.retech.reader.web.client.mobile.ui;
 
-import com.goodow.web.view.wave.client.ToolbarClickButton;
-import com.goodow.web.view.wave.client.ToolbarClickButton.State;
 import com.goodow.web.view.wave.client.panel.WavePanel;
-import com.goodow.web.view.wave.client.WaveToolbar;
+import com.goodow.web.view.wave.client.toolBar.ToolBarClickButton;
+import com.goodow.web.view.wave.client.toolBar.WaveToolBar;
+import com.goodow.web.view.wave.client.toolBar.ToolBarClickButton.State;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
@@ -72,7 +72,7 @@ public class IssueNews extends WavePanel implements Activity {
   @UiField
   DivElement category;
   @UiField
-  WaveToolbar waveToolbar;
+  WaveToolBar waveToolbar;
 
   private static Resources res = GWT.create(Resources.class);
   private static Binder binder = GWT.create(Binder.class);
@@ -81,7 +81,7 @@ public class IssueNews extends WavePanel implements Activity {
   private final DateTimeFormat dateFormat = DateTimeFormat.getFormat(PredefinedFormat.DATE_LONG);
   private ReaderFactory f;
   private EntityProxyId<IssueProxy> issueId;
-  private ToolbarClickButton addButton;
+  private ToolBarClickButton addButton;
   private IssueProxy proxy;
   private final PlaceController placeController;
   private final LocalStorage storage;
@@ -95,11 +95,11 @@ public class IssueNews extends WavePanel implements Activity {
 
     this.setWaveContent(binder.createAndBindUi(this));
 
-    final ToolbarClickButton readButton = waveToolbar.addClickButton();
+    final ToolBarClickButton readButton = waveToolbar.addClickButton();
     readButton.setText("在线阅读");
     readButton.setVisualElement(createIcon(res.issueRead()));
 
-    final ToolbarClickButton sectionButton = waveToolbar.addClickButton();
+    final ToolBarClickButton sectionButton = waveToolbar.addClickButton();
     sectionButton.setText("目录");
     sectionButton.setVisualElement(createIcon(res.issueSection()));
 
@@ -107,7 +107,7 @@ public class IssueNews extends WavePanel implements Activity {
     addButton.setText("收藏");
     addButton.setVisualElement(createIcon(res.issueAdd()));
 
-    final ToolbarClickButton downloadButton = waveToolbar.addClickButton();
+    final ToolBarClickButton downloadButton = waveToolbar.addClickButton();
     downloadButton.setText("下载");
     downloadButton.setVisualElement(createIcon(res.issueDownload()));
     readButton.addClickHandler(new ClickHandler() {

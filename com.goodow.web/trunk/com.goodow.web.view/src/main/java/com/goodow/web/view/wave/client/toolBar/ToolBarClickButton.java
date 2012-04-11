@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client;
+package com.goodow.web.view.wave.client.toolBar;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -27,7 +27,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ToolbarClickButton extends Composite implements HasClickHandlers {
+public class ToolBarClickButton extends Composite implements HasClickHandlers {
   /**
    * The possible display states of a toolbar button.
    */
@@ -38,7 +38,7 @@ public class ToolbarClickButton extends Composite implements HasClickHandlers {
 
     String waveToolbarButtonDisabled();
   }
-  interface ToolbarUiBinder extends UiBinder<Widget, ToolbarClickButton> {
+  interface ToolbarUiBinder extends UiBinder<Widget, ToolBarClickButton> {
   }
 
   private static ToolbarUiBinder uiBinder = GWT.create(ToolbarUiBinder.class);
@@ -58,7 +58,7 @@ public class ToolbarClickButton extends Composite implements HasClickHandlers {
   @UiField
   Element toolbarDivider;
 
-  public ToolbarClickButton() {
+  public ToolBarClickButton() {
     initWidget(uiBinder.createAndBindUi(this));
   }
 

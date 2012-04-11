@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client;
+package com.goodow.web.view.wave.client.toolBar;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
@@ -19,11 +19,13 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.resources.client.ImageResource.ImageOptions;
 import com.google.gwt.resources.client.ImageResource.RepeatStyle;
-import com.google.gwt.user.client.ui.FlowPanel;
 
-public class WaveToolbar extends FlowPanel {
-  interface Resources extends ClientBundle {
-    @Source("WaveToolbar.css")
+import java.util.logging.Logger;
+
+public class WaveToolBarResources {
+
+  interface Bundle extends ClientBundle {
+    @Source("WaveToolBar.css")
     Style style();
 
     @ImageOptions(repeatStyle = RepeatStyle.Horizontal)
@@ -31,38 +33,29 @@ public class WaveToolbar extends FlowPanel {
 
     @ImageOptions(repeatStyle = RepeatStyle.Horizontal)
     ImageResource waveToolbarEmpty();
-
   }
+
   interface Style extends CssResource {
     String waveToolbar();
   }
 
-  static final Resources res = GWT.create(Resources.class);
+  private static Bundle INSTANCE;
+  private static Logger logger = Logger.getLogger(WaveToolBarResources.class.getName());
+
   static {
-    res.style().ensureInjected();
+    logger.finest("static init start");
+
+    INSTANCE = GWT.create(Bundle.class);
+    INSTANCE.style().ensureInjected();
+
+    logger.finest("static init end");
   }
 
-  public WaveToolbar() {
-    addStyleName(res.style().waveToolbar());
+  public static Bundle instance() {
+    return INSTANCE;
   }
 
-  /**
-   * 
-   * Create the ToolbarButton
-   */
-  public ToolbarClickButton addClickButton() {
-    ToolbarClickButton toolbarClickButton = new ToolbarClickButton();
-    if (super.getWidgetCount() == 0) {
-      toolbarClickButton.setShowDivider(false);
-    }
-    this.add(toolbarClickButton);
-    return toolbarClickButton;
-  }
-
-  /**
-   * Create the ToolbarToggleButton
-   */
-  public ToolbarToggleButton addToggleButton() {
-    return null;
+  public static Style style() {
+    return INSTANCE.style();
   }
 }

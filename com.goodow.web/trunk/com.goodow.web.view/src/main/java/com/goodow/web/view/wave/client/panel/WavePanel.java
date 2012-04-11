@@ -14,7 +14,7 @@
 package com.goodow.web.view.wave.client.panel;
 
 import com.goodow.web.view.wave.client.WaveTitle;
-import com.goodow.web.view.wave.client.WaveToolbar;
+import com.goodow.web.view.wave.client.toolBar.WaveToolBar;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -28,8 +28,8 @@ public class WavePanel extends FlowPanel {
     addStyleName(WavePanelResources.style().wave());
   }
 
-  public WaveToolbar addWaveToolbar() {
-    WaveToolbar waveToolbar = new WaveToolbar();
+  public WaveToolBar addWaveToolbar() {
+    WaveToolBar waveToolbar = new WaveToolBar();
     this.add(waveToolbar);
     return waveToolbar;
   }

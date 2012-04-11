@@ -11,10 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client;
+package com.goodow.web.view.wave.client.toolBar;
 
 import com.google.gwt.user.client.ui.Composite;
 
-public class ToolbarToggleButton extends Composite {
+public class ToolBarToggleButton extends Composite {
 
 }

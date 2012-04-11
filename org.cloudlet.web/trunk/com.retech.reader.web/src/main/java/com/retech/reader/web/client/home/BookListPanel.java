@@ -1,8 +1,8 @@
 package com.retech.reader.web.client.home;
 
-import com.goodow.web.view.wave.client.ToolbarClickButton;
-import com.goodow.web.view.wave.client.WaveToolbar;
 import com.goodow.web.view.wave.client.panel.WavePanel;
+import com.goodow.web.view.wave.client.toolBar.ToolBarClickButton;
+import com.goodow.web.view.wave.client.toolBar.WaveToolBar;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
@@ -74,26 +74,26 @@ public class BookListPanel extends Composite implements ProvideActivities {
   @Inject
   BookListPanel(final Provider<BasePlace> places, final BookFlip bookFlipOfBookListPanel,
       final LibraryView libraryView, final WavePanel waveToolbar,
-      final PlaceController placeController, WaveToolbar toolbar) {
+      final PlaceController placeController, WaveToolBar toolbar) {
     this.bookFlipOfBookListPanel = bookFlipOfBookListPanel;
     this.libraryView = libraryView;
     this.waveToolbar = waveToolbar;
     toolbar = waveToolbar.addWaveToolbar();
     initWidget(binder.createAndBindUi(this));
 
-    ToolbarClickButton settingButton = toolbar.addClickButton();
+    ToolBarClickButton settingButton = toolbar.addClickButton();
     settingButton.setText("设置");
     settingButton.setVisualElement(createIcon(res.settings()));
 
-    ToolbarClickButton refreshButton = toolbar.addClickButton();
+    ToolBarClickButton refreshButton = toolbar.addClickButton();
     refreshButton.setText("刷新");
     refreshButton.setVisualElement(createIcon(res.refresh()));
 
-    ToolbarClickButton shareButton = toolbar.addClickButton();
+    ToolBarClickButton shareButton = toolbar.addClickButton();
     shareButton.setText("分享");
     shareButton.setVisualElement(createIcon(res.share()));
 
-    ToolbarClickButton searchButton = toolbar.addClickButton();
+    ToolBarClickButton searchButton = toolbar.addClickButton();
     searchButton.setText("搜索");
     searchButton.setVisualElement(createIcon(res.search()));
     String portraitCss =
