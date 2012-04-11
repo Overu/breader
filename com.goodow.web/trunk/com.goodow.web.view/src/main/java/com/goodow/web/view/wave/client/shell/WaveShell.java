@@ -69,6 +69,7 @@ public class WaveShell extends Composite {
     style.setMarginTop(2, Unit.PX);
     style.setMarginLeft(7, Unit.PX);
 
+    this.getElement().setDraggable(Element.DRAGGABLE_TRUE);
     this.addDomHandler(new GestureStartHandler() {
 
       @Override
