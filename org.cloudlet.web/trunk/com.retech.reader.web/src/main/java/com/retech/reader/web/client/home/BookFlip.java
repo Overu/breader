@@ -149,7 +149,7 @@ public class BookFlip extends WavePanel implements Activity {
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     bookFlipHeight();
-    logger.info("clientWidth:" + Window.getClientWidth() + ";clientHeight:"
+    logger.config("clientWidth:" + Window.getClientWidth() + ";clientHeight:"
         + Window.getClientHeight());
     if (FeatureDetection.mobileNative()) {
       Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
