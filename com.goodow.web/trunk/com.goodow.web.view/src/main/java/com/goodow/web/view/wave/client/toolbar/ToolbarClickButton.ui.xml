@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
-  <ui:style type="com.goodow.web.view.wave.client.toolBar.ToolBarClickButton.Style">
+  <ui:style type="com.goodow.web.view.wave.client.toolbar.ToolBarClickButton.Style">
     .waveToolbarButton {
       font-size: 8pt;
       margin-right: -1px;
