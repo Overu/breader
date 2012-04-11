@@ -792,5 +792,6 @@
 
   <modules>
     <module>com.goodow.web.view</module>
+    <module>com.goodow.web.logging</module>
   </modules>
 </project>
