@@ -22,8 +22,11 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Overflow;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.GestureStartEvent;
+import com.google.gwt.event.dom.client.GestureStartHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -65,6 +68,15 @@ public class WaveShell extends Composite {
     style.setOverflowY(Overflow.AUTO);
     style.setMarginTop(2, Unit.PX);
     style.setMarginLeft(7, Unit.PX);
+
+    this.addDomHandler(new GestureStartHandler() {
+
+      @Override
+      public void onGestureStart(final GestureStartEvent event) {
+        History.back();
+      }
+    }, GestureStartEvent.getType());
+
     Element loading = Document.get().getElementById("loading");
     if (loading != null) {
       loading.removeFromParent();
