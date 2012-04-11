@@ -50,9 +50,6 @@ public class WaveShell extends Composite {
   SimplePanel content;
   @UiField
   FlowPanel topBar;
-  static {
-    WaveBundle.INSTANCE.clean().ensureInjected();
-  }
 
   @Inject
   WaveShell(@Default final SimpleActivityMapper centerActivityMapper, final EventBus eventBus,

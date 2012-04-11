@@ -13,8 +13,8 @@
  */
 package com.goodow.web.view.wave.client.ioc;
 
-import com.goodow.web.view.wave.client.shell.WaveBundle.CellListResources;
 import com.goodow.web.view.wave.client.shell.WaveShell;
+import com.goodow.web.view.wave.client.shell.WaveShellResources.CellListResources;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.user.cellview.client.CellList;
