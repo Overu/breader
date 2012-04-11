@@ -135,7 +135,7 @@
 <!--           </strong> -->
 <!--           to a wave! -->
 <!--         </span> -->
-        <span class="{style.div_font}">正在读此书</span>
+        <span class="{style.div_font}">正在读此书.</span>
       </div>
       <div class="{style.div_close}"></div>
     </div>
