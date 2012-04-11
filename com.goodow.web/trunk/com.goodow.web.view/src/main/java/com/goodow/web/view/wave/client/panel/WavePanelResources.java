@@ -46,11 +46,11 @@ public class WavePanelResources {
     logger.finest("static init end");
   }
 
-  public static Bundle instance() {
-    return INSTANCE;
+  public static Style css() {
+    return INSTANCE.style();
   }
 
-  public static Style style() {
-    return INSTANCE.style();
+  public static Bundle image() {
+    return INSTANCE;
   }
 }

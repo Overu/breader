@@ -13,8 +13,8 @@
  */
 package com.goodow.web.view.wave.client.panel;
 
-import com.goodow.web.view.wave.client.WaveTitle;
-import com.goodow.web.view.wave.client.toolBar.WaveToolBar;
+import com.goodow.web.view.wave.client.title.WaveTitle;
+import com.goodow.web.view.wave.client.toolbar.WaveToolBar;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -25,10 +25,10 @@ public class WavePanel extends FlowPanel {
   private WaveTitle waveTitle;
 
   public WavePanel() {
-    addStyleName(WavePanelResources.style().wave());
+    addStyleName(WavePanelResources.css().wave());
   }
 
-  public WaveToolBar addWaveToolbar() {
+  public WaveToolBar addWaveToolBar() {
     WaveToolBar waveToolbar = new WaveToolBar();
     this.add(waveToolbar);
     return waveToolbar;
@@ -44,7 +44,7 @@ public class WavePanel extends FlowPanel {
 
   public void setWaveContent(final Widget content) {
     SimplePanel simplePanel = new SimplePanel();
-    simplePanel.addStyleName(WavePanelResources.style().waveContent());
+    simplePanel.addStyleName(WavePanelResources.css().waveContent());
     simplePanel.add(content);
     this.add(simplePanel);
   }
