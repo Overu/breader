@@ -15,9 +15,13 @@
     .root>div {
       position: relative;
       display: inline-block;
-      background-color: hsl(48, 100%, 50%);
       padding: 5px 5px 4px 9px;
       -webkit-border-radius: 4px;
+      background-color: hsl(48, 100%, 50%);
+      /* 警告
+      background-color: hsl(0, 100%, 40%);
+      color: white;
+      */
     }
     
     .root>div>span {
