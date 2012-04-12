@@ -1,6 +1,7 @@
 package com.retech.reader.web.client.mobile.ioc;
 
 import com.goodow.web.logging.shared.rpc.ChannelContextProvider;
+import com.goodow.web.view.wave.client.WaveTest;
 import com.goodow.web.view.wave.client.shell.WaveShell;
 
 import com.google.gwt.core.client.GWT;
@@ -20,6 +21,7 @@ import com.google.web.bindery.requestfactory.shared.RequestTransport;
 import com.retech.reader.web.client.home.BookFlip;
 import com.retech.reader.web.client.home.BookListPanel;
 import com.retech.reader.web.client.home.LibraryView;
+import com.retech.reader.web.client.home.SearchPanel;
 import com.retech.reader.web.client.mobile.ui.BookEditor;
 import com.retech.reader.web.client.mobile.ui.BookListEditor;
 import com.retech.reader.web.client.mobile.ui.CategoryListEditor;
@@ -91,6 +93,10 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
     @Inject
     private AsyncProvider<TestEditor> testEditor;
     @Inject
+    private AsyncProvider<WaveTest> waveTest;
+    @Inject
+    private AsyncProvider<SearchPanel> searchPanel;
+    @Inject
     private WaveShell shell;
     @Inject
     private TopBar topBar;
@@ -108,6 +114,7 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
           catgoryListEditor);
       isWidgetMapBinder.addBinding(SectionBrowserView.class.getName()).toAsyncProvider(
           sectionBrowser);
+      isWidgetMapBinder.addBinding(WaveTest.class.getName()).toAsyncProvider(waveTest);
       isWidgetMapBinder.addBinding(BookFlip.class.getName()).toAsyncProvider(bookFlip);
       isWidgetMapBinder.addBinding(IssueProxy.class.getName()).toAsyncProvider(bookEditor);
       isWidgetMapBinder.addBinding(ContentEditor.class.getName()).toAsyncProvider(pageEditor);
@@ -118,6 +125,7 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
       isWidgetMapBinder.addBinding(IssueListImage.class.getName()).toAsyncProvider(issueListImage);
       isWidgetMapBinder.addBinding(IssueNews.class.getName()).toAsyncProvider(issueNews);
       isWidgetMapBinder.addBinding(TestEditor.class.getName()).toAsyncProvider(testEditor);
+      isWidgetMapBinder.addBinding(SearchPanel.class.getName()).toAsyncProvider(searchPanel);
       logger.finest("EagerSingleton end");
       return null;
     }
