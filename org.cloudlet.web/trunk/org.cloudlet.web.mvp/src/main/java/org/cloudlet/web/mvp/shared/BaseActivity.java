@@ -1,8 +1,6 @@
 package org.cloudlet.web.mvp.shared;
 
 import com.google.gwt.activity.shared.Activity;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.logging.client.LogConfiguration;
 import com.google.gwt.user.client.TakesValue;
@@ -10,7 +8,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.HasName;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.servlet.RequestParameters;
@@ -33,14 +30,12 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, HasN
   private String name;
   private String viewId;
   private final Provider<Map<String, String[]>> params;
-  private Widget widget;
 
   @Inject
   BaseActivity(final MapBinder<String, IsWidget> isWidgetMapBinder,
       @RequestParameters final Provider<Map<String, String[]>> params) {
     this.isWidgetMapBinder = isWidgetMapBinder;
     this.params = params;
-    ViewBundle.INSTANCE.style().ensureInjected();
   }
 
   @Override
@@ -124,7 +119,6 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, HasN
       }
       activity.onStop();
     }
-    widget.removeStyleName(ViewBundle.INSTANCE.style().viewTransition());
   }
 
   @Override
@@ -171,14 +165,6 @@ public final class BaseActivity implements Activity, TakesValue<BasePlace>, HasN
 
       @Override
       public void onSuccess(final IsWidget result) {
-        widget = result.asWidget();
-        Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-
-          @Override
-          public void execute() {
-            widget.addStyleName(ViewBundle.INSTANCE.style().viewTransition());
-          }
-        });
         containerWidget.setWidget(result);
         if (result instanceof Activity) {
           ensureWrappedActivities();

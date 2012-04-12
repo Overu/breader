@@ -13,15 +13,31 @@
  */
 package com.goodow.web.view.wave.client.shell;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 
 public class WidgetContainer extends FlowPanel implements AcceptsOneWidget {
   private Widget previousWidget;
   private Widget currentWidget;
-  private boolean goAhead = true;
+  private long toRotateY = 0;
+  private boolean toContainerFront = true;
+  private static final com.goodow.web.view.wave.client.shell.WaveShellResources.Style CSS =
+      WaveShellResources.css();;
+  private static final String[] STYLE_NAMES = new String[] {
+      CSS.widgetPreviousBegin(), CSS.widgetPreviousEnd(), CSS.widgetCurrentBegin(),
+      CSS.widgetCurrentEnd()};
+
+  @Inject
+  WidgetContainer() {
+    addStyleName(WaveShellResources.css().widgetContainer());
+  }
 
   @Override
   public void setWidget(final IsWidget w) {
@@ -31,14 +47,48 @@ public class WidgetContainer extends FlowPanel implements AcceptsOneWidget {
     }
     // Remove old child.
     if (previousWidget != null) {
-      if (previousWidget == newWidget) {
-        goAhead = false;
-      }
       remove(previousWidget);
+    }
+    if (currentWidget != null) {
+      toRotateY += 180;
+      toContainerFront = !toContainerFront;
     }
     previousWidget = currentWidget;
     currentWidget = newWidget;
-    add(newWidget);
+
+    // if (previousWidget != null) {
+    // previousWidget.removeStyleName(css.widgetCurrent());
+    // previousWidget.addStyleName(css.widgetPrevious());
+    // }
+    // currentWidget.removeStyleName(css.widgetPrevious());
+    // currentWidget.addStyleName(css.widgetCurrent());
+    Style curStyle = currentWidget.getElement().getStyle();
+    // curStyle.setProperty("webkitTransform", !toContainerFront ? "rotateY(180deg)" : "initial");
+    curStyle.setTop(0, Unit.PX);
+    setStyle(currentWidget, CSS.widgetCurrentBegin());
+    setStyle(previousWidget, CSS.widgetPreviousBegin());
+    insert(currentWidget, 0);
+    Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+      @Override
+      public void execute() {
+        setStyle(currentWidget, CSS.widgetCurrentEnd());
+        setStyle(previousWidget, CSS.widgetPreviousEnd());
+        if (previousWidget != null) {
+          previousWidget.getElement().getStyle().setTop(-1 * currentWidget.getOffsetHeight() - 7,
+              Unit.PX);
+        }
+      }
+    });
   }
 
+  private void setStyle(final Widget widget, final String name) {
+    if (widget == null) {
+      return;
+    }
+    for (String n : STYLE_NAMES) {
+      widget.removeStyleName(n);
+    }
+    widget.addStyleName(name);
+  }
 }

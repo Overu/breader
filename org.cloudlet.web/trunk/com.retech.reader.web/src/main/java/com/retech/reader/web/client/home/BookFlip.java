@@ -8,6 +8,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.DragStartEvent;
 import com.google.gwt.event.dom.client.DragStartHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -144,11 +145,13 @@ public class BookFlip extends WavePanel implements Activity {
 
   @Override
   public void onStop() {
+    container.getElement().getStyle().setDisplay(Display.NONE);
   }
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     bookFlipHeight();
+    container.getElement().getStyle().setDisplay(Display.BLOCK);
     logger.config("clientWidth:" + Window.getClientWidth() + ";clientHeight:"
         + Window.getClientHeight());
     if (FeatureDetection.mobileNative()) {
