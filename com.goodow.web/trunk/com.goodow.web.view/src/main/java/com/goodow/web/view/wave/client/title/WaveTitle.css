@@ -17,11 +17,13 @@
 }
 
 .waveTitle>div:hover {
-  background-color: rgb(94, 140, 245);
+  background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
+    from(rgb(85, 144, 210) ), to(rgb(69, 120, 174) ) );
 }
 
 .waveTitle>div:active {
-  background-color: rgb(24, 116, 205);
+  background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
+    from(rgb(76, 117, 189) ), to(rgb(66, 112, 164) ) );
 }
 
 .waveTitle>span {
