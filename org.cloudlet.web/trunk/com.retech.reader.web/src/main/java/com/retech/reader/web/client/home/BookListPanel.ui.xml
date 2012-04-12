@@ -11,6 +11,9 @@
       <app:BookFlip ui:field="bookFlipOfBookListPanel"></app:BookFlip>
     </div>
     <div>
+      <app:SearchPanel ui:field="searchPanel"></app:SearchPanel>
+    </div>
+    <div>
       <app:LibraryView ui:field="libraryView"></app:LibraryView>
     </div>
     <div>

@@ -70,14 +70,17 @@ public class BookListPanel extends Composite implements ProvideActivities {
   LibraryView libraryView;
   @UiField(provided = true)
   WavePanel waveToolbar;
+  @UiField(provided = true)
+  SearchPanel searchPanel;
 
   @Inject
   BookListPanel(final Provider<BasePlace> places, final BookFlip bookFlipOfBookListPanel,
       final LibraryView libraryView, final WavePanel waveToolbar,
-      final PlaceController placeController, WaveToolBar toolbar) {
+      final PlaceController placeController, WaveToolBar toolbar, final SearchPanel searchPanel) {
     this.bookFlipOfBookListPanel = bookFlipOfBookListPanel;
     this.libraryView = libraryView;
     this.waveToolbar = waveToolbar;
+    this.searchPanel = searchPanel;
     toolbar = waveToolbar.addWaveToolBar();
     initWidget(binder.createAndBindUi(this));
 

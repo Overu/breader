@@ -33,7 +33,6 @@ import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.shared.Request;
 
 import com.retech.reader.web.client.mobile.ui.IssueEditor;
-import com.retech.reader.web.shared.common.SQLConstant;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.rpc.IssueContext;
@@ -82,6 +81,7 @@ public class BookFlip extends WavePanel implements Activity {
   private static final Logger logger = Logger.getLogger(BookFlip.class.getName());
 
   private static final int DIV_NUMS = 7;
+  private static final int ISSUE_NUMS = 7;
 
   private static Binder binder = GWT.create(Binder.class);
   private static Template template = GWT.create(Template.class);
@@ -187,7 +187,7 @@ public class BookFlip extends WavePanel implements Activity {
   private void bookFlipHeight() {
     int clientWidth = Window.getClientWidth();
     if (Window.getClientWidth() >= 1024) {
-      container.setHeight(String.valueOf(clientWidth * 0.33 * 0.5 * 2) + "px");
+      container.setHeight(String.valueOf(clientWidth * 0.33 * 2) + "px");
     } else {
       container.setHeight(String.valueOf(clientWidth * 0.33 * 2) + "px");
     }
@@ -366,7 +366,7 @@ public class BookFlip extends WavePanel implements Activity {
 
       @Override
       public Request<List<IssueProxy>> provideRequest() {
-        return ctx.find(0, SQLConstant.MAX_RESULTS_ALL);
+        return ctx.find(0, ISSUE_NUMS);
       }
       // }.setKeyForList(IssueProxy.ISSUES);
     }.setKeyForList(IssueProxy.ISSUES).fire();
