@@ -27,13 +27,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class ToolBarClickButton extends Composite implements HasClickHandlers {
-  /**
-   * The possible display states of a toolbar button.
-   */
-  public static enum State {
-    ENABLED, DISABLED, INVISIBLE
-  }
+public class ToolBarClickButton extends Composite implements ToolBarButtonView, HasClickHandlers {
   interface Style extends CssResource {
 
     String waveToolbarButtonDisabled();
@@ -78,9 +72,7 @@ public class ToolBarClickButton extends Composite implements HasClickHandlers {
     }
   }
 
-  /**
-   * Set DropdownArrow is displayed
-   */
+  @Override
   public void setShowDropdownArrow(final boolean showDropdownArrow) {
     if (showDropdownArrow) {
       dropDownArrow.getStyle().setDisplay(Display.BLOCK);
@@ -89,9 +81,7 @@ public class ToolBarClickButton extends Composite implements HasClickHandlers {
     }
   }
 
-  /**
-   * Sets the display state,
-   */
+  @Override
   public void setState(final State state) {
     switch (state) {
       case ENABLED:
@@ -108,14 +98,13 @@ public class ToolBarClickButton extends Composite implements HasClickHandlers {
     }
   }
 
+  @Override
   public void setText(final String text) {
     textElement.setInnerText(text);
     textElement.getStyle().setDisplay(Display.INLINE);
   }
 
-  /**
-   * Sets the "visual element" of a button, for example an icon or unread count.
-   */
+  @Override
   public void setVisualElement(final Element element) {
     visualElement.appendChild(element);
   }
