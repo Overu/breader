@@ -13,6 +13,8 @@
  */
 package com.goodow.web.view.wave.client.shell;
 
+import com.goodow.web.feature.client.FeatureDetection;
+
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style;
@@ -68,6 +70,7 @@ public class WidgetContainer extends FlowPanel implements AcceptsOneWidget {
     setStyle(currentWidget, CSS.widgetCurrentBegin());
     setStyle(previousWidget, CSS.widgetPreviousBegin());
     insert(currentWidget, 0);
+    FeatureDetection.hideAddressBar();
     Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 
       @Override
