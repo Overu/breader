@@ -1,0 +1,60 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style>
+    .root {
+      padding: 16px 5px 16px 6px;
+      overflow: hidden;
+      display: -webkit-box;
+    }
+    
+    .gwt-TextBox {
+      border: 0;
+      padding: 0;
+      background-color: rgba(0, 0, 0, 0);
+      color: silver;
+      width: 100%;
+      height: 100%;
+    }
+    
+    @sprite .left {
+      gwt-image: "waveSearchLeftBlur";
+    }
+    
+    @sprite .middle {
+      gwt-image: "waveSearchTextBlur";
+      -webkit-box-flex: 1;
+    }
+    
+    @sprite .gwt-TextBox:focus {
+      outline: 0;
+      gwt-image: "waveSearchTextFocus";
+      color: initial;
+    }
+    
+    @sprite .right {
+      gwt-image: "waveSearchRightBlur";
+      cursor: pointer;
+    }
+    
+    @sprite .root[focused]>.waveSearchLeftFocus {
+      gwt-image: "waveSearchLeftFocus";
+    }
+    
+    @sprite .root[focused]>.waveSearchRightFocus {
+      gwt-image: "waveSearchRightFocus";
+    }
+  </ui:style>
+  <ui:image field="waveSearchRightBlur" />
+  <ui:image field="waveSearchLeftFocus" />
+  <ui:image field="waveSearchRightFocus" />
+  <ui:image field="waveSearchLeftBlur" />
+  <ui:image field="waveSearchTextBlur" repeatStyle="Horizontal" />
+  <ui:image field="waveSearchTextFocus" repeatStyle="Horizontal" />
+  <g:HTMLPanel addStyleNames="{style.root}" ui:field="root">
+    <div class="{style.left} {style.waveSearchLeftFocus}"></div>
+    <div class="{style.middle}">
+      <g:TextBox addStyleNames="{style.gwt-TextBox}" ui:field="searchText"></g:TextBox>
+    </div>
+    <div class="{style.right} {style.waveSearchRightFocus}" title="单击以搜索" ui:field="waveSearchButton"></div>
+  </g:HTMLPanel>
+</ui:UiBinder> 
