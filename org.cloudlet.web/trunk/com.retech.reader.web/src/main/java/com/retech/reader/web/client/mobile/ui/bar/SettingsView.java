@@ -69,7 +69,7 @@ public class SettingsView extends Composite implements Activity {
     dataProvider.addDataDisplay(cellTable);
     wavePanel.setWaveContent(uiBinder.createAndBindUi(this));
     initWidget(wavePanel);
-    wavePanel.getWaveTitle().setText("相关操作");
+    wavePanel.getWaveTitle().setText("设置");
   }
 
   @Override
