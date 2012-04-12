@@ -21,12 +21,7 @@ import java.util.logging.Logger;
 
 public class WavePanelResources {
 
-  interface Bundle extends ClientBundle {
-    @Source("WavePanel.css")
-    Style style();
-  }
-
-  interface Style extends CssResource {
+  public interface Style extends CssResource {
     String wave();
 
     String waveContent();
@@ -36,6 +31,11 @@ public class WavePanelResources {
     String waveHeader();
 
     String waveWarning();
+  }
+
+  interface Bundle extends ClientBundle {
+    @Source("WavePanel.css")
+    Style style();
   }
 
   private static Bundle INSTANCE;
