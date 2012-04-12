@@ -1,6 +1,7 @@
 package com.retech.reader.web.client.home;
 
 import com.goodow.web.view.wave.client.panel.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanelResources;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
@@ -90,6 +91,11 @@ public class LibraryView extends WavePanel implements Activity {
     this.storage = storage;
     this.placeController = placeController;
     getWaveTitle().setText("我的藏书");
+
+    FlowPanel toDo = new FlowPanel();
+    toDo.addStyleName(WavePanelResources.css().waveWarning());
+    toDo.add(new Label("Anyone on the internet can view and edit this wave. Learn more"));
+    add(toDo);
 
     setWaveContent(binder.createAndBindUi(this));
   }
