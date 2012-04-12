@@ -75,14 +75,14 @@
     }
     
     @sprite .div_font {
+      gwt-image: 'UserStatusLeftImage';
       position: relative;
       left: -15px;
       display: block;
       margin: 0 -15px 0 0;
       padding: 0 0 0 17px;
-      width: auto;
-      height: auto;
-      gwt-image: 'UserStatusLeftImage';
+      width: initial;
+      height: initial;
       background-repeat: no-repeat;
       background-position: 0 50%;
     }
