@@ -13,15 +13,31 @@
  */
 package com.goodow.web.view.wave.client;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
 
 public class IconButtonTemplate extends Widget implements HasClickHandlers {
+  interface Resources extends ClientBundle {
+    @Source("IconButtonTemplate.css")
+    Style style();
+  }
+  interface Style extends CssResource {
+    String visualNumeralElement();
+  }
+
+  private static final Resources res = GWT.create(Resources.class);
+  static {
+    res.style().ensureInjected();
+  }
+
   public IconButtonTemplate() {
     setElement(DOM.createDiv());
   }
@@ -37,4 +53,11 @@ public class IconButtonTemplate extends Widget implements HasClickHandlers {
   public void setIconElement(final Element element) {
     this.getElement().appendChild(element);
   }
+
+  public IconButtonTemplate setIconText(final String text) {
+    getElement().setInnerText(text);
+    addStyleName(res.style().visualNumeralElement());
+    return this;
+  }
+
 }
