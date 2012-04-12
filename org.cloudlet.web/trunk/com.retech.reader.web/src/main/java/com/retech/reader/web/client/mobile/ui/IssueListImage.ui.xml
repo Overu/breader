@@ -11,7 +11,7 @@
     .div_imagery>div {
       cursor: pointer;
       cursor: hand;
-      padding: 0 10px 0 0;
+      padding-left: 10px;
     }
     
     .div_imagery>div>img {
