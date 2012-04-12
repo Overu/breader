@@ -38,6 +38,7 @@ public final class LogHandler extends Handler {
     popup = new PopupPanel(true);
     popup.setPreviewingAllNativeEvents(true);
     popup.setWidget(html);
+    popup.getElement().getStyle().setZIndex(990);
   }
 
   @Override
