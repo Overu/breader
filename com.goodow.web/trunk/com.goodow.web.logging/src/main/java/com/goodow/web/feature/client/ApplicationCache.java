@@ -27,10 +27,6 @@ public class ApplicationCache {
                                                                 }, false);
                                                                 }-*/;
 
-  public static native void hideAddressBar() /*-{
-                                             $wnd.scrollTo(0, 1);
-                                             }-*/;
-
   public static native void swapCache() /*-{
                                              $wnd.applicationCache.swapCache();
                                              }-*/;
