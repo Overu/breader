@@ -15,51 +15,22 @@ package com.retech.reader.web.client.home;
 
 import com.goodow.web.view.wave.client.panel.WavePanel;
 import com.goodow.web.view.wave.client.panel.WavePanelResources;
+import com.goodow.web.view.wave.client.search.SearchBox;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
-import com.google.gwt.event.dom.client.FocusEvent;
-import com.google.gwt.event.dom.client.FocusHandler;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
 public class SearchPanel extends WavePanel {
-  interface SearchPanelUIBinder extends UiBinder<Widget, SearchPanel> {
-  }
-
-  @UiField
-  TextBox searchText;
-  @UiField
-  HTMLPanel root;
-  private static SearchPanelUIBinder uiBinder = GWT.create(SearchPanelUIBinder.class);
+  private final SearchBox searchBox;
 
   @Inject
-  SearchPanel() {
-    Widget search = uiBinder.createAndBindUi(this);
+  SearchPanel(final SearchBox searchBox) {
+    this.searchBox = searchBox;
     this.getWaveTitle().setText("搜索");
-    search.addStyleName(WavePanelResources.css().waveHeader());
-    this.add(search);
-    searchText.getElement().setAttribute("placeholder", "搜索");
-    searchText.addFocusHandler(new FocusHandler() {
-
-      @Override
-      public void onFocus(final FocusEvent arg0) {
-        root.getElement().setAttribute("focused", "");
-      }
-    });
-    searchText.addBlurHandler(new BlurHandler() {
-
-      @Override
-      public void onBlur(final BlurEvent arg0) {
-        root.getElement().removeAttribute("focused");
-      }
-    });
+    searchBox.addStyleName(WavePanelResources.css().waveHeader());
+    searchBox.getElement().getStyle().setProperty("padding", "16px 5px 16px 6px");
+    searchBox.getTextBox().getElement().setAttribute("placeholder", "搜索");
+    this.add(searchBox);
   }
 }
