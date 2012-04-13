@@ -37,7 +37,7 @@
     @if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
       .coverflowTitle>div>img {
       	-webkit-border-radius: 10px 10px;
-      	-webkit-box-reflect: below 25px -webkit-gradient(linear, literal("left top"), literal("left bottom"), from(transparent), color-stop(0.8, transparent), to(rgba(255, 255, 255, 0.6) ) );
+      	-webkit-box-reflect: below 25px -webkit-gradient(linear, literal("left top"), literal("left bottom"), from(transparent), color-stop(0.8, transparent), to(rgba(255, 255, 255, 0.3) ) );
       }
     }
     @else {
@@ -48,7 +48,7 @@
     }
     
     .coverflowTitle>div {
-      height: 700px;
+      height: 1350px;
       position: absolute;
       -webkit-transition: all 0.5s ease-out;
       /*-webkit-transition: -webkit-transform 0.5s ease-out, left 0.5s ease-out,z-index 0.5s ease-out, -webkit-opacity 0.5s ease-out;*/
