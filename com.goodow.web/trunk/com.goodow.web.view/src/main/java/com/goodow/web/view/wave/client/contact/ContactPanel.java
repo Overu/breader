@@ -26,7 +26,9 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -35,6 +37,8 @@ public class ContactPanel extends WavePanel {
   }
   interface Resources extends ClientBundle {
     ImageResource unknown();
+
+    ImageResource waveContactContent();
 
     ImageResource waveTitleMinimize();
   }
@@ -46,21 +50,38 @@ public class ContactPanel extends WavePanel {
   HTMLPanel waveSearch;
   @UiField
   DivElement picture;
+  @UiField
+  HTMLPanel waveContented;
+  @UiField
+  HTMLPanel root;
+  @UiField
+  DivElement picture_Content;
+  @UiField
+  HTMLPanel waveFootered;
+  @UiField
+  FlowPanel tagLink;
 
   @Inject
   ContactPanel(final SearchBox searchBox) {
     this.searchBox = searchBox;
     WaveTitle waveTitle = this.getWaveTitle();
-    waveTitle.setText("Contacts");
-    waveTitle.addIconClickButton().setIconElement(createIcon(res.waveTitleMinimize()));
-    // searchBox.addStyleName(WavePanelResources.css().waveHeader());
-    searchBox.getTextBox().getElement().setAttribute("placeholder", "Search contacts");
-    searchBox.getElement().getStyle().setProperty("padding", "4px 3px 0");
-    Widget widget = uiBinder.createAndBindUi(this);
+    waveTitle.setText("联系人");
+    searchBox.getTextBox().getElement().setAttribute("placeholder", "查找联系人");
+    uiBinder.createAndBindUi(this);
+
     picture.appendChild(createIcon(res.unknown()));
-    widget.addStyleName(WavePanelResources.css().waveHeader());
+    root.addStyleName(WavePanelResources.css().waveHeader());
     waveSearch.add(searchBox);
-    this.add(widget);
+    this.add(root);
+    waveContented.addStyleName(WavePanelResources.css().waveContent());
+    picture_Content.appendChild(createIcon(res.waveContactContent()));
+    this.add(waveContented);
+    waveFootered.addStyleName(WavePanelResources.css().waveFooter());
+    waveFootered.getElement().getStyle().setProperty("padding", "6px 5px 6px 7px");
+    Hyperlink link = new Hyperlink("管理联系人", "#");
+    tagLink.add(link);
+    this.add(waveFootered);
+
   }
 
   public Element createIcon(final ImageResource imageResource) {
