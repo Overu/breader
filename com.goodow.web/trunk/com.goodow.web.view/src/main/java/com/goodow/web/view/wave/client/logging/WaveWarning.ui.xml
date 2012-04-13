@@ -51,7 +51,7 @@
   <ui:image field="closeActive" />
   <g:HTMLPanel addStyleNames="{style.root}">
     <div>
-      <span>仅供内部测试.</span>
+      <span>仅供内测.</span>
       <div class="{style.close}" title="Close"></div>
     </div>
   </g:HTMLPanel>
