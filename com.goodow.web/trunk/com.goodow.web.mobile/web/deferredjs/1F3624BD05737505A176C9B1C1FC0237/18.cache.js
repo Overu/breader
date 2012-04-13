@@ -1,0 +1,1 @@
+UZ(1230,1,Yoc);_.kc=function bic(){yjc(this.c,qfc(this.b.b))};$oc(Yl)(18);
