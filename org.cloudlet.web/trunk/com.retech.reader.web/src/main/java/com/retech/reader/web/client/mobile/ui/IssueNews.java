@@ -73,7 +73,8 @@ public class IssueNews extends WavePanel implements Activity {
   DivElement category;
   @UiField
   WaveToolBar waveToolbar;
-
+  @UiField(provided = true)
+  TagsPanel tagsPanel;
   private static Resources res = GWT.create(Resources.class);
   private static Binder binder = GWT.create(Binder.class);
   private static final Logger logger = Logger.getLogger(IssueNews.class.getName());
@@ -88,10 +89,11 @@ public class IssueNews extends WavePanel implements Activity {
 
   @Inject
   public IssueNews(final ReaderFactory f, final Provider<BasePlace> places,
-      final PlaceController placeController, final LocalStorage storage) {
+      final PlaceController placeController, final LocalStorage storage, final TagsPanel tagsPanel) {
     this.f = f;
     this.placeController = placeController;
     this.storage = storage;
+    this.tagsPanel = tagsPanel;
 
     this.setWaveContent(binder.createAndBindUi(this));
 
