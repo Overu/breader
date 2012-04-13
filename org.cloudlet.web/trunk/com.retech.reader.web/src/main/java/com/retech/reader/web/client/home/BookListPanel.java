@@ -33,7 +33,6 @@ import org.cloudlet.web.mvp.shared.ProvideActivities;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Singleton
 public class BookListPanel extends Composite implements ProvideActivities {
@@ -60,7 +59,6 @@ public class BookListPanel extends Composite implements ProvideActivities {
     String root();
   }
 
-  private Logger logger = Logger.getLogger(getClass().getName());
   private static Resources res = GWT.create(Resources.class);
   private static Binder binder = GWT.create(Binder.class);
   private static Bundle bundle = GWT.create(Bundle.class);
@@ -128,7 +126,7 @@ public class BookListPanel extends Composite implements ProvideActivities {
     searchButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(final ClickEvent event) {
-        logger.info("开发中");
+        placeController.goTo(places.get().setPath(SearchPanel.class.getName()));
       }
     });
 
