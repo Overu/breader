@@ -14,22 +14,40 @@
 package com.goodow.web.view.wave.client;
 
 import com.goodow.web.view.wave.client.panel.WavePanel;
-import com.goodow.web.view.wave.client.toolbar.ToolBarClickButton;
 
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.core.client.JsArray;
+import com.google.gwt.dom.client.Touch;
+import com.google.gwt.event.dom.client.TouchStartEvent;
+import com.google.gwt.event.dom.client.TouchStartHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.HTMLPanel;
 
 public class WaveTest extends WavePanel {
 
   public WaveTest() {
-    getWaveTitle().setText("test title");
+    // getWaveTitle().setText("test title");
     // wave.setHeader(new Label("test header"));
-    setWaveContent(new Label("test content"));
-    ToolBarClickButton btn = addWaveToolBar().addClickButton();
-    btn.setText("test");
+    // setWaveContent(new Label("test content"));
+    // ToolBarClickButton btn = addWaveToolBar().addClickButton();
+    // btn.setText("test");
     // wave.setFooter(new Label("test footer"));
     // ToolBarClickButton clickButton = wave.toolbar().addClickButton();
     // clickButton.setText("test button");
+    HTMLPanel hp = new HTMLPanel("");
+    hp.setWidth("100%");
+    hp.setHeight("700px");
+    setWaveContent(hp);
+
+    hp.addDomHandler(new TouchStartHandler() {
+
+      @Override
+      public void onTouchStart(final TouchStartEvent event) {
+        JsArray<Touch> touches = event.getTouches();
+        if (touches.length() == 2) {
+          Window.alert("sdfsafdsadf");
+        }
+      }
+    }, TouchStartEvent.getType());
 
   }
-
 }
