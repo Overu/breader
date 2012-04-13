@@ -42,6 +42,17 @@ public class WaveTitle extends FlowPanel {
 
     text = DOM.createSpan();
     this.getElement().appendChild(text);
+
+    iconButton = this.addIconClickButton();
+    iconButton.setIconElement(AbstractImagePrototype.create(
+        WaveTitleResources.image().waveTitleClose()).createElement());
+    iconButton.addClickHandler(new ClickHandler() {
+
+      @Override
+      public void onClick(final ClickEvent event) {
+        WaveTitle.this.getParent().removeFromParent();
+      }
+    });
   }
 
   public IconButtonTemplate addIconClickButton() {

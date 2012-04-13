@@ -26,6 +26,8 @@ public class WaveTitleResources {
     @Source("WaveTitle.css")
     Style style();
 
+    ImageResource waveTitleClose();
+
     ImageResource waveTitleReturn();
   }
 
@@ -45,11 +47,11 @@ public class WaveTitleResources {
     logger.finest("static init end");
   }
 
-  public static Bundle image() {
-    return INSTANCE;
-  }
-
   public static Style css() {
     return INSTANCE.style();
+  }
+
+  public static Bundle image() {
+    return INSTANCE;
   }
 }
