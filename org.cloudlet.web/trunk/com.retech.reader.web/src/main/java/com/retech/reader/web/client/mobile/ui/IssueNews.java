@@ -1,6 +1,7 @@
 package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.web.view.wave.client.panel.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanelResources;
 import com.goodow.web.view.wave.client.toolbar.ToolBarButtonView.State;
 import com.goodow.web.view.wave.client.toolbar.ToolBarClickButton;
 import com.goodow.web.view.wave.client.toolbar.WaveToolBar;
@@ -22,7 +23,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -94,6 +98,24 @@ public class IssueNews extends WavePanel implements Activity {
     this.placeController = placeController;
     this.storage = storage;
     this.tagsPanel = tagsPanel;
+
+    FlowPanel toDo = new FlowPanel();
+    toDo.addStyleName(WavePanelResources.css().waveWarning());
+    toDo.add(new HTML("<b>已完成：<b>"));
+    toDo.add(new Label("7.1 书本详细内容展示"));
+    toDo.add(new Label("7.2 在线阅读"));
+    toDo.add(new Label("7.3 目录"));
+    toDo.add(new Label("7.4 收藏状态"));
+    toDo.add(new HTML("<br>"));
+    toDo.add(new HTML("<b>待实现：<b>"));
+    toDo.add(new Label("7.5 界面布局调整（中）"));
+    toDo.add(new Label("7.6 下载（难）"));
+    toDo.add(new Label("7.7 评论（难）"));
+    toDo.add(new Label("7.8 浏览次数（易）"));
+    toDo.add(new Label("7.9 该书读者用户在线状态及实时交流（难）"));
+    toDo.add(new Label("7.10 标签展示（中）"));
+    toDo.add(new Label("7.11 添加标签（难）"));
+    add(toDo);
 
     this.setWaveContent(binder.createAndBindUi(this));
 

@@ -2,6 +2,7 @@ package com.retech.reader.web.client.home;
 
 import com.goodow.web.feature.client.FeatureDetection;
 import com.goodow.web.view.wave.client.panel.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanelResources;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
@@ -25,7 +26,10 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -115,6 +119,17 @@ public class BookFlip extends WavePanel implements Activity {
     // StyleInjector.injectAtEnd(coverflow.getText());
     this.storage = storage;
     getWaveTitle().setText("最热门");
+
+    FlowPanel toDo = new FlowPanel();
+    toDo.addStyleName(WavePanelResources.css().waveWarning());
+    toDo.add(new HTML("<b>已完成：<b>"));
+    toDo.add(new Label("1.1 3D特效的初步实现"));
+    toDo.add(new HTML("<br>"));
+    toDo.add(new HTML("<b>待实现：<b>"));
+    toDo.add(new Label("1.2 手势滚动（中）"));
+    toDo.add(new Label("1.3 完善3D特效（中）"));
+    add(toDo);
+
     setWaveContent(binder.createAndBindUi(this));
     cssMap = new HashMap<Integer, String>();
     cssMap.put(0, coverflow.coverflow0());
@@ -124,7 +139,7 @@ public class BookFlip extends WavePanel implements Activity {
     cssMap.put(-1, coverflow.coverflow_1());
     cssMap.put(-2, coverflow.coverflow_2());
     cssMap.put(-3, coverflow.coverflow_3());
-    bookFlip.getElement().setDraggable(Element.DRAGGABLE_TRUE);
+    // bookFlip.getElement().setDraggable(Element.DRAGGABLE_TRUE);
 
   }
 

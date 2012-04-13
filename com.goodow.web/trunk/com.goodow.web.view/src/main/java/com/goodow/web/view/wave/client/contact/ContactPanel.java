@@ -27,8 +27,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Hyperlink;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -67,6 +69,20 @@ public class ContactPanel extends WavePanel {
     WaveTitle waveTitle = this.getWaveTitle();
     waveTitle.setText("联系人");
     searchBox.getTextBox().getElement().setAttribute("placeholder", "查找联系人");
+
+    FlowPanel toDo = new FlowPanel();
+    toDo.addStyleName(WavePanelResources.css().waveWarning());
+    toDo.add(new HTML("<b>已完成：<b>"));
+    toDo.add(new Label("11.1 部分静态界面展示"));
+    toDo.add(new HTML("<br>"));
+    toDo.add(new HTML("<b>待实现：<b>"));
+    toDo.add(new Label("11.2 集成用户登录（难）"));
+    toDo.add(new Label("11.3 界面展现（中）"));
+    toDo.add(new Label("11.4 搜索联系人（中）"));
+    toDo.add(new Label("11.5 实时交流（中）"));
+    toDo.add(new Label("11.6 分享图书（中） "));
+    add(toDo);
+
     uiBinder.createAndBindUi(this);
 
     picture.appendChild(createIcon(res.unknown()));

@@ -1,6 +1,7 @@
 package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.web.view.wave.client.panel.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanelResources;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.dom.client.Element;
@@ -11,6 +12,9 @@ import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.CellList.Resources;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.view.client.NoSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
@@ -71,6 +75,16 @@ public class BookListEditor extends WavePanel implements Activity {
     this.dataProvider = dataProvider;
     this.cell = cell;
     this.resources = resources;
+
+    FlowPanel toDo = new FlowPanel();
+    toDo.addStyleName(WavePanelResources.css().waveWarning());
+    toDo.add(new HTML("<b>已完成：<b>"));
+    toDo.add(new Label("6.1 列表展示"));
+    toDo.add(new HTML("<br>"));
+    toDo.add(new HTML("<b>待实现：<b>"));
+    toDo.add(new Label("6.2 完成列表的展示（中）"));
+    toDo.add(new Label("6.3 直接添加收藏（易）"));
+    add(toDo);
   }
 
   @Override
@@ -164,6 +178,6 @@ public class BookListEditor extends WavePanel implements Activity {
       dataProvider.removeDataDisplay(cellList);
     }
     super.onUnload();
-    this.remove(1);
+    this.remove(2);
   }
 }

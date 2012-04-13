@@ -1,6 +1,7 @@
 package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.web.view.wave.client.panel.WavePanel;
+import com.goodow.web.view.wave.client.panel.WavePanelResources;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -8,7 +9,9 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
@@ -43,6 +46,22 @@ public class ContentEditor extends WavePanel implements Activity {
     html = new HTML();
     this.f = f;
     this.placeController = placeController;
+
+    FlowPanel toDo = new FlowPanel();
+    toDo.addStyleName(WavePanelResources.css().waveWarning());
+    toDo.add(new HTML("<b>已完成：<b>"));
+    toDo.add(new Label("10.1 单击左右翻页"));
+    toDo.add(new HTML("<br>"));
+    toDo.add(new HTML("<b>待实现：<b>"));
+    toDo.add(new Label("10.2 界面排版效果（中）"));
+    toDo.add(new Label("10.3 快速定位某一页（中）"));
+    toDo.add(new Label("10.4 书签（难）"));
+    toDo.add(new Label("10.5 书本翻页的动画效果（难）"));
+    toDo.add(new Label("10.6 单指手势翻页（中）"));
+    toDo.add(new Label("10.7 返回目录（易）"));
+    toDo.add(new Label("10.8 横屏时分两栏显示（难）"));
+    add(toDo);
+
     this.setWaveContent(html);
 
     html.addClickHandler(new ClickHandler() {
