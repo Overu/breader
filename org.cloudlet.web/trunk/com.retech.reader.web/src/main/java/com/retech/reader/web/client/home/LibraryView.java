@@ -99,10 +99,10 @@ public class LibraryView extends WavePanel implements Activity {
     toDo.add(new Label("3.2 左右自动适应换行"));
     toDo.add(new HTML("<br>"));
     toDo.add(new HTML("<b>待实现：<b>"));
-    toDo.add(new Label("3.3 长按书本可以删除该书（易）"));
+    toDo.add(new Label("3.3 列表布局调整（易）"));
+    toDo.add(new Label("3.4 长按书本可以删除该书（易）"));
     add(toDo);
     toDo.addStyleName(WavePanelResources.css().waveWarning());
-    toDo.add(new Label("Anyone on the internet can view and edit this wave. Learn more"));
     add(toDo);
 
     setWaveContent(binder.createAndBindUi(this));

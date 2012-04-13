@@ -22,6 +22,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.CellList.Resources;
 import com.google.gwt.user.cellview.client.LoadingStateChangeEvent;
@@ -29,16 +30,21 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.view.client.NoSelectionModel;
+import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.shared.Request;
 
 import com.retech.reader.web.client.mobile.ui.BookProxyCell;
+import com.retech.reader.web.client.mobile.ui.IssueEditor;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.rpc.BookDataProvider;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
+import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 import java.util.List;
@@ -54,16 +60,31 @@ public class SearchPanel extends WavePanel implements Activity {
   private final Resources resources;
   private CellList<IssueProxy> cellList;
   private final ReaderFactory f;
+  private final NoSelectionModel<IssueProxy> selectModel;
+
+  private final PlaceController placeController;
+
+  private final Provider<BasePlace> base;
 
   @Inject
   SearchPanel(final SearchBox searchBox, final BookDataProvider bookDataProvider,
-      final BookProxyCell cell, final CellList.Resources resources, final ReaderFactory f) {
+      final BookProxyCell cell, final CellList.Resources resources, final ReaderFactory f,
+      final NoSelectionModel<IssueProxy> selectModel, final PlaceController placeController,
+      final Provider<BasePlace> base) {
     this.searchBox = searchBox;
     this.bookDataProvider = bookDataProvider;
     this.cell = cell;
     this.resources = resources;
     this.f = f;
+    this.selectModel = selectModel;
+    this.placeController = placeController;
+    this.base = base;
     this.getWaveTitle().setText("搜索");
+    searchBox.addStyleName(WavePanelResources.css().waveHeader());
+    searchBox.getElement().getStyle().setProperty("padding", "16px 5px 16px 6px");
+    searchBox.getTextBox().getElement().setAttribute("placeholder", "搜索");
+    this.add(searchBox);
+
     FlowPanel toDo = new FlowPanel();
     toDo.addStyleName(WavePanelResources.css().waveWarning());
     toDo.add(new HTML("<b>已完成：<b>"));
@@ -75,10 +96,6 @@ public class SearchPanel extends WavePanel implements Activity {
     toDo.add(new Label("2.4 搜索关键字自动建议（中）"));
     toDo.add(new Label("2.5 全文检索（难）"));
     add(toDo);
-    searchBox.addStyleName(WavePanelResources.css().waveHeader());
-    searchBox.getElement().getStyle().setProperty("padding", "16px 5px 16px 6px");
-    searchBox.getTextBox().getElement().setAttribute("placeholder", "搜索");
-    this.add(searchBox);
   }
 
   @Override
@@ -98,7 +115,18 @@ public class SearchPanel extends WavePanel implements Activity {
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
+
+    selectModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+
+      @Override
+      public void onSelectionChange(final SelectionChangeEvent event) {
+        placeController.goTo(base.get().setPath(IssueEditor.class.getName()).setParameter(
+            selectModel.getLastSelectedObject().stableId()));
+      }
+    });
+
     cellList = new CellList<IssueProxy>(cell, resources);
+    cellList.setSelectionModel(selectModel);
 
     cellList.addHandler(new LoadingStateChangeEvent.Handler() {
 
@@ -155,5 +183,6 @@ public class SearchPanel extends WavePanel implements Activity {
       bookDataProvider.removeDataDisplay(cellList);
     }
     super.onUnload();
+    remove(3);
   }
 }

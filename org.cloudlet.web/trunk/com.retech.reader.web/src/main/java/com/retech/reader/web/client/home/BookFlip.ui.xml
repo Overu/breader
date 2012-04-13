@@ -19,6 +19,7 @@
           max-height: 50%;
           max-width: 50%;
           */
+          background: black;
       
     }
     
@@ -50,7 +51,7 @@
     .coverflowTitle>div {
       height: 1350px;
       position: absolute;
-      -webkit-transition: all 0.5s ease-out;
+      -webkit-transition: all 1s ease-out;
       /*-webkit-transition: -webkit-transform 0.5s ease-out, left 0.5s ease-out,z-index 0.5s ease-out, -webkit-opacity 0.5s ease-out;*/
       cursor: pointer;
       width: 33%; /*
@@ -73,6 +74,7 @@
       -webkit-border-radius: 20px;
       text-align: center;
       padding: 2px 15px 2px;
+      color: white;
     }
   </ui:style>
 

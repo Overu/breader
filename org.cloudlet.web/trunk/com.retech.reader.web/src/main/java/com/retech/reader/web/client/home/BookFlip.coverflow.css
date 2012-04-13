@@ -54,14 +54,14 @@
 
 @if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
   .coverflow0 {
-    -webkit-transform: rotateY(0deg) scale(1.05) translate(0px, 20px);
+    -webkit-transform: rotateY(0deg) scale(1.05) translate(0px, 30px);
     left: 34%;
     z-index: 10;
   }
 }
 @else {
   .coverflow0 {
-    -webkit-transform: translate(0px, 20px);
+    -webkit-transform: translate(0px, 30px);
     left: 34%;
     z-index: 10;
   }

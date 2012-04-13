@@ -167,6 +167,7 @@ public class BookFlip extends WavePanel implements Activity {
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     bookFlipHeight();
     container.getElement().getStyle().setDisplay(Display.BLOCK);
+    container.getParent().getElement().getStyle().setBackgroundColor("black");
     logger.config("clientWidth:" + Window.getClientWidth() + ";clientHeight:"
         + Window.getClientHeight());
     if (FeatureDetection.mobileNative()) {
