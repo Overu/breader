@@ -3,6 +3,9 @@ package com.retech.reader.web.client.mobile.ui;
 import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.cellview.client.CellList;
@@ -18,11 +21,14 @@ import com.google.web.bindery.requestfactory.shared.Request;
 
 import com.retech.reader.web.shared.proxy.CategoryProxy;
 import com.retech.reader.web.shared.proxy.IssueProxy;
+import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.rpc.BookDataProvider;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
+
+import java.util.List;
 
 /**
  * View used to display the list of Books.
@@ -95,6 +101,40 @@ public class BookListEditor extends WavePanel implements Activity {
 
     cellList = new CellList<IssueProxy>(cell, resources);
     cellList.setSelectionModel(selectionModel);
+
+    cellList.addHandler(new ValueChangeHandler<IssueProxy>() {
+
+      @Override
+      public void onValueChange(final ValueChangeEvent<IssueProxy> event) {
+        CellList<IssueProxy> cellListProxy = (CellList<IssueProxy>) event.getSource();
+        List<IssueProxy> proxys = cellListProxy.getVisibleItems();
+        int i = 0;
+        for (final IssueProxy proxy : proxys) {
+          final Element elm = cellListProxy.getRowElement(i);
+
+          new BaseReceiver<ResourceProxy>() {
+
+            @Override
+            public void onSuccessAndCached(final ResourceProxy resourceProxy) {
+              Element imageElm =
+                  elm.getFirstChildElement().getFirstChildElement().getFirstChildElement()
+                      .getFirstChildElement();
+              imageElm.setInnerHTML("<img width='60px' height='60px' src='data:"
+                  + resourceProxy.getMimeType().getType() + ";base64,"
+                  + resourceProxy.getDataString() + "'/>");
+            }
+
+            @Override
+            public Request<ResourceProxy> provideRequest() {
+              return f.resource().getImage(proxy);
+            }
+          }.setKeyForProxy(proxy.stableId(), ResourceProxy.class.getName()).fire();
+
+          i++;
+        }
+      }
+    }, ValueChangeEvent.getType());
+
     this.setWaveContent(cellList);
 
     if (!dataProvider.getDataDisplays().contains(cellList)) {

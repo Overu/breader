@@ -2,6 +2,7 @@ package com.retech.reader.web.client.mobile.ioc;
 
 import com.goodow.web.logging.shared.rpc.ChannelContextProvider;
 import com.goodow.web.view.wave.client.WaveTest;
+import com.goodow.web.view.wave.client.contact.ContactPanel;
 import com.goodow.web.view.wave.client.shell.WaveShell;
 
 import com.google.gwt.core.client.GWT;
@@ -97,6 +98,8 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
     @Inject
     private AsyncProvider<SearchPanel> searchPanel;
     @Inject
+    private AsyncProvider<ContactPanel> contactPanel;
+    @Inject
     private WaveShell shell;
     @Inject
     private TopBar topBar;
@@ -126,6 +129,7 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
       isWidgetMapBinder.addBinding(IssueNews.class.getName()).toAsyncProvider(issueNews);
       isWidgetMapBinder.addBinding(TestEditor.class.getName()).toAsyncProvider(testEditor);
       isWidgetMapBinder.addBinding(SearchPanel.class.getName()).toAsyncProvider(searchPanel);
+      isWidgetMapBinder.addBinding(ContactPanel.class.getName()).toAsyncProvider(contactPanel);
       logger.finest("EagerSingleton end");
       return null;
     }

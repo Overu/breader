@@ -9,10 +9,8 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.safehtml.shared.SafeUri;
-import com.google.gwt.safehtml.shared.UriUtils;
 
 import com.retech.reader.web.shared.proxy.IssueProxy;
-import com.retech.reader.web.shared.proxy.ResourceProxy;
 
 /**
  * A {@link com.google.gwt.cell.client.Cell} used to render a {@link IssueProxy}.
@@ -27,7 +25,10 @@ public class BookProxyCell extends AbstractCell<IssueProxy> {
     @SafeHtmlTemplates.Template("<table style='width:100%; margin:0px; padding: 0px;' border='0'><tr><td width='60px'><img src=\"{0}\" width='60px' height='60px'></td><td valign='top' style=\"position: relative;\">")
     SafeHtml img(SafeUri src);
 
-    @SafeHtmlTemplates.Template("{0}<div style=\"font-size:80%;color:#999;\">发布日期: {1}</div><div style=\"width: 100%;position: absolute;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;\">{2}</div></td><tr/></table>")
+    // @SafeHtmlTemplates.Template("{0}<div style=\"font-size:80%;color:#999;\">发布日期: {1}</div><div style=\"width: 100%;position: absolute;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;\">{2}</div></td><tr/></table>")
+    // SafeHtml info(SafeHtml name, String date, String detail);
+
+    @SafeHtmlTemplates.Template("<table style='width:100%; margin:0px; padding: 0px;' border='0'><tr><td width='60px'></td><td valign='top' style=\"position: relative;\">{0}<div style=\"font-size:80%;color:#999;\">发布日期: {1}</div><div style=\"width: 100%;position: absolute;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;\">{2}</div></td><tr/></table>")
     SafeHtml info(SafeHtml name, String date, String detail);
   }
 
@@ -53,11 +54,11 @@ public class BookProxyCell extends AbstractCell<IssueProxy> {
     } else {
       name = SafeHtmlUtils.fromString(value.getTitle());
     }
-    ResourceProxy image = value.getImage();
-    if (image != null) {
-      sb.append(template.img(UriUtils.fromTrustedString("data:" + image.getMimeType().getType()
-          + ";base64," + image.getDataString())));
-    }
+    // ResourceProxy image = value.getImage();
+    // if (image != null) {
+    // sb.append(template.img(UriUtils.fromTrustedString("data:" + image.getMimeType().getType()
+    // + ";base64," + image.getDataString())));
+    // }
     sb.append(template.info(name, dateFormat.format(value.getCreateTime()), value.getDetail()));
   }
 }

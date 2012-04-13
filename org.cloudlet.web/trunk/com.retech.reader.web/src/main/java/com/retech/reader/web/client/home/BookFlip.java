@@ -81,7 +81,7 @@ public class BookFlip extends WavePanel implements Activity {
   private static final Logger logger = Logger.getLogger(BookFlip.class.getName());
 
   private static final int DIV_NUMS = 7;
-  private static final int ISSUE_NUMS = 7;
+  public static final int ISSUE_NUMS = 7;
 
   private static Binder binder = GWT.create(Binder.class);
   private static Template template = GWT.create(Template.class);

@@ -1,5 +1,6 @@
 package com.retech.reader.web.client.home;
 
+import com.goodow.web.view.wave.client.contact.ContactPanel;
 import com.goodow.web.view.wave.client.panel.WavePanel;
 import com.goodow.web.view.wave.client.toolbar.ToolBarClickButton;
 import com.goodow.web.view.wave.client.toolbar.WaveToolBar;
@@ -26,7 +27,6 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import com.retech.reader.web.client.mobile.ui.bar.SettingsView;
-import com.retech.reader.web.client.mobile.ui.talk.TalkView;
 
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.mvp.shared.ProvideActivities;
@@ -119,7 +119,7 @@ public class BookListPanel extends Composite implements ProvideActivities {
     shareButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(final ClickEvent event) {
-        placeController.goTo(places.get().setPath(TalkView.class.getName()));
+        placeController.goTo(places.get().setPath(ContactPanel.class.getName()));
       }
     });
 
@@ -141,7 +141,7 @@ public class BookListPanel extends Composite implements ProvideActivities {
 
   @Override
   public List<Activity> provideActivities() {
-    return Arrays.<Activity> asList(bookFlipOfBookListPanel, libraryView);
+    return Arrays.<Activity> asList(bookFlipOfBookListPanel, libraryView, searchPanel);
   }
 
 }
