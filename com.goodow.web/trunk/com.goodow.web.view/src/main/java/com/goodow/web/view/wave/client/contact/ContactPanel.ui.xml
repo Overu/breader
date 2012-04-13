@@ -1,0 +1,66 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style>
+    .headRoot {
+      padding: 4px 3px 4px 0;
+      -ktml-user-drag: none;
+    }
+    
+    .headRoot>*:first-child {
+      padding: 4px 4px 8px 9px;
+      cursor: pointer;
+    }
+    
+    .firstHead {
+      margin-right: 4px;
+      border-width: 1px;
+      float: left;
+      position: relative;
+      border-style: solid;
+      border-color: rgb(202, 208, 217);
+    }
+    
+    .headRoot>*:first-child+div {
+      clear: both;
+    }
+    
+    .picture {
+      margin-right: 4px;
+      border-width: 1px;
+      border-style: solid;
+      border-color: rgb(202, 208, 217);
+    }
+    
+    .picture>img {
+      width: 27px !important;
+      height: 27px !important;
+      background-size: contain;
+    }
+    
+    @sprite .status {
+      gwt-image: "status";
+      position: absolute;
+      right: -4px;
+      bottom: -3px;
+    }
+    
+    .fonted {
+      height: 30px;
+      font-weight: bold;
+      display: inline;
+      text-overflow: ellipsis;
+    }
+  </ui:style>
+  <ui:image field="status"></ui:image>
+  <g:HTMLPanel ui:field="root" addStyleNames="{style.headRoot}">
+    <div>
+      <div class="{style.firstHead}">
+        <div class="{style.picture}" ui:field="picture"></div>
+        <div class="{style.status}"></div>
+      </div>
+      <div class="{style.fonted}" id="fonted">goodow</div>
+    </div>
+    <g:HTMLPanel ui:field="waveSearch">
+    </g:HTMLPanel>
+  </g:HTMLPanel>
+</ui:UiBinder> 
