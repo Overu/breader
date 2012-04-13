@@ -21,20 +21,19 @@
       border-color: hsl(215, 30%, 79%);
     }
     
+    @sprite .usersImage {
+      width: 40px;
+      height: 40px;
+      gwt-image: 'UserGroup';
+      -khtml-user-drag: none;
+      background-size: contain;
+    }
     @sprite .userImage {
       width: 40px;
       height: 40px;
       gwt-image: 'UserStatusUnknown';
       -khtml-user-drag: none;
       background-size: contain;
-    }
-    
-    @sprite .online {
-      right: -4px;
-      bottom: -3px;
-      overflow: hidden;
-      position: absolute;
-      gwt-image: 'UserStatusOnline';
     }
     
     .div_box {
@@ -99,9 +98,44 @@
     @sprite .div_close:hover {
       gwt-image: 'UserStatusCloseHover';
     }
+    
+    @sprite .online {
+      right: -4px;
+      bottom: -3px;
+      overflow: hidden;
+      position: absolute;
+      gwt-image: 'UserStatusOnline';
+    }
+    
+    @sprite .group {
+      right: -4px;
+      bottom: -3px;
+      overflow: hidden;
+      position: absolute;
+      gwt-image: 'UserGroupStatus';
+    }
+    
+    @sprite .idle {
+      right: -4px;
+      bottom: -3px;
+      overflow: hidden;
+      position: absolute;
+      gwt-image: 'UserIdleStatus';
+    }
+    @sprite .invisible {
+      right: -4px;
+      bottom: -3px;
+      overflow: hidden;
+      position: absolute;
+      gwt-image: 'UserInvisibleStatus';
+    }
   </ui:style>
+  <ui:image field="UserGroup"></ui:image>
   <ui:image field="UserStatusUnknown"></ui:image>
   <ui:image field="UserStatusOnline"></ui:image>
+  <ui:image field="UserIdleStatus"></ui:image>
+  <ui:image field="UserGroupStatus"></ui:image>
+  <ui:image field="UserInvisibleStatus"></ui:image>
   <ui:image field="UserStatusAdd"></ui:image>
   <ui:image field="UserStatusMore"></ui:image>
   <ui:image field="UserStatusClose"></ui:image>
@@ -117,7 +151,19 @@
     <div class="{style.div_user}">
       <div>
         <div class="{style.userImage}"></div>
-        <div class="{style.online}"></div>
+        <div class="{style.idle}"></div>
+      </div>
+    </div>
+    <div class="{style.div_user}">
+      <div>
+        <div class="{style.userImage}"></div>
+        <div class="{style.invisible}"></div>
+      </div>
+    </div>
+    <div class="{style.div_user}">
+      <div>
+        <div class="{style.usersImage}"></div>
+        <div class="{style.group}"></div>
       </div>
     </div>
     <div class="{style.div_box}">
@@ -126,15 +172,15 @@
     </div>
     <div class="{style.box}">
       <div class="{style.box_font}">
-<!--         <span> -->
-<!--           You can now add -->
-<!--           <strong> -->
-<!--             any -->
-<!--             <br /> -->
-<!--             email address -->
-<!--           </strong> -->
-<!--           to a wave! -->
-<!--         </span> -->
+        <!-- <span> -->
+        <!-- You can now add -->
+        <!-- <strong> -->
+        <!-- any -->
+        <!-- <br /> -->
+        <!-- email address -->
+        <!-- </strong> -->
+        <!-- to a wave! -->
+        <!-- </span> -->
         <span class="{style.div_font}">正在读此书.</span>
       </div>
       <div class="{style.div_close}"></div>
