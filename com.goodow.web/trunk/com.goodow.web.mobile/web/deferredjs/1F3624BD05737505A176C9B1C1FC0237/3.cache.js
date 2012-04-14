@@ -1,6 +1,0 @@
-function nd(a){this.b=a}
-function qd(a){this.b=a}
-function td(a){this.b=a}
-function Vec(){var a;a=new ld;return a}
-function ld(){var a;kd.call(this);a=new Egb(dpc);a.X.style[Bpc]=Gvc;a.X.style[zpc]='700px';jd(this,a);jc(a,new nd(this),(Hx(),Hx(),Gx));jc(a,new qd(this),(Bx(),Bx(),Ax));jc(a,new td(this),(tx(),tx(),sx))}
-UZ(28,29,Nmc,ld);_.b=false;_.c=0;_.d=0;UZ(33,1,Omc,nd);_.wb=function od(a){var b,c,d;a.b.preventDefault();d=a.b.touches;if(d.length==2){b=d[0];c=d[1];this.b.c=b.pageX;this.b.d=c.pageX;this.b.b=true}};_.b=null;UZ(34,1,Pmc,qd);_.xb=function rd(a){var b,c,d,e,f,g,i;a.b.preventDefault();if(this.b.b){i=a.b.touches;d=i[0];f=i[1];e=d.pageX;g=f.pageX;b=e-this.b.c;c=g-this.b.d;if(b>0&&c>0&&(b>100||c>100)){wcb();$wnd.history.forward();this.b.b=false;return}else if(b<0&&c<0&&(b<-100||c<-100)){ycb();this.b.b=false;return}}};_.b=null;UZ(35,1,Qmc,td);_.yb=function ud(a){a.b.preventDefault();this.b.b=false};_.b=null;UZ(1241,1,Yoc);_.kc=function Mic(){yjc(this.c,Vec(this.b.b))};var AE=E3b(yuc,'WaveTest$1',33,YU),BE=E3b(yuc,'WaveTest$2',34,YU),CE=E3b(yuc,'WaveTest$3',35,YU);$oc(Yl)(3);
