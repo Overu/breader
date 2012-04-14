@@ -70,6 +70,12 @@ public class ContactPanel extends WavePanel {
     waveTitle.setText("联系人");
     searchBox.getTextBox().getElement().setAttribute("placeholder", "查找联系人");
 
+    uiBinder.createAndBindUi(this);
+    picture.appendChild(createIcon(res.unknown()));
+    root.addStyleName(WavePanelResources.css().waveHeader());
+    waveSearch.add(searchBox);
+    this.add(root);
+
     FlowPanel toDo = new FlowPanel();
     toDo.addStyleName(WavePanelResources.css().waveWarning());
     toDo.add(new HTML("<b>已完成：<b>"));
@@ -83,12 +89,6 @@ public class ContactPanel extends WavePanel {
     toDo.add(new Label("11.6 分享图书（中） "));
     add(toDo);
 
-    uiBinder.createAndBindUi(this);
-
-    picture.appendChild(createIcon(res.unknown()));
-    root.addStyleName(WavePanelResources.css().waveHeader());
-    waveSearch.add(searchBox);
-    this.add(root);
     waveContented.addStyleName(WavePanelResources.css().waveContent());
     picture_Content.appendChild(createIcon(res.waveContactContent()));
     this.add(waveContented);
