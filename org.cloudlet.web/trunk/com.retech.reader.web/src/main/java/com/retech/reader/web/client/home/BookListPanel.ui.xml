@@ -10,9 +10,9 @@
     <div>
       <app:BookFlip ui:field="bookFlipOfBookListPanel"></app:BookFlip>
     </div>
-    <div>
+    <!-- <div>
       <app:SearchPanel ui:field="searchPanel"></app:SearchPanel>
-    </div>
+    </div> -->
     <div>
       <app:LibraryView ui:field="libraryView"></app:LibraryView>
     </div>

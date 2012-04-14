@@ -69,8 +69,9 @@ public class BookListPanel extends Composite implements ProvideActivities {
   LibraryView libraryView;
   @UiField(provided = true)
   WavePanel waveToolbar;
-  @UiField(provided = true)
-  SearchPanel searchPanel;
+
+  // @UiField(provided = true)
+  // SearchPanel searchPanel;
 
   @Inject
   BookListPanel(final Provider<BasePlace> places, final BookFlip bookFlipOfBookListPanel,
@@ -79,7 +80,7 @@ public class BookListPanel extends Composite implements ProvideActivities {
     this.bookFlipOfBookListPanel = bookFlipOfBookListPanel;
     this.libraryView = libraryView;
     this.waveToolbar = waveToolbar;
-    this.searchPanel = searchPanel;
+    // this.searchPanel = searchPanel;
     toolbar = waveToolbar.addWaveToolBar();
     initWidget(binder.createAndBindUi(this));
 
@@ -141,7 +142,7 @@ public class BookListPanel extends Composite implements ProvideActivities {
 
   @Override
   public List<Activity> provideActivities() {
-    return Arrays.<Activity> asList(bookFlipOfBookListPanel, libraryView, searchPanel);
+    return Arrays.<Activity> asList(bookFlipOfBookListPanel, libraryView);
   }
 
 }
