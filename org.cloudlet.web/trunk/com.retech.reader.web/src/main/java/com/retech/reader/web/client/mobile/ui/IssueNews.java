@@ -115,7 +115,7 @@ public class IssueNews extends WavePanel implements Activity {
     toDo.add(new Label("7.9 该书读者用户在线状态及实时交流（难）"));
     toDo.add(new Label("7.10 标签展示（中）"));
     toDo.add(new Label("7.11 添加标签（难）"));
-    add(toDo);
+    insert(toDo, 1);
 
     this.setWaveContent(binder.createAndBindUi(this));
 
