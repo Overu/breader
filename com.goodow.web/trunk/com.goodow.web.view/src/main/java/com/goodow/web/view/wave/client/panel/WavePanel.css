@@ -41,4 +41,12 @@
   background: hsl(59, 95%, 92%);
   padding: 10px 2px 8px 7px;
   border-bottom: 1px solid hsl(58, 21%, 55%);
+  height: 12px;
+  -webkit-transition: all 1s;
+}
+@charset "UTF-8";.waveWarning::before {
+  content: '\5f00\53d1\4e2d...';
+}
+.waveWarning:hover{
+  height: 500px;
 }
