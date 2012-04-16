@@ -38,7 +38,7 @@
     @if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
       .coverflowTitle>div>img {
       	-webkit-border-radius: 10px 10px;
-      	-webkit-box-reflect: below 25px -webkit-gradient(linear, literal("left top"), literal("left bottom"), from(transparent), color-stop(0.8, transparent), to(rgba(255, 255, 255, 0.3) ) );
+      	-webkit-box-reflect: below 25px -webkit-gradient(linear, literal("left top"), literal("left bottom"), from(transparent), color-stop(0.8, transparent), to(rgba(255, 255, 255, 0.7) ) );
       }
     }
     @else {
@@ -67,13 +67,6 @@
       border: 1px solid rgb(85, 144, 210);;
       -webkit-border-radius: 20px;
       width: 100%;
-    }
-    
-    .coverflowTitle>div>div>span {
-      border: 1px solid rgb(85, 144, 210);;
-      -webkit-border-radius: 20px;
-      text-align: center;
-      padding: 2px 15px 2px;
       color: white;
     }
   </ui:style>

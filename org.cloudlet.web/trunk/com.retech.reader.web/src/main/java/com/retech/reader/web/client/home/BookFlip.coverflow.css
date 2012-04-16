@@ -23,7 +23,7 @@
 @if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
   .coverflow_2 {
     -webkit-transform: rotateY(55deg) translate(0px, 55px);
-    -webkit-opacity: 0.3;
+    -webkit-opacity: 0.5;
     left: 1%;
     z-index: 0;
   }
@@ -31,7 +31,7 @@
 @else {
   .coverflow_2 {
     -webkit-transform: translate(0px, 55px);
-    -webkit-opacity: 0.3;
+    -webkit-opacity: 0.5;
     left: 1%;
     z-index: 0;
   }
@@ -89,7 +89,7 @@
 @if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
   .coverflow2 {
     -webkit-transform: rotateY(-55deg) translate(0px, 55px);
-    -webkit-opacity: 0.3;
+    -webkit-opacity: 0.5;
     left: 67%;
     z-index: 0;
   }
@@ -97,7 +97,7 @@
 @else {
   .coverflow2 {
     -webkit-transform: translate(0px, 55px);
-    -webkit-opacity: 0.3;
+    -webkit-opacity: 0.5;
     left: 67%;
     z-index: 0;
   }
