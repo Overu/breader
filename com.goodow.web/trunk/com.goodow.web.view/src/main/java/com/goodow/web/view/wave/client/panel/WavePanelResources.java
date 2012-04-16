@@ -38,7 +38,7 @@ public class WavePanelResources {
     @Source("WavePanel.css")
     Style style();
 
-    ImageResource waveAnnimation();
+    ImageResource waveAnimation();
   }
 
   private static Bundle INSTANCE;
