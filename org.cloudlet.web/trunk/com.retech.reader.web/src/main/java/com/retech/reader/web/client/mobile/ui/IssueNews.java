@@ -75,10 +75,6 @@ public class IssueNews extends WavePanel implements Activity {
   DivElement viewcount;
   @UiField
   DivElement category;
-  @UiField
-  WaveToolBar waveToolbar;
-  @UiField(provided = true)
-  TagsPanel tagsPanel;
   private static Resources res = GWT.create(Resources.class);
   private static Binder binder = GWT.create(Binder.class);
   private static final Logger logger = Logger.getLogger(IssueNews.class.getName());
@@ -90,16 +86,19 @@ public class IssueNews extends WavePanel implements Activity {
   private IssueProxy proxy;
   private final PlaceController placeController;
   private final LocalStorage storage;
+  private final WaveToolBar waveToolbar;
 
   @Inject
   public IssueNews(final ReaderFactory f, final Provider<BasePlace> places,
-      final PlaceController placeController, final LocalStorage storage, final TagsPanel tagsPanel) {
+      final PlaceController placeController, final LocalStorage storage, final TagsPanel tagsPanel,
+      final UserStatus userStatus, final WaveToolBar waveToolbar) {
     this.f = f;
     this.placeController = placeController;
     this.storage = storage;
-    this.tagsPanel = tagsPanel;
+    this.waveToolbar = waveToolbar;
 
-    this.setWaveContent(binder.createAndBindUi(this));
+    add(userStatus);
+    add(waveToolbar);
 
     FlowPanel toDo = new FlowPanel();
     toDo.addStyleName(WavePanelResources.css().waveWarning());
@@ -117,7 +116,10 @@ public class IssueNews extends WavePanel implements Activity {
     toDo.add(new Label("7.9 该书读者用户在线状态及实时交流（难）"));
     toDo.add(new Label("7.10 标签展示（中）"));
     toDo.add(new Label("7.11 添加标签（难）"));
-    insert(toDo, 2);
+    add(toDo);
+
+    this.setWaveContent(binder.createAndBindUi(this));
+    add(tagsPanel);
 
     final ToolBarClickButton readButton = waveToolbar.addClickButton();
     readButton.setText("在线阅读");

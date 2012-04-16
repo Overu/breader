@@ -42,8 +42,6 @@
   </ui:style>
 
   <g:HTMLPanel>
-  <app:UserStatus ui:field="users"></app:UserStatus>
-    <wave:WaveToolBar ui:field="waveToolbar"></wave:WaveToolBar>
     <div class="{style.div_news}">
       <div class="{style.div_image}">
         <g:Image ui:field="image" width="100%"></g:Image>
@@ -59,6 +57,5 @@
     </div>
       <div class="{style.label}">简介</div>
       <div ui:field="detail" class="{style.div_intro}"></div>
-    <app:TagsPanel ui:field="tagsPanel"></app:TagsPanel>
   </g:HTMLPanel>
 </ui:UiBinder>
