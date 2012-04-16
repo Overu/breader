@@ -48,6 +48,6 @@
     <div class="{style.tag}">标签:</div>
     <g:FlowPanel addStyleNames="{style.boxTag}" ui:field="tagValue"></g:FlowPanel>
     <div class="{style.addButton}"></div>
-    <g:Button addStyleNames="{style.button}" ui:field="Buttoned">下一本</g:Button>
+    <g:Button addStyleNames="{style.button}" ui:field="buttoned">下一本</g:Button>
   </g:HTMLPanel>
 </ui:UiBinder>
