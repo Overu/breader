@@ -1,0 +1,52 @@
+CACHE MANIFEST
+# Unique id #1334542104095.0.19310678068828402
+# Note: must change this every time for cache to invalidate
+
+CACHE:
+# Static app files
+/index.html
+/icons/favicon.ico
+/icons/icon.png
+
+# Generated app files
+B8EBB731DF723365D6F59423DFE33678.cache.html
+clear.cache.gif
+deferredjs/B8EBB731DF723365D6F59423DFE33678/1.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/10.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/11.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/12.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/13.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/14.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/15.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/16.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/17.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/18.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/19.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/2.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/20.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/3.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/4.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/5.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/6.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/7.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/8.cache.js
+deferredjs/B8EBB731DF723365D6F59423DFE33678/9.cache.js
+gwt/clean/clean.css
+gwt/clean/clean_rtl.css
+gwt/clean/images/circles.png
+gwt/clean/images/circles_ie6.png
+gwt/clean/images/corner.png
+gwt/clean/images/corner_ie6.png
+gwt/clean/images/hborder.png
+gwt/clean/images/hborder_ie6.png
+gwt/clean/images/thumb_horz.png
+gwt/clean/images/thumb_vertical.png
+gwt/clean/images/vborder.png
+gwt/clean/images/vborder_ie6.png
+hosted.html
+web.nocache.js
+
+
+# All other resources require the user to be online.
+NETWORK:
+*
