@@ -76,7 +76,8 @@ public final class SecurityGinModule extends AbstractGinModule {
 
         @Override
         public void updateReady() {
-          if (GWT.isProdMode() && Window.confirm("检测到新版本,是否立即升级?")) {
+          if (GWT.isProdMode()) {// && Window.confirm("检测到新版本,是否立即升级?")) {
+            Window.alert("睿泰阅读已升级至最新版本");
             Storage.getLocalStorageIfSupported().clear();
             Window.Location.reload();
           }
