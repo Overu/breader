@@ -19,6 +19,9 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -35,6 +38,13 @@ public class WidgetContainer extends FlowPanel implements AcceptsOneWidget {
   private static final String[] STYLE_NAMES = new String[] {
       CSS.widgetPreviousBegin(), CSS.widgetPreviousEnd(), CSS.widgetCurrentBegin(),
       CSS.widgetCurrentEnd()};
+
+  private static native void setTransitionEndListener(Element elem, EventListener listener)/*-{
+                                                                                           var callBack = function(e){
+                                                                                           listener.@com.google.gwt.user.client.EventListener::onBrowserEvent(Lcom/google/gwt/user/client/Event;)(e);
+                                                                                           };
+                                                                                           elem.addEventListener('webkitTransitionEnd', callBack, false);
+                                                                                           }-*/;
 
   @Inject
   WidgetContainer() {
@@ -71,6 +81,15 @@ public class WidgetContainer extends FlowPanel implements AcceptsOneWidget {
     setStyle(previousWidget, CSS.widgetPreviousBegin());
     insert(currentWidget, 0);
     FeatureDetection.hideAddressBar();
+    if (previousWidget != null) {
+      setTransitionEndListener(previousWidget.getElement(), new EventListener() {
+
+        @Override
+        public void onBrowserEvent(final Event event) {
+          previousWidget.removeFromParent();
+        }
+      });
+    }
     Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 
       @Override
