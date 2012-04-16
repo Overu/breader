@@ -99,6 +99,8 @@ public class IssueNews extends WavePanel implements Activity {
     this.storage = storage;
     this.tagsPanel = tagsPanel;
 
+    this.setWaveContent(binder.createAndBindUi(this));
+
     FlowPanel toDo = new FlowPanel();
     toDo.addStyleName(WavePanelResources.css().waveWarning());
     toDo.add(new HTML("<b>已完成：<b>"));
@@ -115,9 +117,7 @@ public class IssueNews extends WavePanel implements Activity {
     toDo.add(new Label("7.9 该书读者用户在线状态及实时交流（难）"));
     toDo.add(new Label("7.10 标签展示（中）"));
     toDo.add(new Label("7.11 添加标签（难）"));
-    insert(toDo, 1);
-
-    this.setWaveContent(binder.createAndBindUi(this));
+    insert(toDo, 2);
 
     final ToolBarClickButton readButton = waveToolbar.addClickButton();
     readButton.setText("在线阅读");
