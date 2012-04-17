@@ -178,7 +178,7 @@ public class BookFlip extends WavePanel implements Activity {
           onStartDefault();
           return false;
         }
-      }, 500);
+      }, 5000);
       // addEventListener(new OnStartDefaultDeviceReady() {
       //
       // @Override
