@@ -71,11 +71,11 @@ public final class LogHandler extends Handler {
     if (record.getLevel().intValue() >= Level.SEVERE.intValue()) {
       // popup.setAutoHideEnabled(false);
     }
-    if (record.getLevel().intValue() >= Level.WARNING.intValue()) {
-      popup.setGlassEnabled(true);
-    } else {
-      popup.setGlassEnabled(false);
-    }
+    // if (record.getLevel().intValue() >= Level.WARNING.intValue()) {
+    // popup.setGlassEnabled(true);
+    // } else {
+    // popup.setGlassEnabled(false);
+    // }
     currentLevel = record.getLevel();
 
     Formatter formatter = getFormatter();
