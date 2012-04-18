@@ -1,1 +1,0 @@
-c$(1234,1,spc);_.jc=function qic(){Ujc(this.c,wfc(this.b.b))};upc(bm)(19);
