@@ -24,6 +24,7 @@ import com.google.gwt.event.dom.client.TouchMoveHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 
 public class WaveTest extends WavePanel {
@@ -58,6 +59,7 @@ public class WaveTest extends WavePanel {
           x1 = touch1.getPageX();
           x2 = touch2.getPageX();
           start = true;
+          Window.alert("sdf");
         }
       }
     }, TouchStartEvent.getType());
