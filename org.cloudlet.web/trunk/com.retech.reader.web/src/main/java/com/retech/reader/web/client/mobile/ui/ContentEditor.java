@@ -74,7 +74,6 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchStart(final TouchStartEvent event) {
-        event.preventDefault();
         JsArray<Touch> touches = event.getTouches();
         if (touches.length() == 2) {
           Touch touchLeft = touches.get(0);
@@ -90,7 +89,6 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchMove(final TouchMoveEvent event) {
-        event.preventDefault();
         if (isStart) {
           JsArray<Touch> touches = event.getTouches();
           Touch touchLeft = touches.get(0);
@@ -110,7 +108,6 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchEnd(final TouchEndEvent event) {
-        event.preventDefault();
         isStart = false;
       }
     }, TouchEndEvent.getType());
