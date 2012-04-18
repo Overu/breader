@@ -98,11 +98,11 @@ public class ContentEditor extends WavePanel implements Activity {
             int righNowX = touchRight.getPageX();
             int pageLeftX = leftNowX - leftX;
             int pageRightX = righNowX - rightX;
-            logger.info("leftNowX:" + leftNowX + ";rightNowX:" + righNowX + ";pageLeftX:"
-                + pageLeftX + ";pageRightX:" + pageRightX);
+            // logger.info("leftNowX:" + leftNowX + ";rightNowX:" + righNowX + ";pageLeftX:"
+            // + pageLeftX + ";pageRightX:" + pageRightX);
             if (pageLeftX > 0 && pageRightX > 0) {
-              logger.info("ok");
-              sectionPanel.setWidth(String.valueOf(pageLeftX));
+              // logger.info("ok");
+              sectionPanel.setWidth(String.valueOf(pageLeftX) + "px");
             }
           }
         }
