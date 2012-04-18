@@ -19,7 +19,6 @@ import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -82,7 +81,6 @@ public class ContentEditor extends WavePanel implements Activity {
           leftX = touchLeft.getPageX();
           rightX = touchRight.getPageX();
           isStart = true;
-          Window.alert("TouchStart");
         }
       }
     }, TouchStartEvent.getType());
@@ -91,17 +89,21 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchMove(final TouchMoveEvent event) {
-        Window.alert("TouchMonve");
         if (isStart) {
           JsArray<Touch> touches = event.getTouches();
-          Touch touchLeft = touches.get(0);
-          Touch touchRight = touches.get(1);
-          int leftNowX = touchLeft.getPageX();
-          int righNowX = touchRight.getPageX();
-          int pageLeftX = leftNowX - leftX;
-          int pageRightX = righNowX - rightX;
-          if (pageLeftX > 0 && pageRightX > 0) {
-            sectionPanel.setWidth(String.valueOf(pageLeftX));
+          if (touches.length() == 2) {
+            Touch touchLeft = touches.get(0);
+            Touch touchRight = touches.get(1);
+            int leftNowX = touchLeft.getPageX();
+            int righNowX = touchRight.getPageX();
+            int pageLeftX = leftNowX - leftX;
+            int pageRightX = righNowX - rightX;
+            logger.info("leftNowX:" + leftNowX + ";rightNowX:" + righNowX + ";pageLeftX:"
+                + pageLeftX + ";pageRightX:" + pageRightX);
+            if (pageLeftX > 0 && pageRightX > 0) {
+              logger.info("ok");
+              sectionPanel.setWidth(String.valueOf(pageLeftX));
+            }
           }
         }
       }
@@ -111,7 +113,10 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchEnd(final TouchEndEvent event) {
-        Window.alert("TouchEnd");
+        JsArray<Touch> touches = event.getTouches();
+        if (touches.length() == 2) {
+          isStart = false;
+        }
         isStart = false;
       }
     }, TouchEndEvent.getType());
