@@ -19,6 +19,7 @@ import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -81,6 +82,7 @@ public class ContentEditor extends WavePanel implements Activity {
           leftX = touchLeft.getPageX();
           rightX = touchRight.getPageX();
           isStart = true;
+          Window.alert("TouchStart");
         }
       }
     }, TouchStartEvent.getType());
@@ -89,6 +91,7 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchMove(final TouchMoveEvent event) {
+        Window.alert("TouchMonve");
         if (isStart) {
           JsArray<Touch> touches = event.getTouches();
           Touch touchLeft = touches.get(0);
@@ -108,6 +111,7 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchEnd(final TouchEndEvent event) {
+        Window.alert("TouchEnd");
         isStart = false;
       }
     }, TouchEndEvent.getType());
