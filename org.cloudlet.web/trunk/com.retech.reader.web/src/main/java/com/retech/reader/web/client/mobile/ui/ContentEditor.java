@@ -4,13 +4,25 @@ import com.goodow.web.view.wave.client.panel.WavePanel;
 import com.goodow.web.view.wave.client.panel.WavePanelResources;
 
 import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.core.client.JsArray;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.dom.client.Touch;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.TouchEndEvent;
+import com.google.gwt.event.dom.client.TouchEndHandler;
+import com.google.gwt.event.dom.client.TouchMoveEvent;
+import com.google.gwt.event.dom.client.TouchMoveHandler;
+import com.google.gwt.event.dom.client.TouchStartEvent;
+import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -40,12 +52,68 @@ public class ContentEditor extends WavePanel implements Activity {
   private final PlaceController placeController;
   private PageProxy proxy;
   private final HTML html;
+  private int leftX = 0;
+  private int rightX = 0;
+  private boolean isStart = false;
+
+  private HTMLPanel sectionPanel;
 
   @Inject
   ContentEditor(final ReaderFactory f, final PlaceController placeController) {
     html = new HTML();
     this.f = f;
     this.placeController = placeController;
+    sectionPanel = new HTMLPanel("");
+    Style style = sectionPanel.getElement().getStyle();
+    sectionPanel.setHeight("100%");
+    style.setPosition(Position.ABSOLUTE);
+    style.setBackgroundColor("white");
+    style.setTop(0, Unit.PX);
+
+    this.addDomHandler(new TouchStartHandler() {
+
+      @Override
+      public void onTouchStart(final TouchStartEvent event) {
+        event.preventDefault();
+        JsArray<Touch> touches = event.getTouches();
+        if (touches.length() == 2) {
+          Touch touchLeft = touches.get(0);
+          Touch touchRight = touches.get(1);
+          leftX = touchLeft.getPageX();
+          rightX = touchRight.getPageX();
+          isStart = true;
+        }
+      }
+    }, TouchStartEvent.getType());
+
+    this.addDomHandler(new TouchMoveHandler() {
+
+      @Override
+      public void onTouchMove(final TouchMoveEvent event) {
+        event.preventDefault();
+        if (isStart) {
+          JsArray<Touch> touches = event.getTouches();
+          Touch touchLeft = touches.get(0);
+          Touch touchRight = touches.get(1);
+          int leftNowX = touchLeft.getPageX();
+          int righNowX = touchRight.getPageX();
+          int pageLeftX = leftNowX - leftX;
+          int pageRightX = righNowX - rightX;
+          if (pageLeftX > 0 && pageRightX > 0) {
+            sectionPanel.setWidth(String.valueOf(pageLeftX));
+          }
+        }
+      }
+    }, TouchMoveEvent.getType());
+
+    this.addDomHandler(new TouchEndHandler() {
+
+      @Override
+      public void onTouchEnd(final TouchEndEvent event) {
+        event.preventDefault();
+        isStart = false;
+      }
+    }, TouchEndEvent.getType());
 
     FlowPanel toDo = new FlowPanel();
     toDo.addStyleName(WavePanelResources.css().waveWarning());
@@ -63,6 +131,7 @@ public class ContentEditor extends WavePanel implements Activity {
     add(toDo);
 
     this.setWaveContent(html);
+    this.getWidget(1).getElement().appendChild(sectionPanel.getElement());
 
     html.addClickHandler(new ClickHandler() {
 
