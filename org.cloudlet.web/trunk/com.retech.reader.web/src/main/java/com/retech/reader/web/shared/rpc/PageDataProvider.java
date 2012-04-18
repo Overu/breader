@@ -4,7 +4,6 @@ import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.shared.Request;
 
 import com.retech.reader.web.shared.proxy.PageProxy;
@@ -15,7 +14,6 @@ import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 import java.util.List;
 
-@Singleton
 public class PageDataProvider extends AsyncDataProvider<PageProxy> {
 
   private final ReaderFactory f;
