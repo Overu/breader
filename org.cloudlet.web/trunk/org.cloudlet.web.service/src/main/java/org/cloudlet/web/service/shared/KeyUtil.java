@@ -14,9 +14,11 @@
 package org.cloudlet.web.service.shared;
 
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 
+@Singleton
 public class KeyUtil {
   public static final String ANY_SEPARATOR_PATTERN = "@[abc]@";
   public static final String PROXY_SEPARATOR = "@a@";

@@ -9,6 +9,8 @@ import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.google.web.bindery.requestfactory.shared.impl.AbstractRequestContext;
 
+import org.cloudlet.web.service.shared.FileProxyStore;
+import org.cloudlet.web.service.shared.KeyUtil;
 import org.cloudlet.web.service.shared.LocalStorage;
 
 import java.util.HashSet;
@@ -21,7 +23,9 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
   @Inject
   private static LocalStorage storage;
   @Inject
-  private static RequestFactory f;
+  private static FileProxyStore fileStorage;
+  @Inject
+  private static KeyUtil keyUtil;
 
   private String key;
 
@@ -64,31 +68,41 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
 
   @Override
   public void onSuccess(final V response) {
-    onSuccessAndCached(response);
+    // if (!(response instanceof ResourceProxy)) {
     storage.put(key, response);
+    onSuccessAndCached(response);
+    // return;
+    // }
+    // fileStorage.put(key, content, call)
+
   }
 
   public abstract void onSuccessAndCached(final V response);
 
   public abstract Request<V> provideRequest();
 
-  public BaseReceiver<V> setKeyForList(final EntityProxyId<?> parentId, final String listKey) {
-    this.key = f.getHistoryToken(parentId) + LocalStorage.LIST_SEPARATOR + listKey;
+  public BaseReceiver<V> setKey(final String key) {
+    this.key = key;
     return this;
   }
 
-  public BaseReceiver<V> setKeyForList(final String listKey) {
-    this.key = LocalStorage.LIST_SEPARATOR + listKey;
+  public BaseReceiver<V> setKeyForList(final EntityProxyId<?> parentId, final String listKey) {
+    this.key = keyUtil.proxyListKey(parentId, listKey);
     return this;
   };
 
+  public BaseReceiver<V> setKeyForList(final String listKey) {
+    this.key = keyUtil.listKey(listKey);
+    return this;
+  }
+
   public BaseReceiver<V> setKeyForProxy(final EntityProxyId<?> proxyId) {
-    this.key = f.getHistoryToken(proxyId);
+    this.key = keyUtil.proxy(proxyId);
     return this;
   }
 
   public BaseReceiver<V> setKeyForProxy(final EntityProxyId<?> parentId, final String key) {
-    this.key = f.getHistoryToken(parentId) + LocalStorage.PROXY_SEPARATOR + key;
+    this.key = keyUtil.proxyKey(parentId, key);
     return this;
   }
 
