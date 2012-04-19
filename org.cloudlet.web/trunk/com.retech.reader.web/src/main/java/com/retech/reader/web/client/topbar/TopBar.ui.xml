@@ -3,24 +3,49 @@
   <ui:style>
     .topBar {
       display: -webkit-box;
+      font-family: arial, sans-serif;
       height: 100%;
     }
     
     .topBar>*:first-child {
       -webkit-box-flex: 1;
-      padding: 3px;
+      padding: 3px 0 0 0;
     }
     
     .topBar>*:last-child {
+      position: relative;
+      z-index: 60;
       line-height: 33px;
       border-right: 10px solid transparent;
     }
+    
+    .topBar>*:last-child>* {
+      display: inline;
+      cursor:default;
+    }
+    
+    .topBar>*:last-child>div {
+      margin: 0 4px;
+    }
+    
+    .topBar>*:last-child>span {
+      font-weight: bold;
+      padding-right: 5px;
+      white-space: nowrap;
+    }
+    
+    .topBar>*:last-child>a {
+      cursor: pointer;
+      text-decoration: underline;
+      margin: 0 2px;
+    }
+    
   </ui:style>
   <ui:image field="retechcorpLogo" />
   <g:HTMLPanel addStyleNames='{style.topBar}'>
     <div>
       <g:Image resource='{retechcorpLogo}'></g:Image>
     </div>
-    <div>About</div>
+    <div><span>欢迎</span><div>|</div><a href="#">帮助</a><div>|</div><a href="#">退出</a></div>
   </g:HTMLPanel>
 </ui:UiBinder> 
