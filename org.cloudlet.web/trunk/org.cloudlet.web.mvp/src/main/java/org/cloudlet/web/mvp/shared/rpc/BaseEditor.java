@@ -182,7 +182,7 @@ public abstract class BaseEditor<T extends BaseEntityProxy> extends Composite im
         } else {
           callback.onSuccess(null);
         }
-        storage.remove(BaseEditor.this.proxy.stableId());
+        // storage.remove(BaseEditor.this.proxy.stableId());
       }
 
       @Override
