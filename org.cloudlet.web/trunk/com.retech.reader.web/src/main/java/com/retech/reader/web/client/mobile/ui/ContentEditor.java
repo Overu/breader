@@ -52,11 +52,12 @@ public class ContentEditor extends WavePanel implements Activity {
   private final PlaceController placeController;
   private PageProxy proxy;
   private final HTML html;
+
   private int leftX = 0;
   private int rightX = 0;
   private boolean isStart = false;
-
   private HTMLPanel sectionPanel;
+  private int leftIndex = 0;
 
   @Inject
   ContentEditor(final ReaderFactory f, final PlaceController placeController) {
@@ -64,12 +65,11 @@ public class ContentEditor extends WavePanel implements Activity {
     this.f = f;
     this.placeController = placeController;
     sectionPanel = new HTMLPanel("sadfsadfsadfsadfsadfsadfsdafsadfsadf");
-    Style style = sectionPanel.getElement().getStyle();
+    final Style style = sectionPanel.getElement().getStyle();
     sectionPanel.setHeight("100%");
     style.setPosition(Position.ABSOLUTE);
     style.setBackgroundColor("white");
     style.setTop(0, Unit.PX);
-    sectionPanel.getOffsetWidth();
 
     this.addDomHandler(new TouchStartHandler() {
 
@@ -82,7 +82,6 @@ public class ContentEditor extends WavePanel implements Activity {
           leftX = touchLeft.getPageX();
           rightX = touchRight.getPageX();
           isStart = true;
-          logger.info(String.valueOf(sectionPanel.getOffsetWidth()));
         }
       }
     }, TouchStartEvent.getType());
@@ -105,6 +104,24 @@ public class ContentEditor extends WavePanel implements Activity {
             if (pageLeftX > 0 && pageRightX > 0) {
               // logger.info("ok");
               // sectionPanel.setWidth(String.valueOf(pageLeftX) + "px");
+              leftIndex += pageLeftX;
+              if (leftIndex > 0) {
+                isStart = false;
+                leftIndex = 0;
+                style.setLeft(0, Unit.PX);
+                return;
+              }
+              style.setLeft(leftIndex, Unit.PX);
+            } else if (pageLeftX < 0 && pageRightX < 0) {
+              leftIndex += pageLeftX;
+              int offsetWidth = -sectionPanel.getOffsetWidth();
+              if (leftIndex < offsetWidth) {
+                isStart = false;
+                leftIndex = offsetWidth;
+                style.setLeft(leftIndex, Unit.PX);
+                return;
+              }
+              style.setLeft(leftIndex, Unit.PX);
             }
           }
         }
@@ -167,6 +184,8 @@ public class ContentEditor extends WavePanel implements Activity {
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
+    leftIndex = -sectionPanel.getOffsetWidth();
+    sectionPanel.getElement().getStyle().setLeft(leftIndex, Unit.PX);
     html.setHTML("");
     final EntityProxyId<IssueProxy> issueEntityId =
         ((BasePlace) placeController.getWhere()).getParam(IssueProxy.class);
