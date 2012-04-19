@@ -27,7 +27,7 @@
       float: right;
       /*background-position: 71px center;text-align: left;*/
       width: 93px;
-      box-shadow: 1px 1px 1px #fff;
+      box-shadow: 1px 1px 1px white;
     }
     
     .boxTag>a {
@@ -38,9 +38,10 @@
       cursor: pointer;
       float: left;
     }
+    
     .addTagPanel {
-    position: fixed;
-  }
+      position: fixed;
+    }
   </ui:style>
   <ui:image field="TagsPanelAdd"></ui:image>
   <ui:image field="TagsPanelAddActive"></ui:image>
