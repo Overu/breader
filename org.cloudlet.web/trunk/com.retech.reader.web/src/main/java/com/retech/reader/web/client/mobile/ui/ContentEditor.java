@@ -19,6 +19,7 @@ import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -81,11 +82,11 @@ public class ContentEditor extends WavePanel implements Activity {
           Touch touchRight = touches.get(1);
           leftX = touchLeft.getPageX();
           rightX = touchRight.getPageX();
-          int offsetWidth = -sectionPanel.getOffsetWidth();
+          int offsetWidth = sectionPanel.getOffsetWidth() + 10;
           if (leftIndex == 0 && leftX <= offsetWidth & rightX < offsetWidth) {
             isStart = true;
           }
-          if (leftX < 40 & rightX < 40) {
+          if (leftX < 60 & rightX < 60) {
             isStart = true;
           }
         }
@@ -140,14 +141,16 @@ public class ContentEditor extends WavePanel implements Activity {
       public void onTouchEnd(final TouchEndEvent event) {
         JsArray<Touch> touches = event.getTouches();
         if (touches.length() == 2) {
+          Window.alert("touchTwo");
           int offsetWidth = -sectionPanel.getOffsetWidth();
           if (leftIndex <= offsetWidth / 2) {
             style.setLeft(offsetWidth, Unit.PX);
-          } else if (leftIndex > offsetWidth * 0.2) {
+          } else if (leftIndex > offsetWidth / 2) {
             style.setLeft(0, Unit.PX);
           }
           isStart = false;
         }
+        Window.alert("touchOne");
         isStart = false;
       }
     }, TouchEndEvent.getType());
