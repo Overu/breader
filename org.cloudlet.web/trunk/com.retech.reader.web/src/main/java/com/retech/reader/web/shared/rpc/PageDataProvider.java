@@ -44,7 +44,7 @@ public class PageDataProvider extends AsyncDataProvider<PageProxy> {
     final Range range = display.getVisibleRange();
     if (list != null) {
       updateRowData(range.getStart(), list);
-      updateRowCount(list.size(), true);
+      // updateRowCount(list.size(), true);
       return;
     }
 
@@ -56,11 +56,11 @@ public class PageDataProvider extends AsyncDataProvider<PageProxy> {
     new BaseReceiver<List<PageProxy>>() {
       @Override
       public void onSuccessAndCached(final List<PageProxy> response) {
-        storage.put(parentProxy.stableId(), response);
+        // storage.put(parentProxy.stableId(), response);
         updateRowData(range.getStart(), response);
 
-        response.get(0).stableId();
-        updateRowCount(response.size(), true);
+        // response.get(0).stableId();
+        // updateRowCount(response.size(), true);
 
       }
 
@@ -68,6 +68,6 @@ public class PageDataProvider extends AsyncDataProvider<PageProxy> {
       public Request<List<PageProxy>> provideRequest() {
         return ctx.findPagesBySection(parentProxy).with(PageProxy.WITH);
       }
-    }.setKey(keyUtil.proxyListKey(parentProxy.stableId(), SectionProxy.class.getName())).fire();
+    }.setKey(keyUtil.proxyListKey(parentProxy.stableId(), PageProxy.class.getName())).fire();
   }
 }
