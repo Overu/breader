@@ -41,6 +41,7 @@ import com.retech.reader.web.shared.rpc.IssueContext;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
 import org.cloudlet.web.mvp.shared.BasePlace;
+import org.cloudlet.web.service.shared.KeyUtil;
 import org.cloudlet.web.service.shared.LocalStorage;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
@@ -82,11 +83,13 @@ public class LibraryView extends WavePanel implements Activity {
   private final LocalStorage storage;
   private final PlaceController placeController;
   private static final Resources res = GWT.create(Resources.class);
+  private final KeyUtil keyUtil;
 
   @Inject
   LibraryView(final ReaderFactory f, final Provider<BasePlace> places, final LocalStorage storage,
-      final PlaceController placeController) {
+      final PlaceController placeController, final KeyUtil keyUtil) {
     this.f = f;
+    this.keyUtil = keyUtil;
     this.places = places;
     this.storage = storage;
     this.placeController = placeController;
@@ -124,7 +127,7 @@ public class LibraryView extends WavePanel implements Activity {
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
 
-    List<IssueProxy> myIssues = storage.get(IssueProxy.MY_ISSUES, IssueProxy.class);
+    List<IssueProxy> myIssues = storage.get(keyUtil.listKey(IssueProxy.MY_ISSUES));
 
     libPanel.clear();
     if (myIssues != null) {

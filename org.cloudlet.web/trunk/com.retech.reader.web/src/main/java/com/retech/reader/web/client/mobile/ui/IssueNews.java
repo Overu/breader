@@ -40,6 +40,7 @@ import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
 import org.cloudlet.web.mvp.shared.BasePlace;
+import org.cloudlet.web.service.shared.KeyUtil;
 import org.cloudlet.web.service.shared.LocalStorage;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
@@ -87,15 +88,17 @@ public class IssueNews extends WavePanel implements Activity {
   private final PlaceController placeController;
   private final LocalStorage storage;
   private final WaveToolBar waveToolbar;
+  private final KeyUtil keyUtil;
 
   @Inject
   public IssueNews(final ReaderFactory f, final Provider<BasePlace> places,
       final PlaceController placeController, final LocalStorage storage, final TagsPanel tagsPanel,
-      final UserStatus userStatus, final WaveToolBar waveToolbar) {
+      final UserStatus userStatus, final WaveToolBar waveToolbar, final KeyUtil keyUtil) {
     this.f = f;
     this.placeController = placeController;
     this.storage = storage;
     this.waveToolbar = waveToolbar;
+    this.keyUtil = keyUtil;
 
     add(userStatus);
     add(waveToolbar);
@@ -153,7 +156,7 @@ public class IssueNews extends WavePanel implements Activity {
     addButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(final ClickEvent event) {
-        List<IssueProxy> issueBook = storage.get(IssueProxy.MY_ISSUES, IssueProxy.class);
+        List<IssueProxy> issueBook = storage.get(keyUtil.listKey(IssueProxy.MY_ISSUES));
         if (issueBook == null) {
           issueBook = new ArrayList<IssueProxy>();
         }
@@ -162,7 +165,7 @@ public class IssueNews extends WavePanel implements Activity {
           logger.info("已收藏");
           addButton.setState(State.DISABLED);
         }
-        storage.put(IssueProxy.MY_ISSUES, issueBook);
+        storage.put(keyUtil.listKey(IssueProxy.MY_ISSUES), issueBook);
       }
     });
     downloadButton.addClickHandler(new ClickHandler() {
@@ -212,7 +215,7 @@ public class IssueNews extends WavePanel implements Activity {
         viewcount.setInnerHTML(String.valueOf(proxy.getViewCount()));
         getWaveTitle().setText(proxy.getTitle());
         detail.setInnerHTML(proxy.getDetail());
-        List<IssueProxy> issueBook = storage.get(IssueProxy.MY_ISSUES, IssueProxy.class);
+        List<IssueProxy> issueBook = storage.get(keyUtil.listKey(IssueProxy.MY_ISSUES));
         if (issueBook == null) {
           issueBook = new ArrayList<IssueProxy>();
         }
