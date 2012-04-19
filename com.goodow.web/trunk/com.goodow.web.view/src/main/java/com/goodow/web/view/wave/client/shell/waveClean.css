@@ -7,6 +7,13 @@
   margin: 0;
 }
 
+a:link {
+  color: hsl(218, 100%, 33%);
+}
+a:visited {
+  color: hsl(258, 35%, 46%);
+}
+
 .gwt-Button {
   height: 24px;
   overflow: hidden;
