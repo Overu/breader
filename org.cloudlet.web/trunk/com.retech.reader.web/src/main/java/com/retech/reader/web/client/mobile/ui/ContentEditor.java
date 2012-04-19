@@ -81,7 +81,13 @@ public class ContentEditor extends WavePanel implements Activity {
           Touch touchRight = touches.get(1);
           leftX = touchLeft.getPageX();
           rightX = touchRight.getPageX();
-          isStart = true;
+          int offsetWidth = -sectionPanel.getOffsetWidth();
+          if (leftIndex == 0 && leftX <= offsetWidth & rightX < offsetWidth) {
+            isStart = true;
+          }
+          if (leftX < 40 & rightX < 40) {
+            isStart = true;
+          }
         }
       }
     }, TouchStartEvent.getType());
@@ -99,12 +105,13 @@ public class ContentEditor extends WavePanel implements Activity {
             int righNowX = touchRight.getPageX();
             int pageLeftX = leftNowX - leftX;
             int pageRightX = righNowX - rightX;
+            int offsetWidth = -sectionPanel.getOffsetWidth();
             // logger.info("leftNowX:" + leftNowX + ";rightNowX:" + righNowX + ";pageLeftX:"
             // + pageLeftX + ";pageRightX:" + pageRightX);
             if (pageLeftX > 0 && pageRightX > 0) {
+              leftIndex = offsetWidth + pageLeftX;
               // logger.info("ok");
               // sectionPanel.setWidth(String.valueOf(pageLeftX) + "px");
-              leftIndex += pageLeftX;
               if (leftIndex > 0) {
                 isStart = false;
                 leftIndex = 0;
@@ -113,8 +120,7 @@ public class ContentEditor extends WavePanel implements Activity {
               }
               style.setLeft(leftIndex, Unit.PX);
             } else if (pageLeftX < 0 && pageRightX < 0) {
-              leftIndex += pageLeftX;
-              int offsetWidth = -sectionPanel.getOffsetWidth();
+              leftIndex = offsetWidth + pageLeftX;
               if (leftIndex < offsetWidth) {
                 isStart = false;
                 leftIndex = offsetWidth;
@@ -134,6 +140,12 @@ public class ContentEditor extends WavePanel implements Activity {
       public void onTouchEnd(final TouchEndEvent event) {
         JsArray<Touch> touches = event.getTouches();
         if (touches.length() == 2) {
+          int offsetWidth = -sectionPanel.getOffsetWidth();
+          if (leftIndex <= offsetWidth / 2) {
+            style.setLeft(offsetWidth, Unit.PX);
+          } else if (leftIndex > offsetWidth * 0.2) {
+            style.setLeft(0, Unit.PX);
+          }
           isStart = false;
         }
         isStart = false;
