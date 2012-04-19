@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+
+.waveUser {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 2px 7px 3px;
+}
+
+.waveUser>* {
+  width: 40px !important;
+  height: 40px !important;
+  border: 1px solid hsl(215, 30%, 79%);
+  vertical-align: bottom;
+  background-size: contain;
+}
+
+@sprite .waveUserAvailable::after {
+  gwt-image: "userStatusAvailable";
+}
+
+@sprite .waveUserIdle::after {
+  gwt-image: "userStatusIdle";
+}
+
+@sprite .waveUserInvisible::after {
+  gwt-image: "userStatusInvisible";
+}
+
+@sprite .waveUserGroup::after {
+  gwt-image: "userStatusGroup";
+}
+
+.waveUserAvailable::after,.waveUserIdle::after,.waveUserInvisible::after,.waveUserGroup::after {
+  content: "";
+  display: inline-block;
+  margin-left: -8px;
+  margin-bottom: -2px;
+  vertical-align: bottom;
+}
