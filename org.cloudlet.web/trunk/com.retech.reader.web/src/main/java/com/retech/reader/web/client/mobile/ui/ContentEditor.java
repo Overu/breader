@@ -63,12 +63,13 @@ public class ContentEditor extends WavePanel implements Activity {
     html = new HTML();
     this.f = f;
     this.placeController = placeController;
-    sectionPanel = new HTMLPanel("");
+    sectionPanel = new HTMLPanel("sadfsadfsadfsadfsadfsadfsdafsadfsadf");
     Style style = sectionPanel.getElement().getStyle();
     sectionPanel.setHeight("100%");
     style.setPosition(Position.ABSOLUTE);
     style.setBackgroundColor("white");
     style.setTop(0, Unit.PX);
+    sectionPanel.getOffsetWidth();
 
     this.addDomHandler(new TouchStartHandler() {
 
@@ -81,6 +82,7 @@ public class ContentEditor extends WavePanel implements Activity {
           leftX = touchLeft.getPageX();
           rightX = touchRight.getPageX();
           isStart = true;
+          logger.info(String.valueOf(sectionPanel.getOffsetWidth()));
         }
       }
     }, TouchStartEvent.getType());
@@ -102,7 +104,7 @@ public class ContentEditor extends WavePanel implements Activity {
             // + pageLeftX + ";pageRightX:" + pageRightX);
             if (pageLeftX > 0 && pageRightX > 0) {
               // logger.info("ok");
-              sectionPanel.setWidth(String.valueOf(pageLeftX) + "px");
+              // sectionPanel.setWidth(String.valueOf(pageLeftX) + "px");
             }
           }
         }
