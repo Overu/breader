@@ -45,7 +45,7 @@ public class FeatureDetection {
                                              }-*/;
 
   public static native boolean mobileNative() /*-{
-                                              return $wnd.cordova != undefined;
+                                              return !(typeof($wnd.cordova) == "undefined") || !(typeof($wnd.Cordova) == "undefined");
                                               }-*/;
 
   private static native boolean connectionOfflineWeb() /*-{
