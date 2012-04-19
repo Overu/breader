@@ -1,1 +1,0 @@
-b$(1249,1,spc);_.jc=function njc(){Ujc(this.c,Nfc(this.b.b))};upc(am)(7);
