@@ -82,8 +82,8 @@ public class ContentEditor extends WavePanel implements Activity {
           Touch touchRight = touches.get(1);
           leftX = touchLeft.getPageX();
           rightX = touchRight.getPageX();
-          int offsetWidth = sectionPanel.getOffsetWidth() + 10;
-          if (leftIndex == 0 && leftX <= offsetWidth & rightX < offsetWidth) {
+          int offsetWidth = sectionPanel.getOffsetWidth() + 20;
+          if (leftIndex == 0 && leftX <= offsetWidth && rightX <= offsetWidth) {
             isStart = true;
           }
           if (leftX < 60 & rightX < 60) {
@@ -139,16 +139,22 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchEnd(final TouchEndEvent event) {
-        JsArray<Touch> touches = event.getTouches();
-        if (touches.length() == 2) {
-          Window.alert("touchTwo");
-          int offsetWidth = -sectionPanel.getOffsetWidth();
-          if (leftIndex <= offsetWidth / 2) {
-            style.setLeft(offsetWidth, Unit.PX);
-          } else if (leftIndex > offsetWidth / 2) {
-            style.setLeft(0, Unit.PX);
-          }
-          isStart = false;
+        // JsArray<Touch> touches = event.getTouches();
+        // if (touches.length() == 2) {
+        // Window.alert("touchTwo");
+        // int offsetWidth = -sectionPanel.getOffsetWidth();
+        // if (leftIndex <= offsetWidth / 2) {
+        // style.setLeft(offsetWidth, Unit.PX);
+        // } else if (leftIndex > offsetWidth / 2) {
+        // style.setLeft(0, Unit.PX);
+        // }
+        // isStart = false;
+        // }
+        int offsetWidth = -sectionPanel.getOffsetWidth();
+        if (leftIndex <= offsetWidth / 2) {
+          style.setLeft(offsetWidth, Unit.PX);
+        } else if (leftIndex > offsetWidth / 2) {
+          style.setLeft(0, Unit.PX);
         }
         Window.alert("touchOne");
         isStart = false;
