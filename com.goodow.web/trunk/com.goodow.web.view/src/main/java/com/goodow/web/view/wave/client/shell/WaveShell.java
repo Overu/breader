@@ -19,15 +19,12 @@ import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style;
-import com.google.gwt.dom.client.Style.Overflow;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -47,7 +44,8 @@ public class WaveShell extends Composite {
 
   private static WaveShellUiBinder uiBinder = GWT.create(WaveShellUiBinder.class);
   @UiField
-  AcceptsOneWidget container;
+  // AcceptsOneWidget container;
+  SimplePanel container;
   @UiField
   FlowPanel topBar;
 
@@ -61,10 +59,6 @@ public class WaveShell extends Composite {
     logger.finest("init start");
     initWidget(uiBinder.createAndBindUi(this));
     topBar.add(waveWarning);
-    Style style = getElement().getStyle();
-    style.setOverflowY(Overflow.AUTO);
-    style.setMarginTop(2, Unit.PX);
-    style.setMarginLeft(7, Unit.PX);
     Element loading = Document.get().getElementById("loading");
     if (loading != null) {
       loading.removeFromParent();
