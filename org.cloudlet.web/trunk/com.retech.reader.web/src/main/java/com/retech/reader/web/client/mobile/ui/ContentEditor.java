@@ -57,7 +57,7 @@ public class ContentEditor extends WavePanel implements Activity {
   private int rightX = 0;
   private boolean isStart = false;
   private HTMLPanel sectionPanel;
-  private int leftIndex = 0;
+  private int leftIndex = -1;
 
   @Inject
   ContentEditor(final ReaderFactory f, final PlaceController placeController) {
@@ -81,8 +81,7 @@ public class ContentEditor extends WavePanel implements Activity {
           Touch touchRight = touches.get(1);
           leftX = touchLeft.getPageX();
           rightX = touchRight.getPageX();
-          int offsetWidth = sectionPanel.getOffsetWidth() + 20;
-          if (leftIndex == 0 && leftX <= offsetWidth && rightX <= offsetWidth) {
+          if (leftIndex == 0) {
             isStart = true;
           }
           if (leftX < 60 & rightX < 60) {
@@ -119,11 +118,11 @@ public class ContentEditor extends WavePanel implements Activity {
                 style.setLeft(leftIndex, Unit.PX);
               }
             } else if (pageLeftX < 0 && pageRightX < 0) {
-              leftIndex = offsetWidth + pageLeftX;
+              leftIndex = offsetWidth - pageLeftX;
               if (leftIndex < offsetWidth) {
                 leftIndex = offsetWidth;
-                style.setLeft(leftIndex, Unit.PX);
-              } else {
+                style.setLeft(offsetWidth, Unit.PX);
+              } else if (pageLeftX <= -offsetWidth) {
                 style.setLeft(leftIndex, Unit.PX);
               }
             }
