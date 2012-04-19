@@ -99,21 +99,6 @@ public class LocalStorage {
     this.entitySource = (EntitySource) proxySerializers.get();
   }
 
-  public <T> List<T> get(final EntityProxyId<?> proxyId, final Class<T> valueType) {
-    return get(f.getHistoryToken(proxyId), valueType);
-  }
-
-  public <T extends BaseEntityProxy> T get(final EntityProxyId<T> id) {
-    String historyToken = f.getHistoryToken(id);
-    T toReturn = null;
-    // toReturn = (T) map.get(historyToken);
-    // if (toReturn != null) {
-    // return toReturn;
-    // }
-    toReturn = proxySerializers.get().deserialize(id);
-    return cache(historyToken, toReturn);
-  }
-
   @SuppressWarnings("unchecked")
   public <T> T get(final String key) {
     if (key == null) {
@@ -148,33 +133,29 @@ public class LocalStorage {
     return null;
   }
 
-  @SuppressWarnings("unchecked")
-  public <T> List<T> get(final String keyPrefix, final Class<T> valueType) {
-    String valueTypeToken = null;
-    try {
-      valueTypeToken = f.getHistoryToken((Class<? extends BaseEntityProxy>) valueType);
-    } catch (Exception e) {
-      valueTypeToken = valueType.getName();
-    }
-    String key = keyPrefix + "@" + valueTypeToken + "@";
-    List<T> toReturn = null;
-    // toReturn = (List<T>) map.get(key);
-    // if (toReturn != null) {
-    // return toReturn;
-    // }
-    toReturn =
-        (List<T>) EntityCodex.decode(entitySource, List.class, valueType, proxyStore.get(key));
-
-    return cache(key, toReturn);
-  }
+  // @SuppressWarnings("unchecked")
+  // public <T> List<T> get(final String keyPrefix, final Class<T> valueType) {
+  // String valueTypeToken = null;
+  // try {
+  // valueTypeToken = f.getHistoryToken((Class<? extends BaseEntityProxy>) valueType);
+  // } catch (Exception e) {
+  // valueTypeToken = valueType.getName();
+  // }
+  // String key = keyPrefix + "@" + valueTypeToken + "@";
+  // List<T> toReturn = null;
+  // // toReturn = (List<T>) map.get(key);
+  // // if (toReturn != null) {
+  // // return toReturn;
+  // // }
+  // toReturn =
+  // (List<T>) EntityCodex.decode(entitySource, List.class, valueType, proxyStore.get(key));
+  //
+  // return cache(key, toReturn);
+  // }
 
   public String put(final BaseEntityProxy proxy) {
     // map.put(f.getHistoryToken(proxy.stableId()), proxy);
     return proxySerializers.get().serialize(proxy);
-  }
-
-  public <T> void put(final EntityProxyId<?> proxyId, final List<T> values) {
-    put(f.getHistoryToken(proxyId), values);
   }
 
   public String put(final String key, final Object value) {
