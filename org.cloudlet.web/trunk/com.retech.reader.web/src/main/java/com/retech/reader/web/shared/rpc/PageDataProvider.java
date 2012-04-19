@@ -68,6 +68,6 @@ public class PageDataProvider extends AsyncDataProvider<PageProxy> {
       public Request<List<PageProxy>> provideRequest() {
         return ctx.findPagesBySection(parentProxy).with(PageProxy.WITH);
       }
-    }.setKeyForList(parentProxy.stableId(), SectionProxy.class.getName()).fire();
+    }.setKey(keyUtil.proxyListKey(parentProxy.stableId(), SectionProxy.class.getName())).fire();
   }
 }
