@@ -3,37 +3,12 @@
   <ui:style>
     .root {
       height: 45px;
-      padding: 7px 4px 4px 2px;
+      padding: 7px 4px 4px 3px;
       font-family: Arial, sans-serif;
     }
     
-    .div_user {
-      float: left;
-      padding: 0 2px 7px 3px;
-      text-decoration: none;
-    }
-    
-    .div_user>div {
-      border-width: 1px;
-      position: relative;
-      border-style: solid;
-      cursor: pointer;
-      border-color: hsl(215, 30%, 79%);
-    }
-    
-    @sprite .usersImage {
-      width: 40px;
-      height: 40px;
-      gwt-image: 'UserGroup';
-      -khtml-user-drag: none;
-      background-size: contain;
-    }
-    @sprite .userImage {
-      width: 40px;
-      height: 40px;
-      gwt-image: 'UserStatusUnknown';
-      -khtml-user-drag: none;
-      background-size: contain;
+    .users {
+      display: inline-block;
     }
     
     .div_box {
@@ -58,10 +33,6 @@
       gwt-image: 'UserStatusMore';
     }
     
-    .box { /*margin-left: -26px;*/
-      float: left;
-    }
-    
     .box_font {
       float: left;
       width: 156px;
@@ -71,6 +42,10 @@
       border: 1px solid hsl(58, 21%, 54%);
       background-color: hsl(59, 95%, 92%);
       -webkit-box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.15);
+    }
+    
+    .box {
+      display: inline-block;
     }
     
     @sprite .div_font {
@@ -90,7 +65,7 @@
       gwt-image: 'UserStatusClose';
       cursor: pointer;
       left: -18px;
-      margin-top: 5px;
+      top: 5px;
       position: relative;
       z-index: 1000;
     }
@@ -98,78 +73,18 @@
     @sprite .div_close:hover {
       gwt-image: 'UserStatusCloseHover';
     }
-    
-    @sprite .online {
-      right: -4px;
-      bottom: -3px;
-      overflow: hidden;
-      position: absolute;
-      gwt-image: 'UserStatusOnline';
-    }
-    
-    @sprite .group {
-      right: -4px;
-      bottom: -3px;
-      overflow: hidden;
-      position: absolute;
-      gwt-image: 'UserGroupStatus';
-    }
-    
-    @sprite .idle {
-      right: -4px;
-      bottom: -3px;
-      overflow: hidden;
-      position: absolute;
-      gwt-image: 'UserIdleStatus';
-    }
-    @sprite .invisible {
-      right: -4px;
-      bottom: -3px;
-      overflow: hidden;
-      position: absolute;
-      gwt-image: 'UserInvisibleStatus';
-    }
   </ui:style>
-  <ui:image field="UserGroup"></ui:image>
-  <ui:image field="UserStatusUnknown"></ui:image>
-  <ui:image field="UserStatusOnline"></ui:image>
-  <ui:image field="UserIdleStatus"></ui:image>
-  <ui:image field="UserGroupStatus"></ui:image>
-  <ui:image field="UserInvisibleStatus"></ui:image>
   <ui:image field="UserStatusAdd"></ui:image>
   <ui:image field="UserStatusMore"></ui:image>
   <ui:image field="UserStatusClose"></ui:image>
   <ui:image field="UserStatusCloseHover"></ui:image>
   <ui:image field="UserStatusLeftImage"></ui:image>
   <g:HTMLPanel addStyleNames="{style.root}">
-    <div class="{style.div_user}">
-      <div>
-        <div class="{style.userImage}"></div>
-        <div class="{style.online}"></div>
-      </div>
-    </div>
-    <div class="{style.div_user}">
-      <div>
-        <div class="{style.userImage}"></div>
-        <div class="{style.idle}"></div>
-      </div>
-    </div>
-    <div class="{style.div_user}">
-      <div>
-        <div class="{style.userImage}"></div>
-        <div class="{style.invisible}"></div>
-      </div>
-    </div>
-    <div class="{style.div_user}">
-      <div>
-        <div class="{style.usersImage}"></div>
-        <div class="{style.group}"></div>
-      </div>
-    </div>
     <div class="{style.div_box}">
       <div class="{style.div_add}" title="Add user or group to wave"></div>
       <div class="{style.div_more}" title="More actions"></div>
     </div>
+    <g:FlowPanel ui:field="users" addStyleNames="{style.users}"></g:FlowPanel>
     <div class="{style.box}">
       <div class="{style.box_font}">
         <!-- <span> -->
