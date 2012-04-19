@@ -9,6 +9,7 @@ import com.google.web.bindery.requestfactory.shared.Request;
 import com.retech.reader.web.shared.proxy.PageProxy;
 import com.retech.reader.web.shared.proxy.SectionProxy;
 
+import org.cloudlet.web.service.shared.KeyUtil;
 import org.cloudlet.web.service.shared.LocalStorage;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
@@ -22,10 +23,13 @@ public class PageDataProvider extends AsyncDataProvider<PageProxy> {
 
   private SectionProxy sectionProxy;
 
+  private final KeyUtil keyUtil;
+
   @Inject
-  PageDataProvider(final ReaderFactory f, final LocalStorage storage) {
+  PageDataProvider(final ReaderFactory f, final LocalStorage storage, final KeyUtil keyUtil) {
     this.f = f;
     this.storage = storage;
+    this.keyUtil = keyUtil;
   }
 
   public void setSectionProxy(final SectionProxy sectionProxy) {
@@ -34,7 +38,8 @@ public class PageDataProvider extends AsyncDataProvider<PageProxy> {
 
   @Override
   protected void onRangeChanged(final HasData<PageProxy> display) {
-    List<PageProxy> list = storage.get(sectionProxy.stableId(), PageProxy.class);
+    List<PageProxy> list =
+        storage.get(keyUtil.proxyListKey(sectionProxy.stableId(), PageProxy.class.getName()));
 
     final Range range = display.getVisibleRange();
     if (list != null) {
