@@ -1,5 +1,10 @@
 package org.cloudlet.web.service.shared;
 
+import static org.cloudlet.web.service.shared.KeyUtil.ANY_SEPARATOR_PATTERN;
+import static org.cloudlet.web.service.shared.KeyUtil.LIST_SEPARATOR;
+import static org.cloudlet.web.service.shared.KeyUtil.PROXY_SEPARATOR;
+import static org.cloudlet.web.service.shared.KeyUtil.SET_SEPARATOR;
+
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -30,10 +35,6 @@ import java.util.Set;
 
 @Singleton
 public class LocalStorage {
-  private static final String ANY_SEPARATOR_PATTERN = "@[abc]@";
-  public static final String PROXY_SEPARATOR = "@a@";
-  public static final String LIST_SEPARATOR = "@b@";
-  public static final String SET_SEPARATOR = "@c@";
 
   private static Splittable encode(final EntitySource source, Object value) {
     if (value == null) {
