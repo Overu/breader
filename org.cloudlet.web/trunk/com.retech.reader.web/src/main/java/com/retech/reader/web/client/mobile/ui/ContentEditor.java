@@ -19,7 +19,6 @@ import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -114,21 +113,19 @@ public class ContentEditor extends WavePanel implements Activity {
               // logger.info("ok");
               // sectionPanel.setWidth(String.valueOf(pageLeftX) + "px");
               if (leftIndex > 0) {
-                isStart = false;
                 leftIndex = 0;
                 style.setLeft(0, Unit.PX);
-                return;
+              } else {
+                style.setLeft(leftIndex, Unit.PX);
               }
-              style.setLeft(leftIndex, Unit.PX);
             } else if (pageLeftX < 0 && pageRightX < 0) {
               leftIndex = offsetWidth + pageLeftX;
               if (leftIndex < offsetWidth) {
-                isStart = false;
                 leftIndex = offsetWidth;
                 style.setLeft(leftIndex, Unit.PX);
-                return;
+              } else {
+                style.setLeft(leftIndex, Unit.PX);
               }
-              style.setLeft(leftIndex, Unit.PX);
             }
           }
         }
@@ -156,7 +153,6 @@ public class ContentEditor extends WavePanel implements Activity {
         } else if (leftIndex > offsetWidth / 2) {
           style.setLeft(0, Unit.PX);
         }
-        Window.alert("touchOne");
         isStart = false;
       }
     }, TouchEndEvent.getType());
