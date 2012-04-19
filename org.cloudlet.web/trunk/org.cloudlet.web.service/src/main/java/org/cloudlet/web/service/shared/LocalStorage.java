@@ -173,10 +173,6 @@ public class LocalStorage {
     return key;
   }
 
-  public void remove(final EntityProxyId<? extends EntityProxy> id) {
-
-  }
-
   private <T> T cache(final String key, final T value) {
     if (value != null) {
       // map.put(key, value);
@@ -194,25 +190,25 @@ public class LocalStorage {
     return key.matches(".*" + ANY_SEPARATOR_PATTERN + ".*");
   }
 
-  private <T> void put(final String keyPrefix, final List<T> values) {
-    String valueType = null;
-    boolean isEntityProxy = false;
-    for (T value : values) {
-      if (valueType == null) {
-        if (value instanceof BaseEntityProxy) {
-          isEntityProxy = true;
-          valueType = f.getHistoryToken(((BaseEntityProxy) value).stableId().getProxyClass());
-        } else {
-          valueType = value.getClass().getName();
-        }
-      }
-      if (isEntityProxy) {
-        proxySerializers.get().serialize((BaseEntityProxy) value);
-      }
-    }
-    String key = keyPrefix + "@" + valueType + "@";
-    // map.put(key, values);
-    proxyStore.put(key, EntityCodex.encode(entitySource, values));
-  }
+  // private <T> void put(final String keyPrefix, final List<T> values) {
+  // String valueType = null;
+  // boolean isEntityProxy = false;
+  // for (T value : values) {
+  // if (valueType == null) {
+  // if (value instanceof BaseEntityProxy) {
+  // isEntityProxy = true;
+  // valueType = f.getHistoryToken(((BaseEntityProxy) value).stableId().getProxyClass());
+  // } else {
+  // valueType = value.getClass().getName();
+  // }
+  // }
+  // if (isEntityProxy) {
+  // proxySerializers.get().serialize((BaseEntityProxy) value);
+  // }
+  // }
+  // String key = keyPrefix + "@" + valueType + "@";
+  // // map.put(key, values);
+  // proxyStore.put(key, EntityCodex.encode(entitySource, values));
+  // }
 
 }
