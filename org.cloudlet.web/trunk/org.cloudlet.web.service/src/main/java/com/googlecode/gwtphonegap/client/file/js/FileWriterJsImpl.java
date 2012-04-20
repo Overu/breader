@@ -13,6 +13,8 @@
  */
 package com.googlecode.gwtphonegap.client.file.js;
 
+import com.goodow.web.feature.client.FeatureDetection;
+
 import com.google.gwt.core.client.JavaScriptObject;
 
 import com.googlecode.gwtphonegap.client.file.FileError;
@@ -133,10 +135,13 @@ public class FileWriterJsImpl implements FileWriter {
   }
 
   @Override
-  public native void write(String text) /*-{ 
-                                        var writer = (this.@com.googlecode.gwtphonegap.client.file.js.FileWriterJsImpl::writer);
-                                        writer.write(text);
-                                        }-*/;
+  public void write(final String text) {
+    if (FeatureDetection.mobileNative()) {
+      writeCordova(text);
+    } else {
+      writeBrowser(text);
+    }
+  }
 
   private native double getLength0()/*-{
                                     return (this.@com.googlecode.gwtphonegap.client.file.js.FileWriterJsImpl::writer).length;
@@ -159,5 +164,17 @@ public class FileWriterJsImpl implements FileWriter {
                                                var writer = (this.@com.googlecode.gwtphonegap.client.file.js.FileWriterJsImpl::writer);
                                                writer.truncate(position);
                                                }-*/;
+
+  private native void writeBrowser(String text) /*-{ 
+                                                var writer = (this.@com.googlecode.gwtphonegap.client.file.js.FileWriterJsImpl::writer);
+                                                var bb = new window.WebKitBlobBuilder();
+                                                bb.append(text);
+                                                writer.write(bb.getBlob('text/plain'));
+                                                }-*/;
+
+  private native void writeCordova(String text) /*-{ 
+                                                var writer = (this.@com.googlecode.gwtphonegap.client.file.js.FileWriterJsImpl::writer);
+                                                writer.write(text);
+                                                }-*/;
 
 }
