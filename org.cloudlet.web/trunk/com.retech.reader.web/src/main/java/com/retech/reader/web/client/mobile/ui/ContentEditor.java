@@ -7,6 +7,7 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
@@ -61,6 +62,7 @@ public class ContentEditor extends WavePanel implements Activity {
   private HTMLPanel sectionPanel;
   private int leftIndex = -1;
   JsArray<Touch> touches = null;
+  private boolean scheduled;
 
   @Inject
   ContentEditor(final ReaderFactory f, final PlaceController placeController) {
@@ -86,8 +88,19 @@ public class ContentEditor extends WavePanel implements Activity {
 
             @Override
             public boolean execute() {
-              if (touches != null) {
-                printLog(touches);
+              if (touches != null && isStart && !scheduled) {
+                scheduled = true;
+                Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+                  @Override
+                  public void execute() {
+                    scheduled = false;
+                    printLog(touches);
+                  }
+                });
+              }
+              if (!isStart) {
+                logger.info("Scheduler end:" + isStart);
               }
               return isStart;
             }
@@ -108,6 +121,8 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchEnd(final TouchEndEvent event) {
+        touches = null;
+        logger.info("strat end:");
         isStart = false;
       }
     }, TouchEndEvent.getType());
