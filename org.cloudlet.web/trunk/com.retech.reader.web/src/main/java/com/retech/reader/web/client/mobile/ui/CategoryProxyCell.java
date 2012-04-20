@@ -1,5 +1,7 @@
 package com.retech.reader.web.client.mobile.ui;
 
+import com.goodow.web.view.wave.client.IconButtonTemplate;
+
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
@@ -13,8 +15,14 @@ public class CategoryProxyCell extends AbstractCell<CategoryProxy> {
 
   interface Template extends SafeHtmlTemplates {
 
-    @SafeHtmlTemplates.Template("{0}")
-    SafeHtml info(SafeHtml name);
+    static final String s = IconButtonTemplate.Resources.VISUAL_NUMERAL_STYLE;
+
+    @SafeHtmlTemplates.Template("<div class='{1}' style='display: inline-block; margin-left: 12px;'>{0}</div>")
+    SafeHtml count(SafeHtml num, String style);
+
+    @SafeHtmlTemplates.Template("<div style='display: inline-block;'>{0}{1}</div>")
+    SafeHtml info(SafeHtml name, SafeHtml num);
+
   }
 
   private static Template template;
@@ -33,9 +41,12 @@ public class CategoryProxyCell extends AbstractCell<CategoryProxy> {
     }
 
     SafeHtml name = null;
+    SafeHtml count = null;
     if (value.getTitle() != null) {
       name = SafeHtmlUtils.fromString(value.getTitle());
+      count = SafeHtmlUtils.fromString(String.valueOf(value.getCount()));
     }
-    sb.append(template.info(name));
+    sb.append(template.info(name, template.count(count,
+        IconButtonTemplate.Resources.VISUAL_NUMERAL_STYLE)));
   }
 }

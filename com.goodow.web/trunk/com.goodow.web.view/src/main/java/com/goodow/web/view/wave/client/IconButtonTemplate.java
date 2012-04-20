@@ -25,7 +25,9 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Widget;
 
 public class IconButtonTemplate extends Widget implements HasClickHandlers {
-  interface Resources extends ClientBundle {
+  public interface Resources extends ClientBundle {
+    String VISUAL_NUMERAL_STYLE = res.style().visualNumeralElement();
+
     @Source("IconButtonTemplate.css")
     Style style();
   }
@@ -56,7 +58,7 @@ public class IconButtonTemplate extends Widget implements HasClickHandlers {
 
   public IconButtonTemplate setIconText(final String text) {
     getElement().setInnerText(text);
-    addStyleName(res.style().visualNumeralElement());
+    addStyleName(Resources.VISUAL_NUMERAL_STYLE);
     return this;
   }
 

@@ -13,6 +13,8 @@ public interface CategoryProxy extends BaseEntityProxy {
 
   String CATEGORY = "category.all";
 
+  int getCount();
+
   String getTitle();
 
   CategoryProxy setTitle(String title);

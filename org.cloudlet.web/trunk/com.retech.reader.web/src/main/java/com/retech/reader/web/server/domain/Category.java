@@ -1,5 +1,9 @@
 package com.retech.reader.web.server.domain;
 
+import com.google.inject.Inject;
+
+import com.retech.reader.web.server.service.CategoryService;
+
 import org.cloudlet.web.service.server.jpa.BaseDomain;
 
 import java.util.ArrayList;
@@ -16,6 +20,13 @@ public class Category extends BaseDomain {
 
   @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
   private List<Issue> issues = new ArrayList<Issue>();
+
+  @Inject
+  private transient CategoryService service;
+
+  public int getCount() {
+    return service.count(this).intValue();
+  }
 
   public List<Issue> getIssues() {
     return issues;
