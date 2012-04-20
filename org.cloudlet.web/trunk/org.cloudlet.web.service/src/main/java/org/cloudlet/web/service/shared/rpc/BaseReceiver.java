@@ -1,12 +1,12 @@
 package org.cloudlet.web.service.shared.rpc;
 
+import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.inject.Inject;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.google.web.bindery.requestfactory.shared.Request;
-import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.google.web.bindery.requestfactory.shared.impl.AbstractRequestContext;
 
 import org.cloudlet.web.service.shared.FileProxyStore;
@@ -15,6 +15,7 @@ import org.cloudlet.web.service.shared.LocalStorage;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class BaseReceiver<V> extends Receiver<V> {
@@ -68,12 +69,23 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
 
   @Override
   public void onSuccess(final V response) {
-    // if (!(response instanceof ResourceProxy)) {
-    storage.put(key, response);
-    onSuccessAndCached(response);
-    // return;
-    // }
-    // fileStorage.put(key, content, call)
+    if (!(response instanceof ResourceProxy)) {
+      storage.put(key, response);
+      onSuccessAndCached(response);
+      return;
+    }
+    fileStorage.put(key, (ResourceProxy) response, new Callback<Void, Object>() {
+
+      @Override
+      public void onFailure(final Object reason) {
+        logger.log(Level.SEVERE, "出错");
+      }
+
+      @Override
+      public void onSuccess(final Void result) {
+        onSuccessAndCached(response);
+      }
+    });
 
   }
 
