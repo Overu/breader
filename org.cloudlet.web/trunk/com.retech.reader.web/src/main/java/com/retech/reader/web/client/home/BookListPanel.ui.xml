@@ -8,11 +8,10 @@
 
   <g:HTMLPanel addStyleNames="{landscape.root}">
     <div>
-      <app:BookFlip ui:field="bookFlipOfBookListPanel"></app:BookFlip>
+      <app:MyDownLoadPanel ui:field="myDownLoadPanel"></app:MyDownLoadPanel>
     </div>
-    <!-- <div>
-      <app:SearchPanel ui:field="searchPanel"></app:SearchPanel>
-    </div> -->
+    <!-- <div> <app:BookFlip ui:field="bookFlipOfBookListPanel"></app:BookFlip> </div> -->
+    <!-- <div> <app:SearchPanel ui:field="searchPanel"></app:SearchPanel> </div> -->
     <div>
       <app:LibraryView ui:field="libraryView"></app:LibraryView>
     </div>

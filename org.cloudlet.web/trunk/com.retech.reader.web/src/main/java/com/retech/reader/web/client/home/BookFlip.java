@@ -57,9 +57,9 @@ public class BookFlip extends WavePanel implements Activity {
   interface Binder extends UiBinder<Widget, BookFlip> {
   }
 
-  interface OnStartDefaultDeviceReady {
-    void deviceReady();
-  }
+  // interface OnStartDefaultDeviceReady {
+  // void deviceReady();
+  // }
 
   interface Style extends CssResource {
     String coverflow_1();
@@ -143,11 +143,12 @@ public class BookFlip extends WavePanel implements Activity {
 
   }
 
-  public native void addEventListener(OnStartDefaultDeviceReady oddr)/*-{
-                                                                     $wnd.document.addEventListener("deviceready", function(e) {
-                                                                     oddr.@com.retech.reader.web.client.home.BookFlip.OnStartDefaultDeviceReady::deviceReady()();
-                                                                     }, false);
-                                                                     }-*/;
+  public native void addEventListener()/*-{
+                                           var that = this;
+                                           $wnd.document.addEventListener("deviceready", function(e) {
+                                           that.@com.retech.reader.web.client.home.BookFlip::onStartDefault()();
+                                           }, false);
+                                           }-*/;
 
   @Override
   public String mayStop() {

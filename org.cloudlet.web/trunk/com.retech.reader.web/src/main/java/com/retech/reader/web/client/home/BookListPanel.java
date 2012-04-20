@@ -63,8 +63,10 @@ public class BookListPanel extends Composite implements ProvideActivities {
   private static Binder binder = GWT.create(Binder.class);
   private static Bundle bundle = GWT.create(Bundle.class);
 
+  // @UiField(provided = true)
+  // BookFlip bookFlipOfBookListPanel;
   @UiField(provided = true)
-  BookFlip bookFlipOfBookListPanel;
+  MyDownLoadPanel myDownLoadPanel;
   @UiField(provided = true)
   LibraryView libraryView;
   @UiField(provided = true)
@@ -74,10 +76,11 @@ public class BookListPanel extends Composite implements ProvideActivities {
   // SearchPanel searchPanel;
 
   @Inject
-  BookListPanel(final Provider<BasePlace> places, final BookFlip bookFlipOfBookListPanel,
-      final LibraryView libraryView, final WavePanel waveToolbar,
-      final PlaceController placeController, WaveToolBar toolbar, final SearchPanel searchPanel) {
-    this.bookFlipOfBookListPanel = bookFlipOfBookListPanel;
+  BookListPanel(final Provider<BasePlace> places, final LibraryView libraryView,
+      final WavePanel waveToolbar, final PlaceController placeController, WaveToolBar toolbar,
+      final SearchPanel searchPanel, final MyDownLoadPanel myDownLoadPanel) {
+    // this.bookFlipOfBookListPanel = bookFlipOfBookListPanel;
+    this.myDownLoadPanel = myDownLoadPanel;
     this.libraryView = libraryView;
     this.waveToolbar = waveToolbar;
     // this.searchPanel = searchPanel;
@@ -142,7 +145,8 @@ public class BookListPanel extends Composite implements ProvideActivities {
 
   @Override
   public List<Activity> provideActivities() {
-    return Arrays.<Activity> asList(bookFlipOfBookListPanel, libraryView);
+    // return Arrays.<Activity> asList(bookFlipOfBookListPanel, libraryView);
+    return Arrays.<Activity> asList(libraryView);
   }
 
 }
