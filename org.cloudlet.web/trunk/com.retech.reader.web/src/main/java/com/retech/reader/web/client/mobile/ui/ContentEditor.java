@@ -5,6 +5,8 @@ import com.goodow.web.view.wave.client.panel.WavePanelResources;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
@@ -58,6 +60,7 @@ public class ContentEditor extends WavePanel implements Activity {
   private boolean isStart = false;
   private HTMLPanel sectionPanel;
   private int leftIndex = -1;
+  JsArray<Touch> touches = null;
 
   @Inject
   ContentEditor(final ReaderFactory f, final PlaceController placeController) {
@@ -75,19 +78,8 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchStart(final TouchStartEvent event) {
-        JsArray<Touch> touches = event.getTouches();
-        if (touches.length() == 2) {
-          Touch touchLeft = touches.get(0);
-          Touch touchRight = touches.get(1);
-          leftX = touchLeft.getPageX();
-          rightX = touchRight.getPageX();
-          if (leftIndex == 0) {
-            isStart = true;
-          }
-          if (leftX < 60 & rightX < 60) {
-            isStart = true;
-          }
-        }
+        JsArray<Touch> toucheStart = event.getTouches();
+        logger.info("touch start:" + toucheStart.length());
       }
     }, TouchStartEvent.getType());
 
@@ -95,65 +87,26 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchMove(final TouchMoveEvent event) {
-        if (isStart) {
-          JsArray<Touch> touches = event.getTouches();
-          if (touches.length() == 2) {
-            Touch touchLeft = touches.get(0);
-            Touch touchRight = touches.get(1);
-            int leftNowX = touchLeft.getPageX();
-            int righNowX = touchRight.getPageX();
-            int pageLeftX = leftNowX - leftX;
-            int pageRightX = righNowX - rightX;
-            int offsetWidth = -sectionPanel.getOffsetWidth();
-            // logger.info("leftNowX:" + leftNowX + ";rightNowX:" + righNowX + ";pageLeftX:"
-            // + pageLeftX + ";pageRightX:" + pageRightX);
-            logger.info("leftNowX:" + leftNowX + ";rightNowX:" + righNowX);
-            if (pageLeftX > 0 && pageRightX > 0) {
-              leftIndex = offsetWidth + pageLeftX;
-              // logger.info("ok");
-              // sectionPanel.setWidth(String.valueOf(pageLeftX) + "px");
-              if (leftIndex > 0) {
-                leftIndex = 0;
-                style.setLeft(0, Unit.PX);
-              } else {
-                style.setLeft(leftIndex, Unit.PX);
-              }
-            } else if (pageLeftX < 0 && pageRightX < 0) {
-              if (leftNowX <= -offsetWidth) {
-                leftIndex = offsetWidth - leftNowX;
-                style.setLeft(leftIndex, Unit.PX);
-              }
-              if (leftIndex < offsetWidth) {
-                leftIndex = offsetWidth;
-                style.setLeft(offsetWidth, Unit.PX);
-              }
-            }
-          }
-        }
+        touches = event.getTouches();
+        isStart = true;
       }
     }, TouchMoveEvent.getType());
+
+    Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
+
+      @Override
+      public boolean execute() {
+        if (touches != null) {
+          printLog(touches);
+        }
+        return isStart;
+      }
+    }, 15);
 
     this.addDomHandler(new TouchEndHandler() {
 
       @Override
       public void onTouchEnd(final TouchEndEvent event) {
-        // JsArray<Touch> touches = event.getTouches();
-        // if (touches.length() == 2) {
-        // Window.alert("touchTwo");
-        // int offsetWidth = -sectionPanel.getOffsetWidth();
-        // if (leftIndex <= offsetWidth / 2) {
-        // style.setLeft(offsetWidth, Unit.PX);
-        // } else if (leftIndex > offsetWidth / 2) {
-        // style.setLeft(0, Unit.PX);
-        // }
-        // isStart = false;
-        // }
-        int offsetWidth = -sectionPanel.getOffsetWidth();
-        if (leftIndex <= offsetWidth / 2) {
-          style.setLeft(offsetWidth, Unit.PX);
-        } else if (leftIndex > offsetWidth / 2) {
-          style.setLeft(0, Unit.PX);
-        }
         isStart = false;
       }
     }, TouchEndEvent.getType());
@@ -360,5 +313,21 @@ public class ContentEditor extends WavePanel implements Activity {
       return;
     }
     findContentBySectionProxy(sections.get(indexSection), false, isNextPage);
+  }
+
+  private void printLog(final JsArray<Touch> touches) {
+    StringBuffer sb = new StringBuffer();
+    for (int i = 0; i < touches.length(); i++) {
+      Touch touch = touches.get(i);
+      sb.append("{touch-id:" + touch.getIdentifier());
+      sb.append(";touch-pageX:" + touch.getPageX());
+      sb.append(";touch-pageY:" + touch.getPageY());
+      sb.append(";touch-clientX:" + touch.getClientX());
+      sb.append(";touch-clientY:" + touch.getClientY());
+      sb.append(";touch-screenX:" + touch.getScreenX());
+      sb.append(";touch-screenY:" + touch.getScreenY());
+      sb.append("}");
+    }
+    logger.info(sb.toString());
   }
 }
