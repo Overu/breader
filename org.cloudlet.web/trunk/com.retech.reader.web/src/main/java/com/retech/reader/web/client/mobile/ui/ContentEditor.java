@@ -79,18 +79,20 @@ public class ContentEditor extends WavePanel implements Activity {
       @Override
       public void onTouchStart(final TouchStartEvent event) {
         JsArray<Touch> toucheStart = event.getTouches();
-        logger.info("touch start:" + toucheStart.length());
-        isStart = true;
-        Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
+        if (toucheStart.length() >= 2) {
+          logger.info("touch start:" + toucheStart.length());
+          isStart = true;
+          Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
 
-          @Override
-          public boolean execute() {
-            if (touches != null) {
-              printLog(touches);
+            @Override
+            public boolean execute() {
+              if (touches != null) {
+                printLog(touches);
+              }
+              return isStart;
             }
-            return isStart;
-          }
-        }, 15);
+          }, 15);
+        }
       }
     }, TouchStartEvent.getType());
 
