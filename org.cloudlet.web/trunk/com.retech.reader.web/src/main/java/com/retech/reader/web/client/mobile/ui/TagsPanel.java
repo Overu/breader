@@ -52,7 +52,7 @@ public class TagsPanel extends Composite {
     addStyleName(WavePanelResources.css().waveFooter());
 
     addTagPanel.addStyleName(style.addTagPanel());
-    addTagPanel.getWaveTitle().setText("999");
+    addTagPanel.getWaveTitle().setText("添加标签");
     textBox = new TextBox();
     textBox.getElement().removeClassName("gwt-TextBox");
     addTagPanel.setWaveContent(textBox);
