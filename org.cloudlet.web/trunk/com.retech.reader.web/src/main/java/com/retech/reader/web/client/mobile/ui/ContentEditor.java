@@ -107,6 +107,7 @@ public class ContentEditor extends WavePanel implements Activity {
             int offsetWidth = -sectionPanel.getOffsetWidth();
             // logger.info("leftNowX:" + leftNowX + ";rightNowX:" + righNowX + ";pageLeftX:"
             // + pageLeftX + ";pageRightX:" + pageRightX);
+            logger.info("leftNowX:" + leftNowX + ";rightNowX:" + righNowX);
             if (pageLeftX > 0 && pageRightX > 0) {
               leftIndex = offsetWidth + pageLeftX;
               // logger.info("ok");
@@ -118,12 +119,13 @@ public class ContentEditor extends WavePanel implements Activity {
                 style.setLeft(leftIndex, Unit.PX);
               }
             } else if (pageLeftX < 0 && pageRightX < 0) {
-              leftIndex = offsetWidth - pageLeftX;
+              if (leftNowX <= -offsetWidth) {
+                leftIndex = offsetWidth - leftNowX;
+                style.setLeft(leftIndex, Unit.PX);
+              }
               if (leftIndex < offsetWidth) {
                 leftIndex = offsetWidth;
                 style.setLeft(offsetWidth, Unit.PX);
-              } else if (pageLeftX <= -offsetWidth) {
-                style.setLeft(leftIndex, Unit.PX);
               }
             }
           }
