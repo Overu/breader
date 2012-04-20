@@ -80,6 +80,17 @@ public class ContentEditor extends WavePanel implements Activity {
       public void onTouchStart(final TouchStartEvent event) {
         JsArray<Touch> toucheStart = event.getTouches();
         logger.info("touch start:" + toucheStart.length());
+        isStart = true;
+        Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
+
+          @Override
+          public boolean execute() {
+            if (touches != null) {
+              printLog(touches);
+            }
+            return isStart;
+          }
+        }, 15);
       }
     }, TouchStartEvent.getType());
 
@@ -88,20 +99,8 @@ public class ContentEditor extends WavePanel implements Activity {
       @Override
       public void onTouchMove(final TouchMoveEvent event) {
         touches = event.getTouches();
-        isStart = true;
       }
     }, TouchMoveEvent.getType());
-
-    Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
-
-      @Override
-      public boolean execute() {
-        if (touches != null) {
-          printLog(touches);
-        }
-        return isStart;
-      }
-    }, 15);
 
     this.addDomHandler(new TouchEndHandler() {
 
