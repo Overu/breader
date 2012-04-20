@@ -23,7 +23,6 @@ import com.retech.reader.web.client.home.BookFlip;
 import com.retech.reader.web.client.home.BookListPanel;
 import com.retech.reader.web.client.home.LibraryView;
 import com.retech.reader.web.client.home.SearchPanel;
-import com.retech.reader.web.client.mobile.ui.BookEditor;
 import com.retech.reader.web.client.mobile.ui.BookListEditor;
 import com.retech.reader.web.client.mobile.ui.CategoryListEditor;
 import com.retech.reader.web.client.mobile.ui.ContentEditor;
@@ -37,7 +36,6 @@ import com.retech.reader.web.client.mobile.ui.TestEditor;
 import com.retech.reader.web.client.mobile.ui.bar.SettingsView;
 import com.retech.reader.web.client.mobile.ui.talk.TalkView;
 import com.retech.reader.web.client.topbar.TopBar;
-import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.rpc.FinalRequestFactory;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
@@ -63,9 +61,6 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
 
     @Inject
     private AsyncProvider<HomeView> homeView;
-
-    @Inject
-    private AsyncProvider<BookEditor> bookEditor;
     @Inject
     private AsyncProvider<ContentEditor> pageEditor;
 
@@ -119,7 +114,6 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
           sectionBrowser);
       isWidgetMapBinder.addBinding(WaveTest.class.getName()).toAsyncProvider(waveTest);
       isWidgetMapBinder.addBinding(BookFlip.class.getName()).toAsyncProvider(bookFlip);
-      isWidgetMapBinder.addBinding(IssueProxy.class.getName()).toAsyncProvider(bookEditor);
       isWidgetMapBinder.addBinding(ContentEditor.class.getName()).toAsyncProvider(pageEditor);
       isWidgetMapBinder.addBinding(SettingsView.class.getName()).toAsyncProvider(settingsView);
       isWidgetMapBinder.addBinding(TalkView.class.getName()).toAsyncProvider(talkView);
