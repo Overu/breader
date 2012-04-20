@@ -36,54 +36,12 @@ import java.util.Set;
 @Singleton
 public class LocalStorage {
 
-  private static Splittable encode(final EntitySource source, Object value) {
-    if (value == null) {
-      return Splittable.NULL;
-    }
-
-    if (value instanceof Poser<?>) {
-      value = ((Poser<?>) value).getPosedValue();
-    }
-
-    if (value instanceof Iterable<?>) {
-      StringBuffer toReturn = new StringBuffer();
-      toReturn.append('[');
-      boolean first = true;
-      for (Object val : ((Iterable<?>) value)) {
-        if (!first) {
-          toReturn.append(',');
-        } else {
-          first = false;
-        }
-        if (val == null) {
-          toReturn.append("null");
-        } else {
-          toReturn.append(encode(source, val).getPayload());
-        }
-      }
-      toReturn.append(']');
-      return StringQuoter.split(toReturn.toString());
-    }
-
-    if (value instanceof BaseProxy) {
-      proxySerializer.serialize((BaseProxy) value);
-      AutoBean<BaseProxy> autoBean = AutoBeanUtils.getAutoBean((BaseProxy) value);
-      value = BaseProxyCategory.stableId(autoBean);
-    }
-
-    if (value instanceof SimpleProxyId<?>) {
-      return source.getSerializedProxyId((SimpleProxyId<?>) value);
-    }
-
-    return ValueCodex.encode(value);
-  }
-
   private final Provider<ProxySerializer> proxySerializers;
+
   private final ProxyStore proxyStore;
+  private final EntitySource entitySource;
 
   // private final Map<String, Object> map;
-
-  private final EntitySource entitySource;
 
   private static ProxySerializer proxySerializer;
 
@@ -133,6 +91,11 @@ public class LocalStorage {
     return null;
   }
 
+  public String put(final BaseEntityProxy proxy) {
+    // map.put(f.getHistoryToken(proxy.stableId()), proxy);
+    return proxySerializers.get().serialize(proxy);
+  }
+
   // @SuppressWarnings("unchecked")
   // public <T> List<T> get(final String keyPrefix, final Class<T> valueType) {
   // String valueTypeToken = null;
@@ -153,11 +116,6 @@ public class LocalStorage {
   // return cache(key, toReturn);
   // }
 
-  public String put(final BaseEntityProxy proxy) {
-    // map.put(f.getHistoryToken(proxy.stableId()), proxy);
-    return proxySerializers.get().serialize(proxy);
-  }
-
   public String put(final String key, final Object value) {
     if (key == null) {
       return null;
@@ -169,8 +127,50 @@ public class LocalStorage {
       return proxySerializers.get().serialize(proxy);
     }
     // map.put(key, values);
-    proxyStore.put(key, encode(entitySource, value));
+    proxyStore.put(key, encode(value));
     return key;
+  }
+
+  Splittable encode(Object value) {
+    if (value == null) {
+      return Splittable.NULL;
+    }
+
+    if (value instanceof Poser<?>) {
+      value = ((Poser<?>) value).getPosedValue();
+    }
+
+    if (value instanceof Iterable<?>) {
+      StringBuffer toReturn = new StringBuffer();
+      toReturn.append('[');
+      boolean first = true;
+      for (Object val : ((Iterable<?>) value)) {
+        if (!first) {
+          toReturn.append(',');
+        } else {
+          first = false;
+        }
+        if (val == null) {
+          toReturn.append("null");
+        } else {
+          toReturn.append(encode(val).getPayload());
+        }
+      }
+      toReturn.append(']');
+      return StringQuoter.split(toReturn.toString());
+    }
+
+    if (value instanceof BaseProxy) {
+      proxySerializer.serialize((BaseProxy) value);
+      AutoBean<BaseProxy> autoBean = AutoBeanUtils.getAutoBean((BaseProxy) value);
+      value = BaseProxyCategory.stableId(autoBean);
+    }
+
+    if (value instanceof SimpleProxyId<?>) {
+      return entitySource.getSerializedProxyId((SimpleProxyId<?>) value);
+    }
+
+    return ValueCodex.encode(value);
   }
 
   private <T> T cache(final String key, final T value) {
