@@ -20,15 +20,24 @@ import com.google.web.bindery.requestfactory.shared.RequestFactory;
 
 @Singleton
 public class KeyUtil {
-  public static final String ANY_SEPARATOR_PATTERN = "@[abc]@";
+  public static final String ANY_SEPARATOR_PATTERN = "@[abcr]@";
   public static final String PROXY_SEPARATOR = "@a@";
   public static final String LIST_SEPARATOR = "@b@";
   public static final String SET_SEPARATOR = "@c@";
+  public static final String RESOURCE_SEPARATOR = "@r@";
   private final RequestFactory f;
 
   @Inject
   KeyUtil(final RequestFactory f) {
     this.f = f;
+  }
+
+  public boolean isEncodedKey(final String key) {
+    return key != null && key.matches(".*" + ANY_SEPARATOR_PATTERN + ".*");
+  }
+
+  public boolean isResource(final String encodedKey) {
+    return encodedKey.contains(RESOURCE_SEPARATOR);
   }
 
   public String listKey(final String listKey) {
@@ -45,5 +54,9 @@ public class KeyUtil {
 
   public String proxyListKey(final EntityProxyId<?> parentId, final String listKey) {
     return f.getHistoryToken(parentId) + LIST_SEPARATOR + listKey;
+  }
+
+  public String proxyResourceKey(final EntityProxyId<?> parentId, final String resourceKey) {
+    return f.getHistoryToken(parentId) + RESOURCE_SEPARATOR + resourceKey;
   }
 }
