@@ -26,18 +26,17 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class IconButtonTemplate extends Widget implements HasClickHandlers {
   public interface Resources extends ClientBundle {
-    String VISUAL_NUMERAL_STYLE = res.style().visualNumeralElement();
+    Resources INSTANCE = GWT.create(Resources.class);
 
     @Source("IconButtonTemplate.css")
     Style style();
   }
-  interface Style extends CssResource {
+  public interface Style extends CssResource {
     String visualNumeralElement();
   }
 
-  private static final Resources res = GWT.create(Resources.class);
   static {
-    res.style().ensureInjected();
+    Resources.INSTANCE.style().ensureInjected();
   }
 
   public IconButtonTemplate() {
@@ -58,8 +57,7 @@ public class IconButtonTemplate extends Widget implements HasClickHandlers {
 
   public IconButtonTemplate setIconText(final String text) {
     getElement().setInnerText(text);
-    addStyleName(Resources.VISUAL_NUMERAL_STYLE);
+    addStyleName(Resources.INSTANCE.style().visualNumeralElement());
     return this;
   }
-
 }
