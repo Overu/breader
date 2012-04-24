@@ -40,7 +40,6 @@ import com.retech.reader.web.shared.rpc.FinalRequestFactory;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
 import org.cloudlet.web.boot.shared.MapBinder;
-import org.cloudlet.web.service.client.rpc.BaseRequestTransport;
 
 import java.util.logging.Logger;
 
@@ -136,7 +135,6 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
   protected void configure() {
     bind(Binder.class).toProvider(BinderProvider.class).asEagerSingleton();
 
-    bind(RequestTransport.class).to(BaseRequestTransport.class).in(Singleton.class);
     bind(RequestFactory.class).to(FinalRequestFactory.class).in(Singleton.class);
     bind(ReaderFactory.class).to(FinalRequestFactory.class).in(Singleton.class);
     bind(LoggingRequestProvider.class).to(FinalRequestFactory.class).in(Singleton.class);
