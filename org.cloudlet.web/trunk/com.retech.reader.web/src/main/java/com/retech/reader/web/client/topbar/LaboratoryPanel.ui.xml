@@ -1,0 +1,95 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style>
+    .root {
+      
+    }
+    
+    .root>div:FIRST-CHILD {
+      border-bottom: 1px solid #E6E6E6;
+      height: 39px;
+    }
+    
+    .root>div:FIRST-CHILD>div:FIRST-CHILD {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 39px;
+      height: 24px;
+      -webkit-border-top-right-radius: 5px;
+      background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
+        from(hsl(211, 85%, 56%) ), to(hsl(212, 58%, 58%) ) );
+    }
+    
+    @sprite .logo {
+      gwt-image: "logo";
+      position: absolute;
+      left: 8px;
+      top: 8px;
+    }
+    
+    @sprite .arc {
+      gwt-image: "arc";
+      position: absolute;
+      left: 0;
+      height: 24px;
+      width: 24px;
+    }
+    
+    @sprite .line:HOVER {
+      gwt-image: "linehover";
+      height: 15px;
+      width: 15px;
+    }
+    
+    @sprite .line {
+      gwt-image: "line";
+      position: absolute;
+      left: 20px;
+      top: 4px;
+      cursor: pointer;
+    }
+    
+    .cell {
+      
+    }
+    
+    .cell>div>div>div>div>img {
+      margin: 1px 6px 0 8px;
+    }
+    
+    .cell>div>div>div>div>a {
+      color: inherit;
+    }
+    
+    .cell>div>div>div {
+      color: blue;
+      float: left;
+      width: 100%;
+    }
+    
+    .cell>div>div>div>div:FIRST-CHILD {
+      float: left;
+    }
+    
+    .cell>div>div>div>div:LAST-CHILD {
+      float: right;
+      opacity: 0.8;
+    }
+  </ui:style>
+
+  <ui:image field="logo"></ui:image>
+  <ui:image field="arc"></ui:image>
+  <ui:image field="line"></ui:image>
+  <ui:image field="linehover"></ui:image>
+  <g:HTMLPanel addStyleNames="{style.root}">
+    <div>
+      <div>
+        <div class="{style.arc}"></div>
+        <div class="{style.line}"></div>
+      </div>
+      <div class="{style.logo}"></div>
+    </div>
+    <g:SimplePanel ui:field="simplePanel" addStyleNames="{style.cell}"></g:SimplePanel>
+  </g:HTMLPanel>
+</ui:UiBinder> 

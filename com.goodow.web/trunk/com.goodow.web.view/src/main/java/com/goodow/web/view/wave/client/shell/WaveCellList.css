@@ -4,3 +4,25 @@
   font-size: 12pt;
   color: #333;
 }
+
+.cellListWidget {
+  
+}
+/*
+.cellListWidget>div>div:FOCUS {
+  background-color: hsl(82, 43%, 45%)!important;
+  color: white;
+}
+*/
+.cellListKeyboardSelectedItem {
+}
+
+.cellListWidget>div>div:HOVER {
+  background-color: #EDEDED;
+}
+
+.cellListSelectedItem {
+  background-color: hsl(82, 43%, 45%) !important;
+  color: white!important;
+  background: inherit;
+}

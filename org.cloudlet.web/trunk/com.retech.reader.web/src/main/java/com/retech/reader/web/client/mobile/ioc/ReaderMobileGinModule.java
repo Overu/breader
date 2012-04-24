@@ -4,6 +4,7 @@ import com.goodow.web.logging.shared.rpc.ChannelContextProvider;
 import com.goodow.web.view.wave.client.WaveTest;
 import com.goodow.web.view.wave.client.contact.ContactPanel;
 import com.goodow.web.view.wave.client.shell.WaveShell;
+import com.goodow.web.view.wave.client.tree.TreeTest;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.inject.client.AbstractGinModule;
@@ -35,6 +36,7 @@ import com.retech.reader.web.client.mobile.ui.SectionListEditor;
 import com.retech.reader.web.client.mobile.ui.TestEditor;
 import com.retech.reader.web.client.mobile.ui.bar.SettingsView;
 import com.retech.reader.web.client.mobile.ui.talk.TalkView;
+import com.retech.reader.web.client.topbar.LaboratoryPanel;
 import com.retech.reader.web.client.topbar.TopBar;
 import com.retech.reader.web.shared.rpc.FinalRequestFactory;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
@@ -94,6 +96,10 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
     @Inject
     private AsyncProvider<ContactPanel> contactPanel;
     @Inject
+    private AsyncProvider<TreeTest> treeTest;
+    @Inject
+    private AsyncProvider<LaboratoryPanel> laboratoryPanel;
+    @Inject
     private WaveShell shell;
     @Inject
     private TopBar topBar;
@@ -123,6 +129,9 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
       isWidgetMapBinder.addBinding(TestEditor.class.getName()).toAsyncProvider(testEditor);
       isWidgetMapBinder.addBinding(SearchPanel.class.getName()).toAsyncProvider(searchPanel);
       isWidgetMapBinder.addBinding(ContactPanel.class.getName()).toAsyncProvider(contactPanel);
+      isWidgetMapBinder.addBinding(TreeTest.class.getName()).toAsyncProvider(treeTest);
+      isWidgetMapBinder.addBinding(LaboratoryPanel.class.getName())
+          .toAsyncProvider(laboratoryPanel);
       logger.finest("EagerSingleton end");
       return null;
     }

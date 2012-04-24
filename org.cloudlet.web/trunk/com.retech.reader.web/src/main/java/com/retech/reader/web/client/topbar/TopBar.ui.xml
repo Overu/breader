@@ -21,7 +21,7 @@
     
     .topBar>*:last-child>* {
       display: inline;
-      cursor:default;
+      cursor: default;
     }
     
     .topBar>*:last-child>div {
@@ -39,13 +39,20 @@
       text-decoration: underline;
       margin: 0 2px;
     }
-    
   </ui:style>
   <ui:image field="retechcorpLogo" />
   <g:HTMLPanel addStyleNames='{style.topBar}'>
     <div>
       <g:Image resource='{retechcorpLogo}'></g:Image>
     </div>
-    <div><span>欢迎</span><div>|</div><a href="#">帮助</a><div>|</div><a href="#">退出</a></div>
+    <div>
+      <span>欢迎</span>
+      <div>|</div>
+      <a href="#com.retech.reader.web.client.topbar.LaboratoryPanel">实验室</a>
+      <div>|</div>
+      <a href="#">帮助</a>
+      <div>|</div>
+      <a href="#">退出</a>
+    </div>
   </g:HTMLPanel>
 </ui:UiBinder> 
