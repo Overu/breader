@@ -53,7 +53,7 @@
       float: right;
     }
     
-    .authorMoreActions {
+    .moreActions {
       cursor: pointer;
       float: right;
     }
@@ -81,7 +81,7 @@
     <div class="{style.authorBox}">
       <g:FlowPanel addStyleNames="{style.contributorPics}" ui:field="contributorPics"></g:FlowPanel>
       <div class="{style.authorName}" ui:field="authorName"></div>
-      <icon:IconButtonTemplate addStyleNames="{style.authorMoreActions}" ui:field="authorMoreActions"></icon:IconButtonTemplate>
+      <icon:IconButtonTemplate addStyleNames="{style.moreActions}" ui:field="moreActions"></icon:IconButtonTemplate>
       <div class="{style.pubTime}" ui:field="pubTime"></div>
     </div>
     <div class="{style.editor}" ui:field="editor"></div>

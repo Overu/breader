@@ -21,6 +21,7 @@ import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -39,13 +40,15 @@ public class WaveBlip extends Composite {
   @UiField
   DivElement pubTime;
   @UiField
-  IconButtonTemplate authorMoreActions;
+  IconButtonTemplate moreActions;
   @UiField
   DivElement unRead;
 
   public WaveBlip() {
     initWidget(uiBinder.createAndBindUi(this));
     contributorPics.addStyleName(UserStatusResources.css().waveUser());
+    moreActions.setIconElement(AbstractImagePrototype.create(
+        WaveBlipResources.image().waveBlipMoreActions()).createElement());
   }
 
   public void addUser(final Element element) {
@@ -57,7 +60,7 @@ public class WaveBlip extends Composite {
   }
 
   public IconButtonTemplate getIconButton() {
-    return this.authorMoreActions;
+    return this.moreActions;
   }
 
   public void setContent(final String html) {
