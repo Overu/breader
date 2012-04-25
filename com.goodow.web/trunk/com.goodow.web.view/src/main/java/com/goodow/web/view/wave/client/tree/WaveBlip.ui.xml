@@ -1,0 +1,90 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:icon="urn:import:com.goodow.web.view.wave.client">
+  <ui:style>
+    .root {
+      padding: 9px 13px;
+      position: relative;
+    }
+    
+    .divider {
+      position: absolute;
+      top: -1px;
+      left: 13px;
+      right: 13px;
+      border-bottom: 1px dotted #b3b3b3;
+    }
+    
+    .authorBox {
+      display: inline;
+      line-height: 1.35;
+      overflow: hidden;
+      cursor: default;
+      color: gray;
+    }
+    
+    .contributorPics {
+      margin-right: 6px;
+      float: left;
+      height: 31px;
+      overflow: hidden;
+      position: relative;
+      top: 2px;
+    }
+    
+    .contributorPics>*:first-child {
+      padding: initial;
+    }
+    
+    .contributorPics>div>img {
+      border-color: #ccc !important;
+      width: 27px !important;
+      height: 27px !important;
+    }
+    
+    .authorName {
+      float: left;
+      font-weight: bold;
+      padding-right: 0.5em;
+    }
+    
+    .pubTime {
+      padding-left: 0.5em;
+      float: right;
+    }
+    
+    .authorMoreActions {
+      cursor: pointer;
+      float: right;
+    }
+    
+    .editor {
+      min-height: 33px;
+      line-height: 1.35;
+      white-space: pre-wrap;
+    }
+    
+    .unRead {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      left: 5px;
+      width: 3px;
+      background-color: hsl(71, 100%, 37%);
+      -webkit-border-radius: 2px;
+      opacity: 0;
+      -webkit-transition: opacity 300ms ease-in-out;
+    }
+  </ui:style>
+  <g:HTMLPanel addStyleNames="{style.root}">
+    <div class="{style.divider}"></div>
+    <div class="{style.authorBox}">
+      <g:FlowPanel addStyleNames="{style.contributorPics}" ui:field="contributorPics"></g:FlowPanel>
+      <div class="{style.authorName}" ui:field="authorName"></div>
+      <icon:IconButtonTemplate addStyleNames="{style.authorMoreActions}" ui:field="authorMoreActions"></icon:IconButtonTemplate>
+      <div class="{style.pubTime}" ui:field="pubTime"></div>
+    </div>
+    <div class="{style.editor}" ui:field="editor"></div>
+    <div class="{style.unRead}" ui:field="unRead"></div>
+  </g:HTMLPanel>
+</ui:UiBinder>
