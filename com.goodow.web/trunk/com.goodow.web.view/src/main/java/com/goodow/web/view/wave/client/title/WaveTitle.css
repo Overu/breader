@@ -4,7 +4,7 @@
   background-color: hsl(212, 58%, 58%);
   height: 1.9em;
   color: white;
-  border-left: 1px solid hsl(211, 74%, 73%);
+  /*border-left: 1px solid hsl(211, 74%, 73%);*/
   background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
     from(hsl(211, 85%, 66%)), to(hsl(212, 58%, 58%)));
   display: -webkit-box;
