@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+
+.cellItemLeftDiv {
+  float: left;
+}
+
+.cellItemLeftDiv>a {
+  color: inherit;
+}
+
+.cellItemLeftDiv>img {
+   margin: 1px 6px 0 8px;
+}

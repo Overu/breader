@@ -20,14 +20,14 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Singleton;
 
 @Singleton
-public class TrangeleComboBoxPopupPanel extends PopupPanel {
+public class TrangleComboBoxPopupPanel extends PopupPanel {
 
-  interface Binder extends UiBinder<Widget, TrangeleComboBoxPopupPanel> {
+  interface Binder extends UiBinder<Widget, TrangleComboBoxPopupPanel> {
   }
 
   private static Binder binder = GWT.create(Binder.class);
 
-  public TrangeleComboBoxPopupPanel() {
+  public TrangleComboBoxPopupPanel() {
     Widget widget = binder.createAndBindUi(this);
 
     this.add(widget);

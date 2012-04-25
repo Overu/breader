@@ -48,11 +48,11 @@
     <div>
       <span>欢迎</span>
       <div>|</div>
-      <a href="#com.retech.reader.web.client.topbar.LaboratoryPanel">实验室</a>
+      <a href="#com.retech.reader.web.client.topbar.Labs">实验室</a>
       <div>|</div>
-      <a href="#">帮助</a>
+      <span>帮助</span>
       <div>|</div>
-      <a href="#">退出</a>
+      <span>退出</span>
     </div>
   </g:HTMLPanel>
 </ui:UiBinder> 

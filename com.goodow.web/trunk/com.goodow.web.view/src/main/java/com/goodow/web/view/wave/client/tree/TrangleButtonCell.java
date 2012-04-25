@@ -24,6 +24,7 @@ import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -40,7 +41,14 @@ public class TrangleButtonCell<T> extends AbstractEditableCell<T, Boolean> {
     ImageResource trangleButtoned();
   }
 
+  interface Template extends SafeHtmlTemplates {
+
+    @SafeHtmlTemplates.Template("<div class='{0}'>{1}</div>")
+    SafeHtml div(String style, SafeHtml image);
+  }
+
   private static Bundle bundle = GWT.create(Bundle.class);
+  private static Template template = GWT.create(Template.class);
 
   private static SafeHtml TRANGLE_BUTTON = AbstractImagePrototype.create(bundle.trangleButton())
       .getSafeHtml();
@@ -48,14 +56,14 @@ public class TrangleButtonCell<T> extends AbstractEditableCell<T, Boolean> {
       .create(bundle.trangleButtoned()).getSafeHtml();
 
   private boolean isClick = false;
-  private TrangeleComboBoxPopupPanel pp;
+  private TrangleComboBoxPopupPanel pp;
 
   private Delegate<T> delegate = new TrangleButtonCell.Delegate<T>() {
 
     @Override
     public void execute(final T object) {
       if (pp == null) {
-        pp = new TrangeleComboBoxPopupPanel();
+        pp = new TrangleComboBoxPopupPanel();
       }
       if (isClick) {
         pp.show();
@@ -124,14 +132,15 @@ public class TrangleButtonCell<T> extends AbstractEditableCell<T, Boolean> {
       final SafeHtmlBuilder sb) {
 
     if (value != null && !isClick) {
-      // sb.append(template.div(TRANGLE_BUTTON));
-      // sb.append(SafeHtmlUtils.fromTrustedString("<div>"));
-      sb.append(TRANGLE_BUTTON);
+      sb.append(template.div(TrangleResources.css().trangleCell(), TRANGLE_BUTTON));
+      // sb.append(SafeHtmlUtils
+      // .fromTrustedString("<div style='float: right;opacity: 0.2;:hover{opacity: 0.5;}'>"));
+      // sb.append(TRANGLE_BUTTON);
       // sb.append(SafeHtmlUtils.fromTrustedString("</div>"));
     } else {
-      // sb.append(template.div(TRANGLE_BUTTONED));
-      // sb.append(SafeHtmlUtils.fromTrustedString("<div>"));
-      sb.append(TRANGLE_BUTTONED);
+      sb.append(template.div(TrangleResources.css().trangleCell(), TRANGLE_BUTTONED));
+      // sb.append(SafeHtmlUtils.fromTrustedString("<div style='float: right;opacity: 0.2;'>"));
+      // sb.append(TRANGLE_BUTTONED);
       // sb.append(SafeHtmlUtils.fromTrustedString("</div>"));
     }
   }

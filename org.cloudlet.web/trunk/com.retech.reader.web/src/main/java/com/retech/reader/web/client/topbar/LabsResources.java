@@ -11,36 +11,26 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client.title;
+package com.retech.reader.web.client.topbar;
+
+import com.goodow.web.view.wave.client.title.WaveTitleResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.ImageResource;
 
 import java.util.logging.Logger;
 
-public class WaveTitleResources {
-
+public class LabsResources {
   public interface Bundle extends ClientBundle {
 
-    @Source("WaveTitle.css")
+    @Source("Laboratory.css")
     Style style();
 
-    ImageResource waveTitleClose();
-
-    ImageResource waveTitleMinimize();
-
-    ImageResource waveTitleMinimizeHover();
-
-    ImageResource waveTitleReturn();
   }
 
   public interface Style extends CssResource {
-
-    String waveTitle();
-
-    String waveTitleDiv();
+    String cellItemLeftDiv();
   }
 
   private static Bundle INSTANCE;

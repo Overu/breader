@@ -11,17 +11,17 @@
   overflow: hidden;
 }
 
-.waveTitle>div {
+.waveTitleDiv {
   padding: 0 10px;
   cursor: pointer;
 }
 
-.waveTitle>div:hover {
+.waveTitleDiv:hover {
   background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
     from(hsl(212, 58%, 58%) ), to(hsl(211, 43%, 48%) ) );
 }
 
-.waveTitle>div:active {
+.waveTitleDiv:active {
   background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
     from(hsl(218, 46%, 52%) ), to(hsl(212, 43%, 45%) ) );
 }
@@ -36,7 +36,7 @@
   text-overflow: ellipsis;
 }
 
-.waveTitle>div>img {
+.waveTitleDiv>img {
   height: 100% !important;
   background-position: center !important;
 }

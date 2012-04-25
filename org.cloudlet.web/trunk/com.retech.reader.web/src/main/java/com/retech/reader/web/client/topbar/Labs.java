@@ -13,9 +13,11 @@
  */
 package com.retech.reader.web.client.topbar;
 
+import com.goodow.web.view.wave.client.IconButtonTemplate;
 import com.goodow.web.view.wave.client.WaveTest;
 import com.goodow.web.view.wave.client.contact.ContactPanel;
 import com.goodow.web.view.wave.client.panel.WavePanel;
+import com.goodow.web.view.wave.client.title.WaveTitleResources;
 import com.goodow.web.view.wave.client.tree.TrangleButtonCell;
 import com.goodow.web.view.wave.client.tree.TreeTest;
 
@@ -31,10 +33,10 @@ import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.SimplePanel;
@@ -55,9 +57,9 @@ import java.util.List;
 import javax.inject.Singleton;
 
 @Singleton
-public class LaboratoryPanel extends WavePanel implements Activity {
+public class Labs extends WavePanel implements Activity {
 
-  interface Binder extends UiBinder<Widget, LaboratoryPanel> {
+  interface Binder extends UiBinder<Widget, Labs> {
   }
 
   interface Bundle extends ClientBundle {
@@ -71,6 +73,8 @@ public class LaboratoryPanel extends WavePanel implements Activity {
 
   @UiField
   SimplePanel simplePanel;
+  @UiField
+  IconButtonTemplate minimize;
 
   private CellList<ImageAndHyperlink> cellList;
   private ListDataProvider<ImageAndHyperlink> listDataProvider =
@@ -78,9 +82,12 @@ public class LaboratoryPanel extends WavePanel implements Activity {
   private CompositeCell<ImageAndHyperlink> compositeCell;
 
   @Inject
-  LaboratoryPanel(final CellList.Resources resource, final LaboratoryCell cell,
+  Labs(final CellList.Resources resource, final LabsCell cell,
       final PlaceController placeController, final Provider<BasePlace> base) {
     this.setWaveContent(binder.createAndBindUi(this));
+
+    minimize.setIconElement(AbstractImagePrototype.create(
+        WaveTitleResources.image().waveTitleMinimize()).createElement());
 
     List<ImageAndHyperlink> list = listDataProvider.getList();
     ImageAndHyperlink touch =
@@ -168,9 +175,9 @@ public class LaboratoryPanel extends WavePanel implements Activity {
           final ImageAndHyperlink value, final SafeHtmlBuilder sb,
           final HasCell<ImageAndHyperlink, X> hasCell) {
         Cell<X> cell = hasCell.getCell();
-        sb.append(SafeHtmlUtils.fromTrustedString("<div>"));
+        // sb.append(SafeHtmlUtils.fromTrustedString("<div>"));
         cell.render(context, hasCell.getValue(value), sb);
-        sb.append(SafeHtmlUtils.fromTrustedString("</div>"));
+        // sb.append(SafeHtmlUtils.fromTrustedString("</div>"));
       }
     };
 

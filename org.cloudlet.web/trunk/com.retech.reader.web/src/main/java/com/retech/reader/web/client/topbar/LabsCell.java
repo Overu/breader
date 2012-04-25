@@ -21,12 +21,12 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 
-public class LaboratoryCell extends AbstractCell<ImageAndHyperlink> {
+public class LabsCell extends AbstractCell<ImageAndHyperlink> {
 
   interface Template extends SafeHtmlTemplates {
 
-    @SafeHtmlTemplates.Template("{0}{1}")
-    SafeHtml put(SafeHtml num, SafeHtml url);
+    @SafeHtmlTemplates.Template("<div class='{2}'>{0}{1}</div>")
+    SafeHtml put(SafeHtml num, SafeHtml url, String style);
   }
 
   private static Template template = GWT.create(Template.class);
@@ -39,7 +39,7 @@ public class LaboratoryCell extends AbstractCell<ImageAndHyperlink> {
     }
     SafeHtml image = AbstractImagePrototype.create(value.getImage()).getSafeHtml();
     SafeHtml link = SafeHtmlUtils.fromTrustedString(value.getLink().getElement().getInnerHTML());
-    sb.append(template.put(image, link));
+    sb.append(template.put(image, link, LabsResources.css().cellItemLeftDiv()));
 
     // margin: 1px 6px 0 8px;
   }

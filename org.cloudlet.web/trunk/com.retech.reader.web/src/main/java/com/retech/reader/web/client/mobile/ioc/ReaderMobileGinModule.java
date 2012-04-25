@@ -36,7 +36,7 @@ import com.retech.reader.web.client.mobile.ui.SectionListEditor;
 import com.retech.reader.web.client.mobile.ui.TestEditor;
 import com.retech.reader.web.client.mobile.ui.bar.SettingsView;
 import com.retech.reader.web.client.mobile.ui.talk.TalkView;
-import com.retech.reader.web.client.topbar.LaboratoryPanel;
+import com.retech.reader.web.client.topbar.Labs;
 import com.retech.reader.web.client.topbar.TopBar;
 import com.retech.reader.web.shared.rpc.FinalRequestFactory;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
@@ -98,7 +98,7 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
     @Inject
     private AsyncProvider<TreeTest> treeTest;
     @Inject
-    private AsyncProvider<LaboratoryPanel> laboratoryPanel;
+    private AsyncProvider<Labs> laboratoryPanel;
     @Inject
     private WaveShell shell;
     @Inject
@@ -130,7 +130,7 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
       isWidgetMapBinder.addBinding(SearchPanel.class.getName()).toAsyncProvider(searchPanel);
       isWidgetMapBinder.addBinding(ContactPanel.class.getName()).toAsyncProvider(contactPanel);
       isWidgetMapBinder.addBinding(TreeTest.class.getName()).toAsyncProvider(treeTest);
-      isWidgetMapBinder.addBinding(LaboratoryPanel.class.getName())
+      isWidgetMapBinder.addBinding(Labs.class.getName())
           .toAsyncProvider(laboratoryPanel);
       logger.finest("EagerSingleton end");
       return null;
