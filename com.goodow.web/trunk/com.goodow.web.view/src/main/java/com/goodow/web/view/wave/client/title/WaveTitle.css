@@ -1,12 +1,12 @@
 @CHARSET "UTF-8";
 
 .waveTitle {
-  background-color: rgb(85, 144, 210);
+  background-color: hsl(212, 58%, 58%);
   height: 1.9em;
   color: white;
-  border-left: 1px solid rgb(134, 183, 237);
+  border-left: 1px solid hsl(211, 74%, 73%);
   background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
-    from(rgb(97, 167, 242) ), to(rgb(85, 144, 210) ) );
+    from(hsl(211, 85%, 66%)), to(hsl(212, 58%, 58%)));
   display: -webkit-box;
   overflow: hidden;
 }
