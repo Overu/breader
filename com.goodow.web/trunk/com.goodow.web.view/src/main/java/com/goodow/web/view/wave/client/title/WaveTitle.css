@@ -18,12 +18,12 @@
 
 .waveTitle>div:hover {
   background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
-    from(rgb(85, 144, 210) ), to(rgb(69, 120, 174) ) );
+    from(hsl(212, 58%, 58%) ), to(hsl(211, 43%, 48%) ) );
 }
 
 .waveTitle>div:active {
   background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
-    from(rgb(76, 117, 189) ), to(rgb(66, 112, 164) ) );
+    from(hsl(218, 46%, 52%) ), to(hsl(212, 43%, 45%) ) );
 }
 
 .waveTitle>span {
