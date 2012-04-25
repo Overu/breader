@@ -1,1 +1,0 @@
-s_(1244,1,voc);_.Oc=function Sgc(){Yic(this.c,Kec(this.b.b))};xoc(On)(16);
