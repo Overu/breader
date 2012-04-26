@@ -6,7 +6,9 @@
   overflow-y: auto;
   margin: 0;
 }
-
+a {
+  text-decoration: underline;
+}
 a:link {
   color: hsl(218, 100%, 33%);
 }
