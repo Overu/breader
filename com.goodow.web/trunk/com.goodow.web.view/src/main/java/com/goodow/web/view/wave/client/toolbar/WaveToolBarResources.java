@@ -37,6 +37,8 @@ public class WaveToolBarResources {
 
   interface Style extends CssResource {
     String waveToolbar();
+
+    String waveToolbarButtonDisabled();
   }
 
   private static Bundle INSTANCE;
@@ -51,11 +53,11 @@ public class WaveToolBarResources {
     logger.finest("static init end");
   }
 
-  public static Bundle image() {
-    return INSTANCE;
-  }
-
   public static Style css() {
     return INSTANCE.style();
+  }
+
+  public static Bundle image() {
+    return INSTANCE;
   }
 }
