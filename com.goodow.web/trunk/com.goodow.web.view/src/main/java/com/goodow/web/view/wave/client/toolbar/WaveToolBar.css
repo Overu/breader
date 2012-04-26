@@ -15,3 +15,12 @@
   -webkit-box-pack: center;
   -webkit-box-align: center;
 }
+
+div.waveToolbarButtonDisabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+div.waveToolbarButtonDisabled:active {
+  background: initial;
+}
