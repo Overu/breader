@@ -37,16 +37,20 @@
       top: 0;
       bottom: 0;
     }
-     #overlayBorder {
+    
+     .overlayBorder {
       position: absolute;
       left: 0;
       right: 0;
       top: 0;
       bottom: 0;
     }
-    
-    #overlayBorder:hover {
+    .overlayBorder:hover {
       border: 1px solid rgb(127, 127, 127);
+    }
+    @external DISABLED;
+    .DISABLED>.overlayBorder:hover {
+      border: initial;
     }
   </ui:style>
   <ui:image field="waveToolbarDropDownArrow" />
@@ -56,6 +60,6 @@
     <span ui:field="textElement" class="{style.waveTextElement}" />
     <div ui:field="dropDownArrow" class="{style.waveToolbarDropDownArrow}" />
     <div ui:field="toolbarDivider" class="{style.waveToolbarDivider}" />
-    <div id='overlayBorder' />
+    <div class='{style.overlayBorder}' />
   </g:HTMLPanel>
 </ui:UiBinder> 
