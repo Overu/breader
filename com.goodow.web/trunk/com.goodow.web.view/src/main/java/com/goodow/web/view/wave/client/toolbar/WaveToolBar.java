@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 public class WaveToolBar extends FlowPanel {
 
   public WaveToolBar() {
-    addStyleName(WaveToolBarResources.css().waveToolbar());
+    addStyleName(WaveToolBarResources.css().toplevelToolbarWidget());
   }
 
   /**

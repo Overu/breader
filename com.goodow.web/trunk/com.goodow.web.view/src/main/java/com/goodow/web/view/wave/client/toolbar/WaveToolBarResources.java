@@ -36,7 +36,9 @@ public class WaveToolBarResources {
   }
 
   interface Style extends CssResource {
-    String waveToolbar();
+    String submenuToolbarWidget();
+
+    String toplevelToolbarWidget();
   }
 
   private static Bundle INSTANCE;
