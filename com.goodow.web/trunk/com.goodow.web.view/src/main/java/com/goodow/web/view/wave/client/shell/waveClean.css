@@ -2,7 +2,7 @@
 
 @sprite body {
   gwt-image: "bodyBackgroundTop";
-  background-color: rgb(216, 220, 224);
+  background-color: hsl(210, 11%, 86%);
   overflow-y: auto;
   margin: 0;
 }
