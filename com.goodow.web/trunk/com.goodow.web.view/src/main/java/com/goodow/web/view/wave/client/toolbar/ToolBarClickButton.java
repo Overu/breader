@@ -20,7 +20,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -28,10 +27,6 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ToolBarClickButton extends Composite implements ToolBarButtonView, HasClickHandlers {
-  interface Style extends CssResource {
-
-    String waveToolbarButtonDisabled();
-  }
   interface ToolbarUiBinder extends UiBinder<Widget, ToolBarClickButton> {
   }
 
@@ -46,11 +41,10 @@ public class ToolBarClickButton extends Composite implements ToolBarButtonView, 
   @UiField
   Element dropDownArrow;
   @UiField
-  Element overlay;
-  @UiField
-  Style style;
-  @UiField
   Element toolbarDivider;
+
+  private ClickHandler clickHandler;
+  private HandlerRegistration handlerRegistration;
 
   public ToolBarClickButton() {
     initWidget(uiBinder.createAndBindUi(this));
@@ -58,37 +52,38 @@ public class ToolBarClickButton extends Composite implements ToolBarButtonView, 
 
   @Override
   public HandlerRegistration addClickHandler(final ClickHandler handler) {
-    return root.addDomHandler(handler, ClickEvent.getType());
+    this.clickHandler = handler;
+    handlerRegistration = addDomHandler(handler, ClickEvent.getType());
+    return handlerRegistration;
   }
 
   /**
    * set the ToolbrDivider isHidden
    */
   public void setShowDivider(final boolean showDivider) {
-    if (showDivider) {
-      toolbarDivider.getStyle().setDisplay(Display.BLOCK);
-    } else {
-      toolbarDivider.getStyle().setDisplay(Display.NONE);
-    }
+    toolbarDivider.getStyle().setDisplay(showDivider ? Display.BLOCK : Display.NONE);
   }
 
   @Override
   public void setShowDropdownArrow(final boolean showDropdownArrow) {
-    if (showDropdownArrow) {
-      dropDownArrow.getStyle().setDisplay(Display.BLOCK);
-    } else {
-      dropDownArrow.getStyle().setDisplay(Display.NONE);
-    }
+    dropDownArrow.getStyle().setDisplay(showDropdownArrow ? Display.BLOCK : Display.NONE);
   }
 
   @Override
   public void setState(final State state) {
     switch (state) {
       case ENABLED:
-        root.removeStyleName(style.waveToolbarButtonDisabled());
+        root.removeStyleName(WaveToolBarResources.css().waveToolbarButtonDisabled());
+        if (handlerRegistration == null) {
+          addDomHandler(clickHandler, ClickEvent.getType());
+        }
         break;
       case DISABLED:
-        root.addStyleName(style.waveToolbarButtonDisabled());
+        root.addStyleName(WaveToolBarResources.css().waveToolbarButtonDisabled());
+        if (handlerRegistration != null) {
+          handlerRegistration.removeHandler();
+          handlerRegistration = null;
+        }
         break;
       case INVISIBLE:
         root.getElement().getStyle().setDisplay(Display.NONE);

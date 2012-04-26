@@ -1,13 +1,14 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
-  <ui:style type="com.goodow.web.view.wave.client.toolbar.ToolBarClickButton.Style">
+  <ui:with field="res" type="com.goodow.web.view.wave.client.toolbar.WaveToolBarResources"></ui:with>
+  <ui:style>
     .waveToolbarButton {
       font-size: 8pt;
       margin-right: -1px;
       position: relative;
       cursor: pointer;
       overflow: hidden;
-      -webkit-box-flex:1;
+      -webkit-box-flex: 1;
       min-width: 100%;
       white-space: nowrap;
       padding: 0 4px;
@@ -36,8 +37,7 @@
       top: 0;
       bottom: 0;
     }
-    
-    .overlay {
+     #overlayBorder {
       position: absolute;
       left: 0;
       right: 0;
@@ -45,21 +45,8 @@
       bottom: 0;
     }
     
-    .overlay:hover {
+    #overlayBorder:hover {
       border: 1px solid rgb(127, 127, 127);
-    }
-    
-    .waveToolbarButtonDisabled {
-      opacity: 0.5;
-      cursor: default;
-    }
-    
-    .waveToolbarButtonDisabled>*.overlay:hover {
-      border: inherit;
-    }
-    
-    div.waveToolbarButtonDisabled:active {
-      background: inherit;
     }
   </ui:style>
   <ui:image field="waveToolbarDropDownArrow" />
@@ -69,6 +56,6 @@
     <span ui:field="textElement" class="{style.waveTextElement}" />
     <div ui:field="dropDownArrow" class="{style.waveToolbarDropDownArrow}" />
     <div ui:field="toolbarDivider" class="{style.waveToolbarDivider}" />
-    <div ui:field="overlay" class="{style.overlay}" />
+    <div id='overlayBorder' />
   </g:HTMLPanel>
 </ui:UiBinder> 
