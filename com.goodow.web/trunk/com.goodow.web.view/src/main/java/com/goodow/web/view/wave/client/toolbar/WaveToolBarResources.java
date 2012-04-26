@@ -37,8 +37,6 @@ public class WaveToolBarResources {
 
   interface Style extends CssResource {
     String waveToolbar();
-
-    String waveToolbarButtonDisabled();
   }
 
   private static Bundle INSTANCE;
