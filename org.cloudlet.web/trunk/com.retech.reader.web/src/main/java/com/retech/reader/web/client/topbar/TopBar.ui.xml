@@ -36,7 +36,6 @@
     
     .topBar>*:last-child>a {
       cursor: pointer;
-      text-decoration: underline;
       margin: 0 2px;
     }
   </ui:style>
