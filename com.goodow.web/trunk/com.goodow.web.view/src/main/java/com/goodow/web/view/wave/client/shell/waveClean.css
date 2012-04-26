@@ -1,7 +1,6 @@
 @CHARSET "UTF-8";
 
 @sprite body {
-  font-family: arial, sans-serif;
   gwt-image: "bodyBackgroundTop";
   background-color: hsl(210, 11%, 86%);
   overflow-y: auto;
