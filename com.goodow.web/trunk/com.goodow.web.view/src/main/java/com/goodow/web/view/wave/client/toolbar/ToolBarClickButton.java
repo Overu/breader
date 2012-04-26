@@ -73,13 +73,13 @@ public class ToolBarClickButton extends Composite implements ToolBarButtonView, 
   public void setState(final State state) {
     switch (state) {
       case ENABLED:
-        root.removeStyleName(WaveToolBarResources.css().waveToolbarButtonDisabled());
+        root.removeStyleName(State.DISABLED.name());
         if (handlerRegistration == null) {
           addDomHandler(clickHandler, ClickEvent.getType());
         }
         break;
       case DISABLED:
-        root.addStyleName(WaveToolBarResources.css().waveToolbarButtonDisabled());
+        root.addStyleName(State.DISABLED.name());
         if (handlerRegistration != null) {
           handlerRegistration.removeHandler();
           handlerRegistration = null;
