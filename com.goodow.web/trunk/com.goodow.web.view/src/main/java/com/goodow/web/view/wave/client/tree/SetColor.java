@@ -18,11 +18,15 @@ import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.NodeList;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.BorderStyle;
+import com.google.gwt.dom.client.Style.TextDecoration;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -55,6 +59,7 @@ public class SetColor extends PopupPanel {
   private static Binder binder = GWT.create(Binder.class);
   private static Map<String, String> colorMap = new LinkedHashMap<String, String>();
 
+  private Element changeElm;
   // private EventListenerImpl eventListener = new EventListenerImpl();
 
   static {
@@ -89,6 +94,8 @@ public class SetColor extends PopupPanel {
 
   @UiField
   DivElement colors;
+  @UiField
+  Element noColor;
 
   public SetColor() {
     Widget widget = binder.createAndBindUi(this);
@@ -97,14 +104,64 @@ public class SetColor extends PopupPanel {
     this.setAutoHideEnabled(true);
     NodeList<Node> childNodes = colors.getChildNodes();
     putColor(childNodes);
+
+    DOM.sinkEvents((com.google.gwt.user.client.Element) noColor, Event.ONCLICK);
+    DOM.setEventListener((com.google.gwt.user.client.Element) noColor, new EventListener() {
+
+      @Override
+      public void onBrowserEvent(final Event event) {
+        if (DOM.eventGetType(event) == Event.ONCLICK) {
+          NodeList<Element> aTags = changeElm.getElementsByTagName("span");
+          Element aTag = aTags.getItem(1);
+          Style aTagStyle = aTag.getStyle();
+          aTagStyle.clearColor();
+          aTagStyle.clearBackgroundColor();
+          aTagStyle.clearBorderColor();
+          aTagStyle.clearBorderStyle();
+          aTagStyle.clearBorderWidth();
+          aTagStyle.clearTextDecoration();
+        }
+      }
+    });
   }
 
   @Override
   public void onBrowserEvent(final Event event) {
     if (DOM.eventGetType(event) == Event.ONCLICK) {
+      if (changeElm == null) {
+        Window.alert("changeElm is null!");
+        return;
+      }
+
+      NodeList<Element> aTags = changeElm.getElementsByTagName("span");
+      Element aTag = aTags.getItem(1);
       Element elm = Element.as(event.getEventTarget());
-      Window.alert("title:" + elm.getTitle() + ";color:" + elm.getStyle().getBackgroundColor());
+      Style elmStyle = elm.getStyle();
+      Style aTagStyle = aTag.getStyle();
+
+      if (elm.getTitle().equals("White") || elm.getTitle().equals("20% Black")) {
+        aTagStyle.setBackgroundColor(elmStyle.getBackgroundColor());
+        aTagStyle.setColor("black");
+        aTagStyle.setBorderStyle(BorderStyle.SOLID);
+        aTagStyle.setBorderWidth(1, Unit.PX);
+        aTagStyle.setBorderColor("black");
+        aTagStyle.setTextDecoration(TextDecoration.NONE);
+      } else {
+        if (!aTagStyle.getBorderWidth().equals("")) {
+          aTagStyle.clearBorderColor();
+          aTagStyle.clearBorderStyle();
+          aTagStyle.clearBorderWidth();
+        }
+        aTagStyle.setTextDecoration(TextDecoration.NONE);
+        aTagStyle.setBackgroundColor(elmStyle.getBackgroundColor());
+        aTagStyle.setColor("white");
+      }
+      // Window.alert("title:" + elm.getTitle() + ";color:" + elm.getStyle().getBackgroundColor());
     }
+  }
+
+  public void setChangeElm(final Element changeElm) {
+    this.changeElm = changeElm;
   }
 
   private void addEvent(final Element elm) {

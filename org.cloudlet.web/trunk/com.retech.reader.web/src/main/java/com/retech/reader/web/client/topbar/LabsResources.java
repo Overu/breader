@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 public class LabsResources {
   public interface Bundle extends ClientBundle {
 
-    @Source("Laboratory.css")
+    @Source("Labs.css")
     Style style();
 
   }

@@ -14,33 +14,43 @@
 package com.retech.reader.web.client.topbar;
 
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.ui.Hyperlink;
 
 public class ImageAndHyperlink {
 
   private ImageResource image;
 
-  private Hyperlink link;
+  private String title;
 
-  public ImageAndHyperlink(final ImageResource image, final Hyperlink link) {
+  private Class className;
+
+  public ImageAndHyperlink(final ImageResource image, final String title, final Class className) {
     this.image = image;
-    this.link = link;
+    this.title = title;
+    this.className = className;
+  }
+
+  public Class getClassName() {
+    return className;
   }
 
   public ImageResource getImage() {
     return image;
   }
 
-  public Hyperlink getLink() {
-    return link;
+  public String getTitle() {
+    return title;
+  }
+
+  public void setClassName(final Class className) {
+    this.className = className;
   }
 
   public void setImage(final ImageResource image) {
     this.image = image;
   }
 
-  public void setLink(final Hyperlink link) {
-    this.link = link;
+  public void setTitle(final String title) {
+    this.title = title;
   }
 
 }

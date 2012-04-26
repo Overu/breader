@@ -18,6 +18,7 @@ import com.goodow.web.view.wave.client.WaveTest;
 import com.goodow.web.view.wave.client.contact.ContactPanel;
 import com.goodow.web.view.wave.client.panel.WavePanel;
 import com.goodow.web.view.wave.client.title.WaveTitleResources;
+import com.goodow.web.view.wave.client.tree.SetColor;
 import com.goodow.web.view.wave.client.tree.TrangleButtonCell;
 import com.goodow.web.view.wave.client.tree.TreeTest;
 
@@ -38,7 +39,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
@@ -75,6 +75,8 @@ public class Labs extends WavePanel implements Activity {
   SimplePanel simplePanel;
   @UiField
   IconButtonTemplate minimize;
+  @UiField
+  SetColor setColor;
 
   private CellList<ImageAndHyperlink> cellList;
   private ListDataProvider<ImageAndHyperlink> listDataProvider =
@@ -86,26 +88,24 @@ public class Labs extends WavePanel implements Activity {
       final PlaceController placeController, final Provider<BasePlace> base) {
     this.setWaveContent(binder.createAndBindUi(this));
 
+    setColor.setChangeElm(simplePanel.getElement());
+
     minimize.setIconElement(AbstractImagePrototype.create(
         WaveTitleResources.image().waveTitleMinimize()).createElement());
 
     List<ImageAndHyperlink> list = listDataProvider.getList();
-    ImageAndHyperlink touch =
-        new ImageAndHyperlink(bunder.laboratory(), new Hyperlink("拖动实验", WaveTest.class.getName()));
+    ImageAndHyperlink touch = new ImageAndHyperlink(bunder.laboratory(), "拖动实验", WaveTest.class);
     list.add(touch);
 
-    ImageAndHyperlink flip =
-        new ImageAndHyperlink(bunder.laboratory(), new Hyperlink("3D滚动", BookFlip.class.getName()));
+    ImageAndHyperlink flip = new ImageAndHyperlink(bunder.laboratory(), "3D滚动", BookFlip.class);
     list.add(flip);
 
     ImageAndHyperlink contact =
-        new ImageAndHyperlink(bunder.laboratory(), new Hyperlink("分享与即时聊天", ContactPanel.class
-            .getName()));
+        new ImageAndHyperlink(bunder.laboratory(), "分享与即时聊天", ContactPanel.class);
     list.add(contact);
 
     ImageAndHyperlink treeTest =
-        new ImageAndHyperlink(bunder.laboratory(), new Hyperlink("TreeTest", TreeTest.class
-            .getName()));
+        new ImageAndHyperlink(bunder.laboratory(), "TreeTest", TreeTest.class);
     list.add(treeTest);
 
     final SingleSelectionModel<ImageAndHyperlink> selectionModel =
@@ -114,7 +114,7 @@ public class Labs extends WavePanel implements Activity {
       @Override
       public void onSelectionChange(final SelectionChangeEvent event) {
         placeController.goTo(base.get().setPath(
-            selectionModel.getSelectedObject().getLink().getTargetHistoryToken()));
+            selectionModel.getSelectedObject().getClassName().getName()));
       }
     });
 

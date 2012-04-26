@@ -61,7 +61,7 @@
       <div></div>
     </div>
     <div>
-      <div class="{style.nocolor}">No color</div>
+      <div ui:field="noColor" class="{style.nocolor}">No color</div>
     </div>
   </g:HTMLPanel>
 </ui:UiBinder>

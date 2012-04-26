@@ -25,7 +25,7 @@ public class LabsCell extends AbstractCell<ImageAndHyperlink> {
 
   interface Template extends SafeHtmlTemplates {
 
-    @SafeHtmlTemplates.Template("<div class='{2}'>{0}{1}</div>")
+    @SafeHtmlTemplates.Template("<div class='{2}'>{0}<span>{1}</span></div>")
     SafeHtml put(SafeHtml num, SafeHtml url, String style);
   }
 
@@ -38,7 +38,7 @@ public class LabsCell extends AbstractCell<ImageAndHyperlink> {
       return;
     }
     SafeHtml image = AbstractImagePrototype.create(value.getImage()).getSafeHtml();
-    SafeHtml link = SafeHtmlUtils.fromTrustedString(value.getLink().getElement().getInnerHTML());
+    SafeHtml link = SafeHtmlUtils.fromTrustedString(value.getTitle());
     sb.append(template.put(image, link, LabsResources.css().cellItemLeftDiv()));
 
     // margin: 1px 6px 0 8px;
