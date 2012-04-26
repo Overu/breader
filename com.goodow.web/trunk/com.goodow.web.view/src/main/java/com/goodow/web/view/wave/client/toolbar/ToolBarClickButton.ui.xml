@@ -49,6 +49,13 @@
       border: 1px solid rgb(127, 127, 127);
     }
     @external DISABLED;
+    .DISABLED {
+      opacity: 0.5;
+      cursor: default;
+    }
+    div.DISABLED:active {
+      background: initial;
+    }
     .DISABLED>.overlayBorder:hover {
       border: initial;
     }
