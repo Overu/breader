@@ -57,7 +57,7 @@ public class WaveTitle extends FlowPanel {
 
   public IconButtonTemplate addIconClickButton() {
     IconButtonTemplate iconButton = new IconButtonTemplate();
-    iconButton.addStyleName(WaveTitleResources.css().waveTitleDiv());
+    iconButton.addStyleName(WaveTitleResources.css().waveTitleIcon());
     this.add(iconButton);
     return iconButton;
   }

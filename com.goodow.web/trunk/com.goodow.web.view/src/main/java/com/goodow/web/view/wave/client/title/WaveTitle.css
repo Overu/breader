@@ -11,21 +11,6 @@
   overflow: hidden;
 }
 
-.waveTitleDiv {
-  padding: 0 10px;
-  cursor: pointer;
-}
-
-.waveTitleDiv:hover {
-  background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
-    from(hsl(212, 58%, 58%) ), to(hsl(211, 43%, 48%) ) );
-}
-
-.waveTitleDiv:active {
-  background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
-    from(hsl(218, 46%, 52%) ), to(hsl(212, 43%, 45%) ) );
-}
-
 .waveTitle>span {
   display: -webkit-box;
   -webkit-box-flex: 1;
@@ -36,7 +21,22 @@
   text-overflow: ellipsis;
 }
 
-.waveTitleDiv>img {
+.waveTitleIcon {
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.waveTitleIcon:hover {
+  background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
+    from(hsl(212, 58%, 58%) ), to(hsl(211, 43%, 48%) ) );
+}
+
+.waveTitleIcon:active {
+  background-image: -webkit-gradient(linear, literal("left top"), literal("left bottom"),
+    from(hsl(218, 46%, 52%) ), to(hsl(212, 43%, 45%) ) );
+}
+.waveTitleIcon>img {
   height: 100% !important;
   background-position: center !important;
 }
+

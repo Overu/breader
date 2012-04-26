@@ -22,7 +22,14 @@ import java.util.logging.Logger;
 
 public class WaveTitleResources {
 
-  public interface Bundle extends ClientBundle {
+  public interface Style extends CssResource {
+
+    String waveTitle();
+
+    String waveTitleIcon();
+  }
+
+  interface Bundle extends ClientBundle {
 
     @Source("WaveTitle.css")
     Style style();
@@ -31,16 +38,7 @@ public class WaveTitleResources {
 
     ImageResource waveTitleMinimize();
 
-    ImageResource waveTitleMinimizeHover();
-
     ImageResource waveTitleReturn();
-  }
-
-  public interface Style extends CssResource {
-
-    String waveTitle();
-
-    String waveTitleDiv();
   }
 
   private static Bundle INSTANCE;
