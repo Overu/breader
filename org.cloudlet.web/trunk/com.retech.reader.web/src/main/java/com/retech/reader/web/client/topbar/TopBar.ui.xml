@@ -12,30 +12,29 @@
       padding: 3px 0 0 0;
     }
     
-    .topBar>*:last-child {
+    .links {
       position: relative;
       z-index: 60;
       line-height: 33px;
       border-right: 10px solid transparent;
     }
     
-    .topBar>*:last-child>* {
+    .links>* {
       display: inline;
       cursor: default;
     }
     
-    .topBar>*:last-child>div {
+    .links>div {
       margin: 0 4px;
     }
     
-    .topBar>*:last-child>span {
+    .links>span {
       font-weight: bold;
       padding-right: 5px;
       white-space: nowrap;
     }
     
-    .topBar>*:last-child>a {
-      cursor: pointer;
+    .links>a {
       margin: 0 2px;
     }
   </ui:style>
@@ -44,7 +43,7 @@
     <div>
       <g:Image resource='{retechcorpLogo}'></g:Image>
     </div>
-    <div>
+    <div class='{style.links}'>
       <span>欢迎</span>
       <div>|</div>
       <a href="#com.retech.reader.web.client.topbar.Labs">实验室</a>
