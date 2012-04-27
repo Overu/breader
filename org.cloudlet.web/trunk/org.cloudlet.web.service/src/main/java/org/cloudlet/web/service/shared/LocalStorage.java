@@ -1,6 +1,5 @@
 package org.cloudlet.web.service.shared;
 
-import static org.cloudlet.web.service.shared.KeyUtil.ANY_SEPARATOR_PATTERN;
 import static org.cloudlet.web.service.shared.KeyUtil.LIST_SEPARATOR;
 import static org.cloudlet.web.service.shared.KeyUtil.PROXY_SEPARATOR;
 import static org.cloudlet.web.service.shared.KeyUtil.SET_SEPARATOR;
@@ -30,6 +29,7 @@ import com.google.web.bindery.requestfactory.shared.messages.IdMessage;
 
 import org.cloudlet.web.service.shared.rpc.BaseEntityProxy;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -43,16 +43,20 @@ public class LocalStorage {
 
   // private final Map<String, Object> map;
 
-  private static ProxySerializer proxySerializer;
+  private ProxySerializer proxySerializer;
 
   @Inject
   private RequestFactory f;
 
+  private final KeyUtil keyUtil;
+
   @Inject
-  LocalStorage(final Provider<ProxySerializer> proxySerializers, final ProxyStore proxyStore) {
+  LocalStorage(final Provider<ProxySerializer> proxySerializers, final ProxyStore proxyStore,
+      final KeyUtil keyUtil) {
     // map = new HashMap<String, Object>();
     this.proxySerializers = proxySerializers;
     this.proxyStore = proxyStore;
+    this.keyUtil = keyUtil;
     proxySerializer = proxySerializers.get();
     this.entitySource = (EntitySource) proxySerializers.get();
   }
@@ -62,7 +66,7 @@ public class LocalStorage {
     if (key == null) {
       return null;
     }
-    if (!needKey(key)) {
+    if (!keyUtil.isEncodedKey(key)) {
       EntityProxyId<EntityProxy> proxyId = f.getProxyId(key);
       return (T) proxySerializers.get().deserialize(proxyId);
     }
@@ -120,18 +124,25 @@ public class LocalStorage {
     if (key == null) {
       return null;
     }
-    if (!needKey(key)) {
-      assert value instanceof BaseEntityProxy;
-      BaseEntityProxy proxy = (BaseEntityProxy) value;
-      // map.put(f.getHistoryToken(proxy.stableId()), proxy);
-      return proxySerializers.get().serialize(proxy);
+    // if (!keyUtil.isEncodedKey(key)) {
+    // assert value instanceof BaseEntityProxy;
+    // BaseEntityProxy proxy = (BaseEntityProxy) value;
+    // // map.put(f.getHistoryToken(proxy.stableId()), proxy);
+    // return proxySerializers.get().serialize(proxy);
+    // }
+    // // map.put(key, values);
+    LinkedHashSet<BaseProxy> toSerialize = new LinkedHashSet<BaseProxy>();
+    Splittable encode = encode(value, toSerialize);
+    for (BaseProxy proxy : toSerialize) {
+      proxySerializer.serialize(proxy);
     }
-    // map.put(key, values);
-    proxyStore.put(key, encode(value));
+    if (keyUtil.isEncodedKey(key)) {
+      proxyStore.put(key, encode);
+    }
     return key;
   }
 
-  Splittable encode(Object value) {
+  Splittable encode(Object value, final Set<BaseProxy> toSerialize) {
     if (value == null) {
       return Splittable.NULL;
     }
@@ -153,7 +164,7 @@ public class LocalStorage {
         if (val == null) {
           toReturn.append("null");
         } else {
-          toReturn.append(encode(val).getPayload());
+          toReturn.append(encode(val, toSerialize).getPayload());
         }
       }
       toReturn.append(']');
@@ -161,7 +172,7 @@ public class LocalStorage {
     }
 
     if (value instanceof BaseProxy) {
-      proxySerializer.serialize((BaseProxy) value);
+      toSerialize.add((BaseProxy) value);
       AutoBean<BaseProxy> autoBean = AutoBeanUtils.getAutoBean((BaseProxy) value);
       value = BaseProxyCategory.stableId(autoBean);
     }
@@ -184,10 +195,6 @@ public class LocalStorage {
     IdMessage idMessage =
         AutoBeanCodex.decode(MessageFactoryHolder.FACTORY, IdMessage.class, getProxyClass).as();
     return f.getProxyClass(idMessage.getTypeToken());
-  }
-
-  private boolean needKey(final String key) {
-    return key.matches(".*" + ANY_SEPARATOR_PATTERN + ".*");
   }
 
   // private <T> void put(final String keyPrefix, final List<T> values) {
