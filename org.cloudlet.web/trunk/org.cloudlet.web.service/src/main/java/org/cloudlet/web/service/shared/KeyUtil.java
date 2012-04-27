@@ -26,6 +26,8 @@ public class KeyUtil {
   public static final String SET_SEPARATOR = "@c@";
   public static final String RESOURCE_SEPARATOR = "@r@";
   private final RequestFactory f;
+  private static final int KEY_TOKEN_INDEX = 0;
+  private static final int TYPE_TOKEN_INDEX = 1;
 
   @Inject
   KeyUtil(final RequestFactory f) {
