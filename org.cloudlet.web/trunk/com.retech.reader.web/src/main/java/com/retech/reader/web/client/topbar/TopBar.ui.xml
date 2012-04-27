@@ -21,7 +21,6 @@
     
     .links>* {
       display: inline;
-      cursor: default;
     }
     
     .links>div {
