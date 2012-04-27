@@ -4,6 +4,7 @@ import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.inject.Inject;
+import com.google.web.bindery.requestfactory.shared.EntityProxy;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.google.web.bindery.requestfactory.shared.Request;
@@ -35,46 +36,44 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
   }
 
   public void fire(final Receiver<Void> receiver) {
-    V value = storage.get(key);
-    if (value != null) {
+    if (!keyUtil.isResource(key)) {
+      V value = storage.get(key);
+      if (value == null) {
+        doFire(receiver);
+        return;
+      }
       onSuccessAndCached(value);
       return;
     }
-    final AbstractRequestContext openContextImpl =
-        (AbstractRequestContext) provideRequest().to(this);
-    openContextImpl.setFireDisabled(true);
-    toFires.add(openContextImpl);
-    Scheduler.get().scheduleFinally(new ScheduledCommand() {
+    fileStorage.get(key, new Callback<V, Object>() {
+
       @Override
-      public void execute() {
-        if (toFires.isEmpty()) {
+      public void onFailure(final Object reason) {
+        logger.severe("取数据时出错了");
+        doFire(receiver);
+        return;
+      }
+
+      @Override
+      public void onSuccess(final V result) {
+        if (receiver == null) {
+          doFire(receiver);
           return;
         }
-        for (AbstractRequestContext ctx : toFires) {
-          if (ctx.isLocked()) {
-            logger.fine("AbstractRequestContext.fire() should have been a no-op");
-            continue;
-          }
-          ctx.setFireDisabled(false);
-          ctx.fire();
-        }
-        toFires.clear();
+        onSuccessAndCached(result);
+        return;
       }
     });
-    if (receiver != null) {
-      // Queue a final callback receiver
-      openContextImpl.fire(receiver);
-    }
   }
 
   @Override
   public void onSuccess(final V response) {
-    if (!(response instanceof ResourceProxy)) {
+    if (!keyUtil.isResource(key)) {
       storage.put(key, response);
       onSuccessAndCached(response);
       return;
     }
-    fileStorage.put(key, (ResourceProxy) response, new Callback<Void, Object>() {
+    fileStorage.put(key, (EntityProxy) response, new Callback<Void, Object>() {
 
       @Override
       public void onFailure(final Object reason) {
@@ -101,12 +100,12 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
   public BaseReceiver<V> setKeyForList(final EntityProxyId<?> parentId, final String listKey) {
     this.key = keyUtil.proxyListKey(parentId, listKey);
     return this;
-  };
+  }
 
   public BaseReceiver<V> setKeyForList(final String listKey) {
     this.key = keyUtil.listKey(listKey);
     return this;
-  }
+  };
 
   public BaseReceiver<V> setKeyForProxy(final EntityProxyId<?> proxyId) {
     this.key = keyUtil.proxy(proxyId);
@@ -116,6 +115,34 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
   public BaseReceiver<V> setKeyForProxy(final EntityProxyId<?> parentId, final String key) {
     this.key = keyUtil.proxyKey(parentId, key);
     return this;
+  }
+
+  private void doFire(final Receiver<Void> receiver) {
+    final AbstractRequestContext openContextImpl =
+        (AbstractRequestContext) provideRequest().to(this);
+    openContextImpl.setFireDisabled(true);
+    toFires.add(openContextImpl);
+    Scheduler.get().scheduleFinally(new ScheduledCommand() {
+      @Override
+      public void execute() {
+        if (toFires.isEmpty()) {
+          return;
+        }
+        for (AbstractRequestContext ctx : toFires) {
+          if (ctx.isLocked()) {
+            logger.fine("AbstractRequestContext.fire() should have been a no-op");
+            continue;
+          }
+          ctx.setFireDisabled(false);
+          ctx.fire();
+        }
+        toFires.clear();
+      }
+    });
+    if (receiver != null) {
+      // Queue a final callback receiver
+      openContextImpl.fire(receiver);
+    }
   }
 
 }
