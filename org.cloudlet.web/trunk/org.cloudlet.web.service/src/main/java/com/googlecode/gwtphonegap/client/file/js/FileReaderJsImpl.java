@@ -135,7 +135,11 @@ public final class FileReaderJsImpl extends JavaScriptObject implements FileRead
                                                             }-*/;
 
   private native void readAsText0(JavaScriptObject entry)/*-{
-                                                         this.readAsText(entry);
+                                                         var that = this;
+                                                         var suc = function win(file) {
+                                                         that.readAsText(file);
+                                                         };
+                                                         entry.file($entry(suc));
                                                          }-*/;
 
 }
