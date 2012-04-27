@@ -20,32 +20,23 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class ToolBarClickButton extends Composite implements ToolBarButtonView, HasClickHandlers {
-  interface Style extends CssResource {
-    String waveToolbarButtonDisabled();
-  }
   interface ToolbarUiBinder extends UiBinder<Widget, ToolBarClickButton> {
   }
 
   private static ToolbarUiBinder uiBinder = GWT.create(ToolbarUiBinder.class);
 
   @UiField
-  HTMLPanel root;
-  @UiField
   Element textElement;
   @UiField
   Element visualElement;
   @UiField
   Element dropDownArrow;
-  @UiField
-  Style style;
   @UiField
   Element toolbarDivider;
 
@@ -79,20 +70,20 @@ public class ToolBarClickButton extends Composite implements ToolBarButtonView, 
   public void setState(final State state) {
     switch (state) {
       case ENABLED:
-        root.removeStyleName(style.waveToolbarButtonDisabled());
+        getElement().removeAttribute("disabled");
         if (handlerRegistration == null) {
           addDomHandler(clickHandler, ClickEvent.getType());
         }
         break;
       case DISABLED:
-        root.addStyleName(style.waveToolbarButtonDisabled());
+        getElement().setAttribute("disabled", "");
         if (handlerRegistration != null) {
           handlerRegistration.removeHandler();
           handlerRegistration = null;
         }
         break;
       case INVISIBLE:
-        root.getElement().getStyle().setDisplay(Display.NONE);
+        getElement().getStyle().setDisplay(Display.NONE);
         break;
       default:
         break;
