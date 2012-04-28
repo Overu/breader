@@ -72,10 +72,12 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
 
   @Override
   public void onSuccess(final V response) {
-    if (key != null) {
-      storage.put(key, response);
+    if (key == null) {
+      onSuccessAndCached(response);
+      return;
     }
     if (!keyUtil.isResource(key)) {
+      storage.put(key, response);
       onSuccessAndCached(response);
       return;
     }
