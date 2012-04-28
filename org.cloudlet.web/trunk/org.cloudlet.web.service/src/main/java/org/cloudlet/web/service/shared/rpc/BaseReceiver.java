@@ -36,6 +36,10 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
   }
 
   public void fire(final Receiver<Void> receiver) {
+    if (key == null) {
+      doFire(receiver);
+      return;
+    }
     if (!keyUtil.isResource(key)) {
       V value = storage.get(key);
       if (value == null) {
@@ -68,8 +72,10 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
 
   @Override
   public void onSuccess(final V response) {
-    if (!keyUtil.isResource(key)) {
+    if (key != null) {
       storage.put(key, response);
+    }
+    if (!keyUtil.isResource(key)) {
       onSuccessAndCached(response);
       return;
     }

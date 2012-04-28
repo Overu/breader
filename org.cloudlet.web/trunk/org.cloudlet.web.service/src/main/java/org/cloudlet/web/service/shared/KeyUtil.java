@@ -39,7 +39,8 @@ public class KeyUtil {
   }
 
   public boolean isResource(final String encodedKey) {
-    return encodedKey.contains(RESOURCE_SEPARATOR);
+    return encodedKey != null && encodedKey.contains(RESOURCE_SEPARATOR);
+
   }
 
   public String listKey(final String listKey) {

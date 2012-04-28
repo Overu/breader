@@ -12,6 +12,9 @@ import java.util.List;
 
 @ProxyFor(value = Section.class, locator = NoLocator.class)
 public interface SectionProxy extends BaseEntityProxy {
+
+  String WITH = "issue";
+
   IssueProxy getIssue();
 
   int getPageCount();
