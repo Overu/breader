@@ -8,3 +8,12 @@
   font-weight: bold;
   background-color: hsl(71, 100%, 37%);
 }
+
+.iconButtonDisabled {
+  opacity: 0.5;
+  cursor: default !important;
+}
+
+.iconButtonDisabled:active,.iconButtonDisabled:hover {
+  background-image: none;
+}

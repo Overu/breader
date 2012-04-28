@@ -13,6 +13,8 @@
  */
 package com.goodow.web.view.wave.client;
 
+import com.goodow.web.view.wave.client.toolbar.ToolBarButtonView.State;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -32,8 +34,13 @@ public class IconButtonTemplate extends Widget implements HasClickHandlers {
     Style style();
   }
   public interface Style extends CssResource {
+    String iconButtonDisabled();
+
     String visualNumeralElement();
   }
+
+  private ClickHandler clickHandler;
+  private HandlerRegistration handlerRegistration;
 
   static {
     Resources.INSTANCE.style().ensureInjected();
@@ -45,7 +52,9 @@ public class IconButtonTemplate extends Widget implements HasClickHandlers {
 
   @Override
   public HandlerRegistration addClickHandler(final ClickHandler handler) {
-    return this.addDomHandler(handler, ClickEvent.getType());
+    this.clickHandler = handler;
+    handlerRegistration = addDomHandler(handler, ClickEvent.getType());
+    return handlerRegistration;
   }
 
   /**
@@ -59,5 +68,23 @@ public class IconButtonTemplate extends Widget implements HasClickHandlers {
     getElement().setInnerText(text);
     addStyleName(Resources.INSTANCE.style().visualNumeralElement());
     return this;
+  }
+
+  public void setState(final State state) {
+    switch (state) {
+      case ENABLED:
+        this.removeStyleName(Resources.INSTANCE.style().iconButtonDisabled());
+        if (handlerRegistration == null) {
+          addDomHandler(clickHandler, ClickEvent.getType());
+        }
+        break;
+      case DISABLED:
+        if (handlerRegistration != null) {
+          handlerRegistration.removeHandler();
+          handlerRegistration = null;
+        }
+        this.addStyleName(Resources.INSTANCE.style().iconButtonDisabled());
+        break;
+    }
   }
 }
