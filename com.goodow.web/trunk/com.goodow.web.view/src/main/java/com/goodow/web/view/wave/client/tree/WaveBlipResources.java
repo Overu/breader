@@ -23,19 +23,18 @@ import java.util.logging.Logger;
 public class WaveBlipResources {
 
   public interface Style extends CssResource {
-    String waveBlipGrayBorder();
   }
   interface Bundle extends ClientBundle {
     @Source("WaveBlip.css")
     Style style();
 
-    ImageResource waveBlipPopupContextEdit();
-
     ImageResource waveBlipMoreActions();
 
-    ImageResource waveBlipReply();
+    ImageResource waveBlipPopupContextEdit();
 
     ImageResource waveBlipPopupContextReply();
+
+    ImageResource waveBlipReply();
   }
 
   private static Bundle INSTANCE;

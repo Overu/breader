@@ -10,12 +10,15 @@
     }
     
     .divider {
-      display: none;
       position: absolute;
       top: -1px;
       left: 13px;
       right: 13px;
       border-bottom: 1px dotted #b3b3b3;
+    }
+    
+    .root:focus>.divider {
+      display: none;
     }
     
     @sprite .popupContext {
@@ -165,12 +168,14 @@
       top: 0;
       bottom: 0;
       -webkit-border-radius: 5px;
+      border: 2px solid hsl(0, 0%, 60%);
     }
+    
     .root:focus>.overlay {
       border: 2px solid hsl(82, 85%, 30%);
     }
   </ui:style>
-  <ui:image field="waveReplyEmpty" repeatStyle="Horizontal" />
+  <ui:image field="waveBlipPopupContextEmpty" repeatStyle="Horizontal" />
   <ui:image field="waveBlipPopupContextLeft" />
   <ui:image field="waveBlipPopupContextRight" />
   <g:FlowPanel>

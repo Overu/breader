@@ -18,13 +18,8 @@ import com.goodow.web.view.wave.client.contact.UserStatusResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.event.dom.client.BlurEvent;
-import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
-import com.google.gwt.event.dom.client.FocusEvent;
-import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -87,20 +82,6 @@ public class WaveBlip extends Composite {
             .setOpacity(popupContext.getStyle().getOpacity().equals("0") ? 1 : 0);
       }
     }, DoubleClickEvent.getType());
-    root.addDomHandler(new FocusHandler() {
-      @Override
-      public void onFocus(final FocusEvent event) {
-        overlay.removeClassName(WaveBlipResources.css().waveBlipGrayBorder());
-        dottedDivider.getStyle().setDisplay(Display.NONE);
-      }
-    }, FocusEvent.getType());
-    root.addDomHandler(new BlurHandler() {
-
-      @Override
-      public void onBlur(final BlurEvent event) {
-        dottedDivider.getStyle().setDisplay(Display.BLOCK);
-      }
-    }, BlurEvent.getType());
   }
 
   public void addUserName(final String userName) {
@@ -113,11 +94,6 @@ public class WaveBlip extends Composite {
 
   public FlowPanel getUserPanel() {
     return contributorPics;
-  }
-
-  public void setBorderGray() {
-    overlay.addClassName(WaveBlipResources.css().waveBlipGrayBorder());
-    dottedDivider.getStyle().setDisplay(Display.NONE);
   }
 
   public void setContent(final String html) {
