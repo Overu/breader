@@ -4,6 +4,7 @@ import com.goodow.web.view.wave.client.contact.UserStatusResources;
 import com.goodow.web.view.wave.client.panel.WavePanelResources;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -40,6 +41,9 @@ public class UserStatus extends Composite {
     simplePanel.add(AbstractImagePrototype.create(imageResource).createImage());
     simplePanel.addStyleName(userStatusCss);
     simplePanel.addStyleName(UserStatusResources.css().waveUser());
+    simplePanel.getElement().getStyle().setProperty("padding", "0 0 7px 2px");
+    simplePanel.getElement().getFirstChildElement().getStyle().setWidth(40, Unit.PX);
+    simplePanel.getElement().getFirstChildElement().getStyle().setHeight(40, Unit.PX);
     users.add(simplePanel);
   }
 }
