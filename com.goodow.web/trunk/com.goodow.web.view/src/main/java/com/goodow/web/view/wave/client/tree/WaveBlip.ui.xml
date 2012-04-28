@@ -19,7 +19,7 @@
     }
     
     @sprite .popupContext {
-      gwt-image: "waveReplyEmpty";
+      gwt-image: "waveBlipPopupContextEmpty";
       overflow: visible;
       position: fixed;
       z-index: 50;
