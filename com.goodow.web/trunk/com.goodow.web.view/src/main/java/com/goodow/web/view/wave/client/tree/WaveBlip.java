@@ -18,12 +18,19 @@ import com.goodow.web.view.wave.client.contact.UserStatusResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
+import com.google.gwt.event.dom.client.DoubleClickEvent;
+import com.google.gwt.event.dom.client.DoubleClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class WaveBlip extends Composite {
@@ -43,24 +50,74 @@ public class WaveBlip extends Composite {
   IconButtonTemplate moreActions;
   @UiField
   DivElement unRead;
+  @UiField
+  IconButtonTemplate replyPic;
+  @UiField
+  HTMLPanel replyPanel;
+  @UiField
+  DivElement dottedDivider;
+  @UiField
+  IconButtonTemplate popupContextIconReply;
+  @UiField
+  IconButtonTemplate popupContextIconEdit;
+  @UiField
+  DivElement popupContext;
+  @UiField
+  HTMLPanel root;
+  @UiField
+  DivElement overlay;
 
   public WaveBlip() {
     initWidget(uiBinder.createAndBindUi(this));
     contributorPics.addStyleName(UserStatusResources.css().waveUser());
+    root.getElement().setAttribute("tabIndex", "0");
     moreActions.setIconElement(AbstractImagePrototype.create(
         WaveBlipResources.image().waveBlipMoreActions()).createElement());
-  }
+    replyPic.setIconElement(AbstractImagePrototype
+        .create(WaveBlipResources.image().waveBlipReply()).createElement());
+    popupContextIconReply.setIconElement(AbstractImagePrototype.create(
+        WaveBlipResources.image().waveBlipPopupContextReply()).createElement());
+    popupContextIconEdit.setIconElement(AbstractImagePrototype.create(
+        WaveBlipResources.image().waveBlipPopupContextEdit()).createElement());
+    root.addDomHandler(new DoubleClickHandler() {
 
-  public void addUser(final Element element) {
-    contributorPics.getElement().appendChild(element);
+      @Override
+      public void onDoubleClick(final DoubleClickEvent event) {
+        popupContext.getStyle()
+            .setOpacity(popupContext.getStyle().getOpacity().equals("0") ? 1 : 0);
+      }
+    }, DoubleClickEvent.getType());
+    root.addDomHandler(new FocusHandler() {
+      @Override
+      public void onFocus(final FocusEvent event) {
+        overlay.removeClassName(WaveBlipResources.css().waveBlipGrayBorder());
+        dottedDivider.getStyle().setDisplay(Display.NONE);
+      }
+    }, FocusEvent.getType());
+    root.addDomHandler(new BlurHandler() {
+
+      @Override
+      public void onBlur(final BlurEvent event) {
+        dottedDivider.getStyle().setDisplay(Display.BLOCK);
+      }
+    }, BlurEvent.getType());
   }
 
   public void addUserName(final String userName) {
     authorName.setInnerText(userName + ":");
   }
 
-  public IconButtonTemplate getIconButton() {
-    return this.moreActions;
+  public IconButtonTemplate getEditorIcon() {
+    return this.popupContextIconEdit;
+  }
+
+  public FlowPanel getUserPanel() {
+    return contributorPics;
+  }
+
+  public void setBorderGray() {
+    overlay.addClassName(WaveBlipResources.css().waveBlipGrayBorder());
+    dottedDivider.getStyle().setDisplay(Display.NONE);
   }
 
   public void setContent(final String html) {
@@ -74,5 +131,4 @@ public class WaveBlip extends Composite {
   public void setRead(final boolean read) {
     unRead.getStyle().setOpacity(read ? 0 : 1);
   }
-
 }

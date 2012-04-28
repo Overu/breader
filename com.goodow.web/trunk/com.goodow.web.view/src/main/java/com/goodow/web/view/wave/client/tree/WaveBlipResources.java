@@ -15,14 +15,27 @@ package com.goodow.web.view.wave.client.tree;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 
 import java.util.logging.Logger;
 
 public class WaveBlipResources {
 
+  public interface Style extends CssResource {
+    String waveBlipGrayBorder();
+  }
   interface Bundle extends ClientBundle {
+    @Source("WaveBlip.css")
+    Style style();
+
+    ImageResource waveBlipPopupContextEdit();
+
     ImageResource waveBlipMoreActions();
+
+    ImageResource waveBlipReply();
+
+    ImageResource waveBlipPopupContextReply();
   }
 
   private static Bundle INSTANCE;
@@ -30,9 +43,13 @@ public class WaveBlipResources {
 
   static {
     logger.finest("static init start");
-
     INSTANCE = GWT.create(Bundle.class);
+    INSTANCE.style().ensureInjected();
     logger.finest("static init end");
+  }
+
+  public static Style css() {
+    return INSTANCE.style();
   }
 
   public static Bundle image() {
