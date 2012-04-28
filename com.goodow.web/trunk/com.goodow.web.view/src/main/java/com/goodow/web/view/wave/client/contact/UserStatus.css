@@ -2,13 +2,10 @@
 
 .waveUser {
   cursor: pointer;
-  display: inline-block;
-  padding: 0 2px 7px 3px;
+  display:inline-block;
 }
 
 .waveUser>* {
-  width: 40px !important;
-  height: 40px !important;
   border: 1px solid hsl(215, 30%, 79%);
   vertical-align: bottom;
   background-size: contain;
@@ -29,7 +26,6 @@
 @sprite .waveUserGroup::after {
   gwt-image: "userStatusGroup";
 }
-
 .waveUserAvailable::after,.waveUserIdle::after,.waveUserInvisible::after,.waveUserGroup::after {
   content: "";
   display: inline-block;
