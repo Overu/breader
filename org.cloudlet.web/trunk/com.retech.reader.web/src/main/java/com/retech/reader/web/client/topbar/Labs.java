@@ -28,7 +28,9 @@ import com.google.gwt.cell.client.CompositeCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.HasCell;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.ClientBundle;
@@ -41,13 +43,13 @@ import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.CellPreviewEvent;
 import com.google.gwt.view.client.ListDataProvider;
-import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import com.retech.reader.web.client.home.BookFlip;
+import com.retech.reader.web.client.home.SearchPanel;
 
 import org.cloudlet.web.mvp.shared.BasePlace;
 
@@ -78,14 +80,16 @@ public class Labs extends WavePanel implements Activity {
   @UiField
   SetColor setColor;
 
-  private CellList<ImageAndHyperlink> cellList;
-  private ListDataProvider<ImageAndHyperlink> listDataProvider =
-      new ListDataProvider<ImageAndHyperlink>();
-  private CompositeCell<ImageAndHyperlink> compositeCell;
+  private CellList<LabsIconDecorator> cellList;
+  private ListDataProvider<LabsIconDecorator> listDataProvider =
+      new ListDataProvider<LabsIconDecorator>();
+  private CompositeCell<LabsIconDecorator> compositeCell;
+
+  private Element lastElm;
 
   @Inject
-  Labs(final CellList.Resources resource, final LabsCell cell,
-      final PlaceController placeController, final Provider<BasePlace> base) {
+  Labs(final CellList.Resources resource, final PlaceController placeController,
+      final Provider<BasePlace> base) {
     this.setWaveContent(binder.createAndBindUi(this));
 
     setColor.setChangeElm(simplePanel.getElement());
@@ -93,75 +97,78 @@ public class Labs extends WavePanel implements Activity {
     minimize.setIconElement(AbstractImagePrototype.create(
         WaveTitleResources.image().waveTitleMinimize()).createElement());
 
-    List<ImageAndHyperlink> list = listDataProvider.getList();
-    ImageAndHyperlink touch = new ImageAndHyperlink(bunder.laboratory(), "拖动实验", WaveTest.class);
+    // add Data
+    List<LabsIconDecorator> list = listDataProvider.getList();
+    LabsIconDecorator touch = new LabsIconDecorator(bunder.laboratory(), "拖动实验", WaveTest.class);
     list.add(touch);
 
-    ImageAndHyperlink flip = new ImageAndHyperlink(bunder.laboratory(), "3D滚动", BookFlip.class);
+    LabsIconDecorator flip = new LabsIconDecorator(bunder.laboratory(), "3D滚动", BookFlip.class);
     list.add(flip);
 
-    ImageAndHyperlink contact =
-        new ImageAndHyperlink(bunder.laboratory(), "分享与即时聊天", ContactPanel.class);
+    LabsIconDecorator contact =
+        new LabsIconDecorator(bunder.laboratory(), "分享与即时聊天", ContactPanel.class);
     list.add(contact);
 
-    ImageAndHyperlink treeTest =
-        new ImageAndHyperlink(bunder.laboratory(), "TreeTest", TreeTest.class);
+    LabsIconDecorator treeTest =
+        new LabsIconDecorator(bunder.laboratory(), "TreeTest", TreeTest.class);
     list.add(treeTest);
 
-    final SingleSelectionModel<ImageAndHyperlink> selectionModel =
-        new SingleSelectionModel<ImageAndHyperlink>();
-    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-      @Override
-      public void onSelectionChange(final SelectionChangeEvent event) {
-        placeController.goTo(base.get().setPath(
-            selectionModel.getSelectedObject().getClassName().getName()));
-      }
-    });
+    LabsIconDecorator search = new LabsIconDecorator(bunder.laboratory(), "搜索", SearchPanel.class);
+    list.add(search);
 
-    List<HasCell<ImageAndHyperlink, ?>> hasCells = new ArrayList<HasCell<ImageAndHyperlink, ?>>();
-    hasCells.add(new HasCell<ImageAndHyperlink, ImageAndHyperlink>() {
+    // add cell
+    List<HasCell<LabsIconDecorator, ?>> hasCells = new ArrayList<HasCell<LabsIconDecorator, ?>>();
+    hasCells.add(new HasCell<LabsIconDecorator, LabsIconDecorator>() {
+
+      LabsIconDecoratorCell cell = new LabsIconDecoratorCell(new LabsIconDecoratorCell.Delegate<LabsIconDecorator>() {
+
+        @Override
+        public void execute(final LabsIconDecorator object) {
+          placeController.goTo(base.get().setPath(object.getClassName().getName()));
+        }
+      });
 
       @Override
-      public Cell<ImageAndHyperlink> getCell() {
+      public Cell<LabsIconDecorator> getCell() {
         return cell;
       }
 
       @Override
-      public FieldUpdater<ImageAndHyperlink, ImageAndHyperlink> getFieldUpdater() {
+      public FieldUpdater<LabsIconDecorator, LabsIconDecorator> getFieldUpdater() {
         return null;
       }
 
       @Override
-      public ImageAndHyperlink getValue(final ImageAndHyperlink object) {
+      public LabsIconDecorator getValue(final LabsIconDecorator object) {
         return object;
       }
     });
 
-    hasCells.add(new HasCell<ImageAndHyperlink, ImageAndHyperlink>() {
+    hasCells.add(new HasCell<LabsIconDecorator, LabsIconDecorator>() {
 
-      private TrangleButtonCell<ImageAndHyperlink> tbc = new TrangleButtonCell<ImageAndHyperlink>();
+      private TrangleButtonCell<LabsIconDecorator> tbc = new TrangleButtonCell<LabsIconDecorator>();
 
       @Override
-      public Cell<ImageAndHyperlink> getCell() {
+      public Cell<LabsIconDecorator> getCell() {
         return tbc;
       }
 
       @Override
-      public FieldUpdater<ImageAndHyperlink, ImageAndHyperlink> getFieldUpdater() {
+      public FieldUpdater<LabsIconDecorator, LabsIconDecorator> getFieldUpdater() {
         return null;
       }
 
       @Override
-      public ImageAndHyperlink getValue(final ImageAndHyperlink object) {
+      public LabsIconDecorator getValue(final LabsIconDecorator object) {
         return object;
       }
     });
 
-    compositeCell = new CompositeCell<ImageAndHyperlink>(hasCells) {
+    compositeCell = new CompositeCell<LabsIconDecorator>(hasCells) {
 
       @Override
       public void render(final com.google.gwt.cell.client.Cell.Context context,
-          final ImageAndHyperlink value, final SafeHtmlBuilder sb) {
+          final LabsIconDecorator value, final SafeHtmlBuilder sb) {
         super.render(context, value, sb);
       }
 
@@ -172,17 +179,41 @@ public class Labs extends WavePanel implements Activity {
 
       @Override
       protected <X> void render(final com.google.gwt.cell.client.Cell.Context context,
-          final ImageAndHyperlink value, final SafeHtmlBuilder sb,
-          final HasCell<ImageAndHyperlink, X> hasCell) {
+          final LabsIconDecorator value, final SafeHtmlBuilder sb,
+          final HasCell<LabsIconDecorator, X> hasCell) {
         Cell<X> cell = hasCell.getCell();
-        // sb.append(SafeHtmlUtils.fromTrustedString("<div>"));
         cell.render(context, hasCell.getValue(value), sb);
-        // sb.append(SafeHtmlUtils.fromTrustedString("</div>"));
       }
     };
 
-    cellList = new CellList<ImageAndHyperlink>(compositeCell, resource);
-    cellList.setSelectionModel(selectionModel);
+    // add cellList
+    cellList = new CellList<LabsIconDecorator>(compositeCell, resource);
+
+    // add cellPreviewHanler
+    cellList.addCellPreviewHandler(new CellPreviewEvent.Handler<LabsIconDecorator>() {
+
+      @Override
+      public void onCellPreview(final CellPreviewEvent<LabsIconDecorator> event) {
+        NativeEvent nativeEvent = event.getNativeEvent();
+        boolean isClick = nativeEvent.getType().equals(BrowserEvents.CLICK);
+        if (isClick) {
+          Element clickelm = cellList.getRowElement(event.getIndex());
+          Element eventTarget = Element.as(nativeEvent.getEventTarget());
+          if (clickelm.getFirstChildElement() == eventTarget) {
+            if (Labs.this.lastElm == null) {
+              Labs.this.lastElm = clickelm;
+            }
+            if (Labs.this.lastElm != clickelm) {
+              Labs.this.lastElm.removeClassName(LabsResources.css().cellListSelectionItem());
+              clickelm.addClassName(LabsResources.css().cellListSelectionItem());
+              Labs.this.lastElm = clickelm;
+            } else if (Labs.this.lastElm == clickelm) {
+              clickelm.addClassName(LabsResources.css().cellListSelectionItem());
+            }
+          }
+        }
+      }
+    });
     simplePanel.add(cellList);
   }
 
@@ -203,17 +234,19 @@ public class Labs extends WavePanel implements Activity {
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
-    cellList.setFocus(false);
     if (!listDataProvider.getDataDisplays().contains(cellList)) {
       listDataProvider.addDataDisplay(cellList);
+    }
+    if (lastElm != null) {
+      lastElm.addClassName(LabsResources.css().cellListSelectionItem());
     }
   }
 
   @Override
   protected void onUnload() {
     super.onUnload();
-    if (listDataProvider.getDataDisplays().contains(cellList)) {
-      listDataProvider.removeDataDisplay(cellList);
-    }
+    // if (listDataProvider.getDataDisplays().contains(cellList)) {
+    // listDataProvider.removeDataDisplay(cellList);
+    // }
   }
 }

@@ -31,6 +31,8 @@ public class LabsResources {
 
   public interface Style extends CssResource {
     String cellItemLeftDiv();
+
+    String cellListSelectionItem();
   }
 
   private static Bundle INSTANCE;

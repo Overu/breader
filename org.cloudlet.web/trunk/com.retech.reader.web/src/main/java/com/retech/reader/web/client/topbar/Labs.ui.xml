@@ -8,9 +8,15 @@
       height: 39px;
     }
     
+     @sprite .waveLogo {
+      gwt-image: "waveLogo";
+      position: absolute;
+      left: 8px;
+      top: 8px;
+    }
+    
     .lineAndArcDiv {
       position: absolute;
-      top: 0;
       right: 0;
       width: 39px;
       height: 24px;
@@ -19,41 +25,30 @@
         from(hsl(211, 85%, 66%) ), to(hsl(212, 58%, 58%) ) );
     }
     
-    .lineAndArcDiv>div:LAST-CHILD:HOVER {
-      -webkit-border-top-right-radius: 5px;
-    }
-    
-    .lineAndArcDiv>div:LAST-CHILD {
-      padding: 0 17px;
-    }
-    
-    @sprite .waveLogo {
-      gwt-image: "waveLogo";
-      position: absolute;
-      left: 8px;
-      top: 8px;
-    }
-    
     @sprite .arc {
       gwt-image: "arc";
       position: absolute;
-      left: 0;
-      height: 24px;
-      width: 24px;
     }
     
-    .arc+div>img {
+    .waveTitleIcon {
+      padding: 0 20px!important;
+    }
+    
+    .waveTitleIcon:HOVER {
+      -webkit-border-top-right-radius: 5px;
+    }
+    
+    .waveTitleIcon>img {
       vertical-align: middle;
-    }
-    
-    .cell {
-      
     }
     
     .cell>div>div>div {
       color: blue;
       float: left;
       width: 100%;
+    }
+    .cell>div>div>div:hover>div:last-child {
+      opacity: 1;
     }
     
     .setColor {
@@ -67,7 +62,7 @@
     <div class="{style.title}">
       <div class="{style.lineAndArcDiv}">
         <div class="{style.arc}"></div>
-        <icon:IconButtonTemplate addStyleNames="{res.css.waveTitleIcon}"
+        <icon:IconButtonTemplate addStyleNames="{res.css.waveTitleIcon} {style.waveTitleIcon}"
           ui:field="minimize"></icon:IconButtonTemplate>
       </div>
       <div class="{style.waveLogo}"></div>

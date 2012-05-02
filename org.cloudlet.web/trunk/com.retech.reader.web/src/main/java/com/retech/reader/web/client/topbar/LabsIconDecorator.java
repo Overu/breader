@@ -15,7 +15,7 @@ package com.retech.reader.web.client.topbar;
 
 import com.google.gwt.resources.client.ImageResource;
 
-public class ImageAndHyperlink {
+public class LabsIconDecorator {
 
   private ImageResource image;
 
@@ -23,7 +23,7 @@ public class ImageAndHyperlink {
 
   private Class className;
 
-  public ImageAndHyperlink(final ImageResource image, final String title, final Class className) {
+  public LabsIconDecorator(final ImageResource image, final String title, final Class className) {
     this.image = image;
     this.title = title;
     this.className = className;
