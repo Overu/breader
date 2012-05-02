@@ -18,6 +18,7 @@ import com.goodow.web.view.wave.client.title.WaveTitleResources;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.ImageResource;
 
 import java.util.logging.Logger;
 
@@ -28,10 +29,16 @@ public class TrangleResources {
     @Source("Trangle.css")
     Style style();
 
+    ImageResource trangleButton();
+
+    ImageResource trangleButtoned();
+
   }
 
   interface Style extends CssResource {
     String trangleCell();
+
+    // String trangleCelled();
   }
 
   private static Bundle INSTANCE;

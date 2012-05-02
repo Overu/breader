@@ -13,11 +13,16 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-.trangleCell {
-  float: right;
+@sprite .trangleCell {
+  gwt-image: "trangleButton"; 
   opacity: 0.2;
+  padding: 0 5px;
+  position: absolute;
+  right: 0;
 }
 
-.trangleCell:HOVER {
+@sprite .trangleCell:FOCUS {
+  gwt-image: "trangleButtoned"; 
   opacity: 1;
+  outline: 0px;
 }

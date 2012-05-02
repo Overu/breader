@@ -59,7 +59,9 @@ public class TreeTestViewModel implements TreeViewModel {
         @Override
         public void render(final com.google.gwt.cell.client.Cell.Context context,
             final Integer value, final SafeHtmlBuilder sb) {
+          sb.append(SafeHtmlUtils.fromTrustedString("<div style='float:left;'>"));
           sb.append(value.intValue());
+          sb.append(SafeHtmlUtils.fromTrustedString("</div>"));
         }
       };
 
@@ -103,21 +105,23 @@ public class TreeTestViewModel implements TreeViewModel {
 
       @Override
       public void render(final Context context, final Integer value, final SafeHtmlBuilder sb) {
+        sb.append(SafeHtmlUtils.fromTrustedString("<div>"));
         super.render(context, value, sb);
+        sb.append(SafeHtmlUtils.fromTrustedString("</div>"));
       }
 
       @Override
       protected Element getContainerElement(final Element parent) {
-        return parent;
+        return parent.getFirstChildElement();
       }
 
       @Override
       protected <X> void render(final Context context, final Integer value,
           final SafeHtmlBuilder sb, final HasCell<Integer, X> hasCell) {
         Cell<X> cell = hasCell.getCell();
-        sb.append(SafeHtmlUtils.fromTrustedString("<div>"));
+        // sb.append(SafeHtmlUtils.fromTrustedString("<div>"));
         cell.render(context, hasCell.getValue(value), sb);
-        sb.append(SafeHtmlUtils.fromTrustedString("</div>"));
+        // sb.append(SafeHtmlUtils.fromTrustedString("</div>"));
       }
     };
 

@@ -13,7 +13,7 @@
  */
 package com.goodow.web.view.wave.client.tree;
 
-import com.google.gwt.cell.client.AbstractEditableCell;
+import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BrowserEvents;
@@ -27,9 +27,8 @@ import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.user.client.ui.AbstractImagePrototype;
 
-public class TrangleButtonCell<T> extends AbstractEditableCell<T, Boolean> {
+public class TrangleButtonCell<T> extends AbstractCell<T> {
 
   public static interface Delegate<T> {
     void execute(T object);
@@ -43,19 +42,19 @@ public class TrangleButtonCell<T> extends AbstractEditableCell<T, Boolean> {
 
   interface Template extends SafeHtmlTemplates {
 
-    @SafeHtmlTemplates.Template("<div class='{0}'>{1}</div>")
-    SafeHtml div(String style, SafeHtml image);
+    @SafeHtmlTemplates.Template("<div class='{0}' tabIndex='0'></div>")
+    SafeHtml div(String style);
   }
 
-  private static Bundle bundle = GWT.create(Bundle.class);
+  // private static Bundle bundle = GWT.create(Bundle.class);
   private static Template template = GWT.create(Template.class);
 
-  private static SafeHtml TRANGLE_BUTTON = AbstractImagePrototype.create(bundle.trangleButton())
-      .getSafeHtml();
-  private static SafeHtml TRANGLE_BUTTONED = AbstractImagePrototype
-      .create(bundle.trangleButtoned()).getSafeHtml();
+  // private static SafeHtml TRANGLE_BUTTON = AbstractImagePrototype.create(bundle.trangleButton())
+  // .getSafeHtml();
+  // private static SafeHtml TRANGLE_BUTTONED = AbstractImagePrototype
+  // .create(bundle.trangleButtoned()).getSafeHtml();
 
-  private boolean isClick = false;
+  // private boolean isClick = false;
   private TrangleComboBoxPopupPanel pp;
 
   private Delegate<T> delegate = new TrangleButtonCell.Delegate<T>() {
@@ -65,21 +64,25 @@ public class TrangleButtonCell<T> extends AbstractEditableCell<T, Boolean> {
       if (pp == null) {
         pp = new TrangleComboBoxPopupPanel();
       }
-      if (isClick) {
-        pp.show();
-        Style style = pp.getElement().getStyle();
-        style.setTop(imageElm.getAbsoluteTop() + 15, Unit.PX);
-        style.setLeft(imageElm.getAbsoluteLeft() - pp.getOffsetWidth(), Unit.PX);
-      } else {
-        pp.hide();
-      }
+      pp.show();
+      Style style = pp.getElement().getStyle();
+      style.setTop(imageElm.getAbsoluteTop() + 15, Unit.PX);
+      style.setLeft(imageElm.getAbsoluteLeft() - pp.getOffsetWidth(), Unit.PX);
+      // if (isClick) {
+      // pp.show();
+      // Style style = pp.getElement().getStyle();
+      // style.setTop(imageElm.getAbsoluteTop() + 15, Unit.PX);
+      // style.setLeft(imageElm.getAbsoluteLeft() - pp.getOffsetWidth(), Unit.PX);
+      // } else {
+      // pp.hide();
+      // }
     }
   };
 
   private Element imageElm;
 
   public TrangleButtonCell() {
-    super(BrowserEvents.CLICK, BrowserEvents.BLUR);
+    super(BrowserEvents.FOCUS);
   }
 
   @Override
@@ -92,38 +95,55 @@ public class TrangleButtonCell<T> extends AbstractEditableCell<T, Boolean> {
   public void onBrowserEvent(final com.google.gwt.cell.client.Cell.Context context,
       final Element parent, final T value, final NativeEvent event,
       final ValueUpdater<T> valueUpdater) {
-    boolean clickEvent = event.getType().equals(BrowserEvents.CLICK);
-    boolean blurEvent = event.getType().equals(BrowserEvents.BLUR);
+    // boolean clickEvent = event.getType().equals(BrowserEvents.CLICK);
+    // boolean blurEvent = event.getType().equals(BrowserEvents.BLUR);
+    boolean focusEvent = event.getType().equals(BrowserEvents.FOCUS);
     imageElm = parent;
-    if (clickEvent || blurEvent) {
+    if (focusEvent) {
       EventTarget eventTarget = event.getEventTarget();
       if (!Element.is(eventTarget)) {
         return;
       }
 
-      if (blurEvent) {
-        isClick = false;
-        setValue(context, parent, value);
-        onEnterKeyDown(context, parent, value, event, valueUpdater);
-        parent.removeAttribute("tabindex");
-      }
+      // if (blurEvent) {
+      // isClick = false;
+      // setValue(context, parent.getParentElement(), value);
+      // onEnterKeyDown(context, parent, value, event, valueUpdater);
+      // parent.removeAttribute("tabindex");
+      // }
 
       if (parent.isOrHasChild(Element.as(eventTarget))) {
-        if (clickEvent) {
-          if (!isClick) {
-            isClick = true;
-          } else {
-            isClick = false;
-          }
-          imageElm.getParentElement().removeAttribute("tabindex");
-          imageElm.setTabIndex(1);
-          parent.focus();
-          // parent.setAttribute("tabindex", "0");
-          setValue(context, parent, value);
-          onEnterKeyDown(context, parent, value, event, valueUpdater);
-        }
+        // int parentLeft = parent.getAbsoluteLeft();
+        // int parentTop = parent.getAbsoluteTop();
+        // int parentHeight = parent.getClientHeight();
+        // int parentWidth = parent.getClientWidth();
+        // int parentX = parentLeft + parentWidth;
+        // int parentY = parentTop + parentHeight;
+        // int clientX = event.getClientX();
+        // int clientY = event.getClientY();
+        // if (clickEvent) {
+        // if (!isClick) {
+        // isClick = true;
+        // } else {
+        // isClick = false;
+        // }
+        // imageElm.getParentElement().removeAttribute("tabindex");
+        // imageElm.setTabIndex(1);
+        // parent.focus();
+        // // parent.setAttribute("tabindex", "0");
+        // setValue(context, parent.getParentElement(), value);
+        // }
+        // if (!isClick) {
+        // parent.addClassName(TrangleResources.css().trangleCelled());
+        // parent.removeClassName(TrangleResources.css().trangleCell());
+        // isClick = true;
+        // } else {
+        // parent.addClassName(TrangleResources.css().trangleCell());
+        // parent.removeClassName(TrangleResources.css().trangleCelled());
+        // isClick = false;
+        // }
+        onEnterKeyDown(context, parent, value, event, valueUpdater);
       }
-
     }
   }
 
@@ -131,18 +151,18 @@ public class TrangleButtonCell<T> extends AbstractEditableCell<T, Boolean> {
   public void render(final com.google.gwt.cell.client.Cell.Context context, final T value,
       final SafeHtmlBuilder sb) {
 
-    if (value != null && !isClick) {
-      sb.append(template.div(TrangleResources.css().trangleCell(), TRANGLE_BUTTON));
-      // sb.append(SafeHtmlUtils
-      // .fromTrustedString("<div style='float: right;opacity: 0.2;:hover{opacity: 0.5;}'>"));
-      // sb.append(TRANGLE_BUTTON);
-      // sb.append(SafeHtmlUtils.fromTrustedString("</div>"));
-    } else {
-      sb.append(template.div(TrangleResources.css().trangleCell(), TRANGLE_BUTTONED));
-      // sb.append(SafeHtmlUtils.fromTrustedString("<div style='float: right;opacity: 0.2;'>"));
-      // sb.append(TRANGLE_BUTTONED);
-      // sb.append(SafeHtmlUtils.fromTrustedString("</div>"));
-    }
+    // if (value != null && !isClick) {
+    sb.append(template.div(TrangleResources.css().trangleCell()));
+    // sb.append(SafeHtmlUtils
+    // .fromTrustedString("<div style='float: right;opacity: 0.2;:hover{opacity: 0.5;}'>"));
+    // sb.append(TRANGLE_BUTTON);
+    // sb.append(SafeHtmlUtils.fromTrustedString("</div>"));
+    // } else {
+    // sb.append(template.div(TrangleResources.css().trangleCell()));
+    // sb.append(SafeHtmlUtils.fromTrustedString("<div style='float: right;opacity: 0.2;'>"));
+    // sb.append(TRANGLE_BUTTONED);
+    // sb.append(SafeHtmlUtils.fromTrustedString("</div>"));
+    // }
   }
 
   @Override
