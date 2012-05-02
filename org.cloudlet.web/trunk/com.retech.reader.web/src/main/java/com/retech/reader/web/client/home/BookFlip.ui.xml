@@ -35,15 +35,17 @@
         -webkit-perspective: 700;
       }
     
+    .coverflowTitle>div>img {
+      -webkit-border-radius: 10px 10px;
+    }
+      
     @if (com.google.gwt.modernizr.client.Modernizr.cssTransforms3d()) {
       .coverflowTitle>div>img {
-      	-webkit-border-radius: 10px 10px;
       	-webkit-box-reflect: below 25px -webkit-gradient(linear, literal("left top"), literal("left bottom"), from(transparent), color-stop(0.8, transparent), to(rgba(255, 255, 255, 0.7) ) );
       }
     }
     @else {
   	  .coverflowTitle>div>img {
-      	-webkit-border-radius: 10px 10px;
       	-webkit-box-reflect: below 25px;
       }
     }

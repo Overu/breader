@@ -15,6 +15,7 @@
 }
 */
 .cellListKeyboardSelectedItem {
+  background-color: transparent;
 }
 
 .cellListWidget>div>div:HOVER {
