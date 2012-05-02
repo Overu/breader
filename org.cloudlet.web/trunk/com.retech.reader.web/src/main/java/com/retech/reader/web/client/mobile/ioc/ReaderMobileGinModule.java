@@ -4,6 +4,7 @@ import com.goodow.web.logging.shared.rpc.ChannelContextProvider;
 import com.goodow.web.view.wave.client.WaveTest;
 import com.goodow.web.view.wave.client.contact.ContactPanel;
 import com.goodow.web.view.wave.client.shell.WaveShell;
+import com.goodow.web.view.wave.client.tree.BlipTest;
 import com.goodow.web.view.wave.client.tree.TreeTest;
 
 import com.google.gwt.core.client.GWT;
@@ -100,6 +101,8 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
     @Inject
     private AsyncProvider<Labs> laboratoryPanel;
     @Inject
+    private AsyncProvider<BlipTest> blipTest;
+    @Inject
     private WaveShell shell;
     @Inject
     private TopBar topBar;
@@ -128,10 +131,10 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
       isWidgetMapBinder.addBinding(IssueNews.class.getName()).toAsyncProvider(issueNews);
       isWidgetMapBinder.addBinding(TestEditor.class.getName()).toAsyncProvider(testEditor);
       isWidgetMapBinder.addBinding(SearchPanel.class.getName()).toAsyncProvider(searchPanel);
+      isWidgetMapBinder.addBinding(BlipTest.class.getName()).toAsyncProvider(blipTest);
       isWidgetMapBinder.addBinding(ContactPanel.class.getName()).toAsyncProvider(contactPanel);
       isWidgetMapBinder.addBinding(TreeTest.class.getName()).toAsyncProvider(treeTest);
-      isWidgetMapBinder.addBinding(Labs.class.getName())
-          .toAsyncProvider(laboratoryPanel);
+      isWidgetMapBinder.addBinding(Labs.class.getName()).toAsyncProvider(laboratoryPanel);
       logger.finest("EagerSingleton end");
       return null;
     }
