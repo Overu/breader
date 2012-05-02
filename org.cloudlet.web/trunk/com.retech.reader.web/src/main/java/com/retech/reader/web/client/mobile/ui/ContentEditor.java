@@ -178,6 +178,7 @@ public class ContentEditor extends WavePanel implements Activity {
       @Override
       public void onSuccess(final IsWidget result) {
         sectionView = result.asWidget();
+        sectionView.getElement().getStyle().setLeft(-html.getOffsetWidth(), Unit.PX);
         sectionView.addStyleName(ReaderResources.INSTANCE().style().contentSectionView());
         flowPanel.add(sectionView);
       }
