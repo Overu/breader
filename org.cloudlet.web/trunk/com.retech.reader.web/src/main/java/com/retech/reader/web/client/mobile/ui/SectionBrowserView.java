@@ -36,6 +36,7 @@ public class SectionBrowserView extends WavePanel implements Activity {
   protected PlaceController placeController;
   private final ReaderFactory f;
   private final SectionTreeViewModel sectionTreeViewModel;
+  private EntityProxyId<IssueProxy> issueId;
 
   @Inject
   SectionBrowserView(final SectionTreeViewModel sectionTreeViewModel, final ReaderFactory f) {
@@ -52,6 +53,10 @@ public class SectionBrowserView extends WavePanel implements Activity {
     add(toDo);
   }
 
+  public EntityProxyId<IssueProxy> getIssueId() {
+    return issueId;
+  }
+
   @Override
   public String mayStop() {
     return null;
@@ -63,6 +68,10 @@ public class SectionBrowserView extends WavePanel implements Activity {
 
   @Override
   public void onStop() {
+  }
+
+  public void setIssueId(final EntityProxyId<IssueProxy> issueId) {
+    this.issueId = issueId;
   }
 
   @Override
@@ -91,6 +100,6 @@ public class SectionBrowserView extends WavePanel implements Activity {
   @Override
   protected void onUnload() {
     super.onUnload();
-    this.remove(2);
+    // this.remove(this.getWidgetCount() - 1);
   }
 }

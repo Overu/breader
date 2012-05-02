@@ -1,2 +1,18 @@
 @CHARSET "UTF-8";
 
+.contentSectionView {
+  -webkit-transition: all 1s;
+  position: absolute;
+  top: 0px;
+  left: -900px;
+  bottom: 0px;
+  width: 100%;
+  margin: 0px;
+  background-color: white;
+}
+
+/*
+.contentSectionView:HOVER {
+  left: 0px;
+}
+*/

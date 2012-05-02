@@ -3,30 +3,48 @@ package com.retech.reader.web.client.mobile.ui;
 import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.core.client.JsArray;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.dom.client.Touch;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.TouchEndEvent;
+import com.google.gwt.event.dom.client.TouchEndHandler;
+import com.google.gwt.event.dom.client.TouchMoveEvent;
+import com.google.gwt.event.dom.client.TouchMoveHandler;
+import com.google.gwt.event.dom.client.TouchStartEvent;
+import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.inject.client.AsyncProvider;
+import com.google.gwt.logging.client.LogConfiguration;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.Request;
 
+import com.retech.reader.web.client.style.ReaderResources;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.PageProxy;
 import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.proxy.SectionProxy;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
+import org.cloudlet.web.boot.shared.MapBinder;
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.service.shared.KeyUtil;
 import org.cloudlet.web.service.shared.LocalStorage;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Singleton
@@ -35,6 +53,8 @@ public class ContentEditor extends WavePanel implements Activity {
   private static final Logger logger = Logger.getLogger(ContentEditor.class.getName());
   private static final String LAST_PAGE = "now_reader";
   private final HTML html;
+  private FlowPanel flowPanel;
+  private Widget sectionView;
   private final PlaceController placeContorller;
   private final ReaderFactory f;
   private List<PageProxy> pages;
@@ -45,17 +65,75 @@ public class ContentEditor extends WavePanel implements Activity {
   private final Provider<BasePlace> place;
   private final LocalStorage storage;
   private final KeyUtil keyUtil;
+  private final MapBinder<String, IsWidget> isWidgetMapBinder;
+  private boolean isStart = false;
+  private int startX1;
+  private int startX2;
 
   @Inject
   public ContentEditor(final PlaceController placeContorller, final ReaderFactory f,
-      final Provider<BasePlace> place, final LocalStorage storage, final KeyUtil keyUtil) {
+      final Provider<BasePlace> place, final LocalStorage storage, final KeyUtil keyUtil,
+      final MapBinder<String, IsWidget> isWidgetMapBinder) {
     this.placeContorller = placeContorller;
     this.f = f;
     this.place = place;
     this.storage = storage;
     this.keyUtil = keyUtil;
+    flowPanel = new FlowPanel();
+    this.isWidgetMapBinder = isWidgetMapBinder;
     html = new HTML();
-    this.setWaveContent(html);
+    flowPanel.add(html);
+    this.setWaveContent(flowPanel);
+
+    this.addDomHandler(new TouchStartHandler() {
+
+      @Override
+      public void onTouchStart(final TouchStartEvent event) {
+        JsArray<Touch> toucheStart = event.getTouches();
+        if (toucheStart.length() == 2) {
+          isStart = true;
+          Touch touch1 = toucheStart.get(0);
+          Touch touch2 = toucheStart.get(1);
+          startX1 = touch1.getPageX();
+          startX2 = touch2.getPageX();
+
+        }
+      }
+    }, TouchStartEvent.getType());
+
+    this.addDomHandler(new TouchMoveHandler() {
+
+      @Override
+      public void onTouchMove(final TouchMoveEvent event) {
+        JsArray<Touch> touchesMove = event.getTouches();
+        if (touchesMove.length() == 2) {
+          Touch touch1 = touchesMove.get(0);
+          Touch touch2 = touchesMove.get(1);
+          int nowX1 = touch1.getPageX();
+          int nowX2 = touch2.getPageX();
+          int subtractX1 = nowX1 - startX1;
+          int subtractX2 = nowX2 - startX2;
+          if (subtractX1 > 80 && subtractX2 > 80) {
+            sectionView.getElement().getStyle().setLeft(0, Unit.PX);
+            isStart = false;
+            return;
+          } else if (subtractX1 < 80 && subtractX2 < 80) {
+            sectionView.getElement().getStyle().setLeft(-html.getOffsetWidth(), Unit.PX);
+            isStart = false;
+            return;
+          }
+
+        }
+      }
+    }, TouchMoveEvent.getType());
+
+    this.addDomHandler(new TouchEndHandler() {
+
+      @Override
+      public void onTouchEnd(final TouchEndEvent event) {
+        isStart = false;
+      }
+    }, TouchEndEvent.getType());
 
     html.addClickHandler(new ClickHandler() {
 
@@ -84,6 +162,27 @@ public class ContentEditor extends WavePanel implements Activity {
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
+
+    AsyncProvider<IsWidget> sectionBrowserView =
+        isWidgetMapBinder.getAsyncProvider(SectionBrowserView.class.getName());
+    sectionBrowserView.get(new AsyncCallback<IsWidget>() {
+
+      @Override
+      public void onFailure(final Throwable caught) {
+        if (LogConfiguration.loggingIsEnabled()) {
+          logger.log(Level.WARNING, "加载" + SectionBrowserView.class.getName()
+              + "失败. 请检查网络连接, 并刷新后重试", caught);
+        }
+      }
+
+      @Override
+      public void onSuccess(final IsWidget result) {
+        sectionView = result.asWidget();
+        sectionView.addStyleName(ReaderResources.INSTANCE().style().contentSectionView());
+        flowPanel.add(sectionView);
+      }
+    });
+
     final EntityProxyId<IssueProxy> issueId =
         ((BasePlace) placeContorller.getWhere()).getParam(IssueProxy.class);
 
@@ -152,7 +251,9 @@ public class ContentEditor extends WavePanel implements Activity {
       public void onSuccessAndCached(final ResourceProxy response) {
         ContentEditor.this.getWaveTitle().setText(proxy.getTitle());
         html.setHTML(response.getDataString());
-        storage.put(keyUtil.proxyKey(proxy.getSection().getIssue().stableId(), LAST_PAGE), proxy);
+        if (pageProxy.getPageNum() != 1) {
+          storage.put(keyUtil.proxyKey(proxy.getSection().getIssue().stableId(), LAST_PAGE), proxy);
+        }
       }
 
       @Override

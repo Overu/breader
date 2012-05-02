@@ -21,6 +21,7 @@ public class ReaderResources {
   }
 
   public interface Style extends CssResource {
+    String contentSectionView();
   }
 
   private static Bundle BUNDLE;
