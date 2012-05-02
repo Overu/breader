@@ -36,6 +36,7 @@ import com.google.web.bindery.requestfactory.shared.Request;
 
 import com.retech.reader.web.shared.proxy.CategoryProxy;
 import com.retech.reader.web.shared.proxy.IssueProxy;
+import com.retech.reader.web.shared.proxy.PageProxy;
 import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
@@ -142,8 +143,35 @@ public class IssueNews extends WavePanel implements Activity {
     readButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(final ClickEvent event) {
-        placeController.goTo(places.get().setPath(ContentEditor.class.getName()).setParameter(
-            issueId));
+
+        new BaseReceiver<IssueProxy>() {
+
+          @Override
+          public void onSuccessAndCached(final IssueProxy issueProxy) {
+
+            new BaseReceiver<PageProxy>() {
+
+              @Override
+              public void onSuccessAndCached(final PageProxy pageProxy) {
+                PageProxy lastPage =
+                    storage.get(keyUtil.proxyKey(issueId, ContentEditor.LAST_PAGE));
+                placeController.goTo(places.get().setPath(ContentEditor.class.getName())
+                    .setParameter(lastPage == null ? pageProxy.stableId() : lastPage.stableId()));
+              }
+
+              @Override
+              public Request<PageProxy> provideRequest() {
+                return f.pageContext().findFirstPageByIssue(issueProxy).with(PageProxy.WITH);
+              }
+            }.setKeyForProxy(issueId, PageProxy.class.getName()).fire();
+          }
+
+          @Override
+          public Request<IssueProxy> provideRequest() {
+            return f.find(issueId);
+          }
+        }.setKeyForProxy(issueId).fire();
+
       }
     });
     sectionButton.addClickHandler(new ClickHandler() {

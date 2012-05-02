@@ -50,8 +50,9 @@ import java.util.logging.Logger;
 @Singleton
 public class ContentEditor extends WavePanel implements Activity {
 
+  public static final String LAST_PAGE = "now_reader";
   private static final Logger logger = Logger.getLogger(ContentEditor.class.getName());
-  private static final String LAST_PAGE = "now_reader";
+
   private final HTML html;
   private FlowPanel flowPanel;
   private Widget sectionView;
@@ -184,44 +185,46 @@ public class ContentEditor extends WavePanel implements Activity {
       }
     });
 
-    final EntityProxyId<IssueProxy> issueId =
-        ((BasePlace) placeContorller.getWhere()).getParam(IssueProxy.class);
+    // final EntityProxyId<IssueProxy> issueId =
+    // ((BasePlace) placeContorller.getWhere()).getParam(IssueProxy.class);
 
-    if (issueId != null) {
-      PageProxy pageProxy = storage.get(keyUtil.proxyKey(issueId, LAST_PAGE));
+    // if (issueId != null) {
+    // PageProxy pageProxy = storage.get(keyUtil.proxyKey(issueId, LAST_PAGE));
+    //
+    // if (pageProxy != null) {
+    // pageStart(pageProxy);
+    // Storage.getLocalStorageIfSupported().removeItem(keyUtil.proxyKey(issueId, LAST_PAGE));
+    // // placeContorller.goTo(place.get().setPath(ContentEditor.class.getName()).setParameter(
+    // // pageProxy.stableId()));
+    // return;
+    // }
 
-      if (pageProxy != null) {
-        placeContorller.goTo(place.get().setPath(ContentEditor.class.getName()).setParameter(
-            pageProxy.stableId()));
-        return;
-      }
-
-      new BaseReceiver<IssueProxy>() {
-
-        @Override
-        public void onSuccessAndCached(final IssueProxy issueProxy) {
-
-          new BaseReceiver<PageProxy>() {
-
-            @Override
-            public void onSuccessAndCached(final PageProxy pageProxy) {
-              pageStart(pageProxy);
-            }
-
-            @Override
-            public Request<PageProxy> provideRequest() {
-              return f.pageContext().findFirstPageByIssue(issueProxy).with(PageProxy.WITH);
-            }
-          }.setKeyForProxy(issueId, PageProxy.class.getName()).fire();
-        }
-
-        @Override
-        public Request<IssueProxy> provideRequest() {
-          return f.find(issueId);
-        }
-      }.setKeyForProxy(issueId).fire();
-      return;
-    }
+    // new BaseReceiver<IssueProxy>() {
+    //
+    // @Override
+    // public void onSuccessAndCached(final IssueProxy issueProxy) {
+    //
+    // new BaseReceiver<PageProxy>() {
+    //
+    // @Override
+    // public void onSuccessAndCached(final PageProxy pageProxy) {
+    // pageStart(pageProxy);
+    // }
+    //
+    // @Override
+    // public Request<PageProxy> provideRequest() {
+    // return f.pageContext().findFirstPageByIssue(issueProxy).with(PageProxy.WITH);
+    // }
+    // }.setKeyForProxy(issueId, PageProxy.class.getName()).fire();
+    // }
+    //
+    // @Override
+    // public Request<IssueProxy> provideRequest() {
+    // return f.find(issueId);
+    // }
+    // }.setKeyForProxy(issueId).fire();
+    // return;
+    // }
 
     final EntityProxyId<PageProxy> pageId =
         ((BasePlace) placeContorller.getWhere()).getParam(PageProxy.class);
@@ -301,13 +304,13 @@ public class ContentEditor extends WavePanel implements Activity {
     changePageProxy(pageProxy);
   }
 
-  private void nextSectionIndex(int sectionIndex, final boolean isNextSection) {
+  private void nextSectionIndex(final int sectionIndex, final boolean isNextSection) {
     if (sectionIndex > sections.size() - 1 && pageIndex + 2 > pages.size()) {
-      sectionIndex = sections.size() - 1;
+      this.sectionIndex = sections.size() - 1;
       logger.info("最后一页");
       return;
     } else if (sectionIndex < 0) {
-      sectionIndex = 0;
+      this.sectionIndex = 0;
       logger.info("第一页");
       return;
     }
