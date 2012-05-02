@@ -79,6 +79,9 @@
       position: relative;
       top: 2px;
     }
+    .contributorPics:empty {
+      display:none;
+    }
     
     .contributorPics>img {
       width: 27px !important;
