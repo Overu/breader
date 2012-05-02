@@ -18,6 +18,7 @@ import com.goodow.web.view.wave.client.WaveTest;
 import com.goodow.web.view.wave.client.contact.ContactPanel;
 import com.goodow.web.view.wave.client.panel.WavePanel;
 import com.goodow.web.view.wave.client.title.WaveTitleResources;
+import com.goodow.web.view.wave.client.tree.BlipTest;
 import com.goodow.web.view.wave.client.tree.SetColor;
 import com.goodow.web.view.wave.client.tree.TrangleButtonCell;
 import com.goodow.web.view.wave.client.tree.TreeTest;
@@ -116,17 +117,22 @@ public class Labs extends WavePanel implements Activity {
     LabsIconDecorator search = new LabsIconDecorator(bunder.laboratory(), "搜索", SearchPanel.class);
     list.add(search);
 
+    LabsIconDecorator blipTest =
+        new LabsIconDecorator(bunder.laboratory(), "BlipTest", BlipTest.class);
+    list.add(blipTest);
+
     // add cell
     List<HasCell<LabsIconDecorator, ?>> hasCells = new ArrayList<HasCell<LabsIconDecorator, ?>>();
     hasCells.add(new HasCell<LabsIconDecorator, LabsIconDecorator>() {
 
-      LabsIconDecoratorCell cell = new LabsIconDecoratorCell(new LabsIconDecoratorCell.Delegate<LabsIconDecorator>() {
+      LabsIconDecoratorCell cell = new LabsIconDecoratorCell(
+          new LabsIconDecoratorCell.Delegate<LabsIconDecorator>() {
 
-        @Override
-        public void execute(final LabsIconDecorator object) {
-          placeController.goTo(base.get().setPath(object.getClassName().getName()));
-        }
-      });
+            @Override
+            public void execute(final LabsIconDecorator object) {
+              placeController.goTo(base.get().setPath(object.getClassName().getName()));
+            }
+          });
 
       @Override
       public Cell<LabsIconDecorator> getCell() {
