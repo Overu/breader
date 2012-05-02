@@ -1,0 +1,1 @@
+_0(1254,1,frc);_.Pc=function Rhc(){Pkc(this.c,igc(this.b.b))};hrc(oo)(10);
