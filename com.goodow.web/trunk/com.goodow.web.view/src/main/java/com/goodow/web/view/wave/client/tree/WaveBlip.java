@@ -18,6 +18,7 @@ import com.goodow.web.view.wave.client.contact.UserStatusResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.DoubleClickEvent;
 import com.google.gwt.event.dom.client.DoubleClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -61,6 +62,8 @@ public class WaveBlip extends Composite {
   HTMLPanel root;
   @UiField
   DivElement overlay;
+  @UiField
+  DivElement authorBox;
 
   public WaveBlip() {
     initWidget(uiBinder.createAndBindUi(this));
@@ -86,6 +89,14 @@ public class WaveBlip extends Composite {
 
   public void addUserName(final String userName) {
     authorName.setInnerText(userName + ":");
+  }
+
+  public Element getAuthorBox() {
+    return authorBox;
+  }
+
+  public Element getEditor() {
+    return editor;
   }
 
   public IconButtonTemplate getEditorIcon() {

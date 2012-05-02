@@ -101,6 +101,10 @@
       float: right;
     }
     
+    .moreActions>* {
+      vertical-align: bottom;
+    }
+    
     .editor {
       min-height: 33px;
       line-height: 1.35;
@@ -189,7 +193,7 @@
           ui:field="popupContextIconEdit" title="Edit this message" />
         <span>编辑</span>
       </div>
-      <div class="{style.authorBox}">
+      <div class="{style.authorBox}" ui:field="authorBox">
         <g:FlowPanel addStyleNames="{style.contributorPics}" ui:field="contributorPics"></g:FlowPanel>
         <div class="{style.authorName}" ui:field="authorName"></div>
         <icon:IconButtonTemplate addStyleNames="{style.moreActions}"
