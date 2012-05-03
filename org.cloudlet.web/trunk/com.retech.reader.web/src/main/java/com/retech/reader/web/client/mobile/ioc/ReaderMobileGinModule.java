@@ -1,6 +1,7 @@
 package com.retech.reader.web.client.mobile.ioc;
 
 import com.goodow.web.logging.shared.rpc.ChannelContextProvider;
+import com.goodow.web.view.wave.client.NestedBlipTest;
 import com.goodow.web.view.wave.client.WaveTest;
 import com.goodow.web.view.wave.client.contact.ContactPanel;
 import com.goodow.web.view.wave.client.shell.WaveShell;
@@ -103,6 +104,8 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
     @Inject
     private AsyncProvider<BlipTest> blipTest;
     @Inject
+    private AsyncProvider<NestedBlipTest> nestedBlipTest;
+    @Inject
     private WaveShell shell;
     @Inject
     private TopBar topBar;
@@ -125,6 +128,7 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
       isWidgetMapBinder.addBinding(ContentEditor.class.getName()).toAsyncProvider(pageEditor);
       isWidgetMapBinder.addBinding(SettingsView.class.getName()).toAsyncProvider(settingsView);
       isWidgetMapBinder.addBinding(TalkView.class.getName()).toAsyncProvider(talkView);
+      isWidgetMapBinder.addBinding(NestedBlipTest.class.getName()).toAsyncProvider(nestedBlipTest);
       isWidgetMapBinder.addBinding(IssueEditor.class.getName()).toAsyncProvider(issueEditor);
       isWidgetMapBinder.addBinding(LibraryView.class.getName()).toAsyncProvider(libraryView);
       isWidgetMapBinder.addBinding(IssueListImage.class.getName()).toAsyncProvider(issueListImage);
