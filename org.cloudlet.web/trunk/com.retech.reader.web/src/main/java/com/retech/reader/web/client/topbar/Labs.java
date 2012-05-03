@@ -14,6 +14,7 @@
 package com.retech.reader.web.client.topbar;
 
 import com.goodow.web.view.wave.client.IconButtonTemplate;
+import com.goodow.web.view.wave.client.NestedBlipTest;
 import com.goodow.web.view.wave.client.WaveTest;
 import com.goodow.web.view.wave.client.contact.ContactPanel;
 import com.goodow.web.view.wave.client.panel.WavePanel;
@@ -120,6 +121,9 @@ public class Labs extends WavePanel implements Activity {
     LabsIconDecorator blipTest =
         new LabsIconDecorator(bunder.laboratory(), "BlipTest", BlipTest.class);
     list.add(blipTest);
+    LabsIconDecorator blipTree =
+        new LabsIconDecorator(bunder.laboratory(), "NestedBlipTest", NestedBlipTest.class);
+    list.add(blipTree);
 
     // add cell
     List<HasCell<LabsIconDecorator, ?>> hasCells = new ArrayList<HasCell<LabsIconDecorator, ?>>();
