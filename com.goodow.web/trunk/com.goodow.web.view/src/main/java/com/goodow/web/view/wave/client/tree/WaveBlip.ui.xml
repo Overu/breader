@@ -80,7 +80,7 @@
       top: 2px;
     }
     .contributorPics:empty {
-      display:none;
+      display: none;
     }
     
     .contributorPics>img {
@@ -181,6 +181,7 @@
     .root:focus>.overlay {
       border: 2px solid hsl(82, 85%, 30%);
     }
+    
   </ui:style>
   <ui:image field="waveBlipPopupContextEmpty" repeatStyle="Horizontal" />
   <ui:image field="waveBlipPopupContextLeft" />
@@ -205,8 +206,9 @@
       </div>
       <div class="{style.editor}" ui:field="editor"></div>
       <div class="{style.unRead}" ui:field="unRead"></div>
-      <div class="{style.overlay}" ui:field="overlay"></div>
+      <div class="{style.overlay}"></div>
     </g:HTMLPanel>
+    <g:FlowPanel ui:field="blipTree"></g:FlowPanel>
     <g:HTMLPanel addStyleNames="{style.replyRoot}" ui:field="replyPanel">
       <div class="{style.replyBox}" title="Insert reply here">
         <icon:IconButtonTemplate addStyleNames="{style.replyPic}" ui:field="replyPic"></icon:IconButtonTemplate>

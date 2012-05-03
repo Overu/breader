@@ -61,9 +61,9 @@ public class WaveBlip extends Composite {
   @UiField
   HTMLPanel root;
   @UiField
-  DivElement overlay;
-  @UiField
   DivElement authorBox;
+  @UiField
+  FlowPanel blipTree;
 
   public WaveBlip() {
     initWidget(uiBinder.createAndBindUi(this));
@@ -105,6 +105,10 @@ public class WaveBlip extends Composite {
 
   public FlowPanel getUserPanel() {
     return contributorPics;
+  }
+
+  public FlowPanel getWaveBlipTree() {
+    return blipTree;
   }
 
   public void setContent(final String html) {

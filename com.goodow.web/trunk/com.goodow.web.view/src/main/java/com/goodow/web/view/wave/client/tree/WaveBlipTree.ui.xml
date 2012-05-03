@@ -1,0 +1,73 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style>
+    .blipRoot {
+      padding: 5px 0 10px 35px;
+    }
+    
+    .root {
+      padding: 3px 0 7px 6px;
+      position: relative;
+    }
+    
+    .blipBorder>div {
+      position: absolute;
+    }
+    
+    @sprite .blipLeftTop {
+      gwt-image: "waveBlipBorder1";
+      top: 0;
+      left: 0;
+      background-position: -46px -32px;
+    }
+    
+    @sprite .blipLeft {
+      gwt-image: "waveBlipBorder2";
+      top: 40px;
+      bottom: 10px;
+      left: 0;
+      background-position: -56px 0;
+    }
+    
+    @sprite .blipLeftBottomRadius {
+      gwt-image: "waveBlipBorder1";
+      bottom: 0;
+      left: 0;
+      height: 10px;
+      background-position: 0 -82px;
+    }
+    
+    @sprite .blipBottomLeft {
+      gwt-image: "waveBlipBorder3";
+      height: 10px;
+      bottom: 0;
+      left: 9px;
+      right: 60px;
+      background-position: 0 -523px;
+    }
+    
+    @sprite   .blipBottomRight {
+      gwt-image: "waveBlipBorder1";
+      height: 10px;
+      width: 60px;
+      bottom: 0;
+      right: 0;
+      background-position: 0 -72px;
+    }
+  </ui:style>
+  <ui:image field="waveBlipBorder1" />
+  <ui:image field="waveBlipBorder2" repeatStyle="Vertical" />
+  <ui:image field="waveBlipBorder3" repeatStyle="Horizontal" />
+  <g:HTMLPanel addStyleNames="{style.blipRoot}">
+    <div class="{style.root}">
+      <div class="{style.blipBorder}">
+        <div class="{style.blipLeftTop}" />
+        <div class="{style.blipLeft}"></div>
+        <div class="{style.blipLeftBottomRadius}" />
+        <div class="{style.blipBottomLeft}" />
+        <div class="{style.blipBottomRight}" />
+      </div>
+      <g:FlowPanel ui:field="waveBlip"></g:FlowPanel>
+    </div>
+  </g:HTMLPanel>
+</ui:UiBinder>
