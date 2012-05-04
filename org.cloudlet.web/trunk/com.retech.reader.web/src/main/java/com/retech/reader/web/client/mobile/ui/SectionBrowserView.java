@@ -4,6 +4,7 @@ import com.goodow.web.view.wave.client.panel.WavePanel;
 import com.goodow.web.view.wave.client.panel.WavePanelResources;
 
 import com.google.gwt.activity.shared.Activity;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -53,10 +54,6 @@ public class SectionBrowserView extends WavePanel implements Activity {
     add(toDo);
   }
 
-  public EntityProxyId<IssueProxy> getIssueId() {
-    return issueId;
-  }
-
   @Override
   public String mayStop() {
     return null;
@@ -78,15 +75,30 @@ public class SectionBrowserView extends WavePanel implements Activity {
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     BasePlace place = (BasePlace) placeController.getWhere();
     final EntityProxyId<IssueProxy> issueId = place.getParam(IssueProxy.class);
+
+    if (issueId == null) {
+      sectionTreeViewModel.setIssueId(this.issueId);
+      if (this.getWaveTitle() != null) {
+        this.getWaveTitle().getElement().getStyle().setDisplay(Display.NONE);
+      }
+    } else {
+      rpc(issueId);
+    }
     CellTree cellTree = new CellTree(sectionTreeViewModel, null);
     cellTree.setAnimationEnabled(true);
-    setWaveContent(cellTree);
+    if (getWidgetCount() == 2) {
+      setWaveContent(cellTree);
+    }
 
+  }
+
+  private void rpc(final EntityProxyId<IssueProxy> issueId) {
     BaseReceiver<IssueProxy> baseReceiver = new BaseReceiver<IssueProxy>() {
 
       @Override
       public void onSuccessAndCached(final IssueProxy proxy) {
         getWaveTitle().setText(proxy.getTitle());
+        getWaveTitle().getElement().getStyle().clearDisplay();
       }
 
       @Override
@@ -95,11 +107,5 @@ public class SectionBrowserView extends WavePanel implements Activity {
       }
     };
     baseReceiver.setKeyForProxy(issueId).fire();
-  }
-
-  @Override
-  protected void onUnload() {
-    super.onUnload();
-    // this.remove(this.getWidgetCount() - 1);
   }
 }

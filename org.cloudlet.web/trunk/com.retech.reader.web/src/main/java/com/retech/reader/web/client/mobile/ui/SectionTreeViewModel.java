@@ -11,7 +11,9 @@ import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 import com.google.gwt.view.client.TreeViewModel;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 
+import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.PageProxy;
 import com.retech.reader.web.shared.proxy.SectionProxy;
 import com.retech.reader.web.shared.rpc.PageDataProvider;
@@ -35,6 +37,7 @@ public class SectionTreeViewModel implements TreeViewModel {
 
   };
   private NoSelectionModel<PageProxy> selectionModel;
+  private EntityProxyId<IssueProxy> issueId;
 
   @Inject
   SectionTreeViewModel(final SectionDataProvider sectionDataProvider,
@@ -48,9 +51,6 @@ public class SectionTreeViewModel implements TreeViewModel {
 
       @Override
       public void onSelectionChange(final SelectionChangeEvent event) {
-        // String historyToken =
-        // f.getHistoryToken(selectionModel.getLastSelectedObject().stableId());
-        // placeController.goTo(places.get().setPath(historyToken));
         placeController.goTo(places.get().setPath(ContentEditor.class.getName()).setParameter(
             selectionModel.getLastSelectedObject().stableId()));
       }
@@ -61,6 +61,9 @@ public class SectionTreeViewModel implements TreeViewModel {
   public <T> NodeInfo<?> getNodeInfo(final T value) {
     if (value == null) {
       // Return top level categories.
+      if (this.issueId != null) {
+        sectionDataProvider.setIssueId(issueId);
+      }
       return new DefaultNodeInfo<SectionProxy>(sectionDataProvider, new SectionProxyCell());
     } else if (value instanceof SectionProxy) {
       PageDataProvider pageDataProvider = pageDataProviders.get();
@@ -75,6 +78,10 @@ public class SectionTreeViewModel implements TreeViewModel {
   @Override
   public boolean isLeaf(final Object value) {
     return value instanceof PageProxy;
+  }
+
+  public void setIssueId(final EntityProxyId<IssueProxy> issueId) {
+    this.issueId = issueId;
   }
 
 }

@@ -28,6 +28,8 @@ public class SectionDataProvider extends AsyncDataProvider<SectionProxy> {
 
   private final PlaceController placeController;
 
+  private EntityProxyId<IssueProxy> issueId;
+
   @Inject
   SectionDataProvider(final ReaderFactory f, final LocalStorage storage,
       final PlaceController placeController) {
@@ -36,12 +38,24 @@ public class SectionDataProvider extends AsyncDataProvider<SectionProxy> {
     this.placeController = placeController;
   }
 
+  public void setIssueId(final EntityProxyId<IssueProxy> issueId) {
+    this.issueId = issueId;
+  }
+
   @Override
   protected void onRangeChanged(final HasData<SectionProxy> display) {
     BasePlace place = (BasePlace) placeController.getWhere();
     final EntityProxyId<IssueProxy> issueId = place.getParam(IssueProxy.class);
 
     final Range range = display.getVisibleRange();
+    if (issueId == null) {
+      rpc(this.issueId, range);
+      return;
+    }
+    rpc(issueId, range);
+  }
+
+  private void rpc(final EntityProxyId<IssueProxy> issueId, final Range range) {
     new BaseReceiver<IssueProxy>() {
       @Override
       public void onSuccessAndCached(final IssueProxy proxy) {
@@ -55,7 +69,8 @@ public class SectionDataProvider extends AsyncDataProvider<SectionProxy> {
 
           @Override
           public Request<List<SectionProxy>> provideRequest() {
-            return f.section().findByBook(proxy, 0, SQLConstant.MAX_RESULTS_ALL);
+            return f.section().findByBook(proxy, 0, SQLConstant.MAX_RESULTS_ALL).with(
+                SectionProxy.WITH);
           }
         }.setKeyForList(issueId, SectionProxy.class.getName()).fire();
       }

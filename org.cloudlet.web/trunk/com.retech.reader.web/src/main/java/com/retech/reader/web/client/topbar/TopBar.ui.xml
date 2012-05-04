@@ -12,6 +12,11 @@
       padding: 3px 0 0 0;
     }
     
+    .topBar>*:first-child>a {
+      position: relative;
+      z-index: 60;
+    }
+    
     .links {
       position: relative;
       z-index: 60;
@@ -40,7 +45,7 @@
   <ui:image field="retechcorpLogo" />
   <g:HTMLPanel addStyleNames='{style.topBar}'>
     <div>
-      <g:Image resource='{retechcorpLogo}'></g:Image>
+      <a href="#"><g:Image resource='{retechcorpLogo}'></g:Image></a>
     </div>
     <div class='{style.links}'>
       <span>欢迎</span>

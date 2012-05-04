@@ -23,7 +23,6 @@ import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -55,7 +54,7 @@ public class ContentEditor extends WavePanel implements Activity {
 
   private final HTML html;
   private FlowPanel flowPanel;
-  private Widget sectionView;
+  private SectionBrowserView sectionView;
   private final PlaceController placeContorller;
   private final ReaderFactory f;
   private List<PageProxy> pages;
@@ -164,27 +163,6 @@ public class ContentEditor extends WavePanel implements Activity {
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
 
-    AsyncProvider<IsWidget> sectionBrowserView =
-        isWidgetMapBinder.getAsyncProvider(SectionBrowserView.class.getName());
-    sectionBrowserView.get(new AsyncCallback<IsWidget>() {
-
-      @Override
-      public void onFailure(final Throwable caught) {
-        if (LogConfiguration.loggingIsEnabled()) {
-          logger.log(Level.WARNING, "加载" + SectionBrowserView.class.getName()
-              + "失败. 请检查网络连接, 并刷新后重试", caught);
-        }
-      }
-
-      @Override
-      public void onSuccess(final IsWidget result) {
-        sectionView = result.asWidget();
-        sectionView.getElement().getStyle().setLeft(-html.getOffsetWidth(), Unit.PX);
-        sectionView.addStyleName(ReaderResources.INSTANCE().style().contentSectionView());
-        flowPanel.add(sectionView);
-      }
-    });
-
     // final EntityProxyId<IssueProxy> issueId =
     // ((BasePlace) placeContorller.getWhere()).getParam(IssueProxy.class);
 
@@ -233,6 +211,30 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onSuccessAndCached(final PageProxy pageProxy) {
+
+        AsyncProvider<IsWidget> sectionBrowserView =
+            isWidgetMapBinder.getAsyncProvider(SectionBrowserView.class.getName());
+        sectionBrowserView.get(new AsyncCallback<IsWidget>() {
+
+          @Override
+          public void onFailure(final Throwable caught) {
+            if (LogConfiguration.loggingIsEnabled()) {
+              logger.log(Level.WARNING, "加载" + SectionBrowserView.class.getName()
+                  + "失败. 请检查网络连接, 并刷新后重试", caught);
+            }
+          }
+
+          @Override
+          public void onSuccess(final IsWidget result) {
+            sectionView = (SectionBrowserView) result.asWidget();
+            sectionView.getElement().getStyle().setLeft(-html.getOffsetWidth(), Unit.PX);
+            sectionView.addStyleName(ReaderResources.INSTANCE().style().contentSectionView());
+            sectionView.setIssueId(pageProxy.getSection().getIssue().stableId());
+            sectionView.start(panel, eventBus);
+            flowPanel.add(sectionView);
+          }
+        });
+
         pageStart(pageProxy);
       }
 
@@ -241,6 +243,12 @@ public class ContentEditor extends WavePanel implements Activity {
         return f.find(pageId).with(PageProxy.WITH);
       }
     }.setKeyForProxy(pageId).fire();
+  }
+
+  @Override
+  protected void onUnload() {
+    super.onUnload();
+    this.sectionView.removeStyleName(ReaderResources.INSTANCE().style().contentSectionView());
   }
 
   private void changePageProxy(final PageProxy pageProxy) {
