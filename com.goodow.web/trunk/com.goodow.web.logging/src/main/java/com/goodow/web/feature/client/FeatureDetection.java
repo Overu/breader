@@ -40,6 +40,10 @@ public class FeatureDetection {
     return null;
   }
 
+  public static native boolean fileSystem()/*-{
+                                            return typeof($wnd.webkitRequestFileSystem) == "undefined";
+                                            }-*/;
+
   public static native void hideAddressBar() /*-{
                                              $wnd.scrollTo(0, 1);
                                              }-*/;
@@ -59,9 +63,5 @@ public class FeatureDetection {
   private static native String devicePlatformCordova()/*-{
                                                       return $wnd.device.platform;
                                                       }-*/;
-
-  private static native boolean fileSystem()/*-{
-                                            return typeof($wnd.webkitRequestFileSystem) == "undefined";
-                                            }-*/;
 
 }
