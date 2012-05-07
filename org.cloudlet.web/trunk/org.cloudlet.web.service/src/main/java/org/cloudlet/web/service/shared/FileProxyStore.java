@@ -103,10 +103,10 @@ public class FileProxyStore {
     this.keyUtil = keyUtil;
     this.f = f;
 
-    if (!FeatureDetection.mobileNative()) {
-      requestQuota(FileSystem.LocalFileSystem_PERSISTENT, SIZE, callback);
-    } else {
+    if (FeatureDetection.mobileNative()) {
       callback.onSuccess(SIZE);
+    } else if (FeatureDetection.fileSystem()) {
+      requestQuota(FileSystem.LocalFileSystem_PERSISTENT, SIZE, callback);
     }
   }
 
