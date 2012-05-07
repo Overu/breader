@@ -22,19 +22,7 @@ import java.util.logging.Logger;
 
 public class UserStatusResources {
 
-  public interface Style extends CssResource {
-    String waveUser();
-
-    String waveUserAvailable();
-
-    String waveUserGroup();
-
-    String waveUserIdle();
-
-    String waveUserInvisible();
-  }
-
-  interface Bundle extends ClientBundle {
+  public interface Bundle extends ClientBundle {
     @Source("UserStatus.css")
     Style style();
 
@@ -46,6 +34,22 @@ public class UserStatusResources {
 
     ImageResource userStatusInvisible();
 
+    ImageResource userStatusUnknown();
+
+    ImageResource waveUserGroup();
+
+  }
+
+  public interface Style extends CssResource {
+    String waveUser();
+
+    String waveUserAvailable();
+
+    String waveUserGroup();
+
+    String waveUserIdle();
+
+    String waveUserInvisible();
   }
 
   private static Bundle INSTANCE;

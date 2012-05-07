@@ -20,13 +20,11 @@ import com.goodow.web.view.wave.client.toolbar.ToolBarButtonView.State;
 import com.goodow.web.view.wave.client.tree.WaveBlip;
 import com.goodow.web.view.wave.client.tree.WaveBlipTree;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
@@ -35,12 +33,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 
 public class NestedBlipTest extends WavePanel {
-  interface Resources extends ClientBundle {
-
-    ImageResource userGroup();
-  }
-
-  private static Resources res = GWT.create(Resources.class);
 
   @Inject
   public NestedBlipTest(WaveBlip blip, final FlowPanel flowPanel, final WaveBlipTree blipTree) {
@@ -53,7 +45,8 @@ public class NestedBlipTest extends WavePanel {
     flowPanel.add(blip);
     FlowPanel flowPanel2 = blip.getWaveBlipTree();
     blip = new WaveBlip();
-    blip.getUserPanel().getElement().appendChild(createIcon(res.userGroup()));
+    blip.getUserPanel().getElement().appendChild(
+        createIcon(UserStatusResources.image().waveUserGroup()));
     blip.getUserPanel().addStyleName(UserStatusResources.css().waveUserGroup());
     blip.setContent("没有吧，不太适合国人");
     blip.addUserName("Himcax@googlewave.com");
@@ -61,7 +54,8 @@ public class NestedBlipTest extends WavePanel {
     blipTree.setWaveBlip(blip);
     blip = new WaveBlip();
     blip.setRead(false);
-    blip.getUserPanel().getElement().appendChild(createIcon(res.userGroup()));
+    blip.getUserPanel().getElement().appendChild(
+        createIcon(UserStatusResources.image().waveUserGroup()));
     blip.getUserPanel().addStyleName(UserStatusResources.css().waveUserAvailable());
     blip.setContent("现在看见英文就头疼");
     blip.addUserName("Cholse sun");
@@ -81,7 +75,8 @@ public class NestedBlipTest extends WavePanel {
     blip.setContent("真的很难用");
     blip.setPubTime("Jul 22, 2010");
     blip.addUserName("Cathy Shen");
-    blip.getUserPanel().getElement().appendChild(createIcon(res.userGroup()));
+    blip.getUserPanel().getElement().appendChild(
+        createIcon(UserStatusResources.image().waveUserGroup()));
     blip.getUserPanel().addStyleName(UserStatusResources.css().waveUserAvailable());
     blip.setRead(true);
     flowPanel.add(blip);

@@ -5,7 +5,6 @@ import com.goodow.web.view.wave.client.panel.WavePanelResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -18,21 +17,21 @@ import com.google.gwt.user.client.ui.Widget;
 public class UserStatus extends Composite {
   interface Binder extends UiBinder<Widget, UserStatus> {
   }
-  interface Resources extends ClientBundle {
-    ImageResource UserStatusUnknown();
-  }
 
-  private static Resources res = GWT.create(Resources.class);
   private Binder binder = GWT.create(Binder.class);
   @UiField
   FlowPanel users;
 
   public UserStatus() {
     initWidget(binder.createAndBindUi(this));
-    addUser(UserStatusResources.css().waveUserAvailable(), res.UserStatusUnknown());
-    addUser(UserStatusResources.css().waveUserIdle(), res.UserStatusUnknown());
-    addUser(UserStatusResources.css().waveUserInvisible(), res.UserStatusUnknown());
-    addUser(UserStatusResources.css().waveUserGroup(), res.UserStatusUnknown());
+    addUser(UserStatusResources.css().waveUserAvailable(), UserStatusResources.image()
+        .userStatusUnknown());
+    addUser(UserStatusResources.css().waveUserIdle(), UserStatusResources.image()
+        .userStatusUnknown());
+    addUser(UserStatusResources.css().waveUserInvisible(), UserStatusResources.image()
+        .userStatusUnknown());
+    addUser(UserStatusResources.css().waveUserGroup(), UserStatusResources.image()
+        .userStatusUnknown());
     addStyleName(WavePanelResources.css().waveHeader());
   }
 
