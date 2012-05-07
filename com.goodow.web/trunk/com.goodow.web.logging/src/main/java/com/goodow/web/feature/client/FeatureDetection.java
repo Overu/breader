@@ -59,4 +59,9 @@ public class FeatureDetection {
   private static native String devicePlatformCordova()/*-{
                                                       return $wnd.device.platform;
                                                       }-*/;
+
+  private static native boolean fileSystem()/*-{
+                                            return typeof($wnd.webkitRequestFileSystem) == "undefined";
+                                            }-*/;
+
 }
