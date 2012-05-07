@@ -41,7 +41,7 @@ public class FeatureDetection {
   }
 
   public static native boolean fileSystem()/*-{
-                                            return typeof($wnd.webkitRequestFileSystem) == "undefined";
+                                            return typeof($wnd.webkitRequestFileSystem) != "undefined";
                                             }-*/;
 
   public static native void hideAddressBar() /*-{
