@@ -16,7 +16,6 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.logging.client.LogConfiguration;
 import com.google.gwt.place.shared.PlaceController;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -82,7 +81,7 @@ public class ContentEditor extends WavePanel implements Activity {
     flowPanel = new FlowPanel();
     this.isWidgetMapBinder = isWidgetMapBinder;
     html = new HTML();
-    html.getElement().getStyle().setFontSize(15, Unit.PX);
+    html.getElement().getStyle().setFontSize(1.5, Unit.EM);
     flowPanel.add(html);
     this.setWaveContent(flowPanel);
 
@@ -93,11 +92,13 @@ public class ContentEditor extends WavePanel implements Activity {
         JsArray<Touch> touchesStart = event.getTouches();
         switch (touchesStart.length()) {
           case 1:
+            logger.info("touches: 1 ");
             scheduledOne = false;
             Touch touch = touchesStart.get(0);
             startX1 = touch.getPageX();
             break;
           case 2:
+            logger.info("touches: 2 ");
             scheduledTwo = false;
             Touch touch1 = touchesStart.get(0);
             Touch touch2 = touchesStart.get(1);
@@ -123,13 +124,15 @@ public class ContentEditor extends WavePanel implements Activity {
         switch (touchesMove.length()) {
           case 1:
             scheduledOne = true;
+            logger.info("touch 1 move");
             Touch touch = touchesMove.get(0);
             int nowX = touch.getPageX();
             int subtractX = nowX - startX1;
-            goTo(subtractX > 0 ? 1 : -1);
+            goTo(subtractX > 0 ? -1 : 1);
             break;
           case 2:
             scheduledTwo = true;
+            logger.info("touch 2 move");
             Touch touch1 = touchesMove.get(0);
             Touch touch2 = touchesMove.get(1);
             int nowX1 = touch1.getPageX();
@@ -156,7 +159,9 @@ public class ContentEditor extends WavePanel implements Activity {
       @Override
       public void onTouchEnd(final TouchEndEvent event) {
         JsArray<Touch> touchesMove = event.getTouches();
-        logger.info("onTouchEnd fingers:" + touchesMove);
+        logger.info("onTouchEnd fingers:" + touchesMove.length());
+        scheduledOne = false;
+        scheduledTwo = false;
       }
     }, TouchEndEvent.getType());
 
@@ -290,7 +295,7 @@ public class ContentEditor extends WavePanel implements Activity {
           @Override
           public void onSuccess(final IsWidget result) {
             sectionView = (SectionBrowserView) result.asWidget();
-            sectionView.getElement().getStyle().setLeft(-Window.getClientWidth() - 50, Unit.PX);
+            sectionView.getElement().getStyle().setWidth(0, Unit.PX);
             sectionView.addStyleName(ReaderResources.INSTANCE().style().contentSectionView());
             sectionView.setIssueId(pageProxy.getSection().getIssue().stableId());
             sectionView.start(panel, eventBus);
