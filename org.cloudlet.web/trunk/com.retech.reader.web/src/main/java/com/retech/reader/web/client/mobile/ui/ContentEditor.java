@@ -6,12 +6,6 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Touch;
-import com.google.gwt.event.dom.client.DragEndEvent;
-import com.google.gwt.event.dom.client.DragEndHandler;
-import com.google.gwt.event.dom.client.DragOverEvent;
-import com.google.gwt.event.dom.client.DragOverHandler;
-import com.google.gwt.event.dom.client.DragStartEvent;
-import com.google.gwt.event.dom.client.DragStartHandler;
 import com.google.gwt.event.dom.client.TouchEndEvent;
 import com.google.gwt.event.dom.client.TouchEndHandler;
 import com.google.gwt.event.dom.client.TouchMoveEvent;
@@ -71,7 +65,8 @@ public class ContentEditor extends WavePanel implements Activity {
   private final LocalStorage storage;
   private final KeyUtil keyUtil;
   private final MapBinder<String, IsWidget> isWidgetMapBinder;
-  private boolean isStart = false;
+  private boolean scheduledTwo = false;
+  private boolean scheduledOne;
   private int startX1;
   private int startX2;
 
@@ -96,17 +91,22 @@ public class ContentEditor extends WavePanel implements Activity {
       @Override
       public void onTouchStart(final TouchStartEvent event) {
         JsArray<Touch> touchesStart = event.getTouches();
-        if (touchesStart.length() == 2) {
-          isStart = true;
-          Touch touch1 = touchesStart.get(0);
-          Touch touch2 = touchesStart.get(1);
-          startX1 = touch1.getPageX();
-          startX2 = touch2.getPageX();
-        }
-        if (touchesStart.length() == 1) {
-          isStart = true;
-          Touch touch = touchesStart.get(0);
-          startX1 = touch.getPageX();
+        switch (touchesStart.length()) {
+          case 1:
+            scheduledOne = false;
+            Touch touch = touchesStart.get(0);
+            startX1 = touch.getPageX();
+            break;
+          case 2:
+            scheduledTwo = false;
+            Touch touch1 = touchesStart.get(0);
+            Touch touch2 = touchesStart.get(1);
+            startX1 = touch1.getPageX();
+            startX2 = touch2.getPageX();
+            break;
+
+          default:
+            break;
         }
       }
     }, TouchStartEvent.getType());
@@ -115,37 +115,38 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchMove(final TouchMoveEvent event) {
-        if (isStart) {
-          JsArray<Touch> touchesMove = event.getTouches();
-          if (touchesMove.length() == 2) {
+        event.preventDefault();
+        if (scheduledOne || scheduledTwo) {
+          return;
+        }
+        JsArray<Touch> touchesMove = event.getTouches();
+        switch (touchesMove.length()) {
+          case 1:
+            scheduledOne = true;
+            Touch touch = touchesMove.get(0);
+            int nowX = touch.getPageX();
+            int subtractX = nowX - startX1;
+            goTo(subtractX > 0 ? 1 : -1);
+            break;
+          case 2:
+            scheduledTwo = true;
             Touch touch1 = touchesMove.get(0);
             Touch touch2 = touchesMove.get(1);
             int nowX1 = touch1.getPageX();
             int nowX2 = touch2.getPageX();
             int subtractX1 = nowX1 - startX1;
             int subtractX2 = nowX2 - startX2;
-            if (subtractX1 > 80 && subtractX2 > 80) {
+            if (subtractX1 > 0 && subtractX2 > 0) {
               sectionView.getElement().getStyle().setLeft(0, Unit.PX);
-              isStart = false;
               return;
-            } else if (subtractX1 < -80 && subtractX2 < -80) {
+            } else if (subtractX1 < 0 && subtractX2 < 0) {
               sectionView.getElement().getStyle().setLeft(-html.getOffsetWidth(), Unit.PX);
-              isStart = false;
               return;
             }
-          }
-          if (touchesMove.length() == 1) {
-            Touch touch = touchesMove.get(0);
-            int nowX = touch.getPageX();
-            int subtractX = nowX - startX1;
-            if (subtractX > 80) {
-              goTo(1);
-              isStart = false;
-            } else if (subtractX < -80) {
-              goTo(-1);
-              isStart = false;
-            }
-          }
+            break;
+
+          default:
+            break;
         }
       }
     }, TouchMoveEvent.getType());
@@ -154,47 +155,48 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchEnd(final TouchEndEvent event) {
-        isStart = false;
+        JsArray<Touch> touchesMove = event.getTouches();
+        logger.info("onTouchEnd fingers:" + touchesMove);
       }
     }, TouchEndEvent.getType());
 
-    html.getElement().setDraggable("true");
-    html.addDomHandler(new DragStartHandler() {
-
-      @Override
-      public void onDragStart(final DragStartEvent event) {
-        isStart = true;
-        startX1 = event.getNativeEvent().getClientX();
-      }
-    }, DragStartEvent.getType());
-
-    html.addDomHandler(new DragOverHandler() {
-
-      @Override
-      public void onDragOver(final DragOverEvent event) {
-        if (isStart) {
-          int nowX = event.getNativeEvent().getClientX();
-          int subtractX = nowX - startX1;
-          if (subtractX > 80) {
-            goTo(1);
-            isStart = false;
-            return;
-          } else if (subtractX < -80) {
-            goTo(-1);
-            isStart = false;
-            return;
-          }
-        }
-      }
-    }, DragOverEvent.getType());
-
-    html.addDomHandler(new DragEndHandler() {
-
-      @Override
-      public void onDragEnd(final DragEndEvent event) {
-        isStart = false;
-      }
-    }, DragEndEvent.getType());
+    // html.getElement().setDraggable("true");
+    // html.addDomHandler(new DragStartHandler() {
+    //
+    // @Override
+    // public void onDragStart(final DragStartEvent event) {
+    // isStart = true;
+    // startX1 = event.getNativeEvent().getClientX();
+    // }
+    // }, DragStartEvent.getType());
+    //
+    // html.addDomHandler(new DragOverHandler() {
+    //
+    // @Override
+    // public void onDragOver(final DragOverEvent event) {
+    // if (isStart) {
+    // int nowX = event.getNativeEvent().getClientX();
+    // int subtractX = nowX - startX1;
+    // if (subtractX > 80) {
+    // goTo(1);
+    // isStart = false;
+    // return;
+    // } else if (subtractX < -80) {
+    // goTo(-1);
+    // isStart = false;
+    // return;
+    // }
+    // }
+    // }
+    // }, DragOverEvent.getType());
+    //
+    // html.addDomHandler(new DragEndHandler() {
+    //
+    // @Override
+    // public void onDragEnd(final DragEndEvent event) {
+    // isStart = false;
+    // }
+    // }, DragEndEvent.getType());
 
     // html.addClickHandler(new ClickHandler() {
     //
