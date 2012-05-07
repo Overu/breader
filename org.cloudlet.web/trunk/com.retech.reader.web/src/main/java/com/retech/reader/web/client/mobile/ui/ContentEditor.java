@@ -18,6 +18,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.logging.client.LogConfiguration;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -89,14 +90,17 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchStart(final TouchStartEvent event) {
-        JsArray<Touch> toucheStart = event.getTouches();
-        if (toucheStart.length() == 2) {
+        JsArray<Touch> touchesStart = event.getTouches();
+        if (touchesStart.length() == 2) {
           isStart = true;
-          Touch touch1 = toucheStart.get(0);
-          Touch touch2 = toucheStart.get(1);
+          Touch touch1 = touchesStart.get(0);
+          Touch touch2 = touchesStart.get(1);
           startX1 = touch1.getPageX();
           startX2 = touch2.getPageX();
-
+        }
+        if (touchesStart.length() == 1) {
+          Touch touch = touchesStart.get(0);
+          startX1 = touch.getPageX();
         }
       }
     }, TouchStartEvent.getType());
@@ -122,6 +126,9 @@ public class ContentEditor extends WavePanel implements Activity {
             isStart = false;
             return;
           }
+        }
+        if (touchesMove.length() == 1) {
+          Touch touch = touchesMove.get(0);
 
         }
       }
@@ -227,7 +234,7 @@ public class ContentEditor extends WavePanel implements Activity {
           @Override
           public void onSuccess(final IsWidget result) {
             sectionView = (SectionBrowserView) result.asWidget();
-            sectionView.getElement().getStyle().setLeft(-html.getOffsetWidth(), Unit.PX);
+            sectionView.getElement().getStyle().setLeft(-Window.getClientWidth() - 50, Unit.PX);
             sectionView.addStyleName(ReaderResources.INSTANCE().style().contentSectionView());
             sectionView.setIssueId(pageProxy.getSection().getIssue().stableId());
             sectionView.start(panel, eventBus);

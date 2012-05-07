@@ -37,6 +37,9 @@ public class TestDataUtil {
   public static byte[] getImage(final int folder, final int num) throws IOException {
     InputStream inputStream =
         TestDataUtil.class.getResourceAsStream(folder + "/" + getImageFilename(num) + ".jpg");
+    if (inputStream == null) {
+      return null;
+    }
     byte[] pageImage =
         org.apache.geronimo.mail.util.Base64.encode(IOUtils.toByteArray(inputStream));
     inputStream.close();
@@ -54,7 +57,7 @@ public class TestDataUtil {
             + "/testdata/" + folder + "/" + getHtmlFilename(num) + ".html");
     InputStream img =
         TestDataUtil.class.getResourceAsStream(folder + "/" + getImageFilename(num) + ".jpg");
-    String encode = Base64.encode(Util.readStreamAsBytes(img));
+    String encode = img != null ? Base64.encode(Util.readStreamAsBytes(img)) : "";
     return html.replace("<img src=\"" + getImageFilename(num) + ".jpg\" width=\"100%\" />",
         "<img src=\"" + "data:image/jpeg" + ";base64," + encode + "\" width='100%' >").getBytes(
         "UTF-8");

@@ -12,6 +12,7 @@
     .downloadPanel>* {
       margin: 5px;
       float: left;
+      cursor: pointer;
     }
     
     .downloadPanel>*>*:first-child {

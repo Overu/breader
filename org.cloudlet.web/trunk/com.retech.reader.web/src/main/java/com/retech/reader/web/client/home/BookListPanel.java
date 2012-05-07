@@ -146,7 +146,7 @@ public class BookListPanel extends Composite implements ProvideActivities {
   @Override
   public List<Activity> provideActivities() {
     // return Arrays.<Activity> asList(bookFlipOfBookListPanel, libraryView);
-    return Arrays.<Activity> asList(libraryView);
+    return Arrays.<Activity> asList(myDownLoadPanel, libraryView);
   }
 
 }
