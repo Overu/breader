@@ -8,7 +8,8 @@
     <artifactId>com.goodow.web</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>${project.groupId}.view</artifactId>
+  <groupId>com.goodow</groupId>
+  <artifactId>${project.groupId}.wave</artifactId>
 
   <properties>
   </properties>
