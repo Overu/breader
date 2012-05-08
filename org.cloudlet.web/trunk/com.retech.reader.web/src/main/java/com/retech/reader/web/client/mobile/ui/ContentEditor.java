@@ -63,8 +63,8 @@ public class ContentEditor extends WavePanel implements Activity {
   private int sectionIndex;
   private int pageIndex;
   private int htmlWidth;
-  int contentHeight = Window.getClientHeight() - 73;
-  int contentWidth = Window.getClientWidth() - 14;
+  int contentHeight;
+  int contentWidth;
   private final Provider<BasePlace> place;
   private final LocalStorage storage;
   private final KeyUtil keyUtil;
@@ -103,7 +103,7 @@ public class ContentEditor extends WavePanel implements Activity {
             scheduledOne = false;
             Touch touch = touchesStart.get(0);
             startX1 = touch.getPageX();
-            columnCount = (html.getElement().getScrollWidth() - contentWidth) / contentWidth + 1;
+            columnCount = html.getElement().getScrollWidth() / contentWidth;
             logger.info("columnCount:" + columnCount);
             break;
           case 2:
@@ -137,7 +137,15 @@ public class ContentEditor extends WavePanel implements Activity {
             Touch touch = touchesMove.get(0);
             int nowX = touch.getPageX();
             int subtractX = nowX - startX1;
-            goTo(subtractX > 0 && columnIndex >= columnCount ? -1 : 1);
+            if (subtractX > 0 && columnIndex == 1) {
+              goTo(-1);
+              return;
+            } else if (columnIndex >= columnCount) {
+              goTo(1);
+              columnIndex = 1;
+              return;
+            }
+            // goTo(subtractX > 0 && columnIndex == 1 ? -1 : (columnIndex >= columnCount ? 1));
             scrollNext(subtractX > 0 ? columnIndex-- : columnIndex++);
             break;
           case 2:
@@ -246,6 +254,8 @@ public class ContentEditor extends WavePanel implements Activity {
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
+    contentHeight = Window.getClientHeight() - 73;
+    contentWidth = Window.getClientWidth() - 14;
     Style htmlStyle = html.getElement().getStyle();
     htmlStyle.setHeight(contentHeight, Unit.PX);
     htmlStyle.setProperty("webkitColumnWidth", contentWidth + "px");
@@ -437,10 +447,6 @@ public class ContentEditor extends WavePanel implements Activity {
   }
 
   private void scrollNext(final int columnIndex) {
-    if (columnIndex > columnCount) {
-      return;
-    }
-    this.columnIndex = columnIndex < 1 ? 1 : columnCount;
     html.getElement().getStyle().setLeft(-htmlWidth * columnIndex, Unit.PX);
   }
 }
