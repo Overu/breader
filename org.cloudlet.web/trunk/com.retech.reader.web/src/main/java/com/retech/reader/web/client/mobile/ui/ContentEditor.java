@@ -126,12 +126,12 @@ public class ContentEditor extends WavePanel implements Activity {
       @Override
       public void onTouchMove(final TouchMoveEvent event) {
         event.preventDefault();
-        if (scheduledOne || scheduledTwo) {
-          return;
-        }
         JsArray<Touch> touchesMove = event.getTouches();
         switch (touchesMove.length()) {
           case 1:
+            if (scheduledOne) {
+              return;
+            }
             scheduledOne = true;
             logger.info("touch 1 move");
             Touch touch = touchesMove.get(0);
@@ -141,6 +141,9 @@ public class ContentEditor extends WavePanel implements Activity {
             scrollNext(subtractX > 0 ? columnIndex-- : columnIndex++);
             break;
           case 2:
+            if (scheduledTwo) {
+              return;
+            }
             scheduledTwo = true;
             logger.info("touch 2 move");
             Touch touch1 = touchesMove.get(0);
@@ -313,6 +316,7 @@ public class ContentEditor extends WavePanel implements Activity {
           public void onSuccess(final IsWidget result) {
             sectionView = (SectionBrowserView) result.asWidget();
             sectionView.addStyleName(ReaderResources.INSTANCE().style().contentSectionView());
+            sectionView.getElement().getStyle().setWidth(0, Unit.PX);
             sectionView.setIssueId(pageProxy.getSection().getIssue().stableId());
             sectionView.start(panel, eventBus);
             flowPanel.add(sectionView);
