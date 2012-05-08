@@ -21,6 +21,8 @@ public class ReaderResources {
   }
 
   public interface Style extends CssResource {
+    String contentHtmlPanel();
+
     String contentSectionView();
   }
 

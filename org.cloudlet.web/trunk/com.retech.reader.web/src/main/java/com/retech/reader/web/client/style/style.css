@@ -5,9 +5,18 @@
   position: absolute;
   top: 0px;
   bottom: 0px;
-  width: 100%;
   margin: 0px;
+  width: 0;
   background-color: white;
+}
+
+.contentHtmlPanel {
+  font-size: 1.5em;
+  left: 0;
+  overflow: visible;
+  -webkit-transition: all 1s;
+  -webkit-column-gap: 0em;
+  position: relative;
 }
 
 /*
