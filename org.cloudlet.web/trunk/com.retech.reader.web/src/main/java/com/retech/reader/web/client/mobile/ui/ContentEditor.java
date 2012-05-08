@@ -4,6 +4,7 @@ import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Touch;
 import com.google.gwt.event.dom.client.TouchEndEvent;
@@ -16,6 +17,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.logging.client.LogConfiguration;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -60,12 +62,17 @@ public class ContentEditor extends WavePanel implements Activity {
   private PageProxy proxy;
   private int sectionIndex;
   private int pageIndex;
+  private int htmlWidth;
+  int contentHeight = Window.getClientHeight() - 73;
+  int contentWidth = Window.getClientWidth() - 14;
   private final Provider<BasePlace> place;
   private final LocalStorage storage;
   private final KeyUtil keyUtil;
   private final MapBinder<String, IsWidget> isWidgetMapBinder;
+  private int columnCount;
+  private int columnIndex = 1;
   private boolean scheduledTwo = false;
-  private boolean scheduledOne;
+  private boolean scheduledOne = false;
   private int startX1;
   private int startX2;
 
@@ -81,7 +88,7 @@ public class ContentEditor extends WavePanel implements Activity {
     flowPanel = new FlowPanel();
     this.isWidgetMapBinder = isWidgetMapBinder;
     html = new HTML();
-    html.getElement().getStyle().setFontSize(1.5, Unit.EM);
+    html.addStyleName(ReaderResources.INSTANCE().style().contentHtmlPanel());
     flowPanel.add(html);
     this.setWaveContent(flowPanel);
 
@@ -96,6 +103,8 @@ public class ContentEditor extends WavePanel implements Activity {
             scheduledOne = false;
             Touch touch = touchesStart.get(0);
             startX1 = touch.getPageX();
+            columnCount = (html.getElement().getScrollWidth() - contentWidth) / contentWidth + 1;
+            logger.info("columnCount:" + columnCount);
             break;
           case 2:
             logger.info("touches: 2 ");
@@ -128,7 +137,8 @@ public class ContentEditor extends WavePanel implements Activity {
             Touch touch = touchesMove.get(0);
             int nowX = touch.getPageX();
             int subtractX = nowX - startX1;
-            goTo(subtractX > 0 ? -1 : 1);
+            goTo(subtractX > 0 && columnIndex >= columnCount ? -1 : 1);
+            scrollNext(subtractX > 0 ? columnIndex-- : columnIndex++);
             break;
           case 2:
             scheduledTwo = true;
@@ -140,10 +150,10 @@ public class ContentEditor extends WavePanel implements Activity {
             int subtractX1 = nowX1 - startX1;
             int subtractX2 = nowX2 - startX2;
             if (subtractX1 > 0 && subtractX2 > 0) {
-              sectionView.getElement().getStyle().setLeft(0, Unit.PX);
+              sectionView.getElement().getStyle().setWidth(100, Unit.PCT);
               return;
             } else if (subtractX1 < 0 && subtractX2 < 0) {
-              sectionView.getElement().getStyle().setLeft(-html.getOffsetWidth(), Unit.PX);
+              sectionView.getElement().getStyle().setWidth(0, Unit.PX);
               return;
             }
             break;
@@ -152,6 +162,7 @@ public class ContentEditor extends WavePanel implements Activity {
             break;
         }
       }
+
     }, TouchMoveEvent.getType());
 
     this.addDomHandler(new TouchEndHandler() {
@@ -210,6 +221,8 @@ public class ContentEditor extends WavePanel implements Activity {
     // int offsetWidth = event.getRelativeElement().getOffsetWidth();
     // int x = event.getX();
     // goTo(x > offsetWidth / 2 ? 1 : -1);
+    // logger.info(html.getElement().getScrollWidth() + "");
+    // logger.info((html.getElement().getScrollWidth() - contentWidth) / contentWidth + 1 + "");
     // }
     //
     // });
@@ -230,6 +243,10 @@ public class ContentEditor extends WavePanel implements Activity {
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
+    Style htmlStyle = html.getElement().getStyle();
+    htmlStyle.setHeight(contentHeight, Unit.PX);
+    htmlStyle.setProperty("webkitColumnWidth", contentWidth + "px");
+    flowPanel.getElement().getParentElement().getStyle().setHeight(contentHeight, Unit.PX);
 
     // final EntityProxyId<IssueProxy> issueId =
     // ((BasePlace) placeContorller.getWhere()).getParam(IssueProxy.class);
@@ -295,7 +312,6 @@ public class ContentEditor extends WavePanel implements Activity {
           @Override
           public void onSuccess(final IsWidget result) {
             sectionView = (SectionBrowserView) result.asWidget();
-            sectionView.getElement().getStyle().setWidth(0, Unit.PX);
             sectionView.addStyleName(ReaderResources.INSTANCE().style().contentSectionView());
             sectionView.setIssueId(pageProxy.getSection().getIssue().stableId());
             sectionView.start(panel, eventBus);
@@ -414,5 +430,13 @@ public class ContentEditor extends WavePanel implements Activity {
     }.setKeyForList(issue.stableId(), SectionProxy.class.getName()).fire();
 
     findPages(sectionProxy, false, false);
+  }
+
+  private void scrollNext(final int columnIndex) {
+    if (columnIndex > columnCount) {
+      return;
+    }
+    this.columnIndex = columnIndex < 1 ? 1 : columnCount;
+    html.getElement().getStyle().setLeft(-htmlWidth * columnIndex, Unit.PX);
   }
 }
