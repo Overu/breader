@@ -1,0 +1,4 @@
+<module>
+  <inherits name="com.goodow.wave.client.widget.progress.Progress" />
+  <source path=""/>
+</module>
