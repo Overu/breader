@@ -192,6 +192,14 @@ public class WaveTest extends WavePanel {
         event.preventDefault();
         JsArray<Touch> touchesMove = event.getTouches();
         switch (touchesMove.length()) {
+          case 1:
+            if (scheduledOne) {
+              return;
+            }
+            scheduledOne = true;
+            printLog(touchesMove);
+            break;
+
           case 2:
             if (scheduledTwo) {
               return;
