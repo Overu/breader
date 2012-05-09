@@ -55,7 +55,11 @@ public class WaveTest extends WavePanel {
     // wave.setFooter(new Label("test footer"));
     // ToolBarClickButton clickButton = wave.toolbar().addClickButton();
     // clickButton.setText("test button");
-    HTMLPanel hp = new HTMLPanel("");
+    HTMLPanel hp =
+        new HTMLPanel(
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla at turpis eget nibh ultricies dignissim. Duis luctus euismod turpis. Mauris augue. Aliquam facilisis semper elit. Pellentesque semper hendrerit arcu. Phasellus eleifend commodo justo. Aliquam orci urna, imperdiet sit amet, posuere in, lobortis et, risus. Integer interdum nonummy erat. Nullam tellus. Sed accumsan. Vestibulum orci ipsum, eleifend vitae, mollis vel, mollis sed, purus. Suspendisse mollis elit eu magna. Morbi egestas. Nunc leo ipsum, blandit ac, viverra quis, porttitor quis, dui. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus scelerisque ipsum ut justo. Pellentesque et ligula eu massa sagittis rutrum. In urna nibh, eleifend vel, suscipit ut, sagittis id, nunc."
+                + "Nam ut sapien sed pede pulvinar rutrum. Nunc eu elit sed augue aliquet tincidunt. Morbi rutrum. Vestibulum dui turpis, lobortis quis, euismod sed, consectetuer sit amet, nunc. Nam mi. Fusce at nisl eu tortor bibendum eleifend. Sed ac metus. Phasellus nec elit. Morbi tortor nulla, tristique a, adipiscing at, consectetuer et, nisi. Nunc vel sapien sed risus hendrerit egestas. Vivamus turpis arcu, placerat eu, congue vel, commodo ut, nisl.&lt;");
+    hp.getElement().getStyle().setProperty("webkitColumnWidth", 100 + "px");
     hp.setWidth("100%");
     hp.setHeight("700px");
     setWaveContent(hp);
