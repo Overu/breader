@@ -16,9 +16,6 @@ package com.goodow.web.view.wave.client;
 import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.core.client.JsArray;
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.RepeatingCommand;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Touch;
 import com.google.gwt.event.dom.client.TouchEndEvent;
 import com.google.gwt.event.dom.client.TouchEndHandler;
@@ -27,19 +24,28 @@ import com.google.gwt.event.dom.client.TouchMoveHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.util.logging.Logger;
 
+@Singleton
 public class WaveTest extends WavePanel {
 
   private static final Logger logger = Logger.getLogger(WaveTest.class.getName());
-  private boolean start = false;
-  private int x1;
-  private int x2;
+  // private boolean start = false;
+  // private int x1;
+  // private int x2;
   JsArray<Touch> touches = null;
-  private boolean scheduled;
-  private boolean isStart = false;
+  // private boolean scheduled;
+  // private boolean isStart = false;
+  private boolean scheduledTwo = false;
+  private boolean scheduledOne = false;
 
+  // private int startX1;
+  // private int startX2;
+
+  @Inject
   public WaveTest() {
     // getWaveTitle().setText("test title");
     // wave.setHeader(new Label("test header"));
@@ -106,35 +112,75 @@ public class WaveTest extends WavePanel {
     // }
     // }, TouchEndEvent.getType());
 
+    // hp.addDomHandler(new TouchStartHandler() {
+    //
+    // @Override
+    // public void onTouchStart(final TouchStartEvent event) {
+    // JsArray<Touch> toucheStart = event.getTouches();
+    // if (toucheStart.length() >= 2) {
+    // logger.info("touch start:" + toucheStart.length());
+    // isStart = true;
+    // Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
+    //
+    // @Override
+    // public boolean execute() {
+    // if (touches != null && isStart && !scheduled) {
+    // scheduled = true;
+    // Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+    //
+    // @Override
+    // public void execute() {
+    // scheduled = false;
+    // printLog(touches);
+    // }
+    // });
+    // }
+    // if (!isStart) {
+    // logger.info("Scheduler end:" + isStart);
+    // }
+    // return isStart;
+    // }
+    // }, 15);
+    // }
+    // }
+    // }, TouchStartEvent.getType());
+    //
+    // hp.addDomHandler(new TouchMoveHandler() {
+    //
+    // @Override
+    // public void onTouchMove(final TouchMoveEvent event) {
+    // touches = event.getTouches();
+    // }
+    // }, TouchMoveEvent.getType());
+    //
+    // hp.addDomHandler(new TouchEndHandler() {
+    //
+    // @Override
+    // public void onTouchEnd(final TouchEndEvent event) {
+    // touches = null;
+    // logger.info("strat end:");
+    // isStart = false;
+    // }
+    // }, TouchEndEvent.getType());
+
     hp.addDomHandler(new TouchStartHandler() {
 
       @Override
       public void onTouchStart(final TouchStartEvent event) {
-        JsArray<Touch> toucheStart = event.getTouches();
-        if (toucheStart.length() >= 2) {
-          logger.info("touch start:" + toucheStart.length());
-          isStart = true;
-          Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
+        JsArray<Touch> touchesStart = event.getTouches();
+        switch (touchesStart.length()) {
+          case 1:
+            logger.info("touches: 1 ");
+            scheduledTwo = false;
+            break;
 
-            @Override
-            public boolean execute() {
-              if (touches != null && isStart && !scheduled) {
-                scheduled = true;
-                Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+          case 2:
+            logger.info("touches: 2 ");
+            scheduledTwo = false;
+            break;
 
-                  @Override
-                  public void execute() {
-                    scheduled = false;
-                    printLog(touches);
-                  }
-                });
-              }
-              if (!isStart) {
-                logger.info("Scheduler end:" + isStart);
-              }
-              return isStart;
-            }
-          }, 15);
+          default:
+            break;
         }
       }
     }, TouchStartEvent.getType());
@@ -143,17 +189,30 @@ public class WaveTest extends WavePanel {
 
       @Override
       public void onTouchMove(final TouchMoveEvent event) {
-        touches = event.getTouches();
+        event.preventDefault();
+        JsArray<Touch> touchesMove = event.getTouches();
+        switch (touchesMove.length()) {
+          case 2:
+            if (scheduledTwo) {
+              return;
+            }
+            scheduledTwo = true;
+            printLog(touchesMove);
+            break;
+
+          default:
+            break;
+        }
       }
+
     }, TouchMoveEvent.getType());
 
     hp.addDomHandler(new TouchEndHandler() {
 
       @Override
       public void onTouchEnd(final TouchEndEvent event) {
-        touches = null;
-        logger.info("strat end:");
-        isStart = false;
+        scheduledOne = false;
+        scheduledTwo = false;
       }
     }, TouchEndEvent.getType());
 
