@@ -7,12 +7,6 @@ import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Touch;
-import com.google.gwt.event.dom.client.DragEndEvent;
-import com.google.gwt.event.dom.client.DragEndHandler;
-import com.google.gwt.event.dom.client.DragOverEvent;
-import com.google.gwt.event.dom.client.DragOverHandler;
-import com.google.gwt.event.dom.client.DragStartEvent;
-import com.google.gwt.event.dom.client.DragStartHandler;
 import com.google.gwt.event.dom.client.TouchEndEvent;
 import com.google.gwt.event.dom.client.TouchEndHandler;
 import com.google.gwt.event.dom.client.TouchMoveEvent;
@@ -183,38 +177,38 @@ public class ContentEditor extends WavePanel implements Activity {
       }
     }, TouchEndEvent.getType());
 
-    html.getElement().setDraggable("true");
-    html.addDomHandler(new DragStartHandler() {
-
-      @Override
-      public void onDragStart(final DragStartEvent event) {
-        scheduledOne = false;
-        startX1 = event.getNativeEvent().getClientX();
-        columnCount = html.getElement().getScrollWidth() / contentWidth;
-      }
-    }, DragStartEvent.getType());
-
-    html.addDomHandler(new DragOverHandler() {
-
-      @Override
-      public void onDragOver(final DragOverEvent event) {
-        if (scheduledOne) {
-          return;
-        }
-        scheduledOne = true;
-        int nowX = event.getNativeEvent().getClientX();
-        int subtractX = nowX - startX1;
-        gotoNextPageAndScrollNext(subtractX);
-      }
-    }, DragOverEvent.getType());
-
-    html.addDomHandler(new DragEndHandler() {
-
-      @Override
-      public void onDragEnd(final DragEndEvent event) {
-        scheduledOne = false;
-      }
-    }, DragEndEvent.getType());
+    // html.getElement().setDraggable("true");
+    // html.addDomHandler(new DragStartHandler() {
+    //
+    // @Override
+    // public void onDragStart(final DragStartEvent event) {
+    // scheduledOne = false;
+    // startX1 = event.getNativeEvent().getClientX();
+    // columnCount = html.getElement().getScrollWidth() / contentWidth;
+    // }
+    // }, DragStartEvent.getType());
+    //
+    // html.addDomHandler(new DragOverHandler() {
+    //
+    // @Override
+    // public void onDragOver(final DragOverEvent event) {
+    // if (scheduledOne) {
+    // return;
+    // }
+    // scheduledOne = true;
+    // int nowX = event.getNativeEvent().getClientX();
+    // int subtractX = nowX - startX1;
+    // gotoNextPageAndScrollNext(subtractX);
+    // }
+    // }, DragOverEvent.getType());
+    //
+    // html.addDomHandler(new DragEndHandler() {
+    //
+    // @Override
+    // public void onDragEnd(final DragEndEvent event) {
+    // scheduledOne = false;
+    // }
+    // }, DragEndEvent.getType());
 
     // html.addClickHandler(new ClickHandler() {
     //
