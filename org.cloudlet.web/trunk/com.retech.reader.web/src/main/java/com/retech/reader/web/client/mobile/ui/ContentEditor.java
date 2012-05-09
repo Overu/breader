@@ -7,6 +7,12 @@ import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Touch;
+import com.google.gwt.event.dom.client.DragEndEvent;
+import com.google.gwt.event.dom.client.DragEndHandler;
+import com.google.gwt.event.dom.client.DragOverEvent;
+import com.google.gwt.event.dom.client.DragOverHandler;
+import com.google.gwt.event.dom.client.DragStartEvent;
+import com.google.gwt.event.dom.client.DragStartHandler;
 import com.google.gwt.event.dom.client.TouchEndEvent;
 import com.google.gwt.event.dom.client.TouchEndHandler;
 import com.google.gwt.event.dom.client.TouchMoveEvent;
@@ -62,7 +68,6 @@ public class ContentEditor extends WavePanel implements Activity {
   private PageProxy proxy;
   private int sectionIndex;
   private int pageIndex;
-  private int htmlWidth;
   int contentHeight;
   int contentWidth;
   private final Provider<BasePlace> place;
@@ -137,16 +142,7 @@ public class ContentEditor extends WavePanel implements Activity {
             Touch touch = touchesMove.get(0);
             int nowX = touch.getPageX();
             int subtractX = nowX - startX1;
-            if (subtractX > 0 && columnIndex == 1) {
-              goTo(-1);
-              return;
-            } else if (columnIndex >= columnCount) {
-              goTo(1);
-              columnIndex = 1;
-              return;
-            }
-            // goTo(subtractX > 0 && columnIndex == 1 ? -1 : (columnIndex >= columnCount ? 1));
-            scrollNext(subtractX > 0 ? columnIndex-- : columnIndex++);
+            gotoNextPageAndScrollNext(subtractX);
             break;
           case 2:
             if (scheduledTwo) {
@@ -187,43 +183,38 @@ public class ContentEditor extends WavePanel implements Activity {
       }
     }, TouchEndEvent.getType());
 
-    // html.getElement().setDraggable("true");
-    // html.addDomHandler(new DragStartHandler() {
-    //
-    // @Override
-    // public void onDragStart(final DragStartEvent event) {
-    // isStart = true;
-    // startX1 = event.getNativeEvent().getClientX();
-    // }
-    // }, DragStartEvent.getType());
-    //
-    // html.addDomHandler(new DragOverHandler() {
-    //
-    // @Override
-    // public void onDragOver(final DragOverEvent event) {
-    // if (isStart) {
-    // int nowX = event.getNativeEvent().getClientX();
-    // int subtractX = nowX - startX1;
-    // if (subtractX > 80) {
-    // goTo(1);
-    // isStart = false;
-    // return;
-    // } else if (subtractX < -80) {
-    // goTo(-1);
-    // isStart = false;
-    // return;
-    // }
-    // }
-    // }
-    // }, DragOverEvent.getType());
-    //
-    // html.addDomHandler(new DragEndHandler() {
-    //
-    // @Override
-    // public void onDragEnd(final DragEndEvent event) {
-    // isStart = false;
-    // }
-    // }, DragEndEvent.getType());
+    html.getElement().setDraggable("true");
+    html.addDomHandler(new DragStartHandler() {
+
+      @Override
+      public void onDragStart(final DragStartEvent event) {
+        scheduledOne = false;
+        startX1 = event.getNativeEvent().getClientX();
+        columnCount = html.getElement().getScrollWidth() / contentWidth;
+      }
+    }, DragStartEvent.getType());
+
+    html.addDomHandler(new DragOverHandler() {
+
+      @Override
+      public void onDragOver(final DragOverEvent event) {
+        if (scheduledOne) {
+          return;
+        }
+        scheduledOne = true;
+        int nowX = event.getNativeEvent().getClientX();
+        int subtractX = nowX - startX1;
+        gotoNextPageAndScrollNext(subtractX);
+      }
+    }, DragOverEvent.getType());
+
+    html.addDomHandler(new DragEndHandler() {
+
+      @Override
+      public void onDragEnd(final DragEndEvent event) {
+        scheduledOne = false;
+      }
+    }, DragEndEvent.getType());
 
     // html.addClickHandler(new ClickHandler() {
     //
@@ -347,6 +338,7 @@ public class ContentEditor extends WavePanel implements Activity {
   protected void onUnload() {
     super.onUnload();
     this.sectionView.removeStyleName(ReaderResources.INSTANCE().style().contentSectionView());
+    this.html.getElement().getStyle().clearLeft();
   }
 
   private void changePageProxy(final PageProxy pageProxy) {
@@ -410,6 +402,19 @@ public class ContentEditor extends WavePanel implements Activity {
     changePageProxy(pageProxy);
   }
 
+  private void gotoNextPageAndScrollNext(final int subtractX) {
+    if (subtractX > 0 && columnIndex <= 1) {
+      goTo(-1);
+      return;
+    } else if (subtractX < 0 && columnIndex >= columnCount) {
+      goTo(1);
+      columnIndex = 1;
+      return;
+    }
+    html.getElement().getStyle().setLeft(
+        -100 * ((subtractX > 0 ? --columnIndex : ++columnIndex) - 1), Unit.PCT);
+  }
+
   private void nextSectionIndex(final int sectionIndex, final boolean isNextSection) {
     if (sectionIndex > sections.size() - 1 && pageIndex + 2 > pages.size()) {
       this.sectionIndex = sections.size() - 1;
@@ -444,9 +449,5 @@ public class ContentEditor extends WavePanel implements Activity {
     }.setKeyForList(issue.stableId(), SectionProxy.class.getName()).fire();
 
     findPages(sectionProxy, false, false);
-  }
-
-  private void scrollNext(final int columnIndex) {
-    html.getElement().getStyle().setLeft(-htmlWidth * columnIndex, Unit.PX);
   }
 }
