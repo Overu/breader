@@ -1,18 +1,16 @@
 /**
  * Copyright 2010 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ * 
  */
 
 package com.goodow.wave.client.widget.progress;
@@ -28,8 +26,8 @@ import com.google.gwt.user.client.ui.Widget;
 
 /**
  * Display a progress bar to indicate progress
- *
- *
+ * 
+ * 
  * NOTE(macpherson): This should cease to be a widget and should be inlined into thumbnails.
  */
 public class ProgressWidget extends Widget {
@@ -39,14 +37,17 @@ public class ProgressWidget extends Widget {
   interface ProgressResources extends ClientBundle {
     interface Css extends CssResource {
       String bar();
-      String groove();
-    }
 
-    @Source("ProgressWidget.css")
-    Css css();
+      String groove();
+
+      String root();
+    }
 
     @Source("progress_mini_bar.gif")
     DataResource barImage();
+
+    @Source("ProgressWidget.css")
+    Css css();
 
     @Source("progress_mini_groove.gif")
     DataResource grooveImage();
@@ -70,6 +71,7 @@ public class ProgressWidget extends Widget {
   /** Create a progress bar */
   public ProgressWidget() {
     PROGRESS_RESOURCES.css().ensureInjected();
+    element.setClassName(PROGRESS_RESOURCES.css().root());
     bar.setClassName(PROGRESS_RESOURCES.css().bar());
     groove.setClassName(PROGRESS_RESOURCES.css().groove());
     element.appendChild(bar);
@@ -78,19 +80,19 @@ public class ProgressWidget extends Widget {
     setValue(0.0);
   }
 
-  /**
-   * Update the current progress displayed in the progress bar.
-   *
-   * @param value Must be a number between 0 and 1.
-   */
-  public void setValue(double value) {
-    currentProgress = Math.max(0, Math.min(value, 1));
-    bar.getStyle().setWidth(currentProgress * 100, Style.Unit.PCT);
-    groove.getStyle().setWidth((1 - currentProgress) * 100, Style.Unit.PCT);
-  }
-
   /** Return the current displayed progress */
   public double getValue() {
     return currentProgress;
+  }
+
+  /**
+   * Update the current progress displayed in the progress bar.
+   * 
+   * @param value Must be a number between 0 and 1.
+   */
+  public void setValue(final double value) {
+    currentProgress = Math.max(0, Math.min(value, 1));
+    bar.getStyle().setWidth(currentProgress * 100, Style.Unit.PCT);
+    groove.getStyle().setWidth((1 - currentProgress) * 100, Style.Unit.PCT);
   }
 }

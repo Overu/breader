@@ -13,7 +13,7 @@
   font-size: 1.5em;
   left: 0;
   overflow: visible;
-  -webkit-transition: all 1s;
+  -webkit-transition: all 0.5s;
   -webkit-column-gap: 0em;
   position: relative;
 }

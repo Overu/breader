@@ -18,6 +18,7 @@ public interface IssueProxy extends BaseEntityProxy {
   String MY_ISSUES = "issue.my";
   String COUNT_ISSUE = "issue.count";
   String ISSUE_DOWN = "issue.down";
+  String ISSUE_DOWN_FINISH = "issue.down.finish";
 
   CategoryProxy getCategory();
 

@@ -7,6 +7,12 @@ import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Touch;
+import com.google.gwt.event.dom.client.DragEndEvent;
+import com.google.gwt.event.dom.client.DragEndHandler;
+import com.google.gwt.event.dom.client.DragOverEvent;
+import com.google.gwt.event.dom.client.DragOverHandler;
+import com.google.gwt.event.dom.client.DragStartEvent;
+import com.google.gwt.event.dom.client.DragStartHandler;
 import com.google.gwt.event.dom.client.TouchEndEvent;
 import com.google.gwt.event.dom.client.TouchEndHandler;
 import com.google.gwt.event.dom.client.TouchMoveEvent;
@@ -14,11 +20,8 @@ import com.google.gwt.event.dom.client.TouchMoveHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.inject.client.AsyncProvider;
-import com.google.gwt.logging.client.LogConfiguration;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -43,7 +46,6 @@ import org.cloudlet.web.service.shared.LocalStorage;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Singleton
@@ -177,38 +179,38 @@ public class ContentEditor extends WavePanel implements Activity {
       }
     }, TouchEndEvent.getType());
 
-    // html.getElement().setDraggable("true");
-    // html.addDomHandler(new DragStartHandler() {
-    //
-    // @Override
-    // public void onDragStart(final DragStartEvent event) {
-    // scheduledOne = false;
-    // startX1 = event.getNativeEvent().getClientX();
-    // columnCount = html.getElement().getScrollWidth() / contentWidth;
-    // }
-    // }, DragStartEvent.getType());
-    //
-    // html.addDomHandler(new DragOverHandler() {
-    //
-    // @Override
-    // public void onDragOver(final DragOverEvent event) {
-    // if (scheduledOne) {
-    // return;
-    // }
-    // scheduledOne = true;
-    // int nowX = event.getNativeEvent().getClientX();
-    // int subtractX = nowX - startX1;
-    // gotoNextPageAndScrollNext(subtractX);
-    // }
-    // }, DragOverEvent.getType());
-    //
-    // html.addDomHandler(new DragEndHandler() {
-    //
-    // @Override
-    // public void onDragEnd(final DragEndEvent event) {
-    // scheduledOne = false;
-    // }
-    // }, DragEndEvent.getType());
+    html.getElement().setDraggable("true");
+    html.addDomHandler(new DragStartHandler() {
+
+      @Override
+      public void onDragStart(final DragStartEvent event) {
+        scheduledOne = false;
+        startX1 = event.getNativeEvent().getClientX();
+        columnCount = html.getElement().getScrollWidth() / contentWidth;
+      }
+    }, DragStartEvent.getType());
+
+    html.addDomHandler(new DragOverHandler() {
+
+      @Override
+      public void onDragOver(final DragOverEvent event) {
+        if (scheduledOne) {
+          return;
+        }
+        scheduledOne = true;
+        int nowX = event.getNativeEvent().getClientX();
+        int subtractX = nowX - startX1;
+        gotoNextPageAndScrollNext(subtractX);
+      }
+    }, DragOverEvent.getType());
+
+    html.addDomHandler(new DragEndHandler() {
+
+      @Override
+      public void onDragEnd(final DragEndEvent event) {
+        scheduledOne = false;
+      }
+    }, DragEndEvent.getType());
 
     // html.addClickHandler(new ClickHandler() {
     //
@@ -295,28 +297,28 @@ public class ContentEditor extends WavePanel implements Activity {
       @Override
       public void onSuccessAndCached(final PageProxy pageProxy) {
 
-        AsyncProvider<IsWidget> sectionBrowserView =
-            isWidgetMapBinder.getAsyncProvider(SectionBrowserView.class.getName());
-        sectionBrowserView.get(new AsyncCallback<IsWidget>() {
-
-          @Override
-          public void onFailure(final Throwable caught) {
-            if (LogConfiguration.loggingIsEnabled()) {
-              logger.log(Level.WARNING, "加载" + SectionBrowserView.class.getName()
-                  + "失败. 请检查网络连接, 并刷新后重试", caught);
-            }
-          }
-
-          @Override
-          public void onSuccess(final IsWidget result) {
-            sectionView = (SectionBrowserView) result.asWidget();
-            sectionView.addStyleName(ReaderResources.INSTANCE().style().contentSectionView());
-            sectionView.getElement().getStyle().setWidth(0, Unit.PX);
-            sectionView.setIssueId(pageProxy.getSection().getIssue().stableId());
-            sectionView.start(panel, eventBus);
-            flowPanel.add(sectionView);
-          }
-        });
+        // AsyncProvider<IsWidget> sectionBrowserView =
+        // isWidgetMapBinder.getAsyncProvider(SectionBrowserView.class.getName());
+        // sectionBrowserView.get(new AsyncCallback<IsWidget>() {
+        //
+        // @Override
+        // public void onFailure(final Throwable caught) {
+        // if (LogConfiguration.loggingIsEnabled()) {
+        // logger.log(Level.WARNING, "加载" + SectionBrowserView.class.getName()
+        // + "失败. 请检查网络连接, 并刷新后重试", caught);
+        // }
+        // }
+        //
+        // @Override
+        // public void onSuccess(final IsWidget result) {
+        // sectionView = (SectionBrowserView) result.asWidget();
+        // sectionView.addStyleName(ReaderResources.INSTANCE().style().contentSectionView());
+        // sectionView.getElement().getStyle().setWidth(0, Unit.PX);
+        // sectionView.setIssueId(pageProxy.getSection().getIssue().stableId());
+        // sectionView.start(panel, eventBus);
+        // flowPanel.add(sectionView);
+        // }
+        // });
 
         pageStart(pageProxy);
       }
@@ -331,7 +333,7 @@ public class ContentEditor extends WavePanel implements Activity {
   @Override
   protected void onUnload() {
     super.onUnload();
-    this.sectionView.removeStyleName(ReaderResources.INSTANCE().style().contentSectionView());
+    // this.sectionView.removeStyleName(ReaderResources.INSTANCE().style().contentSectionView());
     this.html.getElement().getStyle().clearLeft();
   }
 

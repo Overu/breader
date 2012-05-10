@@ -15,6 +15,7 @@ package com.goodow.web.view.wave.client;
 
 import com.goodow.web.view.wave.client.panel.WavePanel;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Touch;
 import com.google.gwt.event.dom.client.TouchEndEvent;
@@ -23,6 +24,8 @@ import com.google.gwt.event.dom.client.TouchMoveEvent;
 import com.google.gwt.event.dom.client.TouchMoveHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -32,7 +35,18 @@ import java.util.logging.Logger;
 @Singleton
 public class WaveTest extends WavePanel {
 
+  interface Bundle extends ClientBundle {
+    @Source("WaveTest.css")
+    Style style();
+  }
+
+  interface Style extends CssResource {
+
+    String test();
+  }
+
   private static final Logger logger = Logger.getLogger(WaveTest.class.getName());
+  private static final Bundle INSTANCE;
   // private boolean start = false;
   // private int x1;
   // private int x2;
@@ -42,8 +56,17 @@ public class WaveTest extends WavePanel {
   private boolean scheduledTwo = false;
   private boolean scheduledOne = false;
 
-  // private int startX1;
-  // private int startX2;
+  private int startX1;
+  private int startX2;
+
+  static {
+    logger.finest("static init start");
+
+    INSTANCE = GWT.create(Bundle.class);
+    INSTANCE.style().ensureInjected();
+
+    logger.finest("static init end");
+  }
 
   @Inject
   public WaveTest() {
@@ -62,6 +85,9 @@ public class WaveTest extends WavePanel {
     hp.getElement().getStyle().setProperty("webkitColumnWidth", 100 + "px");
     hp.setWidth("100%");
     hp.setHeight("700px");
+    HTMLPanel test = new HTMLPanel("");
+    test.addStyleName(INSTANCE.style().test());
+    hp.add(test);
     setWaveContent(hp);
 
     // hp.addDomHandler(new TouchStartHandler() {
@@ -209,6 +235,19 @@ public class WaveTest extends WavePanel {
               return;
             }
             scheduledTwo = true;
+            Touch touch1 = touchesMove.get(0);
+            Touch touch2 = touchesMove.get(1);
+            int nowX1 = touch1.getPageX();
+            int nowX2 = touch2.getPageX();
+            int subtractX1 = nowX1 - startX1;
+            int subtractX2 = nowX2 - startX2;
+            if (subtractX1 > 0 && subtractX2 > 0) {
+
+              return;
+            } else if (subtractX1 < 0 && subtractX2 < 0) {
+
+              return;
+            }
             printLog(touchesMove);
             break;
 

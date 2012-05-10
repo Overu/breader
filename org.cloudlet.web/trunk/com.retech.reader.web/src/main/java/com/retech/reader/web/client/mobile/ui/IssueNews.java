@@ -34,13 +34,10 @@ import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.Request;
 
-import com.retech.reader.web.shared.common.SQLConstant;
 import com.retech.reader.web.shared.proxy.CategoryProxy;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.PageProxy;
 import com.retech.reader.web.shared.proxy.ResourceProxy;
-import com.retech.reader.web.shared.proxy.SectionProxy;
-import com.retech.reader.web.shared.rpc.PageContext;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
 import org.cloudlet.web.mvp.shared.BasePlace;
@@ -94,8 +91,6 @@ public class IssueNews extends WavePanel implements Activity {
   private final LocalStorage storage;
   private final WaveToolBar waveToolbar;
   private final KeyUtil keyUtil;
-  private int pageCount;
-  private int nowPage;
 
   @Inject
   public IssueNews(final ReaderFactory f, final Provider<BasePlace> places,
@@ -205,10 +200,17 @@ public class IssueNews extends WavePanel implements Activity {
     downloadButton.addClickHandler(new ClickHandler() {
       @Override
       public void onClick(final ClickEvent event) {
-        downLoadIssue(issueId);
         // logger.info("开发中");
-        logger.info("download start!");
-        downloadButton.setState(State.DISABLED);
+        List<IssueProxy> issueDownload = storage.get(keyUtil.listKey(IssueProxy.ISSUE_DOWN));
+        if (issueDownload == null) {
+          issueDownload = new ArrayList<IssueProxy>();
+        }
+        if (!issueDownload.contains(proxy)) {
+          issueDownload.add(proxy);
+          downloadButton.setState(State.DISABLED);
+        }
+        storage.put(keyUtil.listKey(IssueProxy.ISSUE_DOWN), issueDownload);
+        placeController.goTo(places.get().setPath("/"));
       }
     });
   }
@@ -263,13 +265,18 @@ public class IssueNews extends WavePanel implements Activity {
         }
 
         List<IssueProxy> issueDownload = storage.get(keyUtil.listKey(IssueProxy.ISSUE_DOWN));
+        List<IssueProxy> issueDownloadFinish =
+            storage.get(keyUtil.listKey(IssueProxy.ISSUE_DOWN_FINISH));
         if (issueDownload == null) {
           issueDownload = new ArrayList<IssueProxy>();
         }
-        if (!issueDownload.contains(proxy)) {
-          downloadButton.setState(State.ENABLED);
-        } else {
+        if (issueDownloadFinish == null) {
+          issueDownloadFinish = new ArrayList<IssueProxy>();
+        }
+        if (issueDownload.contains(proxy) || issueDownloadFinish.contains(proxy)) {
           downloadButton.setState(State.DISABLED);
+        } else {
+          downloadButton.setState(State.ENABLED);
         }
 
         new BaseReceiver<ResourceProxy>() {
@@ -306,82 +313,5 @@ public class IssueNews extends WavePanel implements Activity {
         return f.find(issueId);
       }
     }.setKeyForProxy(issueId).fire();
-  }
-
-  private void downLoadIssue(final EntityProxyId<IssueProxy> issueId) {
-    new BaseReceiver<IssueProxy>() {
-
-      @Override
-      public void onSuccessAndCached(final IssueProxy issueProxy) {
-
-        new BaseReceiver<List<SectionProxy>>() {
-
-          @Override
-          public void onSuccessAndCached(final List<SectionProxy> sections) {
-            firePageBySection(sections);
-          }
-
-          @Override
-          public Request<List<SectionProxy>> provideRequest() {
-            return f.section().findByBook(issueProxy, 0, SQLConstant.MAX_RESULTS_ALL).with(
-                SectionProxy.WITH);
-          }
-        }.setKeyForList(issueId, SectionProxy.class.getName()).fire();
-
-      }
-
-      @Override
-      public Request<IssueProxy> provideRequest() {
-        return f.find(issueId);
-      }
-    }.setKeyForProxy(issueId).fire();
-  }
-
-  private void firePageBySection(final List<SectionProxy> sections) {
-    final PageContext pageContext = f.pageContext();
-    for (final SectionProxy sectionProxy : sections) {
-      pageCount += sectionProxy.getPageCount();
-      new BaseReceiver<List<PageProxy>>() {
-
-        @Override
-        public void onSuccessAndCached(final List<PageProxy> pages) {
-          fireReourceByPage(pages);
-        }
-
-        @Override
-        public Request<List<PageProxy>> provideRequest() {
-          return pageContext.findPagesBySection(sectionProxy).with(PageProxy.WITH);
-        }
-      }.setKeyForList(sectionProxy.stableId(), PageProxy.class.getName()).fire();
-    }
-  }
-
-  private void fireReourceByPage(final List<PageProxy> pages) {
-    for (final PageProxy pageProxy : pages) {
-      new BaseReceiver<ResourceProxy>() {
-
-        @Override
-        public void onSuccessAndCached(final ResourceProxy response) {
-          nowPage++;
-          logger.info("now download:" + nowPage + "/" + (pageCount - 1));
-          if (nowPage == pageCount) {
-            List<IssueProxy> issueDownload = storage.get(keyUtil.listKey(IssueProxy.ISSUE_DOWN));
-            if (issueDownload == null) {
-              issueDownload = new ArrayList<IssueProxy>();
-            }
-            if (!issueDownload.contains(proxy)) {
-              issueDownload.add(proxy);
-            }
-            storage.put(keyUtil.listKey(IssueProxy.ISSUE_DOWN), issueDownload);
-            logger.info("download end!!");
-          }
-        }
-
-        @Override
-        public Request<ResourceProxy> provideRequest() {
-          return f.resource().getResource(pageProxy);
-        }
-      }.setKeyForProxy(pageProxy.stableId(), ResourceProxy.class.getName()).fire();
-    }
   }
 }
