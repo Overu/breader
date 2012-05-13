@@ -13,7 +13,7 @@
  */
 package com.goodow.web.view.wave.client;
 
-import com.goodow.web.view.wave.client.toolbar.ToolBarButtonView.State;
+import com.goodow.wave.client.widget.toolbar.buttons.ToolBarButtonView.State;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
