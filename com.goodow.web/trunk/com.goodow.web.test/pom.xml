@@ -8,16 +8,12 @@
     <artifactId>com.goodow.web</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>org.cloudlet.web.test</artifactId>
-
-  <properties>
-
-  </properties>
+  <artifactId>${project.groupId}.test</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>org.cloudlet.web.boot</artifactId>
+      <artifactId>${project.groupId}.boot</artifactId>
       <version>${project.version}</version>
     </dependency>
     <!-- Google Web Toolkit (GWT) -->

@@ -8,21 +8,25 @@
     <artifactId>com.goodow.web</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>org.cloudlet.web.mvp</artifactId>
+  <artifactId>${project.groupId}.mvp</artifactId>
 
   <properties>
   </properties>
 
   <dependencies>
-
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>org.cloudlet.web.boot</artifactId>
+      <groupId>com.goodow.wave</groupId>
+      <artifactId>com.goodow.wave.client</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>org.cloudlet.web.service</artifactId>
+      <artifactId>${project.groupId}.boot</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>${project.groupId}.service</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -65,11 +69,26 @@
       <groupId>com.google.gwt.inject</groupId>
       <artifactId>gin</artifactId>
     </dependency>
-
+    
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+      <version>1.0.0.GA</version>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20090211</version>
+    </dependency>
+    <dependency>
+      <groupId>com.googlecode.gwtmodernizr</groupId>
+      <artifactId>gwtmodernizr</artifactId>
+      <version>1.0.1</version>
+    </dependency>
     <!-- test -->
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>org.cloudlet.web.test</artifactId>
+      <artifactId>${project.groupId}.test</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
