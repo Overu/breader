@@ -1,4 +1,5 @@
 <module>
   <inherits name="com.goodow.wave.client.widget.progress.Progress" />
+  <inherits name="com.goodow.wave.client.widget.toolbar.Toolbar" />
   <source path=""/>
 </module>
