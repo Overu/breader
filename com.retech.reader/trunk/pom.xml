@@ -4,8 +4,8 @@
 
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.goodow</groupId>
-    <artifactId>com.goodow</artifactId>
+    <groupId>com.goodow.web</groupId>
+    <artifactId>com.goodow.web</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>com.retech.reader</artifactId>
