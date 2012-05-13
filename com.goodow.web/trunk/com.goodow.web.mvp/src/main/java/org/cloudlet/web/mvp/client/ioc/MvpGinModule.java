@@ -1,11 +1,15 @@
 package org.cloudlet.web.mvp.client.ioc;
 
+import com.goodow.web.view.wave.client.shell.WaveShell;
+import com.goodow.web.view.wave.client.shell.WaveShellResources.CellListResources;
+
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.user.cellview.client.CellList;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Provides;
@@ -51,6 +55,9 @@ public final class MvpGinModule extends AbstractGinModule {
   @Override
   protected void configure() {
     bind(Binder.class).toProvider(BinderProvider.class).asEagerSingleton();
+
+    bind(CellList.Resources.class).to(CellListResources.class).in(Singleton.class);
+    bind(WaveShell.class).asEagerSingleton();
   }
 
   @Provides
