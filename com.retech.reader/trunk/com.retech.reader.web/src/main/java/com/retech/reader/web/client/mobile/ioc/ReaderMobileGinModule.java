@@ -1,12 +1,12 @@
 package com.retech.reader.web.client.mobile.ioc;
 
 import com.goodow.wave.client.account.ContactPanel;
+import com.goodow.wave.client.wavepanel.blip.BlipTest;
+import com.goodow.wave.client.wavepanel.blip.NestedBlipTest;
+import com.goodow.wave.client.wavepanel.blip.TreeTest;
+import com.goodow.wave.client.wavepanel.blip.WaveTest;
 import com.goodow.web.logging.shared.rpc.ChannelContextProvider;
-import com.goodow.web.view.wave.client.NestedBlipTest;
-import com.goodow.web.view.wave.client.WaveTest;
 import com.goodow.web.view.wave.client.shell.WaveShell;
-import com.goodow.web.view.wave.client.tree.BlipTest;
-import com.goodow.web.view.wave.client.tree.TreeTest;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.inject.client.AbstractGinModule;

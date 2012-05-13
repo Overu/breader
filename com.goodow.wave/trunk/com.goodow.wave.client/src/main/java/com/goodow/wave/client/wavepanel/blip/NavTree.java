@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client.tree;
+package com.goodow.wave.client.wavepanel.blip;
 
 public class NavTree {
 

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module>
-  <inherits name="com.goodow.wave.client.Client" />
-  
-  <source path="client" />
-</module>

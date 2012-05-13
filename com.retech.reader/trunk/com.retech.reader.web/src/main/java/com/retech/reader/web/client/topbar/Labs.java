@@ -15,14 +15,14 @@ package com.retech.reader.web.client.topbar;
 
 import com.goodow.wave.client.account.ContactPanel;
 import com.goodow.wave.client.wavepanel.WavePanel;
+import com.goodow.wave.client.wavepanel.blip.BlipTest;
+import com.goodow.wave.client.wavepanel.blip.NestedBlipTest;
+import com.goodow.wave.client.wavepanel.blip.SetColor;
+import com.goodow.wave.client.wavepanel.blip.TrangleButtonCell;
+import com.goodow.wave.client.wavepanel.blip.TreeTest;
+import com.goodow.wave.client.wavepanel.blip.WaveTest;
+import com.goodow.wave.client.wavepanel.title.WaveTitleResources;
 import com.goodow.wave.client.widget.button.icon.IconButtonTemplate;
-import com.goodow.web.view.wave.client.NestedBlipTest;
-import com.goodow.web.view.wave.client.WaveTest;
-import com.goodow.web.view.wave.client.title.WaveTitleResources;
-import com.goodow.web.view.wave.client.tree.BlipTest;
-import com.goodow.web.view.wave.client.tree.SetColor;
-import com.goodow.web.view.wave.client.tree.TrangleButtonCell;
-import com.goodow.web.view.wave.client.tree.TreeTest;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.cell.client.Cell;

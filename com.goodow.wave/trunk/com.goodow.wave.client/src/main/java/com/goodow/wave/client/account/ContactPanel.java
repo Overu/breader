@@ -13,10 +13,10 @@
  */
 package com.goodow.wave.client.account;
 
+import com.goodow.wave.client.search.SearchBox;
 import com.goodow.wave.client.wavepanel.WavePanel;
 import com.goodow.wave.client.wavepanel.WavePanelResources;
-import com.goodow.web.view.wave.client.search.SearchBox;
-import com.goodow.web.view.wave.client.title.WaveTitle;
+import com.goodow.wave.client.wavepanel.title.WaveTitle;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;

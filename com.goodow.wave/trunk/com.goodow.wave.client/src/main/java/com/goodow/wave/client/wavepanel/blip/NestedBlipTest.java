@@ -11,15 +11,13 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client;
+package com.goodow.wave.client.wavepanel.blip;
 
 import com.goodow.wave.client.account.UserStatusResources;
 import com.goodow.wave.client.wavepanel.WavePanel;
 import com.goodow.wave.client.wavepanel.WavePanelResources;
 import com.goodow.wave.client.widget.button.icon.IconButtonTemplate;
 import com.goodow.wave.client.widget.toolbar.buttons.ToolBarButtonView.State;
-import com.goodow.web.view.wave.client.tree.WaveBlip;
-import com.goodow.web.view.wave.client.tree.WaveBlipTree;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Display;

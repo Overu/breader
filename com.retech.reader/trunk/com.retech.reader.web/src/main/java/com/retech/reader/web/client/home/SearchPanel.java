@@ -13,9 +13,9 @@
  */
 package com.retech.reader.web.client.home;
 
+import com.goodow.wave.client.search.SearchBox;
 import com.goodow.wave.client.wavepanel.WavePanel;
 import com.goodow.wave.client.wavepanel.WavePanelResources;
-import com.goodow.web.view.wave.client.search.SearchBox;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.dom.client.Element;

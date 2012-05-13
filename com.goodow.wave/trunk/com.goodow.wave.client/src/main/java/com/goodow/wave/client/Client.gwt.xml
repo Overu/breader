@@ -3,6 +3,7 @@
   <inherits name="com.goodow.wave.client.widget.toolbar.Toolbar" />
   <inherits name="com.goodow.wave.client.widget.loading.Loading" />
   
+  <inherits name="com.goodow.wave.client.search.Search" />
   <inherits name="com.goodow.wave.client.account.Account" />
   <inherits name="com.goodow.wave.client.wavepanel.WavePanel" />
   <source path=""/>

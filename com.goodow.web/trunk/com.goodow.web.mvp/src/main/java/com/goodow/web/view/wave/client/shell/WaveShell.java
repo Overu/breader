@@ -13,7 +13,7 @@
  */
 package com.goodow.web.view.wave.client.shell;
 
-import com.goodow.web.view.wave.client.logging.WaveWarning;
+import com.goodow.wave.client.wavepanel.warning.WaveWarning;
 
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.core.client.GWT;

@@ -1,3 +1,6 @@
 <module>
   <source path=""/>
+  <source path="blip"/>
+  <source path="title"/>
+  <source path="warning"/>
 </module>

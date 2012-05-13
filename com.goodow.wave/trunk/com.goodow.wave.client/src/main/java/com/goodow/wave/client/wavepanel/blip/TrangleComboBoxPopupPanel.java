@@ -11,30 +11,27 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client.tree;
-
-import com.goodow.wave.client.wavepanel.WavePanel;
+package com.goodow.wave.client.wavepanel.blip;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.cellview.client.CellTree;
-import com.google.inject.Inject;
+import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Singleton;
 
 @Singleton
-public class TreeTest extends WavePanel {
+public class TrangleComboBoxPopupPanel extends PopupPanel {
 
-  interface Resource extends CellTree.Resources {
-    @Override
-    @Source({CellTree.Style.DEFAULT_CSS, "WaveTree.css"})
-    CellTree.Style cellTreeStyle();
+  interface Binder extends UiBinder<Widget, TrangleComboBoxPopupPanel> {
   }
 
-  private static Resource resources = GWT.create(Resource.class);
-  private TreeTestViewModel treeViewModel = new TreeTestViewModel();
+  private static Binder binder = GWT.create(Binder.class);
 
-  @Inject
-  TreeTest() {
-    CellTree cellTree = new CellTree(treeViewModel, null, resources);
-    this.setWaveContent(cellTree);
+  public TrangleComboBoxPopupPanel() {
+    Widget widget = binder.createAndBindUi(this);
+
+    this.add(widget);
+    this.setAutoHideEnabled(true);
   }
+
 }

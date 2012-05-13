@@ -13,7 +13,7 @@
  */
 package com.retech.reader.web.client.topbar;
 
-import com.goodow.web.view.wave.client.title.WaveTitleResources;
+import com.goodow.wave.client.wavepanel.title.WaveTitleResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;

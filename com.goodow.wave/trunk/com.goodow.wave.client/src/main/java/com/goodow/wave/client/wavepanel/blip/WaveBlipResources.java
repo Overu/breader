@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client.title;
+package com.goodow.wave.client.wavepanel.blip;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
@@ -20,36 +20,30 @@ import com.google.gwt.resources.client.ImageResource;
 
 import java.util.logging.Logger;
 
-public class WaveTitleResources {
-
-  public interface Bundle extends ClientBundle {
-
-    @Source("WaveTitle.css")
-    Style style();
-
-    ImageResource waveTitleClose();
-
-    ImageResource waveTitleMinimize();
-
-    ImageResource waveTitleReturn();
-  }
+public class WaveBlipResources {
 
   public interface Style extends CssResource {
+  }
+  interface Bundle extends ClientBundle {
+    @Source("WaveBlip.css")
+    Style style();
 
-    String waveTitle();
+    ImageResource waveBlipMoreActions();
 
-    String waveTitleIcon();
+    ImageResource waveBlipPopupContextEdit();
+
+    ImageResource waveBlipPopupContextReply();
+
+    ImageResource waveBlipReply();
   }
 
   private static Bundle INSTANCE;
-  private static Logger logger = Logger.getLogger(WaveTitleResources.class.getName());
+  private static Logger logger = Logger.getLogger(WaveBlipResources.class.getName());
 
   static {
     logger.finest("static init start");
-
     INSTANCE = GWT.create(Bundle.class);
     INSTANCE.style().ensureInjected();
-
     logger.finest("static init end");
   }
 

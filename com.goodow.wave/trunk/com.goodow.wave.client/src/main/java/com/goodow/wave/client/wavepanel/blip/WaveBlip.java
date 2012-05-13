@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client.tree;
+package com.goodow.wave.client.wavepanel.blip;
 
 import com.goodow.wave.client.account.UserStatusResources;
 import com.goodow.wave.client.widget.button.icon.IconButtonTemplate;

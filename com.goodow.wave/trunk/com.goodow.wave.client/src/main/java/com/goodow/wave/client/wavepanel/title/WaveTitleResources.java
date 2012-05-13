@@ -11,9 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client.tree;
-
-import com.goodow.web.view.wave.client.title.WaveTitleResources;
+package com.goodow.wave.client.wavepanel.title;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
@@ -22,23 +20,25 @@ import com.google.gwt.resources.client.ImageResource;
 
 import java.util.logging.Logger;
 
-public class TrangleResources {
+public class WaveTitleResources {
 
-  interface Bundle extends ClientBundle {
+  public interface Bundle extends ClientBundle {
 
-    @Source("Trangle.css")
+    @Source("WaveTitle.css")
     Style style();
 
-    ImageResource trangleButton();
+    ImageResource waveTitleClose();
 
-    ImageResource trangleButtoned();
+    ImageResource waveTitleMinimize();
 
+    ImageResource waveTitleReturn();
   }
 
-  interface Style extends CssResource {
-    String trangleCell();
+  public interface Style extends CssResource {
 
-    // String trangleCelled();
+    String waveTitle();
+
+    String waveTitleIcon();
   }
 
   private static Bundle INSTANCE;
