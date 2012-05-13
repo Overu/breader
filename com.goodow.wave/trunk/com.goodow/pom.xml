@@ -18,6 +18,10 @@
     <gwt.version>2.4.1.2012.02.23</gwt.version>
     <guice.version>3.0</guice.version>
     <gin.version>1.5.1-20110920</gin.version>
+    
+    <gae.version>1.6.2.1</gae.version>
+    <gae-test.version>1.6.2.1</gae-test.version>
+    <gae.home>${user.home}/.m2/repository/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
 
     <!-- GWT needs at least java 1.6 -->
     <maven.compiler.source>1.6</maven.compiler.source>
