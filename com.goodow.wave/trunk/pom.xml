@@ -13,6 +13,7 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>com.goodow</module>
     <module>com.goodow.wave.client</module>
   </modules>
 </project>
