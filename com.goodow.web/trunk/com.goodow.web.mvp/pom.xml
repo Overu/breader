@@ -34,7 +34,8 @@
       <groupId>${project.groupId}</groupId>
       <artifactId>${project.groupId}.logging</artifactId>
       <version>${project.version}</version>
-      <scope>client</scope>
+      <classifier>client</classifier>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Google Web Toolkit (GWT) -->
