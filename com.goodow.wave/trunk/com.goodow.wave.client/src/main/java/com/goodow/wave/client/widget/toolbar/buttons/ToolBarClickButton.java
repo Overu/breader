@@ -1,6 +1,18 @@
-package com.goodow.web.view.wave.client.toolbar;
+/*
+ * Copyright 2012 Goodow.com
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ */
+package com.goodow.wave.client.widget.toolbar.buttons;
 
-import com.goodow.wave.client.widget.toolbar.buttons.ToolBarButtonView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -9,44 +21,36 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerRegistration;
-import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
-public class VerticalToolbarButtonWidget extends Composite implements ToolBarButtonView,
-    HasClickHandlers {
-  interface Style extends CssResource {
-    String waveToolbarButtonDisabled();
-  }
-  interface ToolbarUiBinder extends UiBinder<Widget, VerticalToolbarButtonWidget> {
+public class ToolBarClickButton extends Composite implements ToolBarButtonView, HasClickHandlers {
+  interface ToolbarUiBinder extends UiBinder<Widget, ToolBarClickButton> {
   }
 
   private static ToolbarUiBinder uiBinder = GWT.create(ToolbarUiBinder.class);
-  @UiField
-  Style style;
-  @UiField
-  Element content;
+
   @UiField
   Element textElement;
   @UiField
   Element visualElement;
   @UiField
-  Element divider;
+  Element dropDownArrow;
   @UiField
-  Element dropdownArrow;
-  private ClickHandler listener;
+  Element toolbarDivider;
 
+  private ClickHandler clickHandler;
   private HandlerRegistration handlerRegistration;
 
-  public VerticalToolbarButtonWidget() {
+  public ToolBarClickButton() {
     initWidget(uiBinder.createAndBindUi(this));
   }
 
   @Override
   public HandlerRegistration addClickHandler(final ClickHandler handler) {
-    this.listener = handler;
+    this.clickHandler = handler;
     handlerRegistration = addDomHandler(handler, ClickEvent.getType());
     return handlerRegistration;
   }
@@ -55,32 +59,32 @@ public class VerticalToolbarButtonWidget extends Composite implements ToolBarBut
    * set the ToolbrDivider isHidden
    */
   public void setShowDivider(final boolean showDivider) {
-    divider.getStyle().setDisplay(showDivider ? Display.BLOCK : Display.NONE);
+    toolbarDivider.getStyle().setDisplay(showDivider ? Display.BLOCK : Display.NONE);
   }
 
   @Override
   public void setShowDropdownArrow(final boolean showDropdownArrow) {
-    dropdownArrow.getStyle().setDisplay(showDropdownArrow ? Display.INLINE_BLOCK : Display.NONE);
+    dropDownArrow.getStyle().setDisplay(showDropdownArrow ? Display.BLOCK : Display.NONE);
   }
 
   @Override
   public void setState(final State state) {
     switch (state) {
       case ENABLED:
-        content.removeClassName(style.waveToolbarButtonDisabled());
+        getElement().removeAttribute("disabled");
         if (handlerRegistration == null) {
-          addDomHandler(listener, ClickEvent.getType());
+          addDomHandler(clickHandler, ClickEvent.getType());
         }
         break;
       case DISABLED:
-        content.addClassName(style.waveToolbarButtonDisabled());
+        getElement().setAttribute("disabled", "");
         if (handlerRegistration != null) {
           handlerRegistration.removeHandler();
           handlerRegistration = null;
         }
         break;
       case INVISIBLE:
-        content.getStyle().setDisplay(Display.NONE);
+        getElement().getStyle().setDisplay(Display.NONE);
         break;
       default:
         break;
@@ -90,6 +94,7 @@ public class VerticalToolbarButtonWidget extends Composite implements ToolBarBut
   @Override
   public void setText(final String text) {
     textElement.setInnerText(text);
+    textElement.getStyle().setDisplay(Display.INLINE);
   }
 
   @Override
@@ -97,10 +102,4 @@ public class VerticalToolbarButtonWidget extends Composite implements ToolBarBut
     visualElement.appendChild(element);
   }
 
-  // @UiHandler("content")
-  // void handleButtonClicked(final ClickEvent e) {
-  // if (listener != null) {
-  // listener.onClick(e);
-  // }
-  // }
 }

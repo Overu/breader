@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client.toolbar;
+package com.goodow.wave.client.widget.toolbar.buttons;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
@@ -24,6 +24,12 @@ import java.util.logging.Logger;
 
 public class WaveToolBarResources {
 
+  public interface Style extends CssResource {
+    String submenuToolbarWidget();
+
+    String toplevelToolbarWidget();
+  }
+
   interface Bundle extends ClientBundle {
     @Source("WaveToolBar.css")
     Style style();
@@ -33,12 +39,6 @@ public class WaveToolBarResources {
 
     @ImageOptions(repeatStyle = RepeatStyle.Horizontal)
     ImageResource waveToolbarEmpty();
-  }
-
-  interface Style extends CssResource {
-    String submenuToolbarWidget();
-
-    String toplevelToolbarWidget();
   }
 
   private static Bundle INSTANCE;

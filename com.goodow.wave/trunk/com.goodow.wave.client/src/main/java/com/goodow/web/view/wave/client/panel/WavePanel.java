@@ -13,8 +13,8 @@
  */
 package com.goodow.web.view.wave.client.panel;
 
+import com.goodow.wave.client.widget.toolbar.buttons.WaveToolBar;
 import com.goodow.web.view.wave.client.title.WaveTitle;
-import com.goodow.web.view.wave.client.toolbar.WaveToolBar;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.SimplePanel;

@@ -1,4 +1,7 @@
-package com.goodow.web.view.wave.client.toolbar;
+package com.goodow.wave.client.widget.toolbar;
+
+import com.goodow.wave.client.widget.toolbar.buttons.VerticalToolbarButtonWidget;
+import com.goodow.wave.client.widget.toolbar.buttons.WaveToolBarResources;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 
