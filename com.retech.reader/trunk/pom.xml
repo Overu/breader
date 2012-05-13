@@ -8,15 +8,10 @@
     <artifactId>com.goodow.web</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>org.cloudlet.web</artifactId>
+  <artifactId>com.retech.reader</artifactId>
   <packaging>pom</packaging>
 
   <modules>
-    <module>org.cloudlet.web.boot</module>
-    <module>org.cloudlet.web.test</module>
-    <module>org.cloudlet.web.service</module>
-    <module>org.cloudlet.web.security</module>
-    <module>org.cloudlet.web.mvp</module>
     <module>com.retech.reader.web</module>
   </modules>
 </project>
