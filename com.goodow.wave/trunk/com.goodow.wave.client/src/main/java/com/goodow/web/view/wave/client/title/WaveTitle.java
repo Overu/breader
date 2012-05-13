@@ -13,7 +13,7 @@
  */
 package com.goodow.web.view.wave.client.title;
 
-import com.goodow.web.view.wave.client.IconButtonTemplate;
+import com.goodow.wave.client.widget.button.icon.IconButtonTemplate;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;

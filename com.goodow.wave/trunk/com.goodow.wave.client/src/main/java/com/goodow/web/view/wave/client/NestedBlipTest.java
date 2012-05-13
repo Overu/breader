@@ -13,6 +13,7 @@
  */
 package com.goodow.web.view.wave.client;
 
+import com.goodow.wave.client.widget.button.icon.IconButtonTemplate;
 import com.goodow.wave.client.widget.toolbar.buttons.ToolBarButtonView.State;
 import com.goodow.web.view.wave.client.contact.UserStatusResources;
 import com.goodow.web.view.wave.client.panel.WavePanel;
