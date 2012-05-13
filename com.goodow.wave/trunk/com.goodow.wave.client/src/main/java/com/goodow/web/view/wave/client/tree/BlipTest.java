@@ -13,8 +13,8 @@
  */
 package com.goodow.web.view.wave.client.tree;
 
-import com.goodow.web.view.wave.client.panel.WavePanel;
-import com.goodow.web.view.wave.client.panel.WavePanelResources;
+import com.goodow.wave.client.wavepanel.WavePanel;
+import com.goodow.wave.client.wavepanel.WavePanelResources;
 
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.FontWeight;

@@ -11,10 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client.contact;
+package com.goodow.wave.client.account;
 
-import com.goodow.web.view.wave.client.panel.WavePanel;
-import com.goodow.web.view.wave.client.panel.WavePanelResources;
+import com.goodow.wave.client.wavepanel.WavePanel;
+import com.goodow.wave.client.wavepanel.WavePanelResources;
 import com.goodow.web.view.wave.client.search.SearchBox;
 import com.goodow.web.view.wave.client.title.WaveTitle;
 

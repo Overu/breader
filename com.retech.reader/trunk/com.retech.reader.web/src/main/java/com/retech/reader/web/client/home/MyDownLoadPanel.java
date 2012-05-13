@@ -13,8 +13,8 @@
  */
 package com.retech.reader.web.client.home;
 
+import com.goodow.wave.client.wavepanel.WavePanel;
 import com.goodow.wave.client.widget.progress.ProgressWidget;
-import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;

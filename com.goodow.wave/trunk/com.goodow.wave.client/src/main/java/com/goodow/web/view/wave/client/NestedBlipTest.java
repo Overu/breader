@@ -13,11 +13,11 @@
  */
 package com.goodow.web.view.wave.client;
 
+import com.goodow.wave.client.account.UserStatusResources;
+import com.goodow.wave.client.wavepanel.WavePanel;
+import com.goodow.wave.client.wavepanel.WavePanelResources;
 import com.goodow.wave.client.widget.button.icon.IconButtonTemplate;
 import com.goodow.wave.client.widget.toolbar.buttons.ToolBarButtonView.State;
-import com.goodow.web.view.wave.client.contact.UserStatusResources;
-import com.goodow.web.view.wave.client.panel.WavePanel;
-import com.goodow.web.view.wave.client.panel.WavePanelResources;
 import com.goodow.web.view.wave.client.tree.WaveBlip;
 import com.goodow.web.view.wave.client.tree.WaveBlipTree;
 

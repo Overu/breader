@@ -1,6 +1,6 @@
 package com.goodow.web.view.wave.client.shell;
 
-import com.goodow.web.view.wave.client.panel.WavePanel;
+import com.goodow.wave.client.wavepanel.WavePanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.CssResource;

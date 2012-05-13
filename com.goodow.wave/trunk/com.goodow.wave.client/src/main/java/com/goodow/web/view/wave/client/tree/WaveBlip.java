@@ -13,8 +13,8 @@
  */
 package com.goodow.web.view.wave.client.tree;
 
+import com.goodow.wave.client.account.UserStatusResources;
 import com.goodow.wave.client.widget.button.icon.IconButtonTemplate;
-import com.goodow.web.view.wave.client.contact.UserStatusResources;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;

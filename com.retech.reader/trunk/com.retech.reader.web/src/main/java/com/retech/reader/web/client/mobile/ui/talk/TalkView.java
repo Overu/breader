@@ -1,6 +1,6 @@
 package com.retech.reader.web.client.mobile.ui.talk;
 
-import com.goodow.web.view.wave.client.panel.WavePanel;
+import com.goodow.wave.client.wavepanel.WavePanel;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

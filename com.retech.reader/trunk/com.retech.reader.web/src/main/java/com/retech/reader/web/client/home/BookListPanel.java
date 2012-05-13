@@ -1,9 +1,9 @@
 package com.retech.reader.web.client.home;
 
+import com.goodow.wave.client.account.ContactPanel;
+import com.goodow.wave.client.wavepanel.WavePanel;
 import com.goodow.wave.client.widget.toolbar.buttons.ToolBarClickButton;
 import com.goodow.wave.client.widget.toolbar.buttons.WaveToolBar;
-import com.goodow.web.view.wave.client.contact.ContactPanel;
-import com.goodow.web.view.wave.client.panel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;

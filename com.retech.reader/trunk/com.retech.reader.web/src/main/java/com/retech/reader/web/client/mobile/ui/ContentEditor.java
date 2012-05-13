@@ -1,6 +1,6 @@
 package com.retech.reader.web.client.mobile.ui;
 
-import com.goodow.web.view.wave.client.panel.WavePanel;
+import com.goodow.wave.client.wavepanel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.JsArray;

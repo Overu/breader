@@ -13,11 +13,11 @@
  */
 package com.retech.reader.web.client.topbar;
 
+import com.goodow.wave.client.account.ContactPanel;
+import com.goodow.wave.client.wavepanel.WavePanel;
 import com.goodow.wave.client.widget.button.icon.IconButtonTemplate;
 import com.goodow.web.view.wave.client.NestedBlipTest;
 import com.goodow.web.view.wave.client.WaveTest;
-import com.goodow.web.view.wave.client.contact.ContactPanel;
-import com.goodow.web.view.wave.client.panel.WavePanel;
 import com.goodow.web.view.wave.client.title.WaveTitleResources;
 import com.goodow.web.view.wave.client.tree.BlipTest;
 import com.goodow.web.view.wave.client.tree.SetColor;
