@@ -4,33 +4,29 @@
 
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.goodow.web</groupId>
-    <artifactId>com.goodow.web</artifactId>
+    <groupId>com.goodow.wave</groupId>
+    <artifactId>com.goodow.wave</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <groupId>com.goodow</groupId>
-  <artifactId>${project.groupId}.wave</artifactId>
-
-  <properties>
-  </properties>
+  <artifactId>${project.groupId}.client</artifactId>
 
   <dependencies>
     <!-- RequestFactory server -->
     <dependency>
-      <groupId>${project.groupId}.web</groupId>
+      <groupId>com.goodow.web</groupId>
       <artifactId>org.cloudlet.web.mvp</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}.web</groupId>
+      <groupId>com.goodow.web</groupId>
       <artifactId>org.cloudlet.web.mvp</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>${project.groupId}.web</groupId>
-      <artifactId>${project.groupId}.web.logging</artifactId>
+      <groupId>com.goodow.web</groupId>
+      <artifactId>com.goodow.web.logging</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
       <scope>provided</scope>
