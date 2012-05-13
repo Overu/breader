@@ -18,6 +18,7 @@
       <groupId>com.goodow.wave</groupId>
       <artifactId>com.goodow.wave.client</artifactId>
       <version>${project.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>

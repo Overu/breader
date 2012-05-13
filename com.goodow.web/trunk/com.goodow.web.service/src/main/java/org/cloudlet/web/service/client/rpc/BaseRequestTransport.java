@@ -1,7 +1,7 @@
 package org.cloudlet.web.service.client.rpc;
 
+import com.goodow.wave.client.widget.loading.LoadingIndicator;
 import com.goodow.web.feature.client.FeatureDetection;
-import com.goodow.web.logging.client.loading.LoadingIndicator;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;

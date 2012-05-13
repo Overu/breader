@@ -13,7 +13,7 @@
  */
 package com.goodow.web.ui.client.ioc;
 
-import com.goodow.web.logging.client.loading.LoadingIndicator;
+import com.goodow.wave.client.widget.loading.LoadingIndicator;
 import com.goodow.web.ui.client.footer.FooterUi;
 import com.goodow.web.ui.client.nav.NavUi;
 import com.goodow.web.ui.client.nav.TreeNodeDataProvider;

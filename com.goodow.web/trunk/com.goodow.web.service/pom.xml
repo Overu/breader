@@ -14,7 +14,12 @@
   </properties>
 
   <dependencies>
-    <!-- RequestFactory server -->
+    <dependency>
+      <groupId>com.goodow.wave</groupId>
+      <artifactId>com.goodow.wave.client</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>${project.groupId}.boot</artifactId>
