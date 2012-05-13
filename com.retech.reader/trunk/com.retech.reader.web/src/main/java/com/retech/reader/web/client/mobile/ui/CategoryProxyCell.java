@@ -1,6 +1,6 @@
 package com.retech.reader.web.client.mobile.ui;
 
-import com.goodow.web.view.wave.client.IconButtonTemplate.Resources;
+import com.goodow.wave.client.widget.button.icon.IconButtonTemplate.Resources;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.core.client.GWT;

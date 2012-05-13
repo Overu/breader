@@ -13,7 +13,7 @@
  */
 package com.retech.reader.web.client.topbar;
 
-import com.goodow.web.view.wave.client.IconButtonTemplate;
+import com.goodow.wave.client.widget.button.icon.IconButtonTemplate;
 import com.goodow.web.view.wave.client.NestedBlipTest;
 import com.goodow.web.view.wave.client.WaveTest;
 import com.goodow.web.view.wave.client.contact.ContactPanel;

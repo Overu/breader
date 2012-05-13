@@ -10,27 +10,27 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.goodow</groupId>
-      <artifactId>com.goodow.wave</artifactId>
+      <groupId>com.goodow.wave</groupId>
+      <artifactId>com.goodow.wave.client</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.goodow</groupId>
-      <artifactId>com.goodow.wave</artifactId>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>${project.groupId}.mvp</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>org.cloudlet.web.security</artifactId>
+      <artifactId>${project.groupId}.security</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>org.cloudlet.web.security</artifactId>
+      <artifactId>${project.groupId}.security</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -42,7 +42,7 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>org.cloudlet.web.service</artifactId>
+      <artifactId>${project.groupId}.service</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
       <scope>provided</scope>
@@ -57,7 +57,7 @@
     <!-- test -->
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>org.cloudlet.web.test</artifactId>
+      <artifactId>${project.groupId}.test</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
