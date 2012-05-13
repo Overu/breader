@@ -4,14 +4,13 @@
 
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
+    <groupId>com.goodow</groupId>
+    <artifactId>com.goodow</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
   </parent>
   <groupId>com.goodow.web</groupId>
   <artifactId>com.goodow.web</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.0-SNAPSHOT</version>
 
   <properties>
     <jarFile.version></jarFile.version>
@@ -19,9 +18,6 @@
     <shiro.version>1.2.0</shiro.version>
     <slf4j.version>1.6.1</slf4j.version>
 
-    <gae.version>1.6.2.1</gae.version>
-    <gae-test.version>1.6.2.1</gae-test.version>
-    <gae.home>${user.home}/.m2/repository/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
     <datanucleus.version>3.0.2</datanucleus.version>
     <hibernate.version>4.1.0.Final</hibernate.version>
   </properties>
