@@ -51,15 +51,6 @@
       <artifactId>gin</artifactId>
     </dependency>
 
-    <!--<dependency> <groupId>org.apache.geronimo.specs</groupId> <artifactId>geronimo-jpa_2.0_spec</artifactId> 
-      </dependency> <dependency> <groupId>org.datanucleus</groupId> <artifactId>datanucleus-core</artifactId> 
-      </dependency> <dependency> <groupId>javax.jdo</groupId> <artifactId>jdo-api</artifactId> </dependency> 
-      <dependency> <groupId>org.datanucleus</groupId> <artifactId>datanucleus-api-jpa</artifactId> </dependency> 
-      <dependency> <groupId>org.datanucleus</groupId> <artifactId>datanucleus-cache</artifactId> </dependency> 
-      <dependency> <groupId>org.datanucleus</groupId> <artifactId>datanucleus-rdbms</artifactId> </dependency> 
-      <dependency> <groupId>com.google.appengine.orm</groupId> <artifactId>datanucleus-appengine</artifactId> 
-      </dependency> -->
-
     <dependency>
       <!-- To import Base64 class. Remove it? -->
       <groupId>com.google.appengine</groupId>
@@ -69,8 +60,6 @@
 
   <build>
     <plugins>
-      <!-- <plugin> <groupId>org.datanucleus</groupId> <artifactId>maven-datanucleus-plugin</artifactId> 
-        </plugin> -->
       <plugin>
         <groupId>org.bsc.maven</groupId>
         <artifactId>maven-processor-plugin</artifactId>
