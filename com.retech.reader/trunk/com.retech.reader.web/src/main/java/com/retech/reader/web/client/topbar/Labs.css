@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+
+.cellItemLeftDiv {
+  float: left;
+  width: 100%;
+}
+
+.cellItemLeftDiv>span {
+  color: inherit;
+  border-radius: 4px;
+  text-decoration: underline;
+  padding: 0 1px;
+}
+
+.cellItemLeftDiv>img {
+  margin: 1px 6px 0 8px;
+}
+
+.cellListSelectionItem {
+  background-color: hsl(82, 43%, 45%)!important;
+  color:white!important;
+}

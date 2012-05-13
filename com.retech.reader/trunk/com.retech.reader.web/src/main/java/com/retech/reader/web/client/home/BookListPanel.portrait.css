@@ -1,0 +1,8 @@
+@CHARSET "UTF-8";
+
+
+.root>*{
+  width: 100%;
+  /* -webkit-transition: all 0.5s ease-in-out; */
+  /* -webkit-transform: translate3d(0,0,0); */
+}

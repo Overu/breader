@@ -1,0 +1,60 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style>
+    .topBar {
+      display: -webkit-box;
+      font-family: arial, sans-serif;
+      height: 100%;
+    }
+    
+    .topBar>*:first-child {
+      -webkit-box-flex: 1;
+      padding: 3px 0 0 0;
+    }
+    
+    .topBar>*:first-child>a {
+      position: relative;
+      z-index: 60;
+    }
+    
+    .links {
+      position: relative;
+      z-index: 60;
+      line-height: 33px;
+      border-right: 10px solid transparent;
+    }
+    
+    .links>* {
+      display: inline;
+    }
+    
+    .links>div {
+      margin: 0 4px;
+    }
+    
+    .links>span {
+      font-weight: bold;
+      padding-right: 5px;
+      white-space: nowrap;
+    }
+    
+    .links>a {
+      margin: 0 2px;
+    }
+  </ui:style>
+  <ui:image field="retechcorpLogo" />
+  <g:HTMLPanel addStyleNames='{style.topBar}'>
+    <div>
+      <a href="#"><g:Image resource='{retechcorpLogo}'></g:Image></a>
+    </div>
+    <div class='{style.links}'>
+      <span>欢迎</span>
+      <div>|</div>
+      <a href="#com.retech.reader.web.client.topbar.Labs">实验室</a>
+      <div>|</div>
+      <span>帮助</span>
+      <div>|</div>
+      <span>退出</span>
+    </div>
+  </g:HTMLPanel>
+</ui:UiBinder> 

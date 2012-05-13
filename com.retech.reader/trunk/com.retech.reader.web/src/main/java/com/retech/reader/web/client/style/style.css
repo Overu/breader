@@ -1,0 +1,25 @@
+@CHARSET "UTF-8";
+
+.contentSectionView {
+  -webkit-transition: all 1s;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  margin: 0px;
+  background-color: white;
+}
+
+.contentHtmlPanel {
+  font-size: 1.5em;
+  left: 0;
+  overflow: visible;
+  -webkit-transition: all 0.5s;
+  -webkit-column-gap: 0em;
+  position: relative;
+}
+
+/*
+.contentSectionView:HOVER {
+  left: 0px;
+}
+*/

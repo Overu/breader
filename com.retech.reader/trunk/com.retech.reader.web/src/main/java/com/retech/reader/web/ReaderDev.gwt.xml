@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="web">
+  <inherits name="com.goodow.web.dev.Dev" />
+
+  <source path="client" />
+  <source path="shared" />
+
+  <extend-configuration-property name="client.ioc.ginModules"
+    value="com.retech.reader.web.client.mobile.ioc.ReaderMobileGinModule" />
+
+</module>

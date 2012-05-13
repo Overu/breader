@@ -1,0 +1,16 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:c='urn:import:com.google.gwt.user.cellview.client' xmlns:w="urn:import:com.google.gwt.widget.client"
+  xmlns:app="urn:import:com.retech.reader.web.client.mobile.ui">
+  <ui:with field='res' type='com.retech.reader.web.client.style.ReaderResources' />
+ 
+<ui:style>
+	.root{
+    overflow: auto;
+}
+</ui:style>
+  <g:HTMLPanel addStyleNames="{style.root}">
+    <app:IssueNews ui:field="issueNews"></app:IssueNews>
+<app:IssueListImage ui:field="issueListImage"> </app:IssueListImage>
+  </g:HTMLPanel>
+</ui:UiBinder>
