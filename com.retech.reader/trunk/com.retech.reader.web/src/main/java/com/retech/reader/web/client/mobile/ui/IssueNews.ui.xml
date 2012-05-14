@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
-  xmlns:wave="urn:import:com.goodow.web.view.wave.client.toolbar" xmlns:app="urn:import:com.retech.reader.web.client.mobile.ui">
+  xmlns:wave="urn:import:urn:import:com.goodow.wave.client.widget.toolbar" xmlns:app="urn:import:com.retech.reader.web.client.mobile.ui">
   <ui:style>
     .label {
       color: hsl(0, 0%, 40%);
