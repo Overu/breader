@@ -108,6 +108,7 @@
         <configuration>
           <extraParam>true</extraParam>
           <module>com.retech.reader.web.ReaderDev</module>
+          <compileSourcesArtifacts>com.goodow.wave:com.goodow.wave.client</compileSourcesArtifacts>
         </configuration>
       </plugin>
       <plugin>
