@@ -5,6 +5,7 @@
   background-color: hsl(210, 11%, 86%);
   overflow-y: auto;
   margin: 0;
+  font-size: initial;
 }
 a {
   text-decoration: underline;
