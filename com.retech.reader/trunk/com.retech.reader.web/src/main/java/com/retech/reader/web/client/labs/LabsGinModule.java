@@ -77,7 +77,7 @@ public final class LabsGinModule extends AbstractGinModule {
 
     @Override
     public Binder get() {
-      Window.setTitle("睿泰阅读");
+      Window.setTitle("实验室");
       shell.getTopBar().add(topBar);
       logger.finest("EagerSingleton begin");
       isWidgetMapBinder.addBinding("/").toAsyncProvider(labs);
