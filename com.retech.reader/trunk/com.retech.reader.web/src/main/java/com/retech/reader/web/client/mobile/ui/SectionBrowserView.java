@@ -1,7 +1,6 @@
 package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.wave.client.wavepanel.WavePanel;
-import com.goodow.wave.client.wavepanel.WavePanelResources;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.dom.client.Style.Display;
@@ -10,9 +9,6 @@ import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -43,15 +39,15 @@ public class SectionBrowserView extends WavePanel implements Activity {
   SectionBrowserView(final SectionTreeViewModel sectionTreeViewModel, final ReaderFactory f) {
     this.sectionTreeViewModel = sectionTreeViewModel;
     this.f = f;
-    FlowPanel toDo = new FlowPanel();
-    toDo.addStyleName(WavePanelResources.css().waveWarning());
-    toDo.add(new HTML("<b>已完成：<b>"));
-    toDo.add(new Label("9.1 目录及各页树状结构的展示"));
-    toDo.add(new HTML("<br>"));
-    toDo.add(new HTML("<b>待实现：<b>"));
-    toDo.add(new Label("9.2 整行可点击（中）"));
-    toDo.add(new Label("9.3 界面调整（中）"));
-    add(toDo);
+    // FlowPanel toDo = new FlowPanel();
+    // toDo.addStyleName(WavePanelResources.css().waveWarning());
+    // toDo.add(new HTML("<b>已完成：<b>"));
+    // toDo.add(new Label("9.1 目录及各页树状结构的展示"));
+    // toDo.add(new HTML("<br>"));
+    // toDo.add(new HTML("<b>待实现：<b>"));
+    // toDo.add(new Label("9.2 整行可点击（中）"));
+    // toDo.add(new Label("9.3 界面调整（中）"));
+    // add(toDo);
   }
 
   @Override
@@ -86,7 +82,7 @@ public class SectionBrowserView extends WavePanel implements Activity {
     }
     CellTree cellTree = new CellTree(sectionTreeViewModel, null);
     cellTree.setAnimationEnabled(true);
-    if (getWidgetCount() == 2) {
+    if (getWidgetCount() == 1) {
       setWaveContent(cellTree);
     }
 

@@ -20,8 +20,11 @@ import com.google.gwt.event.dom.client.TouchMoveHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.inject.client.AsyncProvider;
+import com.google.gwt.logging.client.LogConfiguration;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -46,6 +49,7 @@ import org.cloudlet.web.service.shared.LocalStorage;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Singleton
@@ -297,28 +301,28 @@ public class ContentEditor extends WavePanel implements Activity {
       @Override
       public void onSuccessAndCached(final PageProxy pageProxy) {
 
-        // AsyncProvider<IsWidget> sectionBrowserView =
-        // isWidgetMapBinder.getAsyncProvider(SectionBrowserView.class.getName());
-        // sectionBrowserView.get(new AsyncCallback<IsWidget>() {
-        //
-        // @Override
-        // public void onFailure(final Throwable caught) {
-        // if (LogConfiguration.loggingIsEnabled()) {
-        // logger.log(Level.WARNING, "加载" + SectionBrowserView.class.getName()
-        // + "失败. 请检查网络连接, 并刷新后重试", caught);
-        // }
-        // }
-        //
-        // @Override
-        // public void onSuccess(final IsWidget result) {
-        // sectionView = (SectionBrowserView) result.asWidget();
-        // sectionView.addStyleName(ReaderResources.INSTANCE().style().contentSectionView());
-        // sectionView.getElement().getStyle().setWidth(0, Unit.PX);
-        // sectionView.setIssueId(pageProxy.getSection().getIssue().stableId());
-        // sectionView.start(panel, eventBus);
-        // flowPanel.add(sectionView);
-        // }
-        // });
+        AsyncProvider<IsWidget> sectionBrowserView =
+            isWidgetMapBinder.getAsyncProvider(SectionBrowserView.class.getName());
+        sectionBrowserView.get(new AsyncCallback<IsWidget>() {
+
+          @Override
+          public void onFailure(final Throwable caught) {
+            if (LogConfiguration.loggingIsEnabled()) {
+              logger.log(Level.WARNING, "加载" + SectionBrowserView.class.getName()
+                  + "失败. 请检查网络连接, 并刷新后重试", caught);
+            }
+          }
+
+          @Override
+          public void onSuccess(final IsWidget result) {
+            sectionView = (SectionBrowserView) result.asWidget();
+            sectionView.addStyleName(ReaderResources.INSTANCE().style().contentSectionView());
+            sectionView.getElement().getStyle().setWidth(0, Unit.PX);
+            sectionView.setIssueId(pageProxy.getSection().getIssue().stableId());
+            sectionView.start(panel, eventBus);
+            flowPanel.add(sectionView);
+          }
+        });
 
         pageStart(pageProxy);
       }
@@ -333,7 +337,8 @@ public class ContentEditor extends WavePanel implements Activity {
   @Override
   protected void onUnload() {
     super.onUnload();
-    // this.sectionView.removeStyleName(ReaderResources.INSTANCE().style().contentSectionView());
+    this.sectionView.removeStyleName(ReaderResources.INSTANCE().style().contentSectionView());
+    this.sectionView.getElement().getStyle().clearWidth();
     this.html.getElement().getStyle().clearLeft();
   }
 

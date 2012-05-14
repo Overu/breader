@@ -1,7 +1,6 @@
 package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.wave.client.wavepanel.WavePanel;
-import com.goodow.wave.client.wavepanel.WavePanelResources;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
@@ -16,10 +15,7 @@ import com.google.gwt.safehtml.shared.UriUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -62,15 +58,15 @@ public class IssueListImage extends WavePanel implements Activity {
     this.places = places;
     this.placeController = placeController;
     this.getWaveTitle().setText("相关推荐");
-    FlowPanel toDo = new FlowPanel();
-    toDo.addStyleName(WavePanelResources.css().waveWarning());
-    toDo.add(new HTML("<b>已完成：<b>"));
-    toDo.add(new Label("8.1 推荐同类别图书"));
-    toDo.add(new HTML("<br>"));
-    toDo.add(new HTML("<b>待实现：<b>"));
-    toDo.add(new Label("8.2 界面布局调整（易）"));
-    toDo.add(new Label("8.3 根据用户阅读行为进行推荐（难）"));
-    add(toDo);
+    // FlowPanel toDo = new FlowPanel();
+    // toDo.addStyleName(WavePanelResources.css().waveWarning());
+    // toDo.add(new HTML("<b>已完成：<b>"));
+    // toDo.add(new Label("8.1 推荐同类别图书"));
+    // toDo.add(new HTML("<br>"));
+    // toDo.add(new HTML("<b>待实现：<b>"));
+    // toDo.add(new Label("8.2 界面布局调整（易）"));
+    // toDo.add(new Label("8.3 根据用户阅读行为进行推荐（难）"));
+    // add(toDo);
     this.setWaveContent(binder.createAndBindUi(this));
   }
 
