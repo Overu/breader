@@ -4,7 +4,7 @@
   gwt-image: "waveToolbarEmpty";
   display: -webkit-box;
   z-index: 0;
-  height: 1.5em;
+  /* height: 1.5em; */
 }
 
 @sprite .toplevelToolbarWidget>div:active {
