@@ -50,12 +50,6 @@
       <groupId>com.google.gwt.inject</groupId>
       <artifactId>gin</artifactId>
     </dependency>
-
-    <dependency>
-      <!-- To import Base64 class. Remove it? -->
-      <groupId>com.google.appengine</groupId>
-      <artifactId>appengine-api-1.0-sdk</artifactId>
-    </dependency>
   </dependencies>
 
   <build>
