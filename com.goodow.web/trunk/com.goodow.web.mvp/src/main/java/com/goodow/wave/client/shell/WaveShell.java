@@ -13,8 +13,6 @@
  */
 package com.goodow.wave.client.shell;
 
-import com.goodow.wave.client.wavepanel.warning.WaveWarning;
-
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -54,11 +52,10 @@ public class WaveShell extends Composite {
   }
 
   @Inject
-  WaveShell(@Default final SimpleActivityMapper centerActivityMapper, final EventBus eventBus,
-      final WaveWarning waveWarning) {
+  WaveShell(@Default final SimpleActivityMapper centerActivityMapper, final EventBus eventBus) {
     logger.finest("init start");
     initWidget(uiBinder.createAndBindUi(this));
-    topBar.add(waveWarning);
+    // topBar.add(waveWarning);
     Element loading = Document.get().getElementById("loading");
     if (loading != null) {
       loading.removeFromParent();
