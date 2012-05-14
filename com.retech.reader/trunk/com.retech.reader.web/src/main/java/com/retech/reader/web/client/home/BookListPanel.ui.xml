@@ -6,9 +6,9 @@
   </ui:style>
 
   <g:HTMLPanel addStyleNames="{landscape.root}">
-    <div>
+    <!-- <div>
       <wave:WavePanel ui:field="waveToolbar" />
-    </div>
+    </div> -->
     <div>
       <app:MyDownLoadPanel ui:field="myDownLoadPanel" />
     </div>
