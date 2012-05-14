@@ -50,7 +50,7 @@
     <div class='{style.links}'>
       <span>欢迎</span>
       <div>|</div>
-      <a href="#com.retech.reader.web.client.topbar.Labs">实验室</a>
+      <g:Anchor ui:field="labs" text="实验室" />
       <div>|</div>
       <span>帮助</span>
       <div>|</div>

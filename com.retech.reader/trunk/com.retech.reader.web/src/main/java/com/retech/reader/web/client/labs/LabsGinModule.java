@@ -1,4 +1,4 @@
-package com.retech.reader.web.client.mobile.ioc;
+package com.retech.reader.web.client.labs;
 
 import com.goodow.wave.client.account.ContactPanel;
 import com.goodow.wave.client.shell.WaveShell;
@@ -23,20 +23,8 @@ import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.google.web.bindery.requestfactory.shared.RequestTransport;
 
 import com.retech.reader.web.client.home.BookFlip;
-import com.retech.reader.web.client.home.BookListPanel;
 import com.retech.reader.web.client.home.LibraryView;
 import com.retech.reader.web.client.home.SearchPanel;
-import com.retech.reader.web.client.labs.Labs;
-import com.retech.reader.web.client.labs.TopBar;
-import com.retech.reader.web.client.mobile.ui.BookListEditor;
-import com.retech.reader.web.client.mobile.ui.CategoryListEditor;
-import com.retech.reader.web.client.mobile.ui.ContentEditor;
-import com.retech.reader.web.client.mobile.ui.HomeView;
-import com.retech.reader.web.client.mobile.ui.IssueEditor;
-import com.retech.reader.web.client.mobile.ui.IssueListImage;
-import com.retech.reader.web.client.mobile.ui.IssueNews;
-import com.retech.reader.web.client.mobile.ui.SectionBrowserView;
-import com.retech.reader.web.client.mobile.ui.SectionListEditor;
 import com.retech.reader.web.client.mobile.ui.TestEditor;
 import com.retech.reader.web.client.mobile.ui.bar.SettingsView;
 import com.retech.reader.web.client.mobile.ui.talk.TalkView;
@@ -47,7 +35,7 @@ import org.cloudlet.web.boot.shared.MapBinder;
 
 import java.util.logging.Logger;
 
-public final class ReaderMobileGinModule extends AbstractGinModule {
+public final class LabsGinModule extends AbstractGinModule {
 
   @Singleton
   public static class Binder {
@@ -57,23 +45,6 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
     private final Logger logger = Logger.getLogger(getClass().getName());
     @Inject
     private MapBinder<String, IsWidget> isWidgetMapBinder;
-    @Inject
-    private AsyncProvider<BookListEditor> bookListEditor;
-    @Inject
-    private AsyncProvider<SectionListEditor> sectionListEditor;
-
-    @Inject
-    private AsyncProvider<HomeView> homeView;
-    @Inject
-    private AsyncProvider<ContentEditor> pageEditor;
-
-    @Inject
-    private AsyncProvider<CategoryListEditor> catgoryListEditor;
-    @Inject
-    private AsyncProvider<SectionBrowserView> sectionBrowser;
-
-    @Inject
-    private AsyncProvider<BookListPanel> bookListPanel;
 
     @Inject
     private AsyncProvider<BookFlip> bookFlip;
@@ -82,13 +53,7 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
     @Inject
     private AsyncProvider<TalkView> talkView;
     @Inject
-    private AsyncProvider<IssueEditor> issueEditor;
-    @Inject
     private AsyncProvider<LibraryView> libraryView;
-    @Inject
-    private AsyncProvider<IssueListImage> issueListImage;
-    @Inject
-    private AsyncProvider<IssueNews> issueNews;
     @Inject
     private AsyncProvider<TestEditor> testEditor;
     @Inject
@@ -100,7 +65,7 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
     @Inject
     private AsyncProvider<TreeTest> treeTest;
     @Inject
-    private AsyncProvider<Labs> laboratoryPanel;
+    private AsyncProvider<Labs> labs;
     @Inject
     private AsyncProvider<BlipTest> blipTest;
     @Inject
@@ -115,30 +80,18 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
       Window.setTitle("睿泰阅读");
       shell.getTopBar().add(topBar);
       logger.finest("EagerSingleton begin");
-      isWidgetMapBinder.addBinding("/").toAsyncProvider(bookListPanel);
-      isWidgetMapBinder.addBinding(BookListEditor.class.getName()).toAsyncProvider(bookListEditor);
-      isWidgetMapBinder.addBinding(SectionListEditor.class.getName()).toAsyncProvider(
-          sectionListEditor);
-      isWidgetMapBinder.addBinding(CategoryListEditor.class.getName()).toAsyncProvider(
-          catgoryListEditor);
-      isWidgetMapBinder.addBinding(SectionBrowserView.class.getName()).toAsyncProvider(
-          sectionBrowser);
+      isWidgetMapBinder.addBinding("/").toAsyncProvider(labs);
       isWidgetMapBinder.addBinding(WaveTest.class.getName()).toAsyncProvider(waveTest);
       isWidgetMapBinder.addBinding(BookFlip.class.getName()).toAsyncProvider(bookFlip);
-      isWidgetMapBinder.addBinding(ContentEditor.class.getName()).toAsyncProvider(pageEditor);
       isWidgetMapBinder.addBinding(SettingsView.class.getName()).toAsyncProvider(settingsView);
       isWidgetMapBinder.addBinding(TalkView.class.getName()).toAsyncProvider(talkView);
       isWidgetMapBinder.addBinding(NestedBlipTest.class.getName()).toAsyncProvider(nestedBlipTest);
-      isWidgetMapBinder.addBinding(IssueEditor.class.getName()).toAsyncProvider(issueEditor);
       isWidgetMapBinder.addBinding(LibraryView.class.getName()).toAsyncProvider(libraryView);
-      isWidgetMapBinder.addBinding(IssueListImage.class.getName()).toAsyncProvider(issueListImage);
-      isWidgetMapBinder.addBinding(IssueNews.class.getName()).toAsyncProvider(issueNews);
       isWidgetMapBinder.addBinding(TestEditor.class.getName()).toAsyncProvider(testEditor);
       isWidgetMapBinder.addBinding(SearchPanel.class.getName()).toAsyncProvider(searchPanel);
       isWidgetMapBinder.addBinding(BlipTest.class.getName()).toAsyncProvider(blipTest);
       isWidgetMapBinder.addBinding(ContactPanel.class.getName()).toAsyncProvider(contactPanel);
       isWidgetMapBinder.addBinding(TreeTest.class.getName()).toAsyncProvider(treeTest);
-      isWidgetMapBinder.addBinding(Labs.class.getName()).toAsyncProvider(laboratoryPanel);
       logger.finest("EagerSingleton end");
       return null;
     }

@@ -10,6 +10,4 @@
   <source path="client" />
   <source path="shared" />
 
-  <define-linker name="appcachelinker" class="com.goodow.web.dev.rebind.AppCacheLinker" />
-  <add-linker name="appcachelinker" />
 </module>
