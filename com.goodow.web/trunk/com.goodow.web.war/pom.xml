@@ -105,11 +105,11 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
         <configuration>
-          <extraParam>true</extraParam>
-          <module>com.retech.reader.web.ReaderDev</module>
           <compileSourcesArtifacts>
             <compileSourcesArtifact>com.goodow.wave:com.goodow.wave.client</compileSourcesArtifact>
           </compileSourcesArtifacts>
+          <extraParam>true</extraParam>
+          <module>com.retech.reader.web.ReaderDev</module>
         </configuration>
       </plugin>
       <plugin>
