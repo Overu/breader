@@ -6,13 +6,9 @@
       overflow: auto;
       margin: 2px 0 0 7px;
     }
-    
-    .topBar {
-      height: 40px;
-    }
   </ui:style>
   <g:HTMLPanel addStyleNames='{style.shell}'>
-    <g:FlowPanel addStyleNames='{style.topBar}' ui:field="topBar">
+    <g:FlowPanel ui:field="topBar">
     </g:FlowPanel>
     <!-- <shell:WidgetContainer ui:field="container"></shell:WidgetContainer> -->
     <g:SimplePanel ui:field="container"></g:SimplePanel>
