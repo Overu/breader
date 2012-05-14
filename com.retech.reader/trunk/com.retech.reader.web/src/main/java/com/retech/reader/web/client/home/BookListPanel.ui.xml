@@ -4,10 +4,15 @@
   xmlns:app="urn:import:com.retech.reader.web.client.home" xmlns:wave="urn:import:com.goodow.wave.client.wavepanel">
   <ui:style field='landscape' src='BookListPanel.landscape.css' type='com.retech.reader.web.client.home.BookListPanel.Style'>
   </ui:style>
+  <ui:style>
+    .toolbar {
+      margin-top: 1em;
+    }
+  </ui:style>
 
   <g:HTMLPanel addStyleNames="{landscape.root}">
     <div>
-      <wave:WavePanel ui:field="waveToolbar" />
+      <wave:WavePanel ui:field="waveToolbar" addStyleNames='{style.toolbar}' />
     </div>
     <div>
       <app:MyDownLoadPanel ui:field="myDownLoadPanel" />
