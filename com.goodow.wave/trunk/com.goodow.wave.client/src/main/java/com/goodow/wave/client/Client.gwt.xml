@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <module>
   <inherits name="com.goodow.wave.client.widget.progress.Progress" />
   <inherits name="com.goodow.wave.client.widget.toolbar.Toolbar" />
