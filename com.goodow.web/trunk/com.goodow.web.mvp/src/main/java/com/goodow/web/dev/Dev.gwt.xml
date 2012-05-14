@@ -5,7 +5,7 @@
   <inherits name="org.cloudlet.web.service.Service" />
   <inherits name="org.cloudlet.web.mvp.Mvp" />
   <inherits name='com.google.gwt.modernizr.Gwtmodernizr'/>
-  <inherits name='com.goodow.wave.client.Client'/>
+  <inherits name='com.goodow.wave.client.Client' />
 
   <source path="client" />
   <source path="shared" />
