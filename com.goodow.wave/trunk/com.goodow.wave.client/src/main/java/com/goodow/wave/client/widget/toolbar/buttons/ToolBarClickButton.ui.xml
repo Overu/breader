@@ -29,11 +29,10 @@
     
     @sprite .waveToolbarDivider {
       gwt-image: "waveToolbarDivider";
-      width: 1px;
       position: absolute;
       left: 0;
-      top: 0;
-      bottom: 0;
+      background-position: center;
+      height: initial;
     }
     
     .overlay {
