@@ -1,6 +1,5 @@
 package com.retech.reader.web.client.mobile.ioc;
 
-import com.goodow.wave.client.shell.WaveShell;
 import com.goodow.web.logging.shared.rpc.ChannelContextProvider;
 
 import com.google.gwt.core.client.GWT;
@@ -18,7 +17,6 @@ import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.google.web.bindery.requestfactory.shared.RequestTransport;
 
 import com.retech.reader.web.client.home.BookListPanel;
-import com.retech.reader.web.client.labs.TopBar;
 import com.retech.reader.web.client.mobile.ui.BookListEditor;
 import com.retech.reader.web.client.mobile.ui.CategoryListEditor;
 import com.retech.reader.web.client.mobile.ui.ContentEditor;
@@ -75,15 +73,10 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
     private AsyncProvider<IssueListImage> issueListImage;
     @Inject
     private AsyncProvider<IssueNews> issueNews;
-    @Inject
-    private WaveShell shell;
-    @Inject
-    private TopBar topBar;
 
     @Override
     public Binder get() {
       Window.setTitle("睿泰阅读");
-      shell.getTopBar().add(topBar);
       logger.finest("EagerSingleton begin");
       isWidgetMapBinder.addBinding("/").toAsyncProvider(bookListPanel);
       isWidgetMapBinder.addBinding(BookListEditor.class.getName()).toAsyncProvider(bookListEditor);
