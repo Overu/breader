@@ -1,7 +1,6 @@
 package com.retech.reader.web.client.home;
 
 import com.goodow.wave.client.wavepanel.WavePanel;
-import com.goodow.wave.client.wavepanel.WavePanelResources;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
@@ -95,18 +94,17 @@ public class LibraryView extends WavePanel implements Activity {
     this.placeController = placeController;
     getWaveTitle().setText("我的藏书");
 
-    FlowPanel toDo = new FlowPanel();
-    toDo.addStyleName(WavePanelResources.css().waveWarning());
-    toDo.add(new HTML("<b>已完成：<b>"));
-    toDo.add(new Label("3.1 展示藏书列表"));
-    toDo.add(new Label("3.2 左右自动适应换行"));
-    toDo.add(new HTML("<br>"));
-    toDo.add(new HTML("<b>待实现：<b>"));
-    toDo.add(new Label("3.3 列表布局调整（易）"));
-    toDo.add(new Label("3.4 长按书本可以删除该书（易）"));
-    add(toDo);
-    toDo.addStyleName(WavePanelResources.css().waveWarning());
-    add(toDo);
+    // FlowPanel toDo = new FlowPanel();
+    // toDo.addStyleName(WavePanelResources.css().waveWarning());
+    // toDo.add(new HTML("<b>已完成：<b>"));
+    // toDo.add(new Label("3.1 展示藏书列表"));
+    // toDo.add(new Label("3.2 左右自动适应换行"));
+    // toDo.add(new HTML("<br>"));
+    // toDo.add(new HTML("<b>待实现：<b>"));
+    // toDo.add(new Label("3.3 列表布局调整（易）"));
+    // toDo.add(new Label("3.4 长按书本可以删除该书（易）"));
+    // toDo.addStyleName(WavePanelResources.css().waveWarning());
+    // add(toDo);
 
     setWaveContent(binder.createAndBindUi(this));
   }
