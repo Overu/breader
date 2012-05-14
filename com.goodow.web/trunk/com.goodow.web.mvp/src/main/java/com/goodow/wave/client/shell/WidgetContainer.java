@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.view.wave.client.shell;
+package com.goodow.wave.client.shell;
 
 import com.goodow.web.feature.client.FeatureDetection;
 
@@ -33,7 +33,7 @@ public class WidgetContainer extends FlowPanel implements AcceptsOneWidget {
   private Widget currentWidget;
   private long toRotateY = 0;
   private boolean toContainerFront = true;
-  private static final com.goodow.web.view.wave.client.shell.WaveShellResources.Style CSS =
+  private static final com.goodow.wave.client.shell.WaveShellResources.Style CSS =
       WaveShellResources.css();;
   private static final String[] STYLE_NAMES = new String[] {
       CSS.widgetPreviousBegin(), CSS.widgetPreviousEnd(), CSS.widgetCurrentBegin(),

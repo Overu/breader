@@ -1,7 +1,7 @@
 package org.cloudlet.web.mvp.client.ioc;
 
-import com.goodow.web.view.wave.client.shell.WaveShell;
-import com.goodow.web.view.wave.client.shell.WaveShellResources.CellListResources;
+import com.goodow.wave.client.shell.WaveShell;
+import com.goodow.wave.client.shell.WaveShellResources.CellListResources;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;

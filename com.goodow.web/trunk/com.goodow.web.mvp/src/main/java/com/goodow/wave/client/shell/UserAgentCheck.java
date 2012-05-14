@@ -1,4 +1,4 @@
-package com.goodow.web.view.wave.client.shell;
+package com.goodow.wave.client.shell;
 
 import com.goodow.wave.client.wavepanel.WavePanel;
 
