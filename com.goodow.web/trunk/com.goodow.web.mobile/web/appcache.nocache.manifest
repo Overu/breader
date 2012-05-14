@@ -1,0 +1,55 @@
+CACHE MANIFEST
+# Unique id #1336975018268.0.9413757720830028
+# Note: must change this every time for cache to invalidate
+
+CACHE:
+# Static app files
+/index.html
+/icons/favicon.ico
+/icons/icon.png
+
+# Generated app files
+A74676C07ABF99049697E435B31E2C83.cache.html
+clear.cache.gif
+deferredjs/A74676C07ABF99049697E435B31E2C83/1.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/10.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/11.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/12.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/13.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/14.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/15.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/16.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/17.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/18.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/19.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/2.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/20.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/21.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/22.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/23.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/3.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/4.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/5.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/6.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/7.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/8.cache.js
+deferredjs/A74676C07ABF99049697E435B31E2C83/9.cache.js
+gwt/clean/clean.css
+gwt/clean/clean_rtl.css
+gwt/clean/images/circles.png
+gwt/clean/images/circles_ie6.png
+gwt/clean/images/corner.png
+gwt/clean/images/corner_ie6.png
+gwt/clean/images/hborder.png
+gwt/clean/images/hborder_ie6.png
+gwt/clean/images/thumb_horz.png
+gwt/clean/images/thumb_vertical.png
+gwt/clean/images/vborder.png
+gwt/clean/images/vborder_ie6.png
+hosted.html
+web.nocache.js
+
+
+# All other resources require the user to be online.
+NETWORK:
+*
