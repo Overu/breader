@@ -52,6 +52,7 @@ import com.google.inject.Provider;
 
 import com.retech.reader.web.client.home.BookFlip;
 import com.retech.reader.web.client.home.SearchPanel;
+import com.retech.reader.web.client.mobile.ui.bar.SettingsView;
 
 import org.cloudlet.web.mvp.shared.BasePlace;
 
@@ -121,9 +122,18 @@ public class Labs extends WavePanel implements Activity {
     LabsIconDecorator blipTest =
         new LabsIconDecorator(bunder.laboratory(), "BlipTest", BlipTest.class);
     list.add(blipTest);
+
     LabsIconDecorator blipTree =
         new LabsIconDecorator(bunder.laboratory(), "NestedBlipTest", NestedBlipTest.class);
     list.add(blipTree);
+
+    LabsIconDecorator settingsView =
+        new LabsIconDecorator(bunder.laboratory(), "设置", SettingsView.class);
+    list.add(settingsView);
+
+    LabsIconDecorator contactPanel =
+        new LabsIconDecorator(bunder.laboratory(), "分享", ContactPanel.class);
+    list.add(contactPanel);
 
     // add cell
     List<HasCell<LabsIconDecorator, ?>> hasCells = new ArrayList<HasCell<LabsIconDecorator, ?>>();

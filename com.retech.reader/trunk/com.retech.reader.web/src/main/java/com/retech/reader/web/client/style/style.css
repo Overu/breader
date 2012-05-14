@@ -16,8 +16,12 @@
   -webkit-transition: all 0.5s;
   -webkit-column-gap: 0em;
   position: relative;
+  letter-spacing: 5px;
 }
 
+.contentHtmlPanel>p {
+  padding: 0 0 0 10px;
+}
 /*
 .contentSectionView:HOVER {
   left: 0px;
