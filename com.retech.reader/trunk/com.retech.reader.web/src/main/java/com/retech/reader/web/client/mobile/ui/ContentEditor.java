@@ -1,10 +1,12 @@
 package com.retech.reader.web.client.mobile.ui;
 
+import com.goodow.wave.client.shell.WaveShell;
 import com.goodow.wave.client.wavepanel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Touch;
 import com.google.gwt.event.dom.client.DragEndEvent;
@@ -74,6 +76,7 @@ public class ContentEditor extends WavePanel implements Activity {
   private final LocalStorage storage;
   private final KeyUtil keyUtil;
   private final MapBinder<String, IsWidget> isWidgetMapBinder;
+  private final WaveShell waveShell;
   private int columnCount;
   private int columnIndex = 1;
   private boolean scheduledTwo = false;
@@ -84,17 +87,20 @@ public class ContentEditor extends WavePanel implements Activity {
   @Inject
   public ContentEditor(final PlaceController placeContorller, final ReaderFactory f,
       final Provider<BasePlace> place, final LocalStorage storage, final KeyUtil keyUtil,
-      final MapBinder<String, IsWidget> isWidgetMapBinder) {
+      final MapBinder<String, IsWidget> isWidgetMapBinder, final WaveShell waveShell) {
     this.placeContorller = placeContorller;
     this.f = f;
     this.place = place;
     this.storage = storage;
     this.keyUtil = keyUtil;
-    flowPanel = new FlowPanel();
+    this.waveShell = waveShell;
     this.isWidgetMapBinder = isWidgetMapBinder;
+
+    flowPanel = new FlowPanel();
     html = new HTML();
     html.addStyleName(ReaderResources.INSTANCE().style().contentHtmlPanel());
     flowPanel.add(html);
+
     this.setWaveContent(flowPanel);
 
     this.addDomHandler(new TouchStartHandler() {
@@ -245,7 +251,9 @@ public class ContentEditor extends WavePanel implements Activity {
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
-    contentHeight = Window.getClientHeight() - 73;
+    waveShell.getTopBar().getElement().getStyle().setDisplay(Display.NONE);
+    // contentHeight = Window.getClientHeight() - 73;
+    contentHeight = Window.getClientHeight() - 39;
     contentWidth = Window.getClientWidth() - 14;
     Style htmlStyle = html.getElement().getStyle();
     htmlStyle.setHeight(contentHeight, Unit.PX);
@@ -337,6 +345,7 @@ public class ContentEditor extends WavePanel implements Activity {
   @Override
   protected void onUnload() {
     super.onUnload();
+    this.waveShell.getTopBar().getElement().getStyle().clearDisplay();
     this.sectionView.removeStyleName(ReaderResources.INSTANCE().style().contentSectionView());
     this.sectionView.getElement().getStyle().clearWidth();
     this.html.getElement().getStyle().clearLeft();
