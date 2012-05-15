@@ -32,7 +32,7 @@ file_export_version=3.0
 /project/com.retech.reader.web/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.debug.localVariable=generate
 /project/com.retech.reader.web/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.codegen.unusedLocal=preserve
 /project/com.retech.reader.web/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.debug.lineNumber=generate
-#/project/com.retech.reader.web/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.debug.sourceFile=generate
+/project/com.retech.reader.web/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.debug.sourceFile=generate
 
 # /project/com.goodow.web.view/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.processorOptions/enhanceAPI=JPA
 # /project/com.goodow.web.view/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.processorOptions/verbose=true
