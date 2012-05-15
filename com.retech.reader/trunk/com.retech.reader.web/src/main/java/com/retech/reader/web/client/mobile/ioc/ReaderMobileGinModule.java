@@ -18,6 +18,8 @@ import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.google.web.bindery.requestfactory.shared.RequestTransport;
 
 import com.retech.reader.web.client.home.BookListPanel;
+import com.retech.reader.web.client.home.LibraryView;
+import com.retech.reader.web.client.home.MyDownLoadPanel;
 import com.retech.reader.web.client.home.TopBar;
 import com.retech.reader.web.client.mobile.ui.BookListEditor;
 import com.retech.reader.web.client.mobile.ui.CategoryListEditor;
@@ -76,6 +78,10 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
     @Inject
     private AsyncProvider<IssueNews> issueNews;
     @Inject
+    private AsyncProvider<MyDownLoadPanel> myDownLoadPanel;
+    @Inject
+    private AsyncProvider<LibraryView> libraryView;
+    @Inject
     WaveShell waveShell;
     @Inject
     TopBar topbar;
@@ -99,6 +105,9 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
       isWidgetMapBinder.addBinding(IssueEditor.class.getName()).toAsyncProvider(issueEditor);
       isWidgetMapBinder.addBinding(IssueListImage.class.getName()).toAsyncProvider(issueListImage);
       isWidgetMapBinder.addBinding(IssueNews.class.getName()).toAsyncProvider(issueNews);
+      isWidgetMapBinder.addBinding(MyDownLoadPanel.class.getName())
+          .toAsyncProvider(myDownLoadPanel);
+      isWidgetMapBinder.addBinding(LibraryView.class.getName()).toAsyncProvider(libraryView);
       logger.finest("EagerSingleton end");
       return null;
     }

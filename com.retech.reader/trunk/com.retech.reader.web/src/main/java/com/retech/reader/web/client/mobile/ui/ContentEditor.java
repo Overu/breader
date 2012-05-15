@@ -111,15 +111,15 @@ public class ContentEditor extends WavePanel implements Activity {
         JsArray<Touch> touchesStart = event.getTouches();
         switch (touchesStart.length()) {
           case 1:
-            logger.info("touches: 1 ");
+            // logger.info("touches: 1 ");
             scheduledOne = false;
             Touch touch = touchesStart.get(0);
             startX1 = touch.getPageX();
             columnCount = html.getElement().getScrollWidth() / contentWidth;
-            logger.info("columnCount:" + columnCount);
+            // logger.info("columnCount:" + columnCount);
             break;
           case 2:
-            logger.info("touches: 2 ");
+            // logger.info("touches: 2 ");
             scheduledTwo = false;
             Touch touch1 = touchesStart.get(0);
             Touch touch2 = touchesStart.get(1);
@@ -145,7 +145,7 @@ public class ContentEditor extends WavePanel implements Activity {
               return;
             }
             scheduledOne = true;
-            logger.info("touch 1 move");
+            // logger.info("touch 1 move");
             Touch touch = touchesMove.get(0);
             int nowX = touch.getPageX();
             int subtractX = nowX - startX1;
@@ -156,7 +156,7 @@ public class ContentEditor extends WavePanel implements Activity {
               return;
             }
             scheduledTwo = true;
-            logger.info("touch 2 move");
+            // logger.info("touch 2 move");
             Touch touch1 = touchesMove.get(0);
             Touch touch2 = touchesMove.get(1);
             int nowX1 = touch1.getPageX();
@@ -184,7 +184,7 @@ public class ContentEditor extends WavePanel implements Activity {
       @Override
       public void onTouchEnd(final TouchEndEvent event) {
         JsArray<Touch> touchesMove = event.getTouches();
-        logger.info("onTouchEnd fingers:" + touchesMove.length());
+        // logger.info("onTouchEnd fingers:" + touchesMove.length());
         scheduledOne = false;
         scheduledTwo = false;
       }

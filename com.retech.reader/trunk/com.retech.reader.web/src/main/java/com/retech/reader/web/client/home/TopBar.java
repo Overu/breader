@@ -29,6 +29,8 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
+import com.retech.reader.web.client.mobile.ui.CategoryListEditor;
+
 import org.cloudlet.web.mvp.shared.BasePlace;
 
 @Singleton
@@ -50,31 +52,39 @@ public class TopBar extends WavePanel {
   @Inject
   public TopBar(final PlaceController placeController, final Provider<BasePlace> places) {
     WaveToolBar toolbar = this.addWaveToolBar();
-    ToolBarClickButton index = toolbar.addClickButton();
-    index.setText("首页");
-    index.setVisualElement(createIcon(res.settings()));
-
     ToolBarClickButton myDownload = toolbar.addClickButton();
-    myDownload.setText("下载管理");
+    myDownload.setText("我的书架");
     myDownload.setVisualElement(createIcon(res.settings()));
 
-    ToolBarClickButton before = toolbar.addClickButton();
-    before.setText("前30本");
-    before.setVisualElement(createIcon(res.settings()));
+    ToolBarClickButton libraryView = toolbar.addClickButton();
+    libraryView.setText("我的收藏");
+    libraryView.setVisualElement(createIcon(res.settings()));
 
-    ToolBarClickButton all = toolbar.addClickButton();
-    all.setText("全部");
-    all.setVisualElement(createIcon(res.settings()));
+    ToolBarClickButton category = toolbar.addClickButton();
+    category.setText("分类");
+    category.setVisualElement(createIcon(res.settings()));
 
-    ToolBarClickButton edit = toolbar.addClickButton();
-    edit.setText("编辑");
-    edit.setVisualElement(createIcon(res.settings()));
-
-    index.addClickHandler(new ClickHandler() {
+    myDownload.addClickHandler(new ClickHandler() {
 
       @Override
       public void onClick(final ClickEvent event) {
-        placeController.goTo(places.get().setPath("/"));
+        placeController.goTo(places.get().setPath(MyDownLoadPanel.class.getName()));
+      }
+    });
+
+    libraryView.addClickHandler(new ClickHandler() {
+
+      @Override
+      public void onClick(final ClickEvent event) {
+        placeController.goTo(places.get().setPath(LibraryView.class.getName()));
+      }
+    });
+
+    category.addClickHandler(new ClickHandler() {
+
+      @Override
+      public void onClick(final ClickEvent event) {
+        placeController.goTo(places.get().setPath(CategoryListEditor.class.getName()));
       }
     });
   }

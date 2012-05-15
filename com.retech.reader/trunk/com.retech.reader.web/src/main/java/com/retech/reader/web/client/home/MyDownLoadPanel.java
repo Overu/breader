@@ -111,7 +111,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
     this.keyUtil = keyUtil;
     this.storage = storage;
     this.progresses = progresses;
-    this.getWaveTitle().setText("我的下载");
+    this.getWaveTitle().setText(IssueProxy.ISSUE_DOWN_NAME);
     this.setWaveContent(binder.createAndBindUi(this));
 
   }
@@ -203,7 +203,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
     int pageCount = issueDownloadMessage.getPageCount();
     int nowPage = issueDownloadMessage.getNowPage() + 1;
     issueDownloadMessage.setNowPage(nowPage);
-    logger.info("now download:" + nowPage + "/" + pageCount);
+    // logger.info("now download:" + nowPage + "/" + pageCount);
     issueDownloadMessage.getProgress().setValue((double) nowPage / pageCount);
   }
 
@@ -300,7 +300,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
             }
             storage.put(keyUtil.listKey(IssueProxy.ISSUE_DOWN_FINISH), issueDownloadFinish);
             issueDownloadMessage.getProgress().getElement().getStyle().setDisplay(Display.NONE);
-            logger.info("download end!!");
+            // logger.info("download end!!");
           }
         }
 

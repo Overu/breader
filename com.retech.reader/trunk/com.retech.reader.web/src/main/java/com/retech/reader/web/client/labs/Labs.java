@@ -75,6 +75,8 @@ public class Labs extends WavePanel implements Activity {
 
   }
 
+  private static final String SERVER_URL = "http://58.247.50.59";
+
   private static Bundle bunder = GWT.create(Bundle.class);
   private static Binder binder = GWT.create(Binder.class);
 
@@ -149,11 +151,11 @@ public class Labs extends WavePanel implements Activity {
         "_blank"));
     server.add(new Anchor("在Google Play电子商店上下载",
         "https://play.google.com/store/apps/details?id=com.goodow.web.mobile", "_blank"));
-    server.add(new Anchor("SCM - Subversion", "http://58.247.50.59/svn/retech", "_blank"));
-    server.add(new Anchor("Files", "http://58.247.50.59/files", "_blank"));
-    server.add(new Anchor("Document", "http://58.247.50.59/svn/retech/document", "_blank"));
-    server.add(new Anchor("CI - Hudson", "http://58.247.50.59:8080", "_blank"));
-    server.add(new Anchor("Repository - Nexus", "http://58.247.50.59:8081/nexus", "_blank"));
+    server.add(new Anchor("SCM - Subversion", SERVER_URL + "/svn/retech", "_blank"));
+    server.add(new Anchor("Files", SERVER_URL + "/files", "_blank"));
+    server.add(new Anchor("Document", SERVER_URL + "/svn/retech/document", "_blank"));
+    server.add(new Anchor("CI - Hudson", SERVER_URL + ":8080", "_blank"));
+    server.add(new Anchor("Repository - Nexus", SERVER_URL + ":8081/nexus", "_blank"));
 
     // add cell
     List<HasCell<LabsIconDecorator, ?>> hasCells = new ArrayList<HasCell<LabsIconDecorator, ?>>();

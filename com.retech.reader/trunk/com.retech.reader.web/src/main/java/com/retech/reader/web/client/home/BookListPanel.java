@@ -62,8 +62,9 @@ public class BookListPanel extends Composite implements ProvideActivities {
   // BookFlip bookFlipOfBookListPanel;
   @UiField(provided = true)
   MyDownLoadPanel myDownLoadPanel;
-  @UiField(provided = true)
-  LibraryView libraryView;
+
+  // @UiField(provided = true)
+  // LibraryView libraryView;
 
   // @UiField(provided = true)
   // WavePanel waveToolbar;
@@ -78,7 +79,7 @@ public class BookListPanel extends Composite implements ProvideActivities {
       final MyDownLoadPanel myDownLoadPanel) {
     // this.bookFlipOfBookListPanel = bookFlipOfBookListPanel;
     this.myDownLoadPanel = myDownLoadPanel;
-    this.libraryView = libraryView;
+    // this.libraryView = libraryView;
     // this.waveToolbar = waveToolbar;
     // this.searchPanel = searchPanel;
     // toolbar = waveToolbar.addWaveToolBar();
@@ -143,7 +144,7 @@ public class BookListPanel extends Composite implements ProvideActivities {
   @Override
   public List<Activity> provideActivities() {
     // return Arrays.<Activity> asList(bookFlipOfBookListPanel, libraryView);
-    return Arrays.<Activity> asList(myDownLoadPanel, libraryView);
+    return Arrays.<Activity> asList(myDownLoadPanel);
   }
 
 }

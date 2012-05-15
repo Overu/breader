@@ -17,6 +17,7 @@ public interface IssueProxy extends BaseEntityProxy {
   String ISSUES = "issue.all";
   String MY_ISSUES = "issue.my";
   String COUNT_ISSUE = "issue.count";
+  String ISSUE_DOWN_NAME = "我的书架";
   String ISSUE_DOWN = "issue.down";
   String ISSUE_DOWN_FINISH = "issue.down.finish";
 
