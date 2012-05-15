@@ -6,9 +6,10 @@ import com.goodow.wave.client.wavepanel.WavePanel;
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.dom.client.Style;
-import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Touch;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DragEndEvent;
 import com.google.gwt.event.dom.client.DragEndHandler;
 import com.google.gwt.event.dom.client.DragOverEvent;
@@ -222,6 +223,19 @@ public class ContentEditor extends WavePanel implements Activity {
       }
     }, DragEndEvent.getType());
 
+    flowPanel.addDomHandler(new ClickHandler() {
+
+      @Override
+      public void onClick(final ClickEvent event) {
+        Style style = waveShell.getTopBar().getElement().getStyle();
+        if (style.getTop().equals("-31px")) {
+          style.clearTop();
+        } else {
+          style.setTop(-31, Unit.PX);
+        }
+      }
+    }, ClickEvent.getType());
+
     // html.addClickHandler(new ClickHandler() {
     //
     // @Override
@@ -251,7 +265,8 @@ public class ContentEditor extends WavePanel implements Activity {
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
-    waveShell.getTopBar().getElement().getStyle().setDisplay(Display.NONE);
+    waveShell.getTopBar().addStyleName(ReaderResources.INSTANCE().style().contentTopBar());
+    waveShell.getTopBar().getElement().getStyle().setTop(-31, Unit.PX);
     // contentHeight = Window.getClientHeight() - 73;
     contentHeight = Window.getClientHeight() - 39;
     contentWidth = Window.getClientWidth() - 14;
@@ -345,7 +360,8 @@ public class ContentEditor extends WavePanel implements Activity {
   @Override
   protected void onUnload() {
     super.onUnload();
-    this.waveShell.getTopBar().getElement().getStyle().clearDisplay();
+    this.waveShell.getTopBar().removeStyleName(ReaderResources.INSTANCE().style().contentTopBar());
+    this.waveShell.getTopBar().getElement().getStyle().clearTop();
     this.sectionView.removeStyleName(ReaderResources.INSTANCE().style().contentSectionView());
     this.sectionView.getElement().getStyle().clearWidth();
     this.html.getElement().getStyle().clearLeft();

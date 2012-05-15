@@ -24,6 +24,8 @@ public class ReaderResources {
     String contentHtmlPanel();
 
     String contentSectionView();
+
+    String contentTopBar();
   }
 
   private static Bundle BUNDLE;

@@ -43,6 +43,8 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.CellPreviewEvent;
@@ -82,6 +84,8 @@ public class Labs extends WavePanel implements Activity {
   IconButtonTemplate minimize;
   @UiField
   SetColor setColor;
+  @UiField
+  HTMLPanel server;
 
   private CellList<LabsIconDecorator> cellList;
   private ListDataProvider<LabsIconDecorator> listDataProvider =
@@ -134,6 +138,22 @@ public class Labs extends WavePanel implements Activity {
     LabsIconDecorator contactPanel =
         new LabsIconDecorator(bunder.laboratory(), "分享", ContactPanel.class);
     list.add(contactPanel);
+
+    LabsIconDecorator androidDownload =
+        new LabsIconDecorator(bunder.laboratory(), "Android下载", ContactPanel.class);
+    list.add(androidDownload);
+
+    server.add(new Anchor("Android版下载", "https://build.phonegap.com/apps/95095/download/android",
+        "_blank"));
+    server.add(new Anchor("iOS越狱版下载", "https://build.phonegap.com/apps/95095/download/ios",
+        "_blank"));
+    server.add(new Anchor("在Google Play电子商店上下载",
+        "https://play.google.com/store/apps/details?id=com.goodow.web.mobile", "_blank"));
+    server.add(new Anchor("SCM - Subversion", "http://58.247.50.59/svn/retech", "_blank"));
+    server.add(new Anchor("Files", "http://58.247.50.59/files", "_blank"));
+    server.add(new Anchor("Document", "http://58.247.50.59/svn/retech/document", "_blank"));
+    server.add(new Anchor("CI - Hudson", "http://58.247.50.59:8080", "_blank"));
+    server.add(new Anchor("Repository - Nexus", "http://58.247.50.59:8081/nexus", "_blank"));
 
     // add cell
     List<HasCell<LabsIconDecorator, ?>> hasCells = new ArrayList<HasCell<LabsIconDecorator, ?>>();

@@ -25,6 +25,13 @@
   -webkit-margin-before: 0;
 }
 
+.contentTopBar {
+  position: absolute;
+  left: 7px;
+  right: 0;
+  -webkit-transition: all 0.5s;
+}
+
 /*
 .contentSectionView:HOVER {
   left: 0px;

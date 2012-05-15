@@ -8,7 +8,7 @@
       height: 39px;
     }
     
-     @sprite .waveLogo {
+    @sprite .waveLogo {
       gwt-image: "waveLogo";
       position: absolute;
       left: 8px;
@@ -31,7 +31,7 @@
     }
     
     .waveTitleIcon {
-      padding: 0 20px!important;
+      padding: 0 20px !important;
     }
     
     .waveTitleIcon:HOVER {
@@ -47,12 +47,22 @@
       float: left;
       width: 100%;
     }
+    
     .cell>div>div>div:hover>div:last-child {
       opacity: 1;
     }
     
     .setColor {
       float: left;
+    }
+    
+    .labsHTMLPanle {
+      clear: left;
+      line-height: 33px;
+    }
+    
+    .labsHTMLPanle>a {
+      margin: 0 4px;
     }
   </ui:style>
 
@@ -69,5 +79,6 @@
     </div>
     <g:SimplePanel ui:field="simplePanel" addStyleNames="{style.cell}"></g:SimplePanel>
     <tree:SetColor ui:field="setColor" addStyleNames="{style.setColor}"></tree:SetColor>
+    <g:HTMLPanel ui:field="server" addStyleNames="{style.labsHTMLPanle}"></g:HTMLPanel>
   </g:HTMLPanel>
 </ui:UiBinder> 
