@@ -15,5 +15,6 @@
   <modules>
     <module>com.goodow</module>
     <module>com.goodow.wave.client</module>
+    <module>com.goodow.wave.server</module>
   </modules>
 </project>
