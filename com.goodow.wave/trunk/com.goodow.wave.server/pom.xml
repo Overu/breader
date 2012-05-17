@@ -11,6 +11,11 @@
   <artifactId>${project.groupId}.server</artifactId>
 
   <dependencies>
+    <dependency>
+      <groupId>com.google.web.bindery</groupId>
+      <artifactId>requestfactory-server</artifactId>
+      <scope>compile</scope>
+    </dependency>
     <!-- GIN and Guice for IoC / DI -->
     <dependency>
       <groupId>com.google.inject</groupId>
@@ -28,9 +33,16 @@
       <groupId>com.google.inject.extensions</groupId>
       <artifactId>guice-assistedinject</artifactId>
     </dependency>
+
     <dependency>
-      <groupId>com.google.inject.extensions</groupId>
-      <artifactId>guice-persist</artifactId>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-1.0-sdk</artifactId>
+    </dependency>
+
+    <!-- Generald dependencies for standard applications -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
     </dependency>
   </dependencies>
 
