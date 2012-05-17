@@ -11,36 +11,11 @@
   <artifactId>${project.groupId}.client</artifactId>
 
   <dependencies>
-    <!-- Google Web Toolkit (GWT) -->
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-dev</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-user</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-servlet</artifactId>
-    </dependency>
-
-    <!-- GIN and Guice for IoC / DI -->
-    <dependency>
-      <groupId>com.google.inject</groupId>
-      <artifactId>guice</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.gwt.inject</groupId>
-      <artifactId>gin</artifactId>
-    </dependency>
-    
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>${project.groupId}.server</artifactId>
       <version>${project.version}</version>
     </dependency>
-    
   </dependencies>
 
   <build>
