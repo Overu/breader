@@ -82,6 +82,7 @@ public class IssueNews extends WavePanel implements Activity {
   private EntityProxyId<IssueProxy> issueId;
   private ToolBarClickButton addButton;
   private ToolBarClickButton downloadButton;
+  private ToolBarClickButton readButton;
   private IssueProxy proxy;
   private final PlaceController placeController;
   private final LocalStorage storage;
@@ -122,8 +123,8 @@ public class IssueNews extends WavePanel implements Activity {
     this.setWaveContent(binder.createAndBindUi(this));
     add(tagsPanel);
 
-    final ToolBarClickButton readButton = waveToolbar.addClickButton();
-    readButton.setText("在线阅读");
+    readButton = waveToolbar.addClickButton();
+    readButton.setText(IssueProxy.ISSUE_STATE_ONLINE_READ);
     readButton.setVisualElement(createIcon(res.issueRead()));
 
     final ToolBarClickButton sectionButton = waveToolbar.addClickButton();
@@ -131,11 +132,11 @@ public class IssueNews extends WavePanel implements Activity {
     sectionButton.setVisualElement(createIcon(res.issueSection()));
 
     addButton = waveToolbar.addClickButton();
-    addButton.setText("收藏");
+    addButton.setText(IssueProxy.ISSUE_STATE_COLLECT);
     addButton.setVisualElement(createIcon(res.issueAdd()));
 
     downloadButton = waveToolbar.addClickButton();
-    downloadButton.setText("下载");
+    downloadButton.setText(IssueProxy.ISSUE_STATE_DOWN);
     downloadButton.setVisualElement(createIcon(res.issueDownload()));
     readButton.addClickHandler(new ClickHandler() {
       @Override
@@ -187,7 +188,8 @@ public class IssueNews extends WavePanel implements Activity {
         }
         if (!issueBook.contains(proxy)) {
           issueBook.add(proxy);
-          logger.info("已收藏");
+          // logger.info(IssueProxy.MY_ISSUE_STATE_COLLECTED);
+          addButton.setText(IssueProxy.ISSUE_STATE_COLLECTED);
           addButton.setState(State.DISABLED);
         }
         storage.put(keyUtil.listKey(IssueProxy.MY_ISSUES), issueBook);
@@ -204,6 +206,7 @@ public class IssueNews extends WavePanel implements Activity {
         if (!issueDownload.contains(proxy)) {
           issueDownload.add(proxy);
           downloadButton.setState(State.DISABLED);
+          downloadButton.setText(IssueProxy.ISSUE_STATE_DOWN_FINISH);
         }
         storage.put(keyUtil.listKey(IssueProxy.ISSUE_DOWN), issueDownload);
         placeController.goTo(places.get().setPath("/"));
@@ -258,6 +261,7 @@ public class IssueNews extends WavePanel implements Activity {
           addButton.setState(State.ENABLED);
         } else {
           addButton.setState(State.DISABLED);
+          addButton.setText(IssueProxy.ISSUE_STATE_COLLECTED);
         }
 
         List<IssueProxy> issueDownload = storage.get(keyUtil.listKey(IssueProxy.ISSUE_DOWN));
@@ -271,6 +275,8 @@ public class IssueNews extends WavePanel implements Activity {
         }
         if (issueDownload.contains(proxy) || issueDownloadFinish.contains(proxy)) {
           downloadButton.setState(State.DISABLED);
+          downloadButton.setText(IssueProxy.ISSUE_STATE_DOWN_FINISH);
+          readButton.setText(IssueProxy.ISSUE_STATE_DOWN_READ);
         } else {
           downloadButton.setState(State.ENABLED);
         }

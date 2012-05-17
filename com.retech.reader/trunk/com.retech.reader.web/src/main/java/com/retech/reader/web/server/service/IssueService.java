@@ -56,6 +56,11 @@ public class IssueService extends BaseService<Issue> {
     return issue;
   }
 
+  @Finder(query = "select d from Issue d where d.id = ?", returnAs = ArrayList.class)
+  public List<Issue> findHelpIssue(final long id) {
+    throw new AssertionError();
+  }
+
   @Finder(query = "select p from Page p where p.section.issue.id = ?", returnAs = ArrayList.class)
   public List<Page> findPages(final long id) {
     throw new AssertionError();

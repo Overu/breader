@@ -30,6 +30,8 @@ public interface IssueContext extends BaseContext {
   @Deprecated
   Request<IssueProxy> findForDonwload(final long id);
 
+  Request<List<IssueProxy>> findHelpIssue(final long id);
+
   @Deprecated
   Request<List<PageProxy>> findPages(final long id, final boolean brevity);
 

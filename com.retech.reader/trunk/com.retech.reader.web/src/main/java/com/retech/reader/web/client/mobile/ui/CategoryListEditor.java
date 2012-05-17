@@ -36,7 +36,7 @@ public class CategoryListEditor extends WavePanel implements Activity {
     selectionModel = new NoSelectionModel<CategoryProxy>();
     cellList.setSelectionModel(selectionModel);
 
-    getWaveTitle().setText("类别");
+    getWaveTitle().setText(CategoryProxy.CATEGORY_NAME);
     // FlowPanel toDo = new FlowPanel();
     // toDo.addStyleName(WavePanelResources.css().waveWarning());
     // toDo.add(new HTML("<b>已完成：<b>"));

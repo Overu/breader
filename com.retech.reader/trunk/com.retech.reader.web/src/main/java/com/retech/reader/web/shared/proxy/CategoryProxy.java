@@ -12,6 +12,7 @@ import org.cloudlet.web.service.shared.rpc.BaseEntityProxy;
 public interface CategoryProxy extends BaseEntityProxy {
 
   String CATEGORY = "category.all";
+  String CATEGORY_NAME = "分类";
 
   int getCount();
 

@@ -31,6 +31,7 @@
   right: 0;
   -webkit-transition: all 0.5s;
   margin-top: initial;
+  z-index: 150;
 }
 
 /*

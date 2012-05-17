@@ -59,6 +59,7 @@ import java.util.logging.Logger;
 public class ContentEditor extends WavePanel implements Activity {
 
   public static final String LAST_PAGE = "now_reader";
+  private static final int TOPBAR_TOP = -40;
   private static final Logger logger = Logger.getLogger(ContentEditor.class.getName());
 
   private final HTML html;
@@ -111,7 +112,7 @@ public class ContentEditor extends WavePanel implements Activity {
         JsArray<Touch> touchesStart = event.getTouches();
         switch (touchesStart.length()) {
           case 1:
-            // logger.info("touches: 1 ");
+            logger.info("touches: 1 ");
             scheduledOne = false;
             Touch touch = touchesStart.get(0);
             startX1 = touch.getPageX();
@@ -227,12 +228,20 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onClick(final ClickEvent event) {
-        Style style = waveShell.getTopBar().getElement().getStyle();
-        if (style.getTop().equals("-31px")) {
-          style.clearTop();
-        } else {
-          style.setTop(-31, Unit.PX);
+        int offsetHeight = html.getOffsetHeight();
+        int offsetWidth = html.getOffsetWidth();
+        int clientX = event.getClientX();
+        int clientY = event.getClientY();
+        if (clientY >= offsetHeight * 0.25 && clientY <= offsetHeight * 0.75
+            && clientX >= offsetWidth * 0.25 && clientX <= offsetWidth * 0.75) {
+          Style style = waveShell.getTopBar().getElement().getStyle();
+          if (style.getTop().equals(TOPBAR_TOP + "px")) {
+            style.clearTop();
+          } else {
+            style.setTop(TOPBAR_TOP, Unit.PX);
+          }
         }
+
       }
     }, ClickEvent.getType());
 
@@ -266,7 +275,7 @@ public class ContentEditor extends WavePanel implements Activity {
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     waveShell.getTopBar().addStyleName(ReaderResources.INSTANCE().style().contentTopBar());
-    waveShell.getTopBar().getElement().getStyle().setTop(-31, Unit.PX);
+    waveShell.getTopBar().getElement().getStyle().setTop(TOPBAR_TOP, Unit.PX);
     // contentHeight = Window.getClientHeight() - 73;
     contentHeight = Window.getClientHeight() - 39;
     contentWidth = Window.getClientWidth() - 14;

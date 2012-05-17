@@ -92,7 +92,7 @@ public class LibraryView extends WavePanel implements Activity {
     this.places = places;
     this.storage = storage;
     this.placeController = placeController;
-    getWaveTitle().setText("我的藏书");
+    getWaveTitle().setText(IssueProxy.MY_ISSUES_NAME);
 
     // FlowPanel toDo = new FlowPanel();
     // toDo.addStyleName(WavePanelResources.css().waveWarning());

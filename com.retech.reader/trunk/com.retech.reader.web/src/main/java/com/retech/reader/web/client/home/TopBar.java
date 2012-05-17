@@ -30,6 +30,8 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import com.retech.reader.web.client.mobile.ui.CategoryListEditor;
+import com.retech.reader.web.shared.proxy.CategoryProxy;
+import com.retech.reader.web.shared.proxy.IssueProxy;
 
 import org.cloudlet.web.mvp.shared.BasePlace;
 
@@ -52,17 +54,17 @@ public class TopBar extends WavePanel {
   @Inject
   public TopBar(final PlaceController placeController, final Provider<BasePlace> places) {
     WaveToolBar toolbar = this.addWaveToolBar();
+    ToolBarClickButton category = toolbar.addClickButton();
+    category.setText(CategoryProxy.CATEGORY_NAME);
+    category.setVisualElement(createIcon(res.settings()));
+
     ToolBarClickButton myDownload = toolbar.addClickButton();
-    myDownload.setText("我的书架");
+    myDownload.setText(IssueProxy.ISSUE_DOWN_NAME);
     myDownload.setVisualElement(createIcon(res.settings()));
 
     ToolBarClickButton libraryView = toolbar.addClickButton();
-    libraryView.setText("我的收藏");
+    libraryView.setText(IssueProxy.MY_ISSUES_NAME);
     libraryView.setVisualElement(createIcon(res.settings()));
-
-    ToolBarClickButton category = toolbar.addClickButton();
-    category.setText("分类");
-    category.setVisualElement(createIcon(res.settings()));
 
     myDownload.addClickHandler(new ClickHandler() {
 
