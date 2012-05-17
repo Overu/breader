@@ -380,11 +380,9 @@
   </profiles>
 
   <modules>
-    <module>com.goodow.web.boot</module>
     <module>com.goodow.web.logging</module>
     <module>com.goodow.web.mvp</module>
     <module>com.goodow.web.security</module>
     <module>com.goodow.web.service</module>
-    <module>com.goodow.web.test</module>
   </modules>
 </project>
