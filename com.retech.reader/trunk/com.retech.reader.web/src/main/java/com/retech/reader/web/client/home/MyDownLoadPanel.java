@@ -133,28 +133,45 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
-    List<IssueProxy> issueDownload = storage.get(keyUtil.listKey(IssueProxy.ISSUE_DOWN));
-    List<IssueProxy> issueDownloadFinish =
-        storage.get(keyUtil.listKey(IssueProxy.ISSUE_DOWN_FINISH));
-    myDownLoadPanel.clear();
 
-    if (issueDownloadFinish != null) {
-      displayIssue(issueDownloadFinish, false);
-    }
+    new BaseReceiver<List<IssueProxy>>() {
 
-    if (issueDownload != null) {
-      displayIssue(issueDownload, true);
-      return;
-    }
+      @Override
+      public void onSuccessAndCached(final List<IssueProxy> helpIssue) {
+        List<IssueProxy> issueDownloadFinish =
+            storage.get(keyUtil.listKey(IssueProxy.ISSUE_DOWN_FINISH));
+        myDownLoadPanel.clear();
 
-    HTMLPanel downLoad = new HTMLPanel("");
-    HTMLPanel imagePanel = new HTMLPanel(AbstractImagePrototype.create(res.addIssue()).getHTML());
-    imagePanel.getElement().getStyle().setOpacity(0);
-    downLoad.add(imagePanel);
-    downLoad.add(new Label("下载"));
-    downLoad.getElement().getStyle().setOpacity(0);
-    myDownLoadPanel.getElement().getStyle().setCursor(Cursor.POINTER);
-    myDownLoadPanel.add(downLoad);
+        if (issueDownloadFinish == null) {
+          storage.put(keyUtil.listKey(IssueProxy.ISSUE_DOWN), helpIssue);
+        } else {
+          displayIssue(issueDownloadFinish, false);
+        }
+
+        List<IssueProxy> issueDownload = storage.get(keyUtil.listKey(IssueProxy.ISSUE_DOWN));
+
+        if (issueDownload != null) {
+          displayIssue(issueDownload, true);
+          // return;
+        }
+
+        HTMLPanel downLoad = new HTMLPanel("");
+        HTMLPanel imagePanel =
+            new HTMLPanel(AbstractImagePrototype.create(res.addIssue()).getHTML());
+        // imagePanel.getElement().getStyle().setOpacity(0);
+        downLoad.add(imagePanel);
+        downLoad.add(new Label(IssueProxy.ISSUE_STATE_DOWN));
+        // downLoad.getElement().getStyle().setOpacity(0);
+        myDownLoadPanel.getElement().getStyle().setCursor(Cursor.POINTER);
+        myDownLoadPanel.add(downLoad);
+      }
+
+      @Override
+      public Request<List<IssueProxy>> provideRequest() {
+        return f.issue().findHelpIssue(7);
+      }
+    }.setKey(keyUtil.listKey(IssueProxy.HELP_ISSUE)).fire();
+
   }
 
   private void displayIssue(final List<IssueProxy> proxys, final boolean isDownloadFinish) {
