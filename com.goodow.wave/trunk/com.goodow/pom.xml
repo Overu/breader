@@ -68,6 +68,11 @@
         <version>${gwt.version}</version>
         <scope>provided</scope>
       </dependency>
+      <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>20090211</version>
+      </dependency>
 
       <!-- GIN and Guice for IoC / DI -->
       <dependency>
