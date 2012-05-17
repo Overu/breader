@@ -13,6 +13,7 @@
       <groupId>com.goodow.wave</groupId>
       <artifactId>com.goodow.wave.client</artifactId>
       <version>${project.version}</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.goodow.web</groupId>
@@ -48,16 +49,10 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Google Web Toolkit (GWT) -->
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-user</artifactId>
-    </dependency>
-
     <!-- test -->
     <dependency>
-      <groupId>com.goodow.web</groupId>
-      <artifactId>com.goodow.web.test</artifactId>
+      <groupId>com.goodow.wave</groupId>
+      <artifactId>com.goodow.wave.test</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
