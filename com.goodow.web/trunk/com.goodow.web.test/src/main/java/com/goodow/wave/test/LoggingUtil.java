@@ -1,4 +1,4 @@
-package org.cloudlet.web.test;
+package com.goodow.wave.test;
 
 import java.net.URL;
 import java.util.logging.FileHandler;

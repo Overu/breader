@@ -1,5 +1,7 @@
 package com.retech.reader.web.domain;
 
+import com.goodow.wave.test.BaseTest;
+
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
@@ -16,7 +18,6 @@ import com.retech.reader.web.server.service.ResourceService;
 import com.retech.reader.web.server.service.SectionService;
 import com.retech.reader.web.shared.proxy.MimeType;
 
-import org.cloudlet.web.test.BaseTest;
 import org.junit.Test;
 
 import java.io.IOException;

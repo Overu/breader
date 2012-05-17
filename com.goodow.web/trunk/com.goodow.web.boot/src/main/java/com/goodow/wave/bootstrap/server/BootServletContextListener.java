@@ -1,4 +1,4 @@
-package org.cloudlet.web.boot.server;
+package com.goodow.wave.bootstrap.server;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;

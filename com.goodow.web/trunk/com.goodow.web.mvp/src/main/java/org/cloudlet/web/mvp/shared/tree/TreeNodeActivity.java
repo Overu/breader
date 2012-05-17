@@ -1,5 +1,7 @@
 package org.cloudlet.web.mvp.shared.tree;
 
+import com.goodow.wave.bootstrap.shared.MapBinder;
+
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -12,7 +14,6 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 
-import org.cloudlet.web.boot.shared.MapBinder;
 import org.cloudlet.web.mvp.shared.ActivityAware;
 import org.cloudlet.web.mvp.shared.Default;
 import org.cloudlet.web.mvp.shared.tree.event.RefreshEvent;

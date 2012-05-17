@@ -1,4 +1,4 @@
-package org.cloudlet.web.boot.server;
+package com.goodow.wave.bootstrap.server;
 
 import java.io.IOException;
 import java.io.InputStream;

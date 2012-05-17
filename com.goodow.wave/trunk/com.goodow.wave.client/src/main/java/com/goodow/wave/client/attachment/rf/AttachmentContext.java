@@ -11,15 +11,16 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.wave.client.attachment.rpc;
+package com.goodow.wave.client.attachment.rf;
 
 import com.goodow.wave.server.attachment.AttachmentService;
 import com.goodow.wave.server.rf.RfLocator;
 
+import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.Service;
 
 @Service(value = AttachmentService.class, locator = RfLocator.class)
 public interface AttachmentContext extends RequestContext {
-
+  Request<String> createUploadUrl();
 }

@@ -1,5 +1,7 @@
 package com.retech.reader.web.service;
 
+import com.goodow.wave.test.BaseTest;
+
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
@@ -12,7 +14,6 @@ import com.retech.reader.web.server.service.PageService;
 import com.retech.reader.web.server.service.SectionService;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.test.BaseTest;
 import org.junit.Before;
 import org.junit.Test;
 

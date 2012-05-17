@@ -1,12 +1,13 @@
 package com.retech.reader.web.service;
 
+import com.goodow.wave.test.BaseTest;
+
 import com.google.inject.Inject;
 
 import com.retech.reader.web.server.domain.Issue;
 import com.retech.reader.web.server.service.AdService;
 import com.retech.reader.web.server.service.IssueService;
 
-import org.cloudlet.web.test.BaseTest;
 import org.junit.Test;
 
 import java.util.List;

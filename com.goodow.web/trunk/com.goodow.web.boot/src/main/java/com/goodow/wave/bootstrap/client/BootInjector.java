@@ -1,4 +1,4 @@
-package org.cloudlet.web.boot.client;
+package com.goodow.wave.bootstrap.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.inject.client.GinModules;

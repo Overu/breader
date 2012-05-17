@@ -1,5 +1,7 @@
 package org.cloudlet.web.security.server.auth;
 
+import com.goodow.wave.test.BaseTest;
+
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
@@ -8,7 +10,6 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.util.ByteSource;
 import org.cloudlet.web.security.server.domain.User;
 import org.cloudlet.web.security.server.service.UserService;
-import org.cloudlet.web.test.BaseTest;
 import org.junit.Test;
 
 import java.io.BufferedReader;

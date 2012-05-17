@@ -1,5 +1,7 @@
 package org.cloudlet.web.mvp;
 
+import com.goodow.wave.test.BaseTest;
+
 import com.google.inject.Inject;
 import com.google.inject.Module;
 import com.google.inject.Provides;
@@ -19,7 +21,6 @@ import com.google.web.bindery.requestfactory.vm.RequestFactorySource;
 import org.cloudlet.web.mvp.shared.tree.TreeNodeProxy;
 import org.cloudlet.web.mvp.shared.tree.rpc.TreeNodeContext;
 import org.cloudlet.web.mvp.shared.tree.rpc.TreeNodeFactory;
-import org.cloudlet.web.test.BaseTest;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

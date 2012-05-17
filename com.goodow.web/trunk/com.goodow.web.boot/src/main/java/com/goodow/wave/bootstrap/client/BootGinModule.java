@@ -1,4 +1,4 @@
-package org.cloudlet.web.boot.client;
+package com.goodow.wave.bootstrap.client;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 
@@ -10,6 +10,6 @@ final class BootGinModule extends AbstractGinModule {
   @Override
   protected void configure() {
     logger.finest("config start");
-    install(new org.cloudlet.web.boot.shared.BootGinModule());
+    install(new com.goodow.wave.bootstrap.shared.BootGinModule());
   }
 }

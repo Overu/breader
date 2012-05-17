@@ -1,4 +1,4 @@
-package org.cloudlet.web.boot.shared;
+package com.goodow.wave.bootstrap.shared;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;

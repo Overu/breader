@@ -1,10 +1,11 @@
 package org.cloudlet.web.mvp;
 
+import com.goodow.wave.test.BaseTest;
+
 import com.google.inject.Inject;
 
 import org.cloudlet.web.mvp.server.tree.domain.TreeNode;
 import org.cloudlet.web.mvp.server.tree.service.TreeService;
-import org.cloudlet.web.test.BaseTest;
 import org.junit.Test;
 
 import java.util.List;

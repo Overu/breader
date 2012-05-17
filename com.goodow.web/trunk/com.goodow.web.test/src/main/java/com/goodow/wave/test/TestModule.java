@@ -1,4 +1,4 @@
-package org.cloudlet.web.test;
+package com.goodow.wave.test;
 
 import com.google.appengine.api.rdbms.dev.LocalRdbmsService.ServerType;
 import com.google.appengine.tools.development.testing.LocalMemcacheServiceTestConfig;

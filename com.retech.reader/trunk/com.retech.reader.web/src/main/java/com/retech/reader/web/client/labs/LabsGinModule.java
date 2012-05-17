@@ -1,5 +1,6 @@
 package com.retech.reader.web.client.labs;
 
+import com.goodow.wave.bootstrap.shared.MapBinder;
 import com.goodow.wave.client.account.ContactPanel;
 import com.goodow.wave.client.shell.WaveShell;
 import com.goodow.wave.client.wavepanel.blip.BlipTest;
@@ -31,7 +32,6 @@ import com.retech.reader.web.client.mobile.ui.talk.TalkView;
 import com.retech.reader.web.shared.rpc.FinalRequestFactory;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.boot.shared.MapBinder;
 
 import java.util.logging.Logger;
 

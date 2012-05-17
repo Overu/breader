@@ -1,5 +1,7 @@
 package org.cloudlet.web.mvp.shared.ioc;
 
+import com.goodow.wave.bootstrap.shared.MapBinder;
+
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
@@ -18,7 +20,6 @@ import com.google.web.bindery.requestfactory.shared.ProxySerializer;
 import com.google.web.bindery.requestfactory.shared.ProxyStore;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 
-import org.cloudlet.web.boot.shared.MapBinder;
 import org.cloudlet.web.mvp.shared.BaseActivity;
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.mvp.shared.Default;

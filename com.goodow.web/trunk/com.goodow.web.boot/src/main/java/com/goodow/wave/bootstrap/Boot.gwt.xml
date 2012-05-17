@@ -17,7 +17,7 @@
   <set-property name="user.agent" value="safari"/>
   
   <!-- Specify the app entry point class.                         -->
-  <entry-point class='org.cloudlet.web.boot.client.Boot'/>
+  <entry-point class='com.goodow.wave.bootstrap.client.Boot'/>
   
   <define-configuration-property name="client.ioc.ginModules" is-multi-valued="true" />
   <define-configuration-property name="shared.ioc.ginModules" is-multi-valued="true" />

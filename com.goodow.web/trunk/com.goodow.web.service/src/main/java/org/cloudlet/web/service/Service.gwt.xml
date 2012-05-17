@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='boot'>
   <!-- Inherit the core Web Toolkit stuff.                        -->
-  <inherits name='org.cloudlet.web.boot.Boot'/>
+  <inherits name='com.goodow.wave.bootstrap.Boot'/>
   <inherits name='com.goodow.web.logging.Logging'/>
   <inherits name='com.googlecode.gwtphonegap.PhoneGap' />
       

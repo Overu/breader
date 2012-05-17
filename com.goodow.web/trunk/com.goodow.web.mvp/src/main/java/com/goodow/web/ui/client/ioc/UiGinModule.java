@@ -13,6 +13,7 @@
  */
 package com.goodow.web.ui.client.ioc;
 
+import com.goodow.wave.bootstrap.shared.MapBinder;
 import com.goodow.wave.client.widget.loading.LoadingIndicator;
 import com.goodow.web.ui.client.footer.FooterUi;
 import com.goodow.web.ui.client.nav.NavUi;
@@ -31,7 +32,6 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
 
-import org.cloudlet.web.boot.shared.MapBinder;
 import org.cloudlet.web.mvp.shared.layout.Footer;
 import org.cloudlet.web.mvp.shared.layout.Nav;
 import org.cloudlet.web.mvp.shared.layout.Search;

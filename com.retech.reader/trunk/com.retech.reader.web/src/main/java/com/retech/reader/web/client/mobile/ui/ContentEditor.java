@@ -1,5 +1,6 @@
 package com.retech.reader.web.client.mobile.ui;
 
+import com.goodow.wave.bootstrap.shared.MapBinder;
 import com.goodow.wave.client.shell.WaveShell;
 import com.goodow.wave.client.wavepanel.WavePanel;
 
@@ -45,7 +46,6 @@ import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.proxy.SectionProxy;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.boot.shared.MapBinder;
 import org.cloudlet.web.mvp.shared.BasePlace;
 import org.cloudlet.web.service.shared.KeyUtil;
 import org.cloudlet.web.service.shared.LocalStorage;

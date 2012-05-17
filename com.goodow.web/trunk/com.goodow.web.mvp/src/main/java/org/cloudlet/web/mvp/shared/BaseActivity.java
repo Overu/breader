@@ -1,5 +1,7 @@
 package org.cloudlet.web.mvp.shared;
 
+import com.goodow.wave.bootstrap.shared.MapBinder;
+
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.logging.client.LogConfiguration;
@@ -13,7 +15,6 @@ import com.google.inject.Provider;
 import com.google.inject.servlet.RequestParameters;
 import com.google.web.bindery.requestfactory.shared.EntityProxy;
 
-import org.cloudlet.web.boot.shared.MapBinder;
 
 import java.util.ArrayList;
 import java.util.List;

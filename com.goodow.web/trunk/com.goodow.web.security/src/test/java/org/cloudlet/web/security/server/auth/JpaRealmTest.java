@@ -1,5 +1,7 @@
 package org.cloudlet.web.security.server.auth;
 
+import com.goodow.wave.test.BaseTest;
+
 import com.google.inject.Inject;
 import com.google.inject.Module;
 import com.google.inject.Provider;
@@ -17,7 +19,6 @@ import org.cloudlet.web.security.server.domain.Role;
 import org.cloudlet.web.security.server.domain.User;
 import org.cloudlet.web.security.server.service.UserService;
 import org.cloudlet.web.service.server.jpa.BaseService;
-import org.cloudlet.web.test.BaseTest;
 import org.junit.Before;
 import org.junit.Test;
 

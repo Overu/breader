@@ -1,10 +1,11 @@
-package org.cloudlet.web.test;
+package com.goodow.wave.test;
+
+import com.goodow.wave.bootstrap.server.BootModule;
 
 import com.google.guiceberry.GuiceBerryModule;
 import com.google.guiceberry.junit4.GuiceBerryRule;
 import com.google.inject.Module;
 
-import org.cloudlet.web.boot.server.BootModule;
 import org.junit.Assert;
 import org.junit.Rule;
 
