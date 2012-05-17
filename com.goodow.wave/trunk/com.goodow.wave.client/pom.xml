@@ -12,6 +12,10 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-user</artifactId>
+    </dependency>
+    <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>${project.groupId}.server</artifactId>
       <version>${project.version}</version>
