@@ -21,6 +21,9 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * Metadata associated with an attachment. Should not be changed for a given attachment, so that it
  * can be cached indefinitely.
@@ -30,6 +33,7 @@ import java.io.Serializable;
 // TODO(danilatos) Merge this with WalkaroundAttachment, once we have a json interface.
 // Same goes for "ImageMetadata"
 // TODO(danilatos) Consider using a proto-based implementation?
+@Entity
 public class AttachmentMetadata implements Serializable {
   public interface ImageMetadata {
     public int getHeight();
@@ -38,27 +42,30 @@ public class AttachmentMetadata implements Serializable {
   }
 
   private static final long serialVersionUID = 562560590763783822L;
-
-  private final AttachmentId id;
-  private final BlobKey blobKey;
+  @Id
+  private String id;
+  private String blobKey;
   // String for Serializable
-  private final String rawMetadata;
+  private String rawMetadata;
   // Parsed version of rawMetadata.
   private transient JSONObject maybeMetadata;
 
+  public AttachmentMetadata() {
+  }
+
   public AttachmentMetadata(final AttachmentId id, final BlobKey blobKey, final JSONObject metadata) {
-    this.id = id;
-    this.blobKey = blobKey;
+    this.id = id.getId();
+    this.blobKey = blobKey.getKeyString();
     this.maybeMetadata = metadata;
     this.rawMetadata = metadata.toString();
   }
 
   public BlobKey getBlobKey() {
-    return blobKey;
+    return new BlobKey(blobKey);
   }
 
   public AttachmentId getId() {
-    return id;
+    return new AttachmentId(id);
   }
 
   public ImageMetadata getImage() {
