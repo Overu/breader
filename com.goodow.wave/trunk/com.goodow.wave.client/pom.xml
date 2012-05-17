@@ -31,25 +31,16 @@
       <artifactId>guice</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.google.inject.extensions</groupId>
-      <artifactId>guice-servlet</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.inject.extensions</groupId>
-      <artifactId>guice-multibindings</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.inject.extensions</groupId>
-      <artifactId>guice-assistedinject</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.inject.extensions</groupId>
-      <artifactId>guice-persist</artifactId>
-    </dependency>
-    <dependency>
       <groupId>com.google.gwt.inject</groupId>
       <artifactId>gin</artifactId>
     </dependency>
+    
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>${project.groupId}.server</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    
   </dependencies>
 
   <build>

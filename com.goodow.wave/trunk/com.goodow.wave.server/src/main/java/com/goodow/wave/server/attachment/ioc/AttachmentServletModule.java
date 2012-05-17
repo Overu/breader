@@ -14,7 +14,16 @@
 package com.goodow.wave.server.attachment.ioc;
 
 import com.goodow.wave.server.attachment.AttachmentMetadataHandler;
+import com.goodow.wave.server.attachment.AttachmentUploadHandler;
 
+import com.google.appengine.api.blobstore.BlobInfoFactory;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.urlfetch.URLFetchService;
+import com.google.appengine.api.urlfetch.URLFetchServiceFactory;
+import com.google.inject.Provides;
 import com.google.inject.servlet.ServletModule;
 
 public class AttachmentServletModule extends ServletModule {
@@ -22,6 +31,26 @@ public class AttachmentServletModule extends ServletModule {
   protected void configureServlets() {
     super.configureServlets();
     serve("/attachmentinfo").with(AttachmentMetadataHandler.class);
+    serve("/upload").with(AttachmentUploadHandler.class);
   }
 
+  @Provides
+  BlobInfoFactory provideBlobInfoFactory() {
+    return new BlobInfoFactory();
+  }
+
+  @Provides
+  BlobstoreService provideBlobstoreService() {
+    return BlobstoreServiceFactory.getBlobstoreService();
+  }
+
+  @Provides
+  ImagesService provideImagesService() {
+    return ImagesServiceFactory.getImagesService();
+  }
+
+  @Provides
+  URLFetchService provideUrlFetchService() {
+    return URLFetchServiceFactory.getURLFetchService();
+  }
 }

@@ -1,4 +1,4 @@
-package org.cloudlet.web.service.server;
+package com.goodow.wave.server.rf;
 
 import com.google.inject.Inject;
 import com.google.web.bindery.requestfactory.shared.Locator;
@@ -6,12 +6,12 @@ import com.google.web.bindery.requestfactory.shared.ServiceLocator;
 
 import java.util.logging.Logger;
 
-public class NoLocator extends Locator<Object, Object> implements ServiceLocator {
+public class RfLocator extends Locator<Object, Object> implements ServiceLocator {
 
   private final Logger logger;
 
   @Inject
-  NoLocator(final Logger logger) {
+  RfLocator(final Logger logger) {
     this.logger = logger;
   }
 

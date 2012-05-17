@@ -57,6 +57,7 @@ public class AttachmentUploadHandler extends HttpServlet {
     BlobKey blobKey = Iterables.getOnlyElement(blobKeys);
     log.info("blobKeys: " + blobKeys);
     AttachmentId newId = rawAttachmentService.turnBlobIntoAttachment(blobKey);
+    resp.getWriter().write(newId.getId());
   }
 
 }

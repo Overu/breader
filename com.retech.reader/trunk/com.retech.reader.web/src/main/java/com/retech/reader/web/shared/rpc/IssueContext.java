@@ -1,5 +1,7 @@
 package com.retech.reader.web.shared.rpc;
 
+import com.goodow.wave.server.rf.RfLocator;
+
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.Service;
 
@@ -8,12 +10,11 @@ import com.retech.reader.web.shared.proxy.CategoryProxy;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.PageProxy;
 
-import org.cloudlet.web.service.server.NoLocator;
 import org.cloudlet.web.service.shared.rpc.BaseContext;
 
 import java.util.List;
 
-@Service(value = IssueService.class, locator = NoLocator.class)
+@Service(value = IssueService.class, locator = RfLocator.class)
 public interface IssueContext extends BaseContext {
   @Deprecated
   Request<List<IssueProxy>> find(CategoryProxy categoryProxy);

@@ -1,15 +1,16 @@
 package org.cloudlet.web.mvp.shared.tree;
 
+import com.goodow.wave.server.rf.RfLocator;
+
 import com.google.web.bindery.requestfactory.shared.EntityProxy;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
 import org.cloudlet.web.mvp.server.tree.domain.TreeNode;
-import org.cloudlet.web.service.server.NoLocator;
 
 import java.util.List;
 
-@ProxyFor(value = TreeNode.class, locator = NoLocator.class)
+@ProxyFor(value = TreeNode.class, locator = RfLocator.class)
 public interface TreeNodeProxy extends EntityProxy {
 
   List<TreeNodeProxy> getChildren();
