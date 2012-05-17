@@ -11,14 +11,18 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.wave.bootstrap.shared;
+package com.goodow.wave.bootstrap.client;
 
-import com.google.gwt.inject.client.AsyncProvider;
+import com.google.gwt.inject.client.AbstractGinModule;
 
-public interface LinkedBindingBuilder<T> {
-  // void to(Class<? extends T> implementation);
+import java.util.logging.Logger;
 
-  void toAsyncProvider(AsyncProvider<? extends T> provider);
+final class BootstrapGinModule extends AbstractGinModule {
+  private static final Logger logger = Logger.getLogger(BootstrapGinModule.class.getName());
 
-  void toInstance(T instance);
+  @Override
+  protected void configure() {
+    logger.finest("config start");
+    install(new com.goodow.wave.bootstrap.shared.BootstrapGinModule());
+  }
 }

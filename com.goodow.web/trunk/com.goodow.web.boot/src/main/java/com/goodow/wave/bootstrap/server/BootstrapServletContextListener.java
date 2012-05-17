@@ -1,3 +1,16 @@
+/*
+ * Copyright 2012 Goodow.com
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.goodow.wave.bootstrap.server;
 
 import com.google.inject.Guice;
@@ -11,10 +24,11 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-public final class BootServletContextListener extends GuiceServletContextListener {
+public final class BootstrapServletContextListener extends GuiceServletContextListener {
 
   private ServiceLoader<ServletContextListener> servletContextListeners;
-  private final Logger logger = Logger.getLogger(getClass().getName());
+  private static final Logger logger = Logger.getLogger(BootstrapServletContextListener.class
+      .getName());
 
   @Override
   public void contextDestroyed(final ServletContextEvent servletContextEvent) {
@@ -32,7 +46,7 @@ public final class BootServletContextListener extends GuiceServletContextListene
 
   @Override
   public void contextInitialized(final ServletContextEvent servletContextEvent) {
-    BootUtil.restoreSystemProperties();
+    BootstrapUtil.restoreSystemProperties();
     if (servletContextListeners == null) {
       servletContextListeners = ServiceLoader.load(ServletContextListener.class);
     }
@@ -50,7 +64,7 @@ public final class BootServletContextListener extends GuiceServletContextListene
 
   @Override
   protected Injector getInjector() {
-    Injector injector = Guice.createInjector(new BootModule(), new BootServletModule());
+    Injector injector = Guice.createInjector(new BootstrapModule(), new BootstrapServletModule());
     return injector;
   }
 }

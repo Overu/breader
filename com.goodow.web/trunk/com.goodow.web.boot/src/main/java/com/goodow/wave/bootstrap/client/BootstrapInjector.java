@@ -11,14 +11,14 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.wave.bootstrap.shared;
+package com.goodow.wave.bootstrap.client;
 
-import com.google.gwt.inject.client.AsyncProvider;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.inject.client.GinModules;
+import com.google.gwt.inject.client.Ginjector;
 
-public interface LinkedBindingBuilder<T> {
-  // void to(Class<? extends T> implementation);
-
-  void toAsyncProvider(AsyncProvider<? extends T> provider);
-
-  void toInstance(T instance);
+@GinModules(value = {BootstrapGinModule.class}, properties = {
+    "shared.ioc.ginModules", "client.ioc.ginModules"})
+public interface BootstrapInjector extends Ginjector {
+  GWT get();
 }

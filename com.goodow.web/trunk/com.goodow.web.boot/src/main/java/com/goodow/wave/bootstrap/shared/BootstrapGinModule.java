@@ -13,12 +13,19 @@
  */
 package com.goodow.wave.bootstrap.shared;
 
-import com.google.gwt.inject.client.AsyncProvider;
+import com.google.gwt.inject.client.AbstractGinModule;
+import com.google.inject.Singleton;
+import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.event.shared.SimpleEventBus;
 
-public interface LinkedBindingBuilder<T> {
-  // void to(Class<? extends T> implementation);
+import java.util.logging.Logger;
 
-  void toAsyncProvider(AsyncProvider<? extends T> provider);
+public final class BootstrapGinModule extends AbstractGinModule {
+  private static final Logger logger = Logger.getLogger(BootstrapGinModule.class.getName());
 
-  void toInstance(T instance);
+  @Override
+  protected void configure() {
+    logger.finest("config start");
+    bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
+  }
 }
