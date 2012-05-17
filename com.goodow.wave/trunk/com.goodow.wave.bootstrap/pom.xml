@@ -8,7 +8,7 @@
     <artifactId>com.goodow.wave</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>${project.groupId}.bootstrap</artifactId>
+  <artifactId>com.goodow.wave.bootstrap</artifactId>
 
   <properties>
   </properties>
