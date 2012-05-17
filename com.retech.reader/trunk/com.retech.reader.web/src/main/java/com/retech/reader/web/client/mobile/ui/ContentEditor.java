@@ -145,7 +145,7 @@ public class ContentEditor extends WavePanel implements Activity {
         JsArray<Touch> touchesMove = event.getTouches();
         switch (touchesMove.length()) {
           case 2:
-            if (scheduledTwo) {
+            if (scheduledTwo || !scheduledOne) {
               return;
             }
             scheduledTwo = true;
@@ -165,7 +165,7 @@ public class ContentEditor extends WavePanel implements Activity {
             }
             break;
           case 1:
-            if (scheduledOne) {
+            if (scheduledOne || !scheduledTwo) {
               return;
             }
             scheduledOne = true;
