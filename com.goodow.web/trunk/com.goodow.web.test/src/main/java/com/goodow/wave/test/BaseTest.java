@@ -1,6 +1,6 @@
 package com.goodow.wave.test;
 
-import com.goodow.wave.bootstrap.server.BootModule;
+import com.goodow.wave.bootstrap.server.BootstrapModule;
 
 import com.google.guiceberry.GuiceBerryModule;
 import com.google.guiceberry.junit4.GuiceBerryRule;
@@ -16,7 +16,7 @@ public abstract class BaseTest extends Assert {
     protected void configure() {
       super.configure();
       install(new TestModule());
-      install(new BootModule());
+      install(new BootstrapModule());
     }
   }
 
