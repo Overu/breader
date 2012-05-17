@@ -1,4 +1,4 @@
-package org.cloudlet.web.testing.demo.server.domain;
+package com.goodow.wave.test.domain;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
