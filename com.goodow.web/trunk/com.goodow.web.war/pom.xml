@@ -12,10 +12,15 @@
   <packaging>war</packaging>
   <dependencies>
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>${project.groupId}.boot</artifactId>
+      <groupId>com.goodow.wave</groupId>
+      <artifactId>com.goodow.wave.bootstrap</artifactId>
       <version>${project.version}</version>
-      <classifier>client</classifier>
+    </dependency>
+    <dependency>
+      <groupId>com.goodow.wave</groupId>
+      <artifactId>com.goodow.wave.bootstrap</artifactId>
+      <version>${project.version}</version>
+      <classifier>sources</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
