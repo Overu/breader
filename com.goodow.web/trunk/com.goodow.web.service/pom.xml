@@ -27,18 +27,6 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>${project.groupId}.boot</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>${project.groupId}.boot</artifactId>
-      <version>${project.version}</version>
-      <classifier>client</classifier>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
       <artifactId>${project.groupId}.logging</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -60,7 +48,6 @@
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
-      <version>20090211</version>
     </dependency>
 
     <!-- Google Web Toolkit (GWT) -->
@@ -71,32 +58,6 @@
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-servlet</artifactId>
-    </dependency>
-
-    <!-- GIN and Guice for IoC / DI -->
-    <dependency>
-      <groupId>com.google.inject</groupId>
-      <artifactId>guice</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.inject.extensions</groupId>
-      <artifactId>guice-servlet</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.inject.extensions</groupId>
-      <artifactId>guice-multibindings</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.inject.extensions</groupId>
-      <artifactId>guice-assistedinject</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.inject.extensions</groupId>
-      <artifactId>guice-persist</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.gwt.inject</groupId>
-      <artifactId>gin</artifactId>
     </dependency>
 
     <!--<dependency> <groupId>org.apache.geronimo.specs</groupId> <artifactId>geronimo-jpa_2.0_spec</artifactId> 
@@ -145,8 +106,6 @@
       <version>2.5.0.v20100521-1846</version>
     </dependency>
 
-
-
     <dependency>
       <!-- To import Base64 class. Remove it? -->
       <groupId>com.google.appengine</groupId>
@@ -155,8 +114,8 @@
 
     <!-- test -->
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>${project.groupId}.test</artifactId>
+      <groupId>com.goodow.wave</groupId>
+      <artifactId>com.goodow.wave.test</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
