@@ -233,7 +233,7 @@ public class DomainTest extends BaseTest {
                   resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(7, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
               .setCategory(c7)
-              .setTitle("银幕小生")
+              .setTitle("用户手册")
               .setDetail(
                   "近几年电影界风生水起，异常红火，于是有N多新鲜肉小生盯上了电影这块大阵地，向大银幕发起了猛烈攻击！一时之间，银幕上的新鲜小生空降兵攻城略地，看得我们眼花缭乱。");
       issueService.put(issue);
