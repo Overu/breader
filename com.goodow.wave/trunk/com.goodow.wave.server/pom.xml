@@ -8,7 +8,7 @@
     <artifactId>com.goodow.wave</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>${project.groupId}.client</artifactId>
+  <artifactId>${project.groupId}.server</artifactId>
 
   <dependencies>
     <!-- Google Web Toolkit (GWT) -->
