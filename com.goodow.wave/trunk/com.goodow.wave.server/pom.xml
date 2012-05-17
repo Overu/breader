@@ -12,26 +12,13 @@
 
   <dependencies>
     <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>${project.groupId}.bootstrap</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <groupId>com.google.web.bindery</groupId>
       <artifactId>requestfactory-server</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <!-- GIN and Guice for IoC / DI -->
-    <dependency>
-      <groupId>com.google.inject</groupId>
-      <artifactId>guice</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.inject.extensions</groupId>
-      <artifactId>guice-servlet</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.inject.extensions</groupId>
-      <artifactId>guice-multibindings</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.google.inject.extensions</groupId>
-      <artifactId>guice-assistedinject</artifactId>
     </dependency>
 
     <dependency>
@@ -50,11 +37,8 @@
       <version>1.0</version>
       <scope>provided</scope>
     </dependency>
-    <!-- <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>12.0</version>
-    </dependency> -->
+    <!-- <dependency> <groupId>com.google.guava</groupId> <artifactId>guava</artifactId> <version>12.0</version> 
+      </dependency> -->
   </dependencies>
 
 </project>
