@@ -83,12 +83,6 @@
       <version>2.5.0.v20100521-1846</version>
     </dependency>
 
-    <dependency>
-      <!-- To import Base64 class. Remove it? -->
-      <groupId>com.google.appengine</groupId>
-      <artifactId>appengine-api-1.0-sdk</artifactId>
-    </dependency>
-
     <!-- test -->
     <dependency>
       <groupId>com.goodow.wave</groupId>
