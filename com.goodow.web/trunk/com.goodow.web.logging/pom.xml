@@ -15,6 +15,10 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-user</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.goodow.wave</groupId>
       <artifactId>com.goodow.wave.bootstrap</artifactId>
       <version>${project.version}</version>
@@ -22,10 +26,6 @@
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>javax.validation</groupId>
-      <artifactId>validation-api</artifactId>
     </dependency>
     <dependency>
       <groupId>com.google.appengine</groupId>
