@@ -17,8 +17,12 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.google.web.bindery</groupId>
-      <artifactId>requestfactory-server</artifactId>
+      <groupId>com.google.gwt</groupId>
+      <artifactId>gwt-servlet</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
     </dependency>
 
     <dependency>
