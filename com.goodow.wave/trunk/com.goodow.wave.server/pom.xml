@@ -18,8 +18,7 @@
     </dependency>
     <dependency>
       <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-servlet</artifactId>
-      <scope>compile</scope>
+      <artifactId>gwt-user</artifactId>
     </dependency>
     <dependency>
       <groupId>org.json</groupId>
