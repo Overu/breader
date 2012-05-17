@@ -20,17 +20,6 @@
       <artifactId>guiceberry</artifactId>
       <scope>compile</scope>
     </dependency>
-    <!-- Google Web Toolkit (GWT) -->
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-user</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.google.gwt</groupId>
-      <artifactId>gwt-dev</artifactId>
-      <scope>compile</scope>
-    </dependency>
 
     <!-- persistence -->
     <!-- RequestFactory will use JSR 303 javax.validation if you let it -->
