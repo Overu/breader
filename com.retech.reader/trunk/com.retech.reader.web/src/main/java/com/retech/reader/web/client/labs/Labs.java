@@ -141,10 +141,6 @@ public class Labs extends WavePanel implements Activity {
         new LabsIconDecorator(bunder.laboratory(), "分享", ContactPanel.class);
     list.add(contactPanel);
 
-    LabsIconDecorator androidDownload =
-        new LabsIconDecorator(bunder.laboratory(), "Android下载", ContactPanel.class);
-    list.add(androidDownload);
-
     server.add(new Anchor("Android版下载", "https://build.phonegap.com/apps/95095/download/android",
         "_blank"));
     server.add(new Anchor("iOS越狱版下载", "https://build.phonegap.com/apps/95095/download/ios",

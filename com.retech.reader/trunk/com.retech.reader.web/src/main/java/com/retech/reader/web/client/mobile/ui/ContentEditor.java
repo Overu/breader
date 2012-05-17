@@ -101,6 +101,7 @@ public class ContentEditor extends WavePanel implements Activity {
     flowPanel = new FlowPanel();
     html = new HTML();
     html.addStyleName(ReaderResources.INSTANCE().style().contentHtmlPanel());
+    this.getElement().getStyle().setMarginTop(1, Unit.EM);
     flowPanel.add(html);
 
     this.setWaveContent(flowPanel);
@@ -111,21 +112,23 @@ public class ContentEditor extends WavePanel implements Activity {
       public void onTouchStart(final TouchStartEvent event) {
         JsArray<Touch> touchesStart = event.getTouches();
         switch (touchesStart.length()) {
-          case 1:
-            logger.info("touches: 1 ");
-            scheduledOne = false;
-            Touch touch = touchesStart.get(0);
-            startX1 = touch.getPageX();
-            columnCount = html.getElement().getScrollWidth() / contentWidth;
-            // logger.info("columnCount:" + columnCount);
-            break;
           case 2:
             // logger.info("touches: 2 ");
             scheduledTwo = false;
+            scheduledOne = true;
             Touch touch1 = touchesStart.get(0);
             Touch touch2 = touchesStart.get(1);
             startX1 = touch1.getPageX();
             startX2 = touch2.getPageX();
+            break;
+          case 1:
+            logger.info("touches: 1 ");
+            scheduledOne = false;
+            scheduledTwo = true;
+            Touch touch = touchesStart.get(0);
+            startX1 = touch.getPageX();
+            columnCount = html.getElement().getScrollWidth() / contentWidth;
+            // logger.info("columnCount:" + columnCount);
             break;
 
           default:
@@ -141,17 +144,6 @@ public class ContentEditor extends WavePanel implements Activity {
         event.preventDefault();
         JsArray<Touch> touchesMove = event.getTouches();
         switch (touchesMove.length()) {
-          case 1:
-            if (scheduledOne) {
-              return;
-            }
-            scheduledOne = true;
-            // logger.info("touch 1 move");
-            Touch touch = touchesMove.get(0);
-            int nowX = touch.getPageX();
-            int subtractX = nowX - startX1;
-            gotoNextPageAndScrollNext(subtractX);
-            break;
           case 2:
             if (scheduledTwo) {
               return;
@@ -172,6 +164,17 @@ public class ContentEditor extends WavePanel implements Activity {
               return;
             }
             break;
+          case 1:
+            if (scheduledOne) {
+              return;
+            }
+            scheduledOne = true;
+            // logger.info("touch 1 move");
+            Touch touch = touchesMove.get(0);
+            int nowX = touch.getPageX();
+            int subtractX = nowX - startX1;
+            gotoNextPageAndScrollNext(subtractX);
+            break;
 
           default:
             break;
@@ -184,7 +187,7 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onTouchEnd(final TouchEndEvent event) {
-        JsArray<Touch> touchesMove = event.getTouches();
+        // JsArray<Touch> touchesMove = event.getTouches();
         // logger.info("onTouchEnd fingers:" + touchesMove.length());
         scheduledOne = false;
         scheduledTwo = false;
@@ -237,8 +240,10 @@ public class ContentEditor extends WavePanel implements Activity {
           Style style = waveShell.getTopBar().getElement().getStyle();
           if (style.getTop().equals(TOPBAR_TOP + "px")) {
             style.clearTop();
+            style.setOpacity(1);
           } else {
             style.setTop(TOPBAR_TOP, Unit.PX);
+            style.clearOpacity();
           }
         }
 
@@ -277,7 +282,7 @@ public class ContentEditor extends WavePanel implements Activity {
     waveShell.getTopBar().addStyleName(ReaderResources.INSTANCE().style().contentTopBar());
     waveShell.getTopBar().getElement().getStyle().setTop(TOPBAR_TOP, Unit.PX);
     // contentHeight = Window.getClientHeight() - 73;
-    contentHeight = Window.getClientHeight() - 39;
+    contentHeight = Window.getClientHeight() - 39 - 16;
     contentWidth = Window.getClientWidth() - 14;
     Style htmlStyle = html.getElement().getStyle();
     htmlStyle.setHeight(contentHeight, Unit.PX);
