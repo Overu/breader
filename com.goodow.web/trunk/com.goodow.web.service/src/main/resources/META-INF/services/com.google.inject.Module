@@ -1,2 +1,1 @@
-org.cloudlet.web.service.server.ServiceModule
 org.cloudlet.web.service.server.jpa.JpaServiceModule
