@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.wave.server.attachment.model;
+package com.goodow.wave.server.media.model;
 
 public interface AttachmentMetadata {
   String getThumbnailUrl();

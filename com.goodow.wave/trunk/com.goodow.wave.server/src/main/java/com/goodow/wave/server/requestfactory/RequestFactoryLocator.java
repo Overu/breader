@@ -1,4 +1,4 @@
-package com.goodow.wave.server.rf;
+package com.goodow.wave.server.requestfactory;
 
 import com.google.inject.Inject;
 import com.google.web.bindery.requestfactory.shared.Locator;
@@ -6,12 +6,12 @@ import com.google.web.bindery.requestfactory.shared.ServiceLocator;
 
 import java.util.logging.Logger;
 
-public class RfLocator extends Locator<Object, Object> implements ServiceLocator {
+public class RequestFactoryLocator extends Locator<Object, Object> implements ServiceLocator {
 
   private final Logger logger;
 
   @Inject
-  RfLocator(final Logger logger) {
+  RequestFactoryLocator(final Logger logger) {
     this.logger = logger;
   }
 

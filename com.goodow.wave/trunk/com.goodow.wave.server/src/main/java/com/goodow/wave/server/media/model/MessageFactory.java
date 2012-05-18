@@ -11,16 +11,14 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.wave.client.attachment.rf;
+package com.goodow.wave.server.media.model;
 
-import com.goodow.wave.server.media.AttachmentService;
-import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
+import com.google.web.bindery.autobean.shared.AutoBean;
+import com.google.web.bindery.autobean.shared.AutoBeanFactory;
+import com.google.web.bindery.autobean.vm.AutoBeanFactorySource;
 
-import com.google.web.bindery.requestfactory.shared.Request;
-import com.google.web.bindery.requestfactory.shared.RequestContext;
-import com.google.web.bindery.requestfactory.shared.Service;
+public interface MessageFactory extends AutoBeanFactory {
+  MessageFactory FACTORY = AutoBeanFactorySource.create(MessageFactory.class);
 
-@Service(value = AttachmentService.class, locator = RequestFactoryLocator.class)
-public interface AttachmentContext extends RequestContext {
-  Request<String> createUploadUrl();
+  AutoBean<AttachmentMetadata> attachmentMetadata();
 }

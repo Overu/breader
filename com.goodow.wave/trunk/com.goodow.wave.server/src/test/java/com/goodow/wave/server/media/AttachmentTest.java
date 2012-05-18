@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Google Inc. All Rights Reserved.
+ * Copyright 2012 Goodow.com
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -11,25 +11,24 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.goodow.wave.server.media;
 
-package com.goodow.wave.server.attachment;
+import com.goodow.wave.test.BaseTest;
 
-import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import com.google.inject.Provider;
 
-@Singleton
-public class AttachmentService {
+import org.junit.Test;
 
-  private final BlobstoreService blobstoreService;
+import javax.persistence.EntityManager;
 
+public class AttachmentTest extends BaseTest {
   @Inject
-  AttachmentService(final BlobstoreService blobstoreService) {
-    this.blobstoreService = blobstoreService;
-  }
+  Provider<EntityManager> ems;
 
-  public String createUploadUrl() {
-    return blobstoreService.createUploadUrl("/upload");
+  @Test
+  public void test() {
+    AttachmentMetadata attachmentMetadata = new AttachmentMetadata("i1", null, null);
+    ems.get().persist(attachmentMetadata);
   }
-
 }

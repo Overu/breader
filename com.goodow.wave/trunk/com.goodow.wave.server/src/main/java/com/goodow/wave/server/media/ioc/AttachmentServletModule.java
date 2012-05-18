@@ -11,10 +11,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.wave.server.attachment.ioc;
+package com.goodow.wave.server.media.ioc;
 
-import com.goodow.wave.server.attachment.AttachmentMetadataHandler;
-import com.goodow.wave.server.attachment.AttachmentUploadHandler;
+import com.goodow.wave.server.media.AttachmentMetadataHandler;
+import com.goodow.wave.server.media.AttachmentUploadHandler;
 
 import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobstoreService;

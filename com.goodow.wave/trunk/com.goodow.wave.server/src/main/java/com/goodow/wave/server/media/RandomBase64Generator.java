@@ -12,7 +12,7 @@
  * the License.
  */
 
-package com.goodow.wave.server.attachment;
+package com.goodow.wave.server.media;
 
 import com.google.inject.Inject;
 

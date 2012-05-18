@@ -1,6 +1,6 @@
 package org.cloudlet.web.mvp.shared.tree.rpc;
 
-import com.goodow.wave.server.rf.RfLocator;
+import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
 
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
@@ -11,7 +11,7 @@ import org.cloudlet.web.mvp.shared.tree.TreeNodeProxy;
 
 import java.util.List;
 
-@Service(value = TreeService.class, locator = RfLocator.class)
+@Service(value = TreeService.class, locator = RequestFactoryLocator.class)
 public interface TreeNodeContext extends RequestContext {
   Request<List<TreeNodeProxy>> find(int start, int length, String sort);
 

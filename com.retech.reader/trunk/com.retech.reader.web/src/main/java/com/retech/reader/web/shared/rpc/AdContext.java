@@ -1,6 +1,6 @@
 package com.retech.reader.web.shared.rpc;
 
-import com.goodow.wave.server.rf.RfLocator;
+import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
 
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
@@ -12,7 +12,7 @@ import com.retech.reader.web.shared.proxy.IssueProxy;
 
 import java.util.List;
 
-@Service(value = AdService.class, locator = RfLocator.class)
+@Service(value = AdService.class, locator = RequestFactoryLocator.class)
 public interface AdContext extends RequestContext {
 
   Request<List<IssueProxy>> findRecommend(int start, int length, boolean brevity);

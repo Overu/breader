@@ -1,6 +1,6 @@
 package org.cloudlet.web.service.shared.rpc;
 
-import com.goodow.wave.server.rf.RfLocator;
+import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
 
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
@@ -15,7 +15,7 @@ import org.cloudlet.web.service.server.jpa.BaseService;
  * @author larry
  * 
  */
-@Service(value = BaseService.class, locator = RfLocator.class)
+@Service(value = BaseService.class, locator = RequestFactoryLocator.class)
 public interface BaseContext extends RequestContext {
   Request<Long> count();
 

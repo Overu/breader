@@ -1,6 +1,6 @@
 package com.retech.reader.web.shared.rpc;
 
-import com.goodow.wave.server.rf.RfLocator;
+import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
 
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.Service;
@@ -13,7 +13,7 @@ import org.cloudlet.web.service.shared.rpc.BaseContext;
 
 import java.util.List;
 
-@Service(value = CategoryService.class, locator = RfLocator.class)
+@Service(value = CategoryService.class, locator = RequestFactoryLocator.class)
 public interface CategoryContext extends BaseContext {
 
   Request<List<CategoryProxy>> find(int start, int length);

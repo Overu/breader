@@ -1,6 +1,6 @@
 package com.retech.reader.web.shared.proxy;
 
-import com.goodow.wave.server.rf.RfLocator;
+import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
 
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
@@ -11,7 +11,7 @@ import org.cloudlet.web.service.shared.rpc.BaseEntityProxy;
 
 import java.util.List;
 
-@ProxyFor(value = Section.class, locator = RfLocator.class)
+@ProxyFor(value = Section.class, locator = RequestFactoryLocator.class)
 public interface SectionProxy extends BaseEntityProxy {
 
   String WITH = "issue";
