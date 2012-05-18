@@ -16,11 +16,12 @@ package com.goodow.wave.server.media;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.repackaged.com.google.common.collect.Iterables;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -44,8 +45,28 @@ public class AttachmentUploadHandler extends HttpServlet {
    */
   static final String ATTACHMENT_UPLOAD_PARAM = "attachment";
 
+  public static <T> T getOnlyElement(final Iterator<T> iterator) {
+    T first = iterator.next();
+    if (!iterator.hasNext()) {
+      return first;
+    }
+
+    StringBuilder sb = new StringBuilder();
+    sb.append("expected one element but was: <" + first);
+    for (int i = 0; i < 4 && iterator.hasNext(); i++) {
+      sb.append(", " + iterator.next());
+    }
+    if (iterator.hasNext()) {
+      sb.append(", ...");
+    }
+    sb.append('>');
+
+    throw new IllegalArgumentException(sb.toString());
+  }
+
   @Inject
-  BlobstoreService blobstoreService;
+  BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+
   @Inject
   RawAttachmentService rawAttachmentService;
 
@@ -54,10 +75,11 @@ public class AttachmentUploadHandler extends HttpServlet {
       throws IOException {
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
     List<BlobKey> blobKeys = blobs.get(ATTACHMENT_UPLOAD_PARAM);
-    BlobKey blobKey = Iterables.getOnlyElement(blobKeys);
+    BlobKey blobKey = getOnlyElement(blobKeys.iterator());
     log.info("blobKeys: " + blobKeys);
+    log.info("rawAttachmentService:" + rawAttachmentService);
     String newId = rawAttachmentService.turnBlobIntoAttachment(blobKey);
     resp.getWriter().write(newId);
+    // resp.sendRedirect("/jsp/");
   }
-
 }
