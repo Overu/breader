@@ -39,7 +39,7 @@ public class PageDataProvider extends AsyncDataProvider<PageProxy> {
   @Override
   protected void onRangeChanged(final HasData<PageProxy> display) {
     List<PageProxy> list =
-        storage.get(keyUtil.proxyListKey(sectionProxy.stableId(), PageProxy.class.getName()));
+        storage.get(keyUtil.proxyAndListKey(sectionProxy.stableId(), PageProxy.class.getName()));
 
     final Range range = display.getVisibleRange();
     if (list != null) {
@@ -68,6 +68,6 @@ public class PageDataProvider extends AsyncDataProvider<PageProxy> {
       public Request<List<PageProxy>> provideRequest() {
         return ctx.findPagesBySection(parentProxy).with(PageProxy.WITH);
       }
-    }.setKey(keyUtil.proxyListKey(parentProxy.stableId(), PageProxy.class.getName())).fire();
+    }.setKey(keyUtil.proxyAndListKey(parentProxy.stableId(), PageProxy.class.getName())).fire();
   }
 }

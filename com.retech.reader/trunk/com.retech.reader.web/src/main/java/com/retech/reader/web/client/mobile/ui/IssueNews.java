@@ -152,7 +152,7 @@ public class IssueNews extends WavePanel implements Activity {
               @Override
               public void onSuccessAndCached(final PageProxy pageProxy) {
                 PageProxy lastPage =
-                    storage.get(keyUtil.proxyKey(issueId, ContentEditor.LAST_PAGE));
+                    storage.get(keyUtil.proxyAndKey(issueId, ContentEditor.LAST_PAGE));
                 placeController.goTo(places.get().setPath(ContentEditor.class.getName())
                     .setParameter(lastPage == null ? pageProxy.stableId() : lastPage.stableId()));
               }

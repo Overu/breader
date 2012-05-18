@@ -20,11 +20,11 @@ import com.google.web.bindery.requestfactory.shared.RequestFactory;
 
 @Singleton
 public class KeyUtil {
-  public static final String ANY_SEPARATOR_PATTERN = "@[abcr]@";
-  public static final String PROXY_SEPARATOR = "@a@";
-  public static final String LIST_SEPARATOR = "@b@";
-  public static final String SET_SEPARATOR = "@c@";
-  public static final String RESOURCE_SEPARATOR = "@r@";
+  public static final String ANY_SEPARATOR_PATTERN = "@[plsm]@";
+  public static final String PROXY_SEPARATOR = "@p@";
+  public static final String LIST_SEPARATOR = "@l@";
+  public static final String SET_SEPARATOR = "@s@";
+  public static final String MEDIA_SEPARATOR = "@m@";
   private final RequestFactory f;
   private static final int KEY_TOKEN_INDEX = 0;
   private static final int TYPE_TOKEN_INDEX = 1;
@@ -38,9 +38,8 @@ public class KeyUtil {
     return key != null && key.matches(".*" + ANY_SEPARATOR_PATTERN + ".*");
   }
 
-  public boolean isResource(final String encodedKey) {
-    return encodedKey != null && encodedKey.contains(RESOURCE_SEPARATOR);
-
+  public boolean isMedia(final String encodedKey) {
+    return encodedKey != null && encodedKey.contains(MEDIA_SEPARATOR);
   }
 
   public String listKey(final String listKey) {
@@ -51,15 +50,15 @@ public class KeyUtil {
     return f.getHistoryToken(proxyId);
   };
 
-  public String proxyKey(final EntityProxyId<?> parentId, final String key) {
+  public String proxyAndKey(final EntityProxyId<?> parentId, final String key) {
     return f.getHistoryToken(parentId) + PROXY_SEPARATOR + key;
   }
 
-  public String proxyListKey(final EntityProxyId<?> parentId, final String listKey) {
+  public String proxyAndListKey(final EntityProxyId<?> parentId, final String listKey) {
     return f.getHistoryToken(parentId) + LIST_SEPARATOR + listKey;
   }
 
-  public String proxyResourceKey(final EntityProxyId<?> parentId, final String resourceKey) {
-    return f.getHistoryToken(parentId) + RESOURCE_SEPARATOR + resourceKey;
+  public String proxyAndMediaKey(final EntityProxyId<?> parentId, final String meidaKey) {
+    return f.getHistoryToken(parentId) + MEDIA_SEPARATOR + meidaKey;
   }
 }

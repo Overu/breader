@@ -40,7 +40,7 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
       doFire(receiver);
       return;
     }
-    if (!keyUtil.isResource(key)) {
+    if (!keyUtil.isMedia(key)) {
       V value = storage.get(key);
       if (value == null) {
         doFire(receiver);
@@ -76,7 +76,7 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
       onSuccessAndCached(response);
       return;
     }
-    if (!keyUtil.isResource(key)) {
+    if (!keyUtil.isMedia(key)) {
       storage.put(key, response);
       onSuccessAndCached(response);
       return;
@@ -106,7 +106,7 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
   }
 
   public BaseReceiver<V> setKeyForList(final EntityProxyId<?> parentId, final String listKey) {
-    this.key = keyUtil.proxyListKey(parentId, listKey);
+    this.key = keyUtil.proxyAndListKey(parentId, listKey);
     return this;
   }
 
@@ -121,7 +121,7 @@ public abstract class BaseReceiver<V> extends Receiver<V> {
   }
 
   public BaseReceiver<V> setKeyForProxy(final EntityProxyId<?> parentId, final String key) {
-    this.key = keyUtil.proxyKey(parentId, key);
+    this.key = keyUtil.proxyAndKey(parentId, key);
     return this;
   }
 

@@ -394,7 +394,7 @@ public class ContentEditor extends WavePanel implements Activity {
         ContentEditor.this.getWaveTitle().setText(proxy.getTitle());
         html.setHTML(response.getDataString());
         if (pageProxy.getPageNum() != 1) {
-          storage.put(keyUtil.proxyKey(proxy.getSection().getIssue().stableId(), LAST_PAGE), proxy);
+          storage.put(keyUtil.proxyAndKey(proxy.getSection().getIssue().stableId(), LAST_PAGE), proxy);
         }
       }
 
