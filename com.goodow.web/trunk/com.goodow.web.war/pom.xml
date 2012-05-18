@@ -13,7 +13,7 @@
   <dependencies>
     <dependency>
       <groupId>com.goodow.wave</groupId>
-      <artifactId>com.goodow.wave.bootstrap</artifactId>
+      <artifactId>com.goodow.wave.server</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
