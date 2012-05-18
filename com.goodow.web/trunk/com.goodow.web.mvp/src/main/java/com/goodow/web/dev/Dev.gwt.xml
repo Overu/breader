@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to="web">
-  <inherits name="com.goodow.wave.bootstrap.Boot" />
+  <inherits name="com.goodow.wave.bootstrap.Bootstrap" />
   <inherits name="com.goodow.web.logging.Logging" />
   <inherits name="org.cloudlet.web.service.Service" />
   <inherits name="org.cloudlet.web.mvp.Mvp" />
