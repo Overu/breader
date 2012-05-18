@@ -18,12 +18,12 @@
     <mime-type>text/cache-manifest</mime-type>
   </mime-mapping>
   
-  <servlet>
+  <!-- <servlet>
     <servlet-name>Upload</servlet-name>
     <servlet-class>com.goodow.wave.server.media.AttachmentUploadHandler</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Upload</servlet-name>
     <url-pattern>/upload</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping> -->
 </web-app>

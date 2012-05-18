@@ -14,6 +14,7 @@
 package com.goodow.wave.server.media.ioc;
 
 import com.goodow.wave.server.media.AttachmentMetadataHandler;
+import com.goodow.wave.server.media.AttachmentUploadHandler;
 
 import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobstoreService;
@@ -30,7 +31,7 @@ public class AttachmentServletModule extends ServletModule {
   protected void configureServlets() {
     super.configureServlets();
     serve("/attachmentinfo").with(AttachmentMetadataHandler.class);
-    // serve("/upload").with(AttachmentUploadHandler.class);
+    serve("/upload").with(AttachmentUploadHandler.class);
   }
 
   @Provides
