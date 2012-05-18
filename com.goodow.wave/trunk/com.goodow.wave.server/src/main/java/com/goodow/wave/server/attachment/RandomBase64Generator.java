@@ -16,6 +16,8 @@ package com.goodow.wave.server.attachment;
 
 import com.google.inject.Inject;
 
+import java.util.Random;
+
 /**
  * Produces pseudo-random web-safe base-64 strings.
  * 
@@ -25,19 +27,13 @@ import com.google.inject.Inject;
 // org.waveprotocol.wave.examples.fedone.util.RandomBase64Generator
 public class RandomBase64Generator {
 
-  public interface RandomProvider {
-    /** @returns a pseudorandom non-negative integer smaller than upperBound */
-    int nextInt(int upperBound);
-  }
-
   /** The 64 valid web-safe characters. */
   static final char[] WEB64_ALPHABET =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_".toCharArray();
-
-  private final RandomProvider random;
+  private final Random random;
 
   @Inject
-  public RandomBase64Generator(final RandomProvider random) {
+  public RandomBase64Generator(final Random random) {
     this.random = random;
   }
 

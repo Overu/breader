@@ -53,8 +53,8 @@ public class AttachmentMetadata implements Serializable {
   public AttachmentMetadata() {
   }
 
-  public AttachmentMetadata(final AttachmentId id, final BlobKey blobKey, final JSONObject metadata) {
-    this.id = id.getId();
+  public AttachmentMetadata(final String id, final BlobKey blobKey, final JSONObject metadata) {
+    this.id = id;
     this.blobKey = blobKey.getKeyString();
     this.maybeMetadata = metadata;
     this.rawMetadata = metadata.toString();
@@ -64,8 +64,8 @@ public class AttachmentMetadata implements Serializable {
     return new BlobKey(blobKey);
   }
 
-  public AttachmentId getId() {
-    return new AttachmentId(id);
+  public String getId() {
+    return id;
   }
 
   public ImageMetadata getImage() {

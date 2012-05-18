@@ -75,18 +75,18 @@ public class AttachmentMetadataHandler extends HttpServlet {
 
   private void doRequest(final HttpServletRequest req, final HttpServletResponse resp)
       throws IOException {
-    Map<AttachmentId, Optional<AttachmentMetadata>> result = null;
+    Map<String, Optional<AttachmentMetadata>> result = null;
     // attachments.getMetadata(getIds(req), MAX_REQUEST_TIME_MS);
     JSONObject json = new JSONObject();
     try {
-      for (Entry<AttachmentId, Optional<AttachmentMetadata>> entry : result.entrySet()) {
+      for (Entry<String, Optional<AttachmentMetadata>> entry : result.entrySet()) {
         JSONObject metadata =
             new JSONObject(entry.getValue().isPresent() ? entry.getValue().get()
                 .getMetadataJsonString() : INVALID_ATTACHMENT_ID_METADATA_STRING);
-        String queryParams = "attachment=" + entry.getKey().getId();
+        String queryParams = "attachment=" + entry.getKey();
         metadata.put("url", "/download?" + queryParams);
         metadata.put("thumbnailUrl", "/thumbnail?" + queryParams);
-        json.put(entry.getKey().getId(), metadata);
+        json.put(entry.getKey(), metadata);
       }
     } catch (JSONException e) {
       throw new Error(e);
@@ -94,10 +94,10 @@ public class AttachmentMetadataHandler extends HttpServlet {
     resp.getWriter().print(XSSI_PREFIX + "(" + json.toString() + ")");
   }
 
-  private List<AttachmentId> getIds(final HttpServletRequest req) {
-    List<AttachmentId> out = new ArrayList<AttachmentId>();
+  private List<String> getIds(final HttpServletRequest req) {
+    List<String> out = new ArrayList<String>();
     for (String id : req.getParameter("ids").split(",", -1)) {
-      out.add(new AttachmentId(id));
+      out.add(id);
     }
     return out;
   }

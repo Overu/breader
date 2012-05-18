@@ -74,11 +74,11 @@ public class RawAttachmentService {
     return imagesService.applyTransform(resize, emptyImage).getImageData();
   }
 
-  public AttachmentId turnBlobIntoAttachment(final BlobKey blobKey) throws IOException {
+  public String turnBlobIntoAttachment(final BlobKey blobKey) throws IOException {
     assert blobKey != null : "Null blobKey";
-    AttachmentId newId = new AttachmentId(random64.next(
+    String newId = random64.next(
     // 115 * 6 random bits; should be unguessable. (6 bits per random64 char.)
-        115));
+        115);
 
     log.info("Computing metadata for " + newId + " (" + blobKey + ")");
     AttachmentMetadata metadata = computeMetadata(newId, blobKey);
@@ -118,7 +118,7 @@ public class RawAttachmentService {
     }
   }
 
-  private AttachmentMetadata computeMetadata(final AttachmentId id, final BlobKey blobKey) {
+  private AttachmentMetadata computeMetadata(final String id, final BlobKey blobKey) {
     try {
       BlobInfo info = blobInfoFactory.loadBlobInfo(blobKey);
       if (info != null) {
