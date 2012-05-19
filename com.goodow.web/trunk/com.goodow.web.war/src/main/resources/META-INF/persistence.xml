@@ -5,6 +5,7 @@
 
   <persistence-unit name="persist.jpaUnit">
     <jar-file>file:WEB-INF/lib/com.retech.reader.web${jarFile.version}.jar</jar-file>
+    <class>com.goodow.wave.server.media.RawAttachmentService</class>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
       <property name="javax.persistence.jdbc.driver" value="com.google.appengine.api.rdbms.AppEngineDriver" />
