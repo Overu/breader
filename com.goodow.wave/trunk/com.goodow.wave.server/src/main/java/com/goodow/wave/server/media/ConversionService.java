@@ -46,15 +46,18 @@ public class ConversionService {
     Asset asset =
         new Asset(MimeType.IMAGE_PNG.APPLICATION_PDF.getType(), blobstoreService.fetchData(blobKey,
             0, BlobstoreService.MAX_BLOB_FETCH_SIZE));
+    logger.info("1");
     Document document = new Document(asset);
     // ConversionOptions options =
     // ConversionOptions.Builder.withImageWidth(1000).firstPage(2).lastPage(10);
     Conversion conversion = new Conversion(document, MimeType.IMAGE_PNG.getType());
     com.google.appengine.api.conversion.ConversionService conversionService =
         ConversionServiceFactory.getConversionService();
+    logger.info("2");
     ConversionResult result = conversionService.convert(conversion);
 
     if (result.success()) {
+      logger.info("Conversion success");
       List<BlobKey> toReturn = new ArrayList<BlobKey>();
       for (Asset a : result.getOutputDoc().getAssets()) {
         toReturn.add(createNewBlobFile("", a.getData()));
@@ -69,11 +72,11 @@ public class ConversionService {
   private BlobKey createNewBlobFile(final String mimeType, final byte[] bytes) throws IOException {
     FileService fileService = FileServiceFactory.getFileService();
     AppEngineFile file = fileService.createNewBlobFile(mimeType);
-
+    logger.info("createNewBlobFile");
     boolean lock = false;
     FileWriteChannel writeChannel = fileService.openWriteChannel(file, lock);
     writeChannel.write(ByteBuffer.wrap(bytes));
-
+    logger.info("3");
     writeChannel.closeFinally();
     return fileService.getBlobKey(file);
   }
