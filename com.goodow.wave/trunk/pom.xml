@@ -16,7 +16,8 @@
     <module>com.goodow</module>
     <module>com.goodow.wave.bootstrap</module>
     <module>com.goodow.wave.test</module>
-    <module>com.goodow.wave.client</module>
+    <module>com.goodow.wave.shared</module>
     <module>com.goodow.wave.server</module>
+    <module>com.goodow.wave.client</module>
   </modules>
 </project>
