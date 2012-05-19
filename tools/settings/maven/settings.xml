@@ -36,7 +36,7 @@
   <mirrors>
     <mirror>
       <id>repo</id>
-      <mirrorOf>*</mirrorOf>
+      <mirrorOf>*,!goodow</mirrorOf>
       <name>Nexus Repo</name>
       <url>http://dev.retechcorp.com:8081/nexus/content/groups/public</url>
     </mirror>
@@ -46,6 +46,20 @@
     <profile>
       <id>dev</id>
       <repositories>
+        <repository>
+          <id>goodow</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+          <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+            <checksumPolicy>fail</checksumPolicy>
+          </snapshots>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+            <checksumPolicy>fail</checksumPolicy>
+          </releases>
+        </repository>
         <repository>
           <id>central</id>
           <url>http://central</url>
