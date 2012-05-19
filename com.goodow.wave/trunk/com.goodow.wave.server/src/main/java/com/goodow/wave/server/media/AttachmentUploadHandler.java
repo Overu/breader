@@ -70,8 +70,8 @@ public class AttachmentUploadHandler extends HttpServlet {
   @Inject
   ConversionService conversionService;
 
-  @Inject
-  RawAttachmentService rawAttachmentService;
+  // @Inject
+  // RawAttachmentService rawAttachmentService;
 
   @Override
   public void doPost(final HttpServletRequest req, final HttpServletResponse resp)
@@ -80,8 +80,9 @@ public class AttachmentUploadHandler extends HttpServlet {
     List<BlobKey> blobKeys = blobs.get(ATTACHMENT_UPLOAD_PARAM);
     BlobKey blobKey = getOnlyElement(blobKeys.iterator());
     log.info("blobKeys: " + blobKeys);
-    rawAttachmentService.turnBlobIntoAttachment(blobKey);
+    // rawAttachmentService.turnBlobIntoAttachment(blobKey);
     List<BlobKey> keys = conversionService.convertFromPdfToPng(blobKey);
+    log.info("pngKeys: " + keys);
     req.setAttribute("blobKeys", keys);
     getServletContext().getRequestDispatcher(
         "/jsp/AttachmentResult.jsp?blobKey=" + blobKey.getKeyString()).forward(req, resp);
