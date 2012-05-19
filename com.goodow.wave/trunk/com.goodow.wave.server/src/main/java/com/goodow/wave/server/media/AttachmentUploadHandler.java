@@ -83,7 +83,8 @@ public class AttachmentUploadHandler extends HttpServlet {
     String newId = rawAttachmentService.turnBlobIntoAttachment(blobKey);
     List<BlobKey> keys = conversionService.convertFromPdfToPng(blobKey);
     req.setAttribute("blobKeys", keys);
-    getServletContext().getRequestDispatcher("/jsp/AttachmentResult.jsp").forward(req, resp);
+    getServletContext().getRequestDispatcher(
+        "/jsp/AttachmentResult.jsp?blobKey=" + blobKey.getKeyString()).forward(req, resp);
 
   }
 }
