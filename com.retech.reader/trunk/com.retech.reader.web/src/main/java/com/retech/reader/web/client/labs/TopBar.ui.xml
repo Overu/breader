@@ -46,7 +46,7 @@
   <ui:image field="retechcorpLogo" />
   <g:HTMLPanel addStyleNames='{style.topBar}'>
     <div>
-      <a href="#"><g:Image resource='{retechcorpLogo}'></g:Image></a>
+      <a href="/"><g:Image resource='{retechcorpLogo}'></g:Image></a>
     </div>
     <div class='{style.links}'>
       <span>欢迎</span>

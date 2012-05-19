@@ -17,6 +17,8 @@ import com.google.gwt.event.dom.client.DragOverEvent;
 import com.google.gwt.event.dom.client.DragOverHandler;
 import com.google.gwt.event.dom.client.DragStartEvent;
 import com.google.gwt.event.dom.client.DragStartHandler;
+import com.google.gwt.event.dom.client.GestureChangeEvent;
+import com.google.gwt.event.dom.client.GestureChangeHandler;
 import com.google.gwt.event.dom.client.TouchEndEvent;
 import com.google.gwt.event.dom.client.TouchEndHandler;
 import com.google.gwt.event.dom.client.TouchMoveEvent;
@@ -85,6 +87,7 @@ public class ContentEditor extends WavePanel implements Activity {
   private boolean scheduledOne = false;
   private int startX1;
   private int startX2;
+  private int startScale;
 
   @Inject
   public ContentEditor(final PlaceController placeContorller, final ReaderFactory f,
@@ -122,7 +125,7 @@ public class ContentEditor extends WavePanel implements Activity {
             startX2 = touch2.getPageX();
             break;
           case 1:
-            logger.info("touches: 1 ");
+            // logger.info("touches: 1 ");
             scheduledOne = false;
             scheduledTwo = true;
             Touch touch = touchesStart.get(0);
@@ -193,6 +196,14 @@ public class ContentEditor extends WavePanel implements Activity {
         scheduledTwo = false;
       }
     }, TouchEndEvent.getType());
+
+    this.addDomHandler(new GestureChangeHandler() {
+
+      @Override
+      public void onGestureChange(final GestureChangeEvent event) {
+        logger.info("scale:" + event.getScale() + ";rotation:" + event.getRotation());
+      }
+    }, GestureChangeEvent.getType());
 
     html.getElement().setDraggable("true");
     html.addDomHandler(new DragStartHandler() {
@@ -394,7 +405,8 @@ public class ContentEditor extends WavePanel implements Activity {
         ContentEditor.this.getWaveTitle().setText(proxy.getTitle());
         html.setHTML(response.getDataString());
         if (pageProxy.getPageNum() != 1) {
-          storage.put(keyUtil.proxyAndKey(proxy.getSection().getIssue().stableId(), LAST_PAGE), proxy);
+          storage.put(keyUtil.proxyAndKey(proxy.getSection().getIssue().stableId(), LAST_PAGE),
+              proxy);
         }
       }
 
