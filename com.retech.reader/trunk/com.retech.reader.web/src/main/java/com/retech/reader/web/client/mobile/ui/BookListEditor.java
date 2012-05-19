@@ -74,10 +74,10 @@ public class BookListEditor extends WavePanel implements Activity {
 
     // FlowPanel toDo = new FlowPanel();
     // toDo.addStyleName(WavePanelResources.css().waveWarning());
-    // toDo.add(new HTML("<b>已完成：<b>"));
+    // toDo.add(new TEXT_HTML("<b>已完成：<b>"));
     // toDo.add(new Label("6.1 列表展示"));
-    // toDo.add(new HTML("<br>"));
-    // toDo.add(new HTML("<b>待实现：<b>"));
+    // toDo.add(new TEXT_HTML("<br>"));
+    // toDo.add(new TEXT_HTML("<b>待实现：<b>"));
     // toDo.add(new Label("6.2 完成列表的展示（中）"));
     // toDo.add(new Label("6.3 直接添加收藏（易）"));
     // add(toDo);

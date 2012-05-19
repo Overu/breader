@@ -1,5 +1,6 @@
 package com.retech.reader.web.domain;
 
+import com.goodow.wave.server.media.MimeType;
 import com.goodow.wave.test.BaseTest;
 
 import com.google.inject.Inject;
@@ -16,7 +17,6 @@ import com.retech.reader.web.server.service.IssueService;
 import com.retech.reader.web.server.service.PageService;
 import com.retech.reader.web.server.service.ResourceService;
 import com.retech.reader.web.server.service.SectionService;
-import com.retech.reader.web.shared.proxy.MimeType;
 
 import org.junit.Test;
 
@@ -103,7 +103,7 @@ public class DomainTest extends BaseTest {
           issues
               .get()
               .setImage(
-                  resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(1, 1)))
+                  resources.get().setMimeType(MimeType.IMAGE_JPEG).setData(TestDataUtil.getImage(1, 1)))
               .setCategory(c4)
               .setTitle("图说天下")
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
@@ -134,7 +134,7 @@ public class DomainTest extends BaseTest {
     for (int c = 1; c < 2; c++) {
       Issue i2 =
           issues.get().setImage(
-              resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(2, 1)))
+              resources.get().setMimeType(MimeType.IMAGE_JPEG).setData(TestDataUtil.getImage(2, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
               .setCategory(c5).setTitle("影资讯").setDetail("“筷子兄弟”新作受好评 《父亲》引爆亲情共鸣");
       issueService.put(i2);
@@ -151,7 +151,7 @@ public class DomainTest extends BaseTest {
     for (int c = 1; c < 2; c++) {
       Issue issue =
           issues.get().setImage(
-              resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(3, 1)))
+              resources.get().setMimeType(MimeType.IMAGE_JPEG).setData(TestDataUtil.getImage(3, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
               .setCategory(c5).setTitle("选购指南").setDetail("简约之美 主流一体机电脑推荐");
       issueService.put(issue);
@@ -168,7 +168,7 @@ public class DomainTest extends BaseTest {
     for (int c = 1; c < 2; c++) {
       Issue issue =
           issues.get().setImage(
-              resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(4, 1)))
+              resources.get().setMimeType(MimeType.IMAGE_JPEG).setData(TestDataUtil.getImage(4, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
               .setCategory(c6).setTitle("新旅行").setDetail(
                   "坐在美国盐湖城山谷雪场的缆车上，刚刚过了一个山头，下边是黑压压的松树，缆车下行，然后上行，阳光真好，晒在人身上暖洋洋的，也无风，所以一点都不觉得冷。");
@@ -188,7 +188,7 @@ public class DomainTest extends BaseTest {
 
       Issue issue =
           issues.get().setImage(
-              resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(5, 1)))
+              resources.get().setMimeType(MimeType.IMAGE_JPEG).setData(TestDataUtil.getImage(5, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
               .setCategory(c8).setTitle("超体育").setDetail("西班牙德比：巴塞罗那胜皇家马德里");
       issueService.put(issue);
@@ -208,7 +208,7 @@ public class DomainTest extends BaseTest {
           issues
               .get()
               .setImage(
-                  resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(6, 1)))
+                  resources.get().setMimeType(MimeType.IMAGE_JPEG).setData(TestDataUtil.getImage(6, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
               .setCategory(c6)
               .setTitle("游遍天下")
@@ -231,7 +231,7 @@ public class DomainTest extends BaseTest {
           issues
               .get()
               .setImage(
-                  resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(7, 1)))
+                  resources.get().setMimeType(MimeType.IMAGE_JPEG).setData(TestDataUtil.getImage(7, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
               .setCategory(c7)
               .setTitle("用户手册")
@@ -254,7 +254,7 @@ public class DomainTest extends BaseTest {
           issues
               .get()
               .setImage(
-                  resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(8, 1)))
+                  resources.get().setMimeType(MimeType.IMAGE_JPEG).setData(TestDataUtil.getImage(8, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
               .setCategory(c4)
               .setTitle("当月潮流")
@@ -275,7 +275,7 @@ public class DomainTest extends BaseTest {
     for (int c = 1; c < 2; c++) {
       Issue issue =
           issues.get().setImage(
-              resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(9, 1)))
+              resources.get().setMimeType(MimeType.IMAGE_JPEG).setData(TestDataUtil.getImage(9, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
               .setCategory(c7).setTitle("B&G").setDetail("美女学英语");
       issueService.put(issue);
@@ -293,7 +293,7 @@ public class DomainTest extends BaseTest {
     for (int c = 1; c < 2; c++) {
       Issue issue =
           issues.get().setImage(
-              resources.get().setMimeType(MimeType.JPG).setData(TestDataUtil.getImage(10, 1)))
+              resources.get().setMimeType(MimeType.IMAGE_JPEG).setData(TestDataUtil.getImage(10, 1)))
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
               .setCategory(c7).setTitle("TREND").setDetail(
                   "谁说皮草只是女性的时尚独享？本季秋冬也让皮草陪型男们过个美丽的圣诞节，让皮草的奢华之风与男性的阳刚之气制造出最in的混搭潮流。");
@@ -320,20 +320,20 @@ public class DomainTest extends BaseTest {
     pageService.put(page);
     Resource singleHtml =
         resources.get().setName(TestDataUtil.getHtmlFilename(pageCount)).setData(
-            TestDataUtil.getSingleHtml(folder, pageCount)).setMimeType(MimeType.HTML);
+            TestDataUtil.getSingleHtml(folder, pageCount)).setMimeType(MimeType.TEXT_HTML);
     singleHtml.setPage(page);
     resourceService.put(singleHtml);
     // Resource html =
     // resources.get().setName(TestDataUtil.getHtmlFilename(pageCount)).setData(
-    // TestDataUtil.getHtml(folder, pageCount)).setMimeType(MimeType.HTML);
+    // TestDataUtil.getHtml(folder, pageCount)).setMimeType(MimeType.TEXT_HTML);
     // resourceService.put(html);
     // Resource font =
     // resources.get().setName("page_font").setData(TestDataUtil.getCss()).setMimeType(
-    // MimeType.CSS);
+    // MimeType.TEXT_CSS);
     // resourceService.put(font);
     // Resource image =
     // resources.get().setName(TestDataUtil.getImageFilename(pageCount)).setData(
-    // TestDataUtil.getImage(folder, pageCount)).setMimeType(MimeType.JPG);
+    // TestDataUtil.getImage(folder, pageCount)).setMimeType(MimeType.IMAGE_JPEG);
     // resourceService.put(image);
     pageService.put(page.setMainResourceFilename(singleHtml.getFilename()));
     // pageResourceService.put(pageResources.get().setPage(page).setResource(singleHtml));

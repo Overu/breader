@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,20 +67,23 @@ public class AttachmentUploadHandler extends HttpServlet {
 
   @Inject
   BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+  @Inject
+  ConversionService conversionService;
 
   @Inject
   RawAttachmentService rawAttachmentService;
 
   @Override
   public void doPost(final HttpServletRequest req, final HttpServletResponse resp)
-      throws IOException {
+      throws IOException, ServletException {
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
     List<BlobKey> blobKeys = blobs.get(ATTACHMENT_UPLOAD_PARAM);
     BlobKey blobKey = getOnlyElement(blobKeys.iterator());
     log.info("blobKeys: " + blobKeys);
-    log.info("rawAttachmentService:" + rawAttachmentService);
     String newId = rawAttachmentService.turnBlobIntoAttachment(blobKey);
-    resp.getWriter().write(newId);
-    // resp.sendRedirect("/jsp/");
+    List<BlobKey> keys = conversionService.convertFromPdfToPng(blobKey);
+    req.setAttribute("blobKeys", keys);
+    getServletContext().getRequestDispatcher("/jsp/AttachmentResult.jsp").forward(req, resp);
+
   }
 }

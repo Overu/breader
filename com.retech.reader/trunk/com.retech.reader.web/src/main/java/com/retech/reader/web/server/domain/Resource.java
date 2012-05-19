@@ -1,6 +1,6 @@
 package com.retech.reader.web.server.domain;
 
-import com.retech.reader.web.shared.proxy.MimeType;
+import com.goodow.wave.server.media.MimeType;
 
 import org.apache.commons.lang.StringUtils;
 import org.cloudlet.web.service.server.jpa.BaseDomain;

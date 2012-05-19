@@ -39,10 +39,10 @@ public class CategoryListEditor extends WavePanel implements Activity {
     getWaveTitle().setText(CategoryProxy.CATEGORY_NAME);
     // FlowPanel toDo = new FlowPanel();
     // toDo.addStyleName(WavePanelResources.css().waveWarning());
-    // toDo.add(new HTML("<b>已完成：<b>"));
+    // toDo.add(new TEXT_HTML("<b>已完成：<b>"));
     // toDo.add(new Label("5.1 数据库各个分类内容"));
-    // toDo.add(new HTML("<br>"));
-    // toDo.add(new HTML("<b>待实现：<b>"));
+    // toDo.add(new TEXT_HTML("<br>"));
+    // toDo.add(new TEXT_HTML("<b>待实现：<b>"));
     // toDo.add(new Label("5.2 我的藏书分类（易）"));
     // toDo.add(new Label("5.3 特色分类（中）"));
     // toDo.add(new Label("5.4 推荐分类（中）"));

@@ -41,10 +41,10 @@ public class SectionBrowserView extends WavePanel implements Activity {
     this.f = f;
     // FlowPanel toDo = new FlowPanel();
     // toDo.addStyleName(WavePanelResources.css().waveWarning());
-    // toDo.add(new HTML("<b>已完成：<b>"));
+    // toDo.add(new TEXT_HTML("<b>已完成：<b>"));
     // toDo.add(new Label("9.1 目录及各页树状结构的展示"));
-    // toDo.add(new HTML("<br>"));
-    // toDo.add(new HTML("<b>待实现：<b>"));
+    // toDo.add(new TEXT_HTML("<br>"));
+    // toDo.add(new TEXT_HTML("<b>待实现：<b>"));
     // toDo.add(new Label("9.2 整行可点击（中）"));
     // toDo.add(new Label("9.3 界面调整（中）"));
     // add(toDo);

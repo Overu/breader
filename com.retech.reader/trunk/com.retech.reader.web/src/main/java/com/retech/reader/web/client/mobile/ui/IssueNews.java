@@ -104,13 +104,13 @@ public class IssueNews extends WavePanel implements Activity {
 
     // FlowPanel toDo = new FlowPanel();
     // toDo.addStyleName(WavePanelResources.css().waveWarning());
-    // toDo.add(new HTML("<b>已完成：<b>"));
+    // toDo.add(new TEXT_HTML("<b>已完成：<b>"));
     // toDo.add(new Label("7.1 书本详细内容展示"));
     // toDo.add(new Label("7.2 在线阅读"));
     // toDo.add(new Label("7.3 目录"));
     // toDo.add(new Label("7.4 收藏状态"));
-    // toDo.add(new HTML("<br>"));
-    // toDo.add(new HTML("<b>待实现：<b>"));
+    // toDo.add(new TEXT_HTML("<br>"));
+    // toDo.add(new TEXT_HTML("<b>待实现：<b>"));
     // toDo.add(new Label("7.5 界面布局调整（中）"));
     // toDo.add(new Label("7.6 下载（难）"));
     // toDo.add(new Label("7.7 评论（难）"));

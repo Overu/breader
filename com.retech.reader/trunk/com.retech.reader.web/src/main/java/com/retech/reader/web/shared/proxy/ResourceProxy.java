@@ -1,5 +1,6 @@
 package com.retech.reader.web.shared.proxy;
 
+import com.goodow.wave.server.media.MimeType;
 import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
 
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;

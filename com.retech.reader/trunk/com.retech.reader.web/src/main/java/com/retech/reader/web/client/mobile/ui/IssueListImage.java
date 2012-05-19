@@ -60,10 +60,10 @@ public class IssueListImage extends WavePanel implements Activity {
     this.getWaveTitle().setText("相关推荐");
     // FlowPanel toDo = new FlowPanel();
     // toDo.addStyleName(WavePanelResources.css().waveWarning());
-    // toDo.add(new HTML("<b>已完成：<b>"));
+    // toDo.add(new TEXT_HTML("<b>已完成：<b>"));
     // toDo.add(new Label("8.1 推荐同类别图书"));
-    // toDo.add(new HTML("<br>"));
-    // toDo.add(new HTML("<b>待实现：<b>"));
+    // toDo.add(new TEXT_HTML("<br>"));
+    // toDo.add(new TEXT_HTML("<b>待实现：<b>"));
     // toDo.add(new Label("8.2 界面布局调整（易）"));
     // toDo.add(new Label("8.3 根据用户阅读行为进行推荐（难）"));
     // add(toDo);

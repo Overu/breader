@@ -72,14 +72,14 @@ public class SettingsView extends WavePanel implements Activity {
 
     // FlowPanel toDo = new FlowPanel();
     // toDo.addStyleName(WavePanelResources.css().waveWarning());
-    // toDo.add(new HTML("<b>已完成：<b>"));
+    // toDo.add(new TEXT_HTML("<b>已完成：<b>"));
     // toDo.add(new Label("4.1 网站的离线使用"));
     // toDo.add(new Label("4.2 少量数据的离线存储<5M"));
     // toDo.add(new Label("4.3 清除所有已存储的数据"));
     // toDo.add(new Label("4.4 3D特效的使用方式"));
     // toDo.add(new Label("4.5 用户界面整体样式的部分设计"));
-    // toDo.add(new HTML("<br>"));
-    // toDo.add(new HTML("<b>待实现：<b>"));
+    // toDo.add(new TEXT_HTML("<br>"));
+    // toDo.add(new TEXT_HTML("<b>待实现：<b>"));
     // toDo.add(new Label("4.6 界面调整（易）"));
     // toDo.add(new Label("4.7 大量数据的离线存储<50M（中）"));
     // toDo.add(new Label("4.8 无限量数据的离线存储（难）"));
