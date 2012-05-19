@@ -28,7 +28,6 @@ import com.google.inject.Provider;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -74,7 +73,7 @@ public class RawAttachmentService {
     return imagesService.applyTransform(resize, emptyImage).getImageData();
   }
 
-  public void turnBlobIntoAttachment(final BlobKey blobKey) throws IOException {
+  public void turnBlobIntoAttachment(final BlobKey blobKey) {
     assert blobKey != null : "Null blobKey";
 
     log.info("Computing metadata for " + " (" + blobKey + ")");
