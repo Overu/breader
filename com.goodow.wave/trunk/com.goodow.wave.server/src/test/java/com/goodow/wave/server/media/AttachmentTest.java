@@ -28,7 +28,7 @@ public class AttachmentTest extends BaseTest {
 
   @Test
   public void test() {
-    AttachmentMetadata attachmentMetadata = new AttachmentMetadata("i1", null, null);
+    AttachmentMetadata attachmentMetadata = new AttachmentMetadata("i1", null);
     ems.get().persist(attachmentMetadata);
   }
 }

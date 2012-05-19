@@ -74,14 +74,11 @@ public class RawAttachmentService {
     return imagesService.applyTransform(resize, emptyImage).getImageData();
   }
 
-  public String turnBlobIntoAttachment(final BlobKey blobKey) throws IOException {
+  public void turnBlobIntoAttachment(final BlobKey blobKey) throws IOException {
     assert blobKey != null : "Null blobKey";
-    String newId = random64.next(
-    // 115 * 6 random bits; should be unguessable. (6 bits per random64 char.)
-        115);
 
-    log.info("Computing metadata for " + newId + " (" + blobKey + ")");
-    AttachmentMetadata metadata = computeMetadata(newId, blobKey);
+    log.info("Computing metadata for " + " (" + blobKey + ")");
+    AttachmentMetadata metadata = computeMetadata(blobKey.getKeyString(), blobKey);
     EntityManager entityManager = em.get();
     AttachmentMetadata existingMetadata = entityManager.find(AttachmentMetadata.class, metadata);
     if (existingMetadata != null) {
@@ -94,7 +91,6 @@ public class RawAttachmentService {
       entityManager.persist(metadata);
     }
     log.info("Wrote metadata " + metadata);
-    return newId;
   }
 
   private Image attemptGetImageMetadata(final BlobstoreService blobstore, final BlobInfo info) {
@@ -145,7 +141,7 @@ public class RawAttachmentService {
           // TODO(danilatos): Thumbnails for non-images
           log.info("Unimplemented: Thumbnails for non-images");
         }
-        return new AttachmentMetadata(id, blobKey, data);
+        return new AttachmentMetadata(id, data);
       }
       return null;
     } catch (JSONException e) {

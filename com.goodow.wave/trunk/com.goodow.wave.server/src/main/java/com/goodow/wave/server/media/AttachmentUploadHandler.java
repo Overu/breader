@@ -80,7 +80,7 @@ public class AttachmentUploadHandler extends HttpServlet {
     List<BlobKey> blobKeys = blobs.get(ATTACHMENT_UPLOAD_PARAM);
     BlobKey blobKey = getOnlyElement(blobKeys.iterator());
     log.info("blobKeys: " + blobKeys);
-    String newId = rawAttachmentService.turnBlobIntoAttachment(blobKey);
+    rawAttachmentService.turnBlobIntoAttachment(blobKey);
     List<BlobKey> keys = conversionService.convertFromPdfToPng(blobKey);
     req.setAttribute("blobKeys", keys);
     getServletContext().getRequestDispatcher(

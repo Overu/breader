@@ -14,8 +14,6 @@
 
 package com.goodow.wave.server.media;
 
-import com.google.appengine.api.blobstore.BlobKey;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,7 +42,6 @@ public class AttachmentMetadata implements Serializable {
   private static final long serialVersionUID = 562560590763783822L;
   @Id
   private String id;
-  private String blobKey;
   // String for Serializable
   private String rawMetadata;
   // Parsed version of rawMetadata.
@@ -53,15 +50,10 @@ public class AttachmentMetadata implements Serializable {
   public AttachmentMetadata() {
   }
 
-  public AttachmentMetadata(final String id, final BlobKey blobKey, final JSONObject metadata) {
+  public AttachmentMetadata(final String id, final JSONObject metadata) {
     this.id = id;
-    this.blobKey = blobKey.getKeyString();
     this.maybeMetadata = metadata;
     this.rawMetadata = metadata.toString();
-  }
-
-  public BlobKey getBlobKey() {
-    return new BlobKey(blobKey);
   }
 
   public String getId() {
@@ -82,7 +74,7 @@ public class AttachmentMetadata implements Serializable {
 
   @Override
   public String toString() {
-    return "AttachmentMetadata(" + id + ", " + blobKey + ", " + rawMetadata + ")";
+    return "AttachmentMetadata(" + id + ", " + rawMetadata + ")";
   }
 
   private ImageMetadata createImageMetadata(final String key) {
