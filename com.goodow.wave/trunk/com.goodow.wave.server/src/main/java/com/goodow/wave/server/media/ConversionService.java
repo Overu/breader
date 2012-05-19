@@ -39,10 +39,10 @@ import java.util.logging.Logger;
 public class ConversionService {
   @Inject
   BlobstoreService blobstoreService;
-  @Inject
-  Logger logger;
+  static final Logger logger = Logger.getLogger(ConversionService.class.getName());
 
   public List<BlobKey> convertFromPdfToPng(final BlobKey blobKey) throws IOException {
+    logger.info("1");
     Asset asset =
         new Asset(MimeType.IMAGE_PNG.APPLICATION_PDF.getType(), blobstoreService.fetchData(blobKey,
             0, BlobstoreService.MAX_BLOB_FETCH_SIZE));

@@ -16,7 +16,6 @@ package com.goodow.wave.server.media;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -66,7 +65,7 @@ public class AttachmentUploadHandler extends HttpServlet {
   }
 
   @Inject
-  BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+  BlobstoreService blobstoreService;
   @Inject
   ConversionService conversionService;
 
@@ -76,6 +75,7 @@ public class AttachmentUploadHandler extends HttpServlet {
   @Override
   public void doPost(final HttpServletRequest req, final HttpServletResponse resp)
       throws IOException, ServletException {
+    log.info(blobstoreService + " : " + blobstoreService);
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
     List<BlobKey> blobKeys = blobs.get(ATTACHMENT_UPLOAD_PARAM);
     BlobKey blobKey = getOnlyElement(blobKeys.iterator());
