@@ -42,6 +42,8 @@ public class TopBar extends WavePanel {
 
     ImageResource bookshelf();
 
+    ImageResource bookstore();
+
     ImageResource collect();
 
     ImageResource refresh();
@@ -60,7 +62,7 @@ public class TopBar extends WavePanel {
     WaveToolBar toolbar = this.addWaveToolBar();
     ToolBarClickButton category = toolbar.addClickButton();
     category.setText(CategoryProxy.CATEGORY_NAME);
-    category.setVisualElement(createIcon(res.settings()));
+    category.setVisualElement(createIcon(res.bookstore()));
 
     ToolBarClickButton myDownload = toolbar.addClickButton();
     myDownload.setText(IssueProxy.ISSUE_DOWN_NAME);
