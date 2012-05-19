@@ -1,4 +1,4 @@
-package com.goodow.wave.server.media;
+package com.gooodow.wave.shared.media;
 
 public enum MimeType {
   TEXT_HTML("html"), TEXT_CSS("css"), TEXT_JAVASCRIPT("js"), //

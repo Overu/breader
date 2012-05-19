@@ -27,6 +27,8 @@ import com.google.appengine.api.files.FileWriteChannel;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+import com.gooodow.wave.shared.media.MimeType;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;

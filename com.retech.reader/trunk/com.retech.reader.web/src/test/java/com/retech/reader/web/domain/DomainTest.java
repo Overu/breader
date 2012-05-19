@@ -1,11 +1,11 @@
 package com.retech.reader.web.domain;
 
-import com.goodow.wave.server.media.MimeType;
 import com.goodow.wave.test.BaseTest;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
+import com.gooodow.wave.shared.media.MimeType;
 import com.retech.reader.web.domain.testdata.TestDataUtil;
 import com.retech.reader.web.server.domain.Category;
 import com.retech.reader.web.server.domain.Issue;
