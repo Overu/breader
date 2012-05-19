@@ -40,6 +40,10 @@ public class TopBar extends WavePanel {
 
   interface Resources extends ClientBundle {
 
+    ImageResource bookshelf();
+
+    ImageResource collect();
+
     ImageResource refresh();
 
     ImageResource search();
@@ -60,11 +64,11 @@ public class TopBar extends WavePanel {
 
     ToolBarClickButton myDownload = toolbar.addClickButton();
     myDownload.setText(IssueProxy.ISSUE_DOWN_NAME);
-    myDownload.setVisualElement(createIcon(res.settings()));
+    myDownload.setVisualElement(createIcon(res.bookshelf()));
 
     ToolBarClickButton libraryView = toolbar.addClickButton();
     libraryView.setText(IssueProxy.MY_ISSUES_NAME);
-    libraryView.setVisualElement(createIcon(res.settings()));
+    libraryView.setVisualElement(createIcon(res.collect()));
 
     myDownload.addClickHandler(new ClickHandler() {
 

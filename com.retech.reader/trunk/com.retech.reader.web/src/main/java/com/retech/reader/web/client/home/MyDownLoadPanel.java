@@ -18,7 +18,6 @@ import com.goodow.wave.client.widget.progress.ProgressWidget;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -158,11 +157,11 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
         HTMLPanel downLoad = new HTMLPanel("");
         HTMLPanel imagePanel =
             new HTMLPanel(AbstractImagePrototype.create(res.addIssue()).getHTML());
-        // imagePanel.getElement().getStyle().setOpacity(0);
+        imagePanel.getElement().getStyle().setOpacity(0);
         downLoad.add(imagePanel);
         downLoad.add(new Label(IssueProxy.ISSUE_STATE_DOWN));
-        // downLoad.getElement().getStyle().setOpacity(0);
-        myDownLoadPanel.getElement().getStyle().setCursor(Cursor.POINTER);
+        downLoad.getElement().getStyle().setOpacity(0);
+        // myDownLoadPanel.getElement().getStyle().setCursor(Cursor.POINTER);
         myDownLoadPanel.add(downLoad);
       }
 

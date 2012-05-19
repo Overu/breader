@@ -7,6 +7,7 @@
     
     .downloadPanel {
       text-align: center;
+      cursor: pointer;
     }
     
     .downloadPanel>* {

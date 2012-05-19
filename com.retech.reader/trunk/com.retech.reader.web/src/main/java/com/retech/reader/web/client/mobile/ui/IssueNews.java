@@ -203,11 +203,12 @@ public class IssueNews extends WavePanel implements Activity {
         if (issueDownload == null) {
           issueDownload = new ArrayList<IssueProxy>();
         }
-        if (!issueDownload.contains(proxy)) {
-          issueDownload.add(proxy);
-          downloadButton.setState(State.DISABLED);
-          downloadButton.setText(IssueProxy.ISSUE_STATE_DOWN_FINISH);
+        if (issueDownload.contains(proxy)) {
+          return;
         }
+        issueDownload.add(proxy);
+        downloadButton.setState(State.DISABLED);
+        downloadButton.setText(IssueProxy.ISSUE_STATE_DOWN_FINISH);
         storage.put(keyUtil.listKey(IssueProxy.ISSUE_DOWN), issueDownload);
         placeController.goTo(places.get().setPath("/"));
       }
@@ -259,6 +260,7 @@ public class IssueNews extends WavePanel implements Activity {
         }
         if (!issueBook.contains(proxy)) {
           addButton.setState(State.ENABLED);
+          addButton.setText(IssueProxy.ISSUE_STATE_COLLECT);
         } else {
           addButton.setState(State.DISABLED);
           addButton.setText(IssueProxy.ISSUE_STATE_COLLECTED);
@@ -279,6 +281,7 @@ public class IssueNews extends WavePanel implements Activity {
           readButton.setText(IssueProxy.ISSUE_STATE_DOWN_READ);
         } else {
           downloadButton.setState(State.ENABLED);
+          downloadButton.setText(IssueProxy.ISSUE_STATE_DOWN);
         }
 
         new BaseReceiver<ResourceProxy>() {

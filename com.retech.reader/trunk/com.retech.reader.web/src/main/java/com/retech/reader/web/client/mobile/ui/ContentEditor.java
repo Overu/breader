@@ -85,6 +85,7 @@ public class ContentEditor extends WavePanel implements Activity {
   private int columnIndex = 1;
   private boolean scheduledTwo = false;
   private boolean scheduledOne = false;
+  private boolean scheduledGesture = false;
   private int startX1;
   private int startX2;
   private int startScale;
@@ -119,6 +120,7 @@ public class ContentEditor extends WavePanel implements Activity {
             // logger.info("touches: 2 ");
             scheduledTwo = false;
             scheduledOne = true;
+            scheduledGesture = true;
             Touch touch1 = touchesStart.get(0);
             Touch touch2 = touchesStart.get(1);
             startX1 = touch1.getPageX();
@@ -194,6 +196,7 @@ public class ContentEditor extends WavePanel implements Activity {
         // logger.info("onTouchEnd fingers:" + touchesMove.length());
         scheduledOne = false;
         scheduledTwo = false;
+        scheduledGesture = false;
       }
     }, TouchEndEvent.getType());
 
@@ -201,6 +204,9 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onGestureChange(final GestureChangeEvent event) {
+        if (scheduledGesture) {
+          return;
+        }
         logger.info("scale:" + event.getScale() + ";rotation:" + event.getRotation());
       }
     }, GestureChangeEvent.getType());

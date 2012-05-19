@@ -4,7 +4,6 @@ import com.goodow.wave.client.wavepanel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Cursor;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -32,7 +31,6 @@ import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.Request;
 
-import com.retech.reader.web.client.mobile.ui.CategoryListEditor;
 import com.retech.reader.web.client.mobile.ui.IssueNews;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.ResourceProxy;
@@ -137,14 +135,15 @@ public class LibraryView extends WavePanel implements Activity {
     imagePanel.add(add);
     issuePanel.add(imagePanel);
     issuePanel.add(new Label("添加"));
-    libPanel.getElement().getStyle().setCursor(Cursor.POINTER);
-    issuePanel.addDomHandler(new ClickHandler() {
-
-      @Override
-      public void onClick(final ClickEvent event) {
-        placeController.goTo(places.get().setPath(CategoryListEditor.class.getName()));
-      }
-    }, ClickEvent.getType());
+    issuePanel.getElement().getStyle().setOpacity(0);
+    // issuePanel.getElement().getStyle().setCursor(Cursor.POINTER);
+    // issuePanel.addDomHandler(new ClickHandler() {
+    //
+    // @Override
+    // public void onClick(final ClickEvent event) {
+    // placeController.goTo(places.get().setPath(CategoryListEditor.class.getName()));
+    // }
+    // }, ClickEvent.getType());
     libPanel.add(issuePanel);
   }
 
