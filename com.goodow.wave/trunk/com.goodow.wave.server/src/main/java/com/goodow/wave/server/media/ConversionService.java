@@ -78,10 +78,11 @@ public class ConversionService {
   private String createNewBlobFile(final String mimeType, final String blobInfoUploadedFileName,
       final byte[] bytes) throws IOException {
     FileService fileService = FileServiceFactory.getFileService();
-    AppEngineFile file = fileService.createNewBlobFile(mimeType, blobInfoUploadedFileName);
-    FileWriteChannel writeChannel = fileService.openWriteChannel(file, true);
-    writeChannel.write(ByteBuffer.wrap(bytes));
+    AppEngineFile file = null;
     try {
+      file = fileService.createNewBlobFile(mimeType, blobInfoUploadedFileName);
+      FileWriteChannel writeChannel = fileService.openWriteChannel(file, true);
+      writeChannel.write(ByteBuffer.wrap(bytes));
       writeChannel.closeFinally();
     } catch (Exception e) {
       logger.log(Level.SEVERE, "关闭writeChannel时异常", e);
