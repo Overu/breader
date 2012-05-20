@@ -201,7 +201,7 @@ public class ContentEditor extends WavePanel implements Activity {
       }
     }, TouchEndEvent.getType());
 
-    flowPanel.addDomHandler(new GestureChangeHandler() {
+    this.addDomHandler(new GestureChangeHandler() {
 
       @Override
       public void onGestureChange(final GestureChangeEvent event) {
