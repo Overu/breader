@@ -16,7 +16,6 @@ package com.goodow.wave.server.media;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -38,7 +37,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Singleton
 public class AttachmentUploadHandler extends HttpServlet {
-  @SuppressWarnings("unused")
   private static final Logger log = Logger.getLogger(AttachmentUploadHandler.class.getName());
 
   /**
