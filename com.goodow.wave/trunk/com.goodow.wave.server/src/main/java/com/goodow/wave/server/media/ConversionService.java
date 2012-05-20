@@ -17,7 +17,6 @@ import com.goodow.wave.server.util.Util;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreInputStream;
-import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.conversion.Asset;
 import com.google.appengine.api.conversion.Conversion;
 import com.google.appengine.api.conversion.ConversionResult;
@@ -27,7 +26,6 @@ import com.google.appengine.api.files.AppEngineFile;
 import com.google.appengine.api.files.FileService;
 import com.google.appengine.api.files.FileServiceFactory;
 import com.google.appengine.api.files.FileWriteChannel;
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import java.io.IOException;
@@ -40,8 +38,6 @@ import java.util.logging.Logger;
 @Singleton
 public class ConversionService {
 
-  @Inject
-  BlobstoreService blobstoreService;
   static final Logger logger = Logger.getLogger(ConversionService.class.getName());
 
   public List<String> convertFromPdfToPng(final BlobKey blobKey) throws IOException {
@@ -80,11 +76,14 @@ public class ConversionService {
     FileService fileService = FileServiceFactory.getFileService();
     AppEngineFile file = fileService.createNewBlobFile(mimeType);
     logger.info("createNewBlobFile");
-    boolean lock = false;
-    FileWriteChannel writeChannel = fileService.openWriteChannel(file, lock);
+    FileWriteChannel writeChannel = fileService.openWriteChannel(file, true);
     writeChannel.write(ByteBuffer.wrap(bytes));
     logger.info("3");
-    writeChannel.closeFinally();
+    try {
+      writeChannel.closeFinally();
+    } catch (Exception e) {
+      logger.log(Level.SEVERE, "关闭writeChannel时异常", e);
+    }
     return fileService.getBlobKey(file).getKeyString();
   }
 }
