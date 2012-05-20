@@ -148,28 +148,28 @@ public class ContentEditor extends WavePanel implements Activity {
         event.preventDefault();
         JsArray<Touch> touchesMove = event.getTouches();
         switch (touchesMove.length()) {
-          case 2:
-            if (scheduledTwo || !scheduledOne) {
-              return;
-            }
-            scheduledTwo = true;
-            // logger.info("touch 2 move");
-            Touch touch1 = touchesMove.get(0);
-            Touch touch2 = touchesMove.get(1);
-            int nowX1 = touch1.getPageX();
-            int nowX2 = touch2.getPageX();
-            int subtractX1 = nowX1 - startX1;
-            int subtractX2 = nowX2 - startX2;
-            if (subtractX1 > 0 && subtractX2 > 0) {
-              // scheduledGesture = true;
-              sectionView.getElement().getStyle().setWidth(100, Unit.PCT);
-              return;
-            } else if (subtractX1 < 0 && subtractX2 < 0) {
-              // scheduledGesture = true;
-              sectionView.getElement().getStyle().setWidth(0, Unit.PX);
-              return;
-            }
-            break;
+        // case 2:
+        // if (scheduledTwo || !scheduledOne) {
+        // return;
+        // }
+        // scheduledTwo = true;
+        // // logger.info("touch 2 move");
+        // Touch touch1 = touchesMove.get(0);
+        // Touch touch2 = touchesMove.get(1);
+        // int nowX1 = touch1.getPageX();
+        // int nowX2 = touch2.getPageX();
+        // int subtractX1 = nowX1 - startX1;
+        // int subtractX2 = nowX2 - startX2;
+        // if (subtractX1 > 0 && subtractX2 > 0) {
+        // // scheduledGesture = true;
+        // sectionView.getElement().getStyle().setWidth(100, Unit.PCT);
+        // return;
+        // } else if (subtractX1 < 0 && subtractX2 < 0) {
+        // // scheduledGesture = true;
+        // sectionView.getElement().getStyle().setWidth(0, Unit.PX);
+        // return;
+        // }
+        // break;
           case 1:
             if (scheduledOne || !scheduledTwo) {
               return;
@@ -205,9 +205,28 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onGestureChange(final GestureChangeEvent event) {
-        if (scheduledGesture) {
-          return;
+        JsArray<Touch> targetTouches = event.getNativeEvent().getTargetTouches();
+        switch (targetTouches.length()) {
+          case 2:
+            Touch touch1 = targetTouches.get(0);
+            Touch touch2 = targetTouches.get(1);
+            int nowX1 = touch1.getPageX();
+            int nowX2 = touch2.getPageX();
+            int subtractX1 = nowX1 - startX1;
+            int subtractX2 = nowX2 - startX2;
+            if (subtractX1 > 0 && subtractX2 > 0) {
+              logger.info("right!");
+              return;
+            } else if (subtractX1 < 0 && subtractX2 < 0) {
+              logger.info("left!");
+              return;
+            }
+            break;
+
+          default:
+            break;
         }
+
         logger.info("scale:" + event.getScale() + ";rotation:" + event.getRotation());
       }
     }, GestureChangeEvent.getType());
