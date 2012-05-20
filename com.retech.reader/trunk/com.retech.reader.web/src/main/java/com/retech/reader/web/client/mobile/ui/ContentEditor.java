@@ -221,13 +221,12 @@ public class ContentEditor extends WavePanel implements Activity {
               logger.info("left!");
               return;
             }
+            logger.info("scale:" + event.getScale() + ";rotation:" + event.getRotation());
             break;
 
           default:
             break;
         }
-
-        logger.info("scale:" + event.getScale() + ";rotation:" + event.getRotation());
       }
     }, GestureChangeEvent.getType());
 
