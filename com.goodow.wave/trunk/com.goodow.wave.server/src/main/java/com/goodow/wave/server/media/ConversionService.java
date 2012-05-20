@@ -13,8 +13,12 @@
  */
 package com.goodow.wave.server.media;
 
+import com.goodow.wave.server.util.Util;
+
 import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreInputStream;
 import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.conversion.Asset;
 import com.google.appengine.api.conversion.Conversion;
 import com.google.appengine.api.conversion.ConversionResult;
@@ -37,16 +41,19 @@ import java.util.logging.Logger;
 
 @Singleton
 public class ConversionService {
+
   @Inject
-  BlobstoreService blobstoreService;
+  BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
   static final Logger logger = Logger.getLogger(ConversionService.class.getName());
 
   public List<BlobKey> convertFromPdfToPng(final BlobKey blobKey) throws IOException {
     logger.info("0");
-    byte[] pdfData = blobstoreService.fetchData(blobKey, 0, BlobstoreService.MAX_BLOB_FETCH_SIZE);
-    logger.info("0.5");
-    Asset asset = new Asset(MimeType.APPLICATION_PDF.getType(), pdfData);
-    logger.info("1");
+    BlobstoreInputStream blobstoreInputStream = new BlobstoreInputStream(blobKey);
+    logger.info("0.1" + blobstoreInputStream);
+    byte[] bytes = Util.readStreamAsBytes(blobstoreInputStream);
+    logger.info("0.5" + bytes);
+    Asset asset = new Asset(MimeType.APPLICATION_PDF.getType(), bytes);
+    logger.info("1" + asset);
     Document document = new Document(asset);
     // ConversionOptions options =
     // ConversionOptions.Builder.withImageWidth(1000).firstPage(2).lastPage(10);
