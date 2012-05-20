@@ -52,7 +52,6 @@ public class ConversionService {
     Conversion conversion = new Conversion(document, MimeType.IMAGE_PNG.getType());
     com.google.appengine.api.conversion.ConversionService conversionService =
         ConversionServiceFactory.getConversionService();
-    logger.info("2" + conversionService);
     ConversionResult result = null;
     try {
       result = conversionService.convert(conversion);
@@ -64,8 +63,10 @@ public class ConversionService {
     if (result.success()) {
       logger.info("Conversion success");
       List<String> toReturn = new ArrayList<String>();
-      for (Asset a : result.getOutputDoc().getAssets()) {
-        toReturn.add(createNewBlobFile(MimeType.IMAGE_PNG.getType(), a.getData()));
+      List<Asset> assets = result.getOutputDoc().getAssets();
+      for (int i = 0; i < assets.size(); i++) {
+        Asset a = assets.get(i);
+        toReturn.add(createNewBlobFile(MimeType.IMAGE_PNG.getType(), "" + i, a.getData()));
       }
       return toReturn;
     } else {
@@ -74,13 +75,12 @@ public class ConversionService {
     }
   }
 
-  private String createNewBlobFile(final String mimeType, final byte[] bytes) throws IOException {
+  private String createNewBlobFile(final String mimeType, final String blobInfoUploadedFileName,
+      final byte[] bytes) throws IOException {
     FileService fileService = FileServiceFactory.getFileService();
-    AppEngineFile file = fileService.createNewBlobFile(mimeType);
-    logger.info("createNewBlobFile");
+    AppEngineFile file = fileService.createNewBlobFile(mimeType, blobInfoUploadedFileName);
     FileWriteChannel writeChannel = fileService.openWriteChannel(file, true);
     writeChannel.write(ByteBuffer.wrap(bytes));
-    logger.info("3");
     try {
       writeChannel.closeFinally();
     } catch (Exception e) {
