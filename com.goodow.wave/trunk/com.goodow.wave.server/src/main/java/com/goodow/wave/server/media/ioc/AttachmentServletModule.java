@@ -31,9 +31,9 @@ public class AttachmentServletModule extends ServletModule {
   @Override
   protected void configureServlets() {
     super.configureServlets();
-    serve("/attachmentinfo").with(AttachmentMetadataHandler.class);
+    serve("/mediaInfo").with(AttachmentMetadataHandler.class);
     serve("/upload").with(AttachmentUploadHandler.class);
-    serve("/serve").with(BlobServeServlet.class);
+    serve("/media").with(BlobServeServlet.class);
   }
 
   @Provides
