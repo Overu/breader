@@ -88,7 +88,6 @@ public class ContentEditor extends WavePanel implements Activity {
   private boolean scheduledGesture = false;
   private int startX1;
   private int startX2;
-  private double startScale = 0;
   private double changeScale;
   private double fontSize = 1.5;
 
@@ -171,10 +170,9 @@ public class ContentEditor extends WavePanel implements Activity {
               scheduledTwo = true;
               sectionView.getElement().getStyle().setWidth(0, Unit.PX);
               return;
-            } else if (!scheduledTwo && Math.abs(changeScale - startScale) >= 1) {
-              fontSize += changeScale;
-              htmlStyle.setFontSize(fontSize, Unit.EM);
-              logger.info("scale:" + startScale);
+            } else if (!scheduledTwo && Math.abs(changeScale - 1.0) >= 0.15) {
+              htmlStyle.setFontSize(fontSize + (changeScale - 1.0), Unit.EM);
+              logger.info("scale:" + changeScale + ";fontSize:" + fontSize + (changeScale - 1.0));
             }
             break;
           case 1:
@@ -205,7 +203,6 @@ public class ContentEditor extends WavePanel implements Activity {
         scheduledOne = false;
         scheduledTwo = false;
         scheduledGesture = false;
-        startScale = 0;
       }
     }, TouchEndEvent.getType());
 
@@ -213,9 +210,6 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onGestureChange(final GestureChangeEvent event) {
-        if (startScale == 0) {
-          startScale = event.getScale();
-        }
         changeScale = event.getScale();
         // logger.info("scale:" + event.getScale());
       }
