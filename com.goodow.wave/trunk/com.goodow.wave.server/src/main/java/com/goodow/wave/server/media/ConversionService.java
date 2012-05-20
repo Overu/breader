@@ -18,7 +18,6 @@ import com.goodow.wave.server.util.Util;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreInputStream;
 import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.conversion.Asset;
 import com.google.appengine.api.conversion.Conversion;
 import com.google.appengine.api.conversion.ConversionResult;
@@ -31,12 +30,11 @@ import com.google.appengine.api.files.FileWriteChannel;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import com.gooodow.wave.shared.media.MimeType;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Singleton
@@ -47,27 +45,29 @@ public class ConversionService {
   static final Logger logger = Logger.getLogger(ConversionService.class.getName());
 
   public List<String> convertFromPdfToPng(final BlobKey blobKey) throws IOException {
-    logger.info("0");
     BlobstoreInputStream blobstoreInputStream = new BlobstoreInputStream(blobKey);
-    logger.info("0.1" + blobstoreInputStream);
     byte[] bytes = Util.readStreamAsBytes(blobstoreInputStream);
-    logger.info("0.5" + bytes);
-    Asset asset = new Asset(MimeType.APPLICATION_PDF.getType(), bytes);
-    logger.info("1" + asset);
+    Asset asset = new Asset("application/pdf", bytes, "test.pdf");
     Document document = new Document(asset);
     // ConversionOptions options =
     // ConversionOptions.Builder.withImageWidth(1000).firstPage(2).lastPage(10);
-    Conversion conversion = new Conversion(document, MimeType.IMAGE_PNG.getType());
+    Conversion conversion = new Conversion(document, "image/png");
     com.google.appengine.api.conversion.ConversionService conversionService =
         ConversionServiceFactory.getConversionService();
-    logger.info("2");
-    ConversionResult result = conversionService.convert(conversion);
+    logger.info("2" + conversionService);
+    ConversionResult result = null;
+    try {
+      result = conversionService.convert(conversion);
+      logger.info("2.1" + result);
+    } catch (Exception e) {
+      logger.log(Level.SEVERE, "转换异常", e);
+    }
 
     if (result.success()) {
       logger.info("Conversion success");
       List<String> toReturn = new ArrayList<String>();
       for (Asset a : result.getOutputDoc().getAssets()) {
-        toReturn.add(createNewBlobFile(MimeType.IMAGE_PNG.getType(), a.getData()));
+        toReturn.add(createNewBlobFile("image/png", a.getData()));
       }
       return toReturn;
     } else {
