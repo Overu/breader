@@ -75,7 +75,6 @@ public class AttachmentUploadHandler extends HttpServlet {
   @Override
   public void doPost(final HttpServletRequest req, final HttpServletResponse resp)
       throws IOException, ServletException {
-    log.info(blobstoreService + " : " + blobstoreService);
     Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
     List<BlobKey> blobKeys = blobs.get(ATTACHMENT_UPLOAD_PARAM);
     BlobKey blobKey = getOnlyElement(blobKeys.iterator());
