@@ -149,7 +149,6 @@ public class ContentEditor extends WavePanel implements Activity {
         JsArray<Touch> touchesMove = event.getTouches();
         switch (touchesMove.length()) {
           case 2:
-            scheduledGesture = true;
             if (scheduledTwo || !scheduledOne) {
               return;
             }
@@ -162,9 +161,11 @@ public class ContentEditor extends WavePanel implements Activity {
             int subtractX1 = nowX1 - startX1;
             int subtractX2 = nowX2 - startX2;
             if (subtractX1 > 0 && subtractX2 > 0) {
+              // scheduledGesture = true;
               sectionView.getElement().getStyle().setWidth(100, Unit.PCT);
               return;
             } else if (subtractX1 < 0 && subtractX2 < 0) {
+              // scheduledGesture = true;
               sectionView.getElement().getStyle().setWidth(0, Unit.PX);
               return;
             }
@@ -200,11 +201,11 @@ public class ContentEditor extends WavePanel implements Activity {
       }
     }, TouchEndEvent.getType());
 
-    this.addDomHandler(new GestureChangeHandler() {
+    flowPanel.addDomHandler(new GestureChangeHandler() {
 
       @Override
       public void onGestureChange(final GestureChangeEvent event) {
-        if (scheduledGesture || scheduledGesture) {
+        if (scheduledGesture) {
           return;
         }
         logger.info("scale:" + event.getScale() + ";rotation:" + event.getRotation());
