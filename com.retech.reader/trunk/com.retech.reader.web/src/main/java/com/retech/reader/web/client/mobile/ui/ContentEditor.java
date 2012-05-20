@@ -120,7 +120,6 @@ public class ContentEditor extends WavePanel implements Activity {
             // logger.info("touches: 2 ");
             scheduledTwo = false;
             scheduledOne = true;
-            scheduledGesture = true;
             Touch touch1 = touchesStart.get(0);
             Touch touch2 = touchesStart.get(1);
             startX1 = touch1.getPageX();
@@ -150,6 +149,7 @@ public class ContentEditor extends WavePanel implements Activity {
         JsArray<Touch> touchesMove = event.getTouches();
         switch (touchesMove.length()) {
           case 2:
+            scheduledGesture = true;
             if (scheduledTwo || !scheduledOne) {
               return;
             }
@@ -204,7 +204,7 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onGestureChange(final GestureChangeEvent event) {
-        if (scheduledGesture) {
+        if (scheduledGesture || scheduledGesture) {
           return;
         }
         logger.info("scale:" + event.getScale() + ";rotation:" + event.getRotation());
