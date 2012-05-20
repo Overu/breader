@@ -88,7 +88,9 @@ public class ContentEditor extends WavePanel implements Activity {
   private boolean scheduledGesture = false;
   private int startX1;
   private int startX2;
-  private double startScale;
+  private double startScale = 0;
+  private double changeScale;
+  private double fontSize = 1.5;
 
   @Inject
   public ContentEditor(final PlaceController placeContorller, final ReaderFactory f,
@@ -104,8 +106,10 @@ public class ContentEditor extends WavePanel implements Activity {
 
     flowPanel = new FlowPanel();
     html = new HTML();
+    final Style htmlStyle = html.getElement().getStyle();
     html.addStyleName(ReaderResources.INSTANCE().style().contentHtmlPanel());
-    this.getElement().getStyle().setMarginTop(1, Unit.EM);
+    htmlStyle.setMarginTop(1, Unit.EM);
+    htmlStyle.setFontSize(fontSize, Unit.EM);
     flowPanel.add(html);
 
     this.setWaveContent(flowPanel);
@@ -167,7 +171,9 @@ public class ContentEditor extends WavePanel implements Activity {
               scheduledTwo = true;
               sectionView.getElement().getStyle().setWidth(0, Unit.PX);
               return;
-            } else {
+            } else if (!scheduledTwo && Math.abs(changeScale - startScale) >= 1) {
+              fontSize += changeScale;
+              htmlStyle.setFontSize(fontSize, Unit.EM);
               logger.info("scale:" + startScale);
             }
             break;
@@ -199,6 +205,7 @@ public class ContentEditor extends WavePanel implements Activity {
         scheduledOne = false;
         scheduledTwo = false;
         scheduledGesture = false;
+        startScale = 0;
       }
     }, TouchEndEvent.getType());
 
@@ -206,7 +213,10 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onGestureChange(final GestureChangeEvent event) {
-        startScale = event.getScale();
+        if (startScale == 0) {
+          startScale = event.getScale();
+        }
+        changeScale = event.getScale();
         // logger.info("scale:" + event.getScale());
       }
     }, GestureChangeEvent.getType());
