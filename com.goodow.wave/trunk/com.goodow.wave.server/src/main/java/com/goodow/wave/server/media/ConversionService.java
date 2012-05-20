@@ -28,6 +28,8 @@ import com.google.appengine.api.files.FileServiceFactory;
 import com.google.appengine.api.files.FileWriteChannel;
 import com.google.inject.Singleton;
 
+import com.gooodow.wave.shared.media.MimeType;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -43,11 +45,11 @@ public class ConversionService {
   public List<String> convertFromPdfToPng(final BlobKey blobKey) throws IOException {
     BlobstoreInputStream blobstoreInputStream = new BlobstoreInputStream(blobKey);
     byte[] bytes = Util.readStreamAsBytes(blobstoreInputStream);
-    Asset asset = new Asset("application/pdf", bytes, "test.pdf");
+    Asset asset = new Asset(MimeType.APPLICATION_PDF.getType(), bytes, "test.pdf");
     Document document = new Document(asset);
     // ConversionOptions options =
     // ConversionOptions.Builder.withImageWidth(1000).firstPage(2).lastPage(10);
-    Conversion conversion = new Conversion(document, "image/png");
+    Conversion conversion = new Conversion(document, MimeType.IMAGE_PNG.getType());
     com.google.appengine.api.conversion.ConversionService conversionService =
         ConversionServiceFactory.getConversionService();
     logger.info("2" + conversionService);
@@ -63,7 +65,7 @@ public class ConversionService {
       logger.info("Conversion success");
       List<String> toReturn = new ArrayList<String>();
       for (Asset a : result.getOutputDoc().getAssets()) {
-        toReturn.add(createNewBlobFile("image/png", a.getData()));
+        toReturn.add(createNewBlobFile(MimeType.IMAGE_PNG.getType(), a.getData()));
       }
       return toReturn;
     } else {
