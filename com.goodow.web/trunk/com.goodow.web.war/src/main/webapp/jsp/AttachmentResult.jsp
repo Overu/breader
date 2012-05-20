@@ -14,7 +14,7 @@
     <%
       for(BlobKey key : keys) {
     %>
-    <img src="/serve?blobKey=<%= key.getKeyString() %>">
+    <img src="/media?key=<%= key.getKeyString() %>">
     <%
       }
     %>
