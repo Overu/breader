@@ -3,7 +3,6 @@ package org.cloudlet.web.service.client.rpc;
 import com.goodow.wave.client.widget.loading.LoadingIndicator;
 import com.goodow.web.feature.client.FeatureDetection;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
@@ -27,7 +26,7 @@ public class BaseRequestTransport extends DefaultRequestTransport implements Sch
   @Inject
   BaseRequestTransport(final LoadingIndicator loadingIndicator) {
     loading = loadingIndicator.getElement();
-    if (GWT.isProdMode()) {
+    if (FeatureDetection.mobileNative()) {
       super.setRequestUrl("http://dev.goodow.com/" + DefaultRequestTransport.URL);
     }
   }
