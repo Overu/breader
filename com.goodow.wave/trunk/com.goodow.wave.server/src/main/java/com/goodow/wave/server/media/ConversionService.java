@@ -42,10 +42,10 @@ public class ConversionService {
   static final Logger logger = Logger.getLogger(ConversionService.class.getName());
 
   public List<BlobKey> convertFromPdfToPng(final BlobKey blobKey) throws IOException {
-    logger.info("1");
-    Asset asset =
-        new Asset(MimeType.IMAGE_PNG.APPLICATION_PDF.getType(), blobstoreService.fetchData(blobKey,
-            0, BlobstoreService.MAX_BLOB_FETCH_SIZE));
+    logger.info("0");
+    byte[] pdfData = blobstoreService.fetchData(blobKey, 0, BlobstoreService.MAX_BLOB_FETCH_SIZE);
+    logger.info("0.5");
+    Asset asset = new Asset(MimeType.APPLICATION_PDF.getType(), pdfData);
     logger.info("1");
     Document document = new Document(asset);
     // ConversionOptions options =
