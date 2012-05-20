@@ -4,17 +4,16 @@
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory" %>
 <%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.google.appengine.api.blobstore.BlobKey" %>
 <%
   BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-  List<BlobKey> keys = (List<BlobKey>)request.getAttribute("blobKey");
+  List<String> keys = (List<String>)request.getAttribute("keys");
 %>
 <html>
     <body>
     <%
-      for(BlobKey key : keys) {
+      for(String key : keys) {
     %>
-    <img src="/media?key=<%= key.getKeyString() %>">
+    <img src="/media?key=<%= key %>">
     <%
       }
     %>

@@ -16,6 +16,7 @@ package com.goodow.wave.server.media;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -80,9 +81,9 @@ public class AttachmentUploadHandler extends HttpServlet {
     BlobKey blobKey = getOnlyElement(blobKeys.iterator());
     log.info("blobKeys: " + blobKeys);
     // rawAttachmentService.turnBlobIntoAttachment(blobKey);
-    List<BlobKey> keys = conversionService.convertFromPdfToPng(blobKey);
+    List<String> keys = conversionService.convertFromPdfToPng(blobKey);
     log.info("pngKeys: " + keys);
-    req.setAttribute("blobKeys", keys);
+    req.setAttribute("keys", keys);
     getServletContext().getRequestDispatcher(
         "/jsp/AttachmentResult.jsp?blobKey=" + blobKey.getKeyString()).forward(req, resp);
 

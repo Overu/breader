@@ -43,10 +43,10 @@ import java.util.logging.Logger;
 public class ConversionService {
 
   @Inject
-  BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+  BlobstoreService blobstoreService;
   static final Logger logger = Logger.getLogger(ConversionService.class.getName());
 
-  public List<BlobKey> convertFromPdfToPng(final BlobKey blobKey) throws IOException {
+  public List<String> convertFromPdfToPng(final BlobKey blobKey) throws IOException {
     logger.info("0");
     BlobstoreInputStream blobstoreInputStream = new BlobstoreInputStream(blobKey);
     logger.info("0.1" + blobstoreInputStream);
@@ -65,9 +65,9 @@ public class ConversionService {
 
     if (result.success()) {
       logger.info("Conversion success");
-      List<BlobKey> toReturn = new ArrayList<BlobKey>();
+      List<String> toReturn = new ArrayList<String>();
       for (Asset a : result.getOutputDoc().getAssets()) {
-        toReturn.add(createNewBlobFile("", a.getData()));
+        toReturn.add(createNewBlobFile(MimeType.IMAGE_PNG.getType(), a.getData()));
       }
       return toReturn;
     } else {
@@ -76,7 +76,7 @@ public class ConversionService {
     }
   }
 
-  private BlobKey createNewBlobFile(final String mimeType, final byte[] bytes) throws IOException {
+  private String createNewBlobFile(final String mimeType, final byte[] bytes) throws IOException {
     FileService fileService = FileServiceFactory.getFileService();
     AppEngineFile file = fileService.createNewBlobFile(mimeType);
     logger.info("createNewBlobFile");
@@ -85,6 +85,6 @@ public class ConversionService {
     writeChannel.write(ByteBuffer.wrap(bytes));
     logger.info("3");
     writeChannel.closeFinally();
-    return fileService.getBlobKey(file);
+    return fileService.getBlobKey(file).getKeyString();
   }
 }
