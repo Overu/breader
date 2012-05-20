@@ -206,27 +206,21 @@ public class ContentEditor extends WavePanel implements Activity {
       @Override
       public void onGestureChange(final GestureChangeEvent event) {
         JsArray<Touch> targetTouches = event.getNativeEvent().getTouches();
-        switch (targetTouches.length()) {
-          case 2:
-            Touch touch1 = targetTouches.get(0);
-            Touch touch2 = targetTouches.get(1);
-            int nowX1 = touch1.getPageX();
-            int nowX2 = touch2.getPageX();
-            int subtractX1 = nowX1 - startX1;
-            int subtractX2 = nowX2 - startX2;
-            if (subtractX1 > 0 && subtractX2 > 0) {
-              logger.info("right!");
-              return;
-            } else if (subtractX1 < 0 && subtractX2 < 0) {
-              logger.info("left!");
-              return;
-            }
-            logger.info("scale:" + event.getScale() + ";rotation:" + event.getRotation());
-            break;
-
-          default:
-            break;
-        }
+        Touch touch1 = targetTouches.get(0);
+        Touch touch2 = targetTouches.get(1);
+        logger.info("touch1:" + touch1.getPageX() + ";touch2:" + touch2.getPageX());
+        // int nowX1 = touch1.getPageX();
+        // int nowX2 = touch2.getPageX();
+        // int subtractX1 = nowX1 - startX1;
+        // int subtractX2 = nowX2 - startX2;
+        // if (subtractX1 > 0 && subtractX2 > 0) {
+        // logger.info("right!");
+        // return;
+        // } else if (subtractX1 < 0 && subtractX2 < 0) {
+        // logger.info("left!");
+        // return;
+        // }
+        logger.info("scale:" + event.getScale() + ";rotation:" + event.getRotation());
       }
     }, GestureChangeEvent.getType());
 
