@@ -205,7 +205,7 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onGestureChange(final GestureChangeEvent event) {
-        JsArray<Touch> targetTouches = event.getNativeEvent().getTargetTouches();
+        JsArray<Touch> targetTouches = event.getNativeEvent().getTouches();
         switch (targetTouches.length()) {
           case 2:
             Touch touch1 = targetTouches.get(0);
