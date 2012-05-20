@@ -54,7 +54,7 @@ public class TrangleButtonCell<T> extends AbstractCell<T> {
   // private static SafeHtml TRANGLE_BUTTONED = AbstractImagePrototype
   // .create(bundle.trangleButtoned()).getSafeHtml();
 
-  // private boolean isClick = false;
+  private boolean isClick = false;
   private TrangleComboBoxPopupPanel pp;
 
   private Delegate<T> delegate = new TrangleButtonCell.Delegate<T>() {
@@ -82,7 +82,7 @@ public class TrangleButtonCell<T> extends AbstractCell<T> {
   private Element imageElm;
 
   public TrangleButtonCell() {
-    super(BrowserEvents.FOCUS);
+    super(BrowserEvents.CLICK, BrowserEvents.BLUR);
   }
 
   @Override
@@ -95,11 +95,11 @@ public class TrangleButtonCell<T> extends AbstractCell<T> {
   public void onBrowserEvent(final com.google.gwt.cell.client.Cell.Context context,
       final Element parent, final T value, final NativeEvent event,
       final ValueUpdater<T> valueUpdater) {
-    // boolean clickEvent = event.getType().equals(BrowserEvents.CLICK);
-    // boolean blurEvent = event.getType().equals(BrowserEvents.BLUR);
-    boolean focusEvent = event.getType().equals(BrowserEvents.FOCUS);
+    boolean clickEvent = event.getType().equals(BrowserEvents.CLICK);
+    boolean blurEvent = event.getType().equals(BrowserEvents.BLUR);
+    // boolean focusEvent = event.getType().equals(BrowserEvents.FOCUS);
     imageElm = parent;
-    if (focusEvent) {
+    if (clickEvent || blurEvent) {
       EventTarget eventTarget = event.getEventTarget();
       if (!Element.is(eventTarget)) {
         return;
@@ -121,12 +121,14 @@ public class TrangleButtonCell<T> extends AbstractCell<T> {
         // int parentY = parentTop + parentHeight;
         // int clientX = event.getClientX();
         // int clientY = event.getClientY();
-        // if (clickEvent) {
-        // if (!isClick) {
-        // isClick = true;
-        // } else {
-        // isClick = false;
-        // }
+        if (!isClick) {
+          isClick = true;
+          parent.focus();
+          onEnterKeyDown(context, parent, value, event, valueUpdater);
+        } else {
+          parent.blur();
+          isClick = false;
+        }
         // imageElm.getParentElement().removeAttribute("tabindex");
         // imageElm.setTabIndex(1);
         // parent.focus();
@@ -142,7 +144,6 @@ public class TrangleButtonCell<T> extends AbstractCell<T> {
         // parent.removeClassName(TrangleResources.css().trangleCelled());
         // isClick = false;
         // }
-        onEnterKeyDown(context, parent, value, event, valueUpdater);
       }
     }
   }
