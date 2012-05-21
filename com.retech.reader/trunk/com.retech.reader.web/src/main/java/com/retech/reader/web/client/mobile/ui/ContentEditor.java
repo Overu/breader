@@ -89,6 +89,7 @@ public class ContentEditor extends WavePanel implements Activity {
   private int startX1;
   private int startX2;
   private double changeScale;
+  private double nowScale;
   private double fontSize = 1.5;
 
   @Inject
@@ -107,7 +108,7 @@ public class ContentEditor extends WavePanel implements Activity {
     html = new HTML();
     final Style htmlStyle = html.getElement().getStyle();
     html.addStyleName(ReaderResources.INSTANCE().style().contentHtmlPanel());
-    htmlStyle.setMarginTop(1, Unit.EM);
+    this.getElement().getStyle().setMarginTop(1, Unit.EM);
     htmlStyle.setFontSize(fontSize, Unit.EM);
     flowPanel.add(html);
 
@@ -171,7 +172,8 @@ public class ContentEditor extends WavePanel implements Activity {
               sectionView.getElement().getStyle().setWidth(0, Unit.PX);
               return;
             } else if (!scheduledTwo && Math.abs(changeScale - 1.0) >= 0.15) {
-              htmlStyle.setFontSize(fontSize + (changeScale - 1.0), Unit.EM);
+              nowScale = fontSize + (changeScale - 1.0);
+              htmlStyle.setFontSize(nowScale, Unit.EM);
               logger.info("scale:" + changeScale + ";fontSize:" + fontSize + (changeScale - 1.0));
             }
             break;
@@ -200,6 +202,7 @@ public class ContentEditor extends WavePanel implements Activity {
       public void onTouchEnd(final TouchEndEvent event) {
         // JsArray<Touch> touchesMove = event.getTouches();
         // logger.info("onTouchEnd fingers:" + touchesMove.length());
+        fontSize = nowScale;
         scheduledOne = false;
         scheduledTwo = false;
         scheduledGesture = false;
