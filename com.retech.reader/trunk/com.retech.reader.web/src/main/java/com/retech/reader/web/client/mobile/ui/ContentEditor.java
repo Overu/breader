@@ -83,8 +83,7 @@ public class ContentEditor extends WavePanel implements Activity {
   private final WaveShell waveShell;
   private int columnCount;
   private int columnIndex = 1;
-  private boolean scheduledTwo = false;
-  private boolean scheduledOne = false;
+  private int fingerCount = 0;
   private boolean scheduledGesture = false;
   private int startX1;
   private int startX2;
@@ -108,8 +107,8 @@ public class ContentEditor extends WavePanel implements Activity {
     html = new HTML();
     final Style htmlStyle = html.getElement().getStyle();
     html.addStyleName(ReaderResources.INSTANCE().style().contentHtmlPanel());
-    this.getElement().getStyle().setMarginTop(1, Unit.EM);
     htmlStyle.setFontSize(fontSize, Unit.EM);
+    this.getElement().getStyle().setMarginTop(1, Unit.EM);
     flowPanel.add(html);
 
     this.setWaveContent(flowPanel);
@@ -122,8 +121,7 @@ public class ContentEditor extends WavePanel implements Activity {
         switch (touchesStart.length()) {
           case 2:
             // logger.info("touches: 2 ");
-            scheduledTwo = false;
-            scheduledOne = true;
+            fingerCount = 2;
             Touch touch1 = touchesStart.get(0);
             Touch touch2 = touchesStart.get(1);
             startX1 = touch1.getPageX();
@@ -131,8 +129,7 @@ public class ContentEditor extends WavePanel implements Activity {
             break;
           case 1:
             // logger.info("touches: 1 ");
-            scheduledOne = false;
-            scheduledTwo = true;
+            fingerCount = 1;
             Touch touch = touchesStart.get(0);
             startX1 = touch.getPageX();
             columnCount = html.getElement().getScrollWidth() / contentWidth;
@@ -153,7 +150,7 @@ public class ContentEditor extends WavePanel implements Activity {
         JsArray<Touch> touchesMove = event.getTouches();
         switch (touchesMove.length()) {
           case 2:
-            if (scheduledTwo || !scheduledOne) {
+            if (fingerCount == 0) {
               return;
             }
             // logger.info("touch 2 move");
@@ -163,25 +160,30 @@ public class ContentEditor extends WavePanel implements Activity {
             int nowX2 = touch2.getPageX();
             int subtractX1 = nowX1 - startX1;
             int subtractX2 = nowX2 - startX2;
-            if (subtractX1 > 0 && subtractX2 > 0) {
-              scheduledTwo = true;
-              sectionView.getElement().getStyle().setWidth(100, Unit.PCT);
-              return;
-            } else if (subtractX1 < 0 && subtractX2 < 0) {
-              scheduledTwo = true;
-              sectionView.getElement().getStyle().setWidth(0, Unit.PX);
-              return;
-            } else if (!scheduledTwo && Math.abs(changeScale - 1.0) >= 0.15) {
+            if ((subtractX1 > 0 && subtractX2 < 0) || (subtractX1 < 0 && subtractX2 > 0)) {
               nowScale = fontSize + (changeScale - 1.0);
               htmlStyle.setFontSize(nowScale, Unit.EM);
               logger.info("scale:" + changeScale + ";fontSize:" + fontSize + (changeScale - 1.0));
-            }
-            break;
-          case 1:
-            if (scheduledOne || !scheduledTwo) {
               return;
             }
-            scheduledOne = true;
+            if (subtractX1 > 0 && subtractX2 > 0) {
+              fingerCount = 0;
+              sectionView.getElement().getStyle().setWidth(100, Unit.PCT);
+              return;
+            } else if (subtractX1 < 0 && subtractX2 < 0) {
+              fingerCount = 0;
+              sectionView.getElement().getStyle().setWidth(0, Unit.PX);
+              return;
+            }
+            // else if (fingerCount == 2 && Math.abs(changeScale - 1.0) >= 0.15) {
+            //
+            // }
+            break;
+          case 1:
+            if (fingerCount == 0) {
+              return;
+            }
+            fingerCount = 0;
             // logger.info("touch 1 move");
             Touch touch = touchesMove.get(0);
             int nowX = touch.getPageX();
@@ -203,9 +205,10 @@ public class ContentEditor extends WavePanel implements Activity {
         // JsArray<Touch> touchesMove = event.getTouches();
         // logger.info("onTouchEnd fingers:" + touchesMove.length());
         fontSize = nowScale;
-        scheduledOne = false;
-        scheduledTwo = false;
-        scheduledGesture = false;
+        // scheduledOne = false;
+        // scheduledTwo = false;
+        fingerCount = 0;
+        // scheduledGesture = false;
       }
     }, TouchEndEvent.getType());
 
@@ -223,7 +226,8 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onDragStart(final DragStartEvent event) {
-        scheduledOne = false;
+        fingerCount = 1;
+        // scheduledOne = false;
         startX1 = event.getNativeEvent().getClientX();
         columnCount = html.getElement().getScrollWidth() / contentWidth;
       }
@@ -233,10 +237,11 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onDragOver(final DragOverEvent event) {
-        if (scheduledOne) {
+        if (fingerCount == 0) {
           return;
         }
-        scheduledOne = true;
+        // scheduledOne = true;
+        fingerCount = 0;
         int nowX = event.getNativeEvent().getClientX();
         int subtractX = nowX - startX1;
         gotoNextPageAndScrollNext(subtractX);
@@ -247,7 +252,8 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onDragEnd(final DragEndEvent event) {
-        scheduledOne = false;
+        // scheduledOne = false;
+        fingerCount = 0;
       }
     }, DragEndEvent.getType());
 
@@ -303,8 +309,8 @@ public class ContentEditor extends WavePanel implements Activity {
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
-    waveShell.getTopBar().addStyleName(ReaderResources.INSTANCE().style().contentTopBar());
     waveShell.getTopBar().getElement().getStyle().setTop(TOPBAR_TOP, Unit.PX);
+    waveShell.getTopBar().addStyleName(ReaderResources.INSTANCE().style().contentTopBar());
     // contentHeight = Window.getClientHeight() - 73;
     contentHeight = Window.getClientHeight() - 39 - 16;
     contentWidth = Window.getClientWidth() - 14;
@@ -398,8 +404,10 @@ public class ContentEditor extends WavePanel implements Activity {
   @Override
   protected void onUnload() {
     super.onUnload();
+    Style waveShellStyle = waveShell.getTopBar().getElement().getStyle();
+    waveShellStyle.clearTop();
+    waveShellStyle.clearOpacity();
     this.waveShell.getTopBar().removeStyleName(ReaderResources.INSTANCE().style().contentTopBar());
-    this.waveShell.getTopBar().getElement().getStyle().clearTop();
     this.sectionView.removeStyleName(ReaderResources.INSTANCE().style().contentSectionView());
     this.sectionView.getElement().getStyle().clearWidth();
     this.html.getElement().getStyle().clearLeft();
