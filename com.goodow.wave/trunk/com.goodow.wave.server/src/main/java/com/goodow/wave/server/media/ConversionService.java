@@ -83,7 +83,10 @@ public class ConversionService {
       file = fileService.createNewBlobFile(mimeType, blobInfoUploadedFileName);
       FileWriteChannel writeChannel = fileService.openWriteChannel(file, true);
       writeChannel.write(ByteBuffer.wrap(bytes));
+      writeChannel.close();
+      logger.info("close:" + blobInfoUploadedFileName);
       writeChannel.closeFinally();
+      logger.info("closeFinally" + blobInfoUploadedFileName);
     } catch (Exception e) {
       logger.log(Level.SEVERE, "关闭writeChannel时异常", e);
     }
