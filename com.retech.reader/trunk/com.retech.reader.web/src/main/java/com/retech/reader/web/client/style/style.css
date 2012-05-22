@@ -36,7 +36,7 @@ body {
   position: absolute;
   left: 7px;
   right: 0;
-  -webkit-transition: all 0.5s;
+  -webkit-transition: all 0.3s;
   z-index: 150;
   opacity: 0;
 }

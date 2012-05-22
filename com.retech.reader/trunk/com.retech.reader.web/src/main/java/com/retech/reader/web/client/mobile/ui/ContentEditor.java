@@ -531,6 +531,7 @@ public class ContentEditor extends WavePanel implements Activity {
   }
 
   private void onDeviceorientation() {
+    Window.alert("onDeviceorientation");
     contentHeight = Window.getClientHeight() - 9 - 16;
     contentWidth = Window.getClientWidth() - 14;
     Style htmlStyle = html.getElement().getStyle();
