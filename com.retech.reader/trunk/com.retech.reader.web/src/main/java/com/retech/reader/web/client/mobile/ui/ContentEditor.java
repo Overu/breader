@@ -29,6 +29,7 @@ import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.logging.client.LogConfiguration;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -294,6 +295,14 @@ public class ContentEditor extends WavePanel implements Activity {
     // });
   }
 
+  public native void addEventListener(Command cmd)/*-{
+                                                  $wnd.alert("start");
+                                                  $wnd.document.addEventListener("deviceorientation", function(e) {
+                                                  $wnd.alert("onDeviceorientation");
+                                                  cmd.@com.google.gwt.user.client::execute()();
+                                                  }, false);
+                                                  }-*/;
+
   @Override
   public String mayStop() {
     return null;
@@ -309,15 +318,19 @@ public class ContentEditor extends WavePanel implements Activity {
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
+    this.addEventListener(new Command() {
+
+      @Override
+      public void execute() {
+        Window.alert("123");
+        onDeviceorientation();
+      }
+    });
+
     waveShell.getTopBar().getElement().getStyle().setTop(TOPBAR_TOP, Unit.PX);
     waveShell.getTopBar().addStyleName(ReaderResources.INSTANCE().style().contentTopBar());
+    onDeviceorientation();
     // contentHeight = Window.getClientHeight() - 73;
-    contentHeight = Window.getClientHeight() - 9 - 16;
-    contentWidth = Window.getClientWidth() - 14;
-    Style htmlStyle = html.getElement().getStyle();
-    htmlStyle.setHeight(contentHeight, Unit.PX);
-    htmlStyle.setProperty("webkitColumnWidth", contentWidth + "px");
-    flowPanel.getElement().getParentElement().getStyle().setHeight(contentHeight, Unit.PX);
 
     // final EntityProxyId<IssueProxy> issueId =
     // ((BasePlace) placeContorller.getWhere()).getParam(IssueProxy.class);
@@ -499,6 +512,15 @@ public class ContentEditor extends WavePanel implements Activity {
       return;
     }
     findPages(sections.get(sectionIndex), true, isNextSection);
+  }
+
+  private void onDeviceorientation() {
+    contentHeight = Window.getClientHeight() - 9 - 16;
+    contentWidth = Window.getClientWidth() - 14;
+    Style htmlStyle = html.getElement().getStyle();
+    htmlStyle.setProperty("webkitColumnWidth", contentWidth + "px");
+    htmlStyle.setHeight(contentHeight, Unit.PX);
+    flowPanel.getElement().getParentElement().getStyle().setHeight(contentHeight, Unit.PX);
   }
 
   private void pageStart(final PageProxy pageProxy) {
