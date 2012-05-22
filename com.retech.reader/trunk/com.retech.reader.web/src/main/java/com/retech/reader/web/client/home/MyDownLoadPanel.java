@@ -110,7 +110,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
     this.keyUtil = keyUtil;
     this.storage = storage;
     this.progresses = progresses;
-    this.getWaveTitle().setText(IssueProxy.ISSUE_DOWN_NAME);
+    // this.getWaveTitle().setText(IssueProxy.ISSUE_DOWN_NAME);
     this.setWaveContent(binder.createAndBindUi(this));
 
   }

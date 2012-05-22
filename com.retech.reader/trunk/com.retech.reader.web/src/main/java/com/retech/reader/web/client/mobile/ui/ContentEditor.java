@@ -312,7 +312,7 @@ public class ContentEditor extends WavePanel implements Activity {
     waveShell.getTopBar().getElement().getStyle().setTop(TOPBAR_TOP, Unit.PX);
     waveShell.getTopBar().addStyleName(ReaderResources.INSTANCE().style().contentTopBar());
     // contentHeight = Window.getClientHeight() - 73;
-    contentHeight = Window.getClientHeight() - 39 - 16;
+    contentHeight = Window.getClientHeight() - 9 - 16;
     contentWidth = Window.getClientWidth() - 14;
     Style htmlStyle = html.getElement().getStyle();
     htmlStyle.setHeight(contentHeight, Unit.PX);
@@ -423,7 +423,7 @@ public class ContentEditor extends WavePanel implements Activity {
 
       @Override
       public void onSuccessAndCached(final ResourceProxy response) {
-        ContentEditor.this.getWaveTitle().setText(proxy.getTitle());
+        // ContentEditor.this.getWaveTitle().setText(proxy.getTitle());
         html.setHTML(response.getDataString());
         if (pageProxy.getPageNum() != 1) {
           storage.put(keyUtil.proxyAndKey(proxy.getSection().getIssue().stableId(), LAST_PAGE),

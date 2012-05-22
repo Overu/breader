@@ -39,7 +39,7 @@
     }
     
     .waveTitleIcon>img {
-      vertical-align: middle;
+      vertical-align: top;
     }
     
     .cell>div>div>div {

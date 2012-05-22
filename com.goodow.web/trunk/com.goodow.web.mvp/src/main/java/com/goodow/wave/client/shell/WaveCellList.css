@@ -1,7 +1,7 @@
 .cellListEvenItem,.cellListOddItem {
   border-bottom: 1px solid #bbb;
-  padding: 2px 0px;
-  font-size: 12pt;
+  padding: 12px 20px; 
+  font-size : 1.5em;
   color: #333;
 }
 
@@ -24,6 +24,6 @@
 
 .cellListSelectedItem {
   background-color: hsl(82, 43%, 45%) !important;
-  color: white!important;
+  color: white !important;
   background: inherit;
 }

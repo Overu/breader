@@ -33,9 +33,9 @@ import com.retech.reader.web.client.mobile.ui.SectionBrowserView;
 import com.retech.reader.web.client.mobile.ui.SectionListEditor;
 import com.retech.reader.web.client.mobile.ui.bar.SettingsView;
 import com.retech.reader.web.client.mobile.ui.talk.TalkView;
+import com.retech.reader.web.client.style.ReaderResources;
 import com.retech.reader.web.shared.rpc.FinalRequestFactory;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
-
 
 import java.util.logging.Logger;
 
@@ -89,6 +89,7 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
     @Override
     public Binder get() {
       Window.setTitle("睿泰阅读");
+      ReaderResources.INSTANCE();
       waveShell.getTopBar().add(topbar);
       logger.finest("EagerSingleton begin");
       isWidgetMapBinder.addBinding("/").toAsyncProvider(bookListPanel);

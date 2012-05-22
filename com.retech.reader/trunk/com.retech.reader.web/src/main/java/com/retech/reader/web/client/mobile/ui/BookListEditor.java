@@ -16,10 +16,8 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.Request;
 
-import com.retech.reader.web.shared.proxy.CategoryProxy;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.rpc.BookDataProvider;
@@ -129,7 +127,7 @@ public class BookListEditor extends WavePanel implements Activity {
               Element imageElm =
                   elm.getFirstChildElement().getFirstChildElement().getFirstChildElement()
                       .getFirstChildElement();
-              imageElm.setInnerHTML("<img width='60px' height='60px' src='data:"
+              imageElm.setInnerHTML("<img width='80px' height='107px' src='data:"
                   + resourceProxy.getMimeType().getType() + ";base64,"
                   + resourceProxy.getDataString() + "'/>");
             }
@@ -151,21 +149,21 @@ public class BookListEditor extends WavePanel implements Activity {
       dataProvider.addDataDisplay(cellList);
     }
 
-    BasePlace basePlace = (BasePlace) placeController.getWhere();
-    final EntityProxyId<CategoryProxy> categoryId = basePlace.getProxyId();
-    new BaseReceiver<CategoryProxy>() {
-
-      @Override
-      public void onSuccessAndCached(final CategoryProxy response) {
-        BookListEditor.this.getWaveTitle().setText(response.getTitle());
-      }
-
-      @Override
-      public Request<CategoryProxy> provideRequest() {
-        return f.find(categoryId);
-      }
-
-    }.setKeyForProxy(categoryId).fire();
+    // BasePlace basePlace = (BasePlace) placeController.getWhere();
+    // final EntityProxyId<CategoryProxy> categoryId = basePlace.getProxyId();
+    // new BaseReceiver<CategoryProxy>() {
+    //
+    // @Override
+    // public void onSuccessAndCached(final CategoryProxy response) {
+    // BookListEditor.this.getWaveTitle().setText(response.getTitle());
+    // }
+    //
+    // @Override
+    // public Request<CategoryProxy> provideRequest() {
+    // return f.find(categoryId);
+    // }
+    //
+    // }.setKeyForProxy(categoryId).fire();
   }
 
   @Override
@@ -174,6 +172,6 @@ public class BookListEditor extends WavePanel implements Activity {
       dataProvider.removeDataDisplay(cellList);
     }
     super.onUnload();
-    this.remove(1);
+    this.remove(this.getWidgetCount() - 1);
   }
 }

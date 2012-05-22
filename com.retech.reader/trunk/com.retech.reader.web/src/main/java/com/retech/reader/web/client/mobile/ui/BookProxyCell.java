@@ -28,7 +28,7 @@ public class BookProxyCell extends AbstractCell<IssueProxy> {
     // @SafeHtmlTemplates.Template("{0}<div style=\"font-size:80%;color:#999;\">发布日期: {1}</div><div style=\"width: 100%;position: absolute;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;\">{2}</div></td><tr/></table>")
     // SafeHtml info(SafeHtml name, String date, String detail);
 
-    @SafeHtmlTemplates.Template("<table style='width:100%; margin:0px; padding: 0px;' border='0'><tr><td width='60px' height='60px'></td><td valign='top' style=\"position: relative;\">{0}<div style=\"font-size:80%;color:#999;\">发布日期: {1}</div><div style=\"width: 100%;position: absolute;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;\">{2}</div></td><tr/></table>")
+    @SafeHtmlTemplates.Template("<table style='width:100%; margin:0px; padding: 0px;' border='0'><tr><td width='80px' height='107px'></td><td valign='top' style=\"position: relative;font-size: inherit\"><b>{0}</b><div style=\"font-size:80%;color:#999;\">发布日期: {1}</div><div style=\"width: 100%;position: absolute;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;\">{2}</div></td><tr/></table>")
     SafeHtml info(SafeHtml name, String date, String detail);
   }
 

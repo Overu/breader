@@ -252,7 +252,7 @@ public class IssueNews extends WavePanel implements Activity {
         IssueNews.this.proxy = proxy;
         datetime.setInnerHTML(dateFormat.format(proxy.getCreateTime()));
         viewcount.setInnerHTML(String.valueOf(proxy.getViewCount()));
-        getWaveTitle().setText(proxy.getTitle());
+        // getWaveTitle().setText(proxy.getTitle());
         detail.setInnerHTML(proxy.getDetail());
         List<IssueProxy> issueBook = storage.get(keyUtil.listKey(IssueProxy.MY_ISSUES));
         if (issueBook == null) {
