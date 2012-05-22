@@ -177,7 +177,6 @@ public class ContentEditor extends WavePanel implements Activity {
               return;
             }
             // else if (fingerCount == 2 && Math.abs(changeScale - 1.0) >= 0.15) {
-            //
             // }
             break;
           case 1:
