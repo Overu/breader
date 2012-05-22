@@ -21,6 +21,7 @@ import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.gwt.safehtml.shared.UriUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
@@ -143,12 +144,11 @@ public class BookFlip extends WavePanel implements Activity {
 
   }
 
-  public native void addEventListener()/*-{
-                                           var that = this;
-                                           $wnd.document.addEventListener("deviceready", function(e) {
-                                           that.@com.retech.reader.web.client.home.BookFlip::onStartDefault()();
-                                           }, false);
-                                           }-*/;
+  public native void addEventListener(Command command)/*-{
+                                                      $wnd.document.addEventListener("deviceready", function(e) {
+                                                      command.@com.google.gwt.user.client.Command::execute()();
+                                                      }, false);
+                                                      }-*/;
 
   @Override
   public String mayStop() {

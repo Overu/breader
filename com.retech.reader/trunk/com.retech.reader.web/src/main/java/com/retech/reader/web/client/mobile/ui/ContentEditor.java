@@ -6,6 +6,8 @@ import com.goodow.wave.client.wavepanel.WavePanel;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.JsArray;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Touch;
@@ -25,6 +27,8 @@ import com.google.gwt.event.dom.client.TouchMoveEvent;
 import com.google.gwt.event.dom.client.TouchMoveHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.logging.client.LogConfiguration;
@@ -65,6 +69,16 @@ public class ContentEditor extends WavePanel implements Activity {
   private static final int TOPBAR_TOP = -40;
   private static final Logger logger = Logger.getLogger(ContentEditor.class.getName());
 
+  public static native void addEventListener(Command command)/*-{
+                                                              var resizeTimer = null;
+                                                              $wnd.onresize = function(){  
+                                                              if(resizeTimer) clearTimeout(resizeTimer);  
+                                                              resizeTimer = setTimeout(function(e) {
+                                                              command.@com.google.gwt.user.client.Command::execute()();
+                                                              },300);  
+                                                              }
+                                                              }-*/;
+
   private final HTML html;
   private FlowPanel flowPanel;
   private SectionBrowserView sectionView;
@@ -90,7 +104,18 @@ public class ContentEditor extends WavePanel implements Activity {
   private int startX2;
   private double changeScale;
   private double nowScale;
+
   private double fontSize = 1.5;
+
+  private final ScheduledCommand resizeCmd = new ScheduledCommand() {
+    @Override
+    public void execute() {
+      resizeCmdScheduled = false;
+      onDeviceorientation();
+    }
+  };
+
+  private boolean resizeCmdScheduled = false;
 
   @Inject
   public ContentEditor(final PlaceController placeContorller, final ReaderFactory f,
@@ -294,14 +319,6 @@ public class ContentEditor extends WavePanel implements Activity {
     // });
   }
 
-  public native void addEventListener(Command command)/*-{
-                                                      $wnd.alert("start");
-                                                      $wnd.document.addEventListener("deviceorientation", function(e) {
-                                                      $wnd.alert("onDeviceorientation");
-                                                      command.@com.google.gwt.user.client.Command::execute()();
-                                                      }, false);
-                                                      }-*/;
-
   @Override
   public String mayStop() {
     return null;
@@ -317,18 +334,18 @@ public class ContentEditor extends WavePanel implements Activity {
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
-    this.addEventListener(new Command() {
+    Window.addResizeHandler(new ResizeHandler() {
 
       @Override
-      public void execute() {
-        Window.alert("123");
-        onDeviceorientation();
+      public void onResize(final ResizeEvent event) {
+        scheduleResize();
       }
     });
 
     waveShell.getTopBar().getElement().getStyle().setTop(TOPBAR_TOP, Unit.PX);
     waveShell.getTopBar().addStyleName(ReaderResources.INSTANCE().style().contentTopBar());
     onDeviceorientation();
+
     // contentHeight = Window.getClientHeight() - 73;
 
     // final EntityProxyId<IssueProxy> issueId =
@@ -543,5 +560,16 @@ public class ContentEditor extends WavePanel implements Activity {
     }.setKeyForList(issue.stableId(), SectionProxy.class.getName()).fire();
 
     findPages(sectionProxy, false, false);
+  }
+
+  /**
+   * Schedule a resize handler. We schedule the event so the DOM has time to update the offset
+   * sizes, and to avoid duplicate resize events from both a height and width resize.
+   */
+  private void scheduleResize() {
+    if (isAttached() && !resizeCmdScheduled) {
+      resizeCmdScheduled = true;
+      Scheduler.get().scheduleDeferred(resizeCmd);
+    }
   }
 }
