@@ -294,13 +294,13 @@ public class ContentEditor extends WavePanel implements Activity {
     // });
   }
 
-  public native void addEventListener(Command cmd)/*-{
-                                                  $wnd.alert("start");
-                                                  $wnd.document.addEventListener("deviceorientation", function(e) {
-                                                  $wnd.alert("onDeviceorientation");
-                                                  cmd.@com.google.gwt.user.client.Command::execute()();
-                                                  }, false);
-                                                  }-*/;
+  public native void addEventListener(Command command)/*-{
+                                                      $wnd.alert("start");
+                                                      $wnd.document.addEventListener("deviceorientation", function(e) {
+                                                      $wnd.alert("onDeviceorientation");
+                                                      command.@com.google.gwt.user.client.Command::execute()();
+                                                      }, false);
+                                                      }-*/;
 
   @Override
   public String mayStop() {
