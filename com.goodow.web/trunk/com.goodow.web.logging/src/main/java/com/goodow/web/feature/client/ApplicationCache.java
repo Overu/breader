@@ -13,16 +13,14 @@
  */
 package com.goodow.web.feature.client;
 
-public class ApplicationCache {
-  public interface Listener {
-    void updateReady();
-  }
+import com.google.gwt.user.client.Command;
 
-  public static native void addEventListener(Listener listener) /*-{
+public class ApplicationCache {
+  public static native void addEventListener(Command cmd) /*-{
                                                                 $wnd.applicationCache.addEventListener('updateready', function(e) {
                                                                 if ($wnd.applicationCache.status == $wnd.applicationCache.UPDATEREADY) {
                                                                 $wnd.applicationCache.swapCache();
-                                                                listener.@com.goodow.web.feature.client.ApplicationCache.Listener::updateReady()();
+                                                                cmd.@com.google.gwt.user.client.Command::execute()();
                                                                 }
                                                                 }, false);
                                                                 }-*/;

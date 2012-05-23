@@ -10,6 +10,7 @@ import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.storage.client.Storage;
+import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -72,10 +73,10 @@ public final class SecurityGinModule extends AbstractGinModule {
           logger.info("网络恢复");
         }
       });
-      ApplicationCache.addEventListener(new ApplicationCache.Listener() {
+      ApplicationCache.addEventListener(new Command() {
 
         @Override
-        public void updateReady() {
+        public void execute() {
           if (GWT.isProdMode()) {// && Window.confirm("检测到新版本,是否立即升级?")) {
             Window.alert("睿泰阅读已升级至最新版本");
             Storage.getLocalStorageIfSupported().clear();
