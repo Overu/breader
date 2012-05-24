@@ -18,9 +18,12 @@ import com.goodow.wave.client.widget.progress.ProgressWidget;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.ClientBundle;
@@ -32,6 +35,9 @@ import com.google.gwt.safehtml.shared.UriUtils;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -91,12 +97,16 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
   @UiField
   FlowPanel myDownLoadPanel;
+  @UiField
+  DivElement shelf;
   private final Provider<BasePlace> places;
   private final PlaceController placeController;
   private final ReaderFactory f;
   private final KeyUtil keyUtil;
   private final LocalStorage storage;
   private final Provider<ProgressWidget> progresses;
+
+  private boolean isStart = true;
 
   // private List<IssueProxy> issueDownload;
 
@@ -115,8 +125,26 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
     // this.getWaveTitle().setText(IssueProxy.ISSUE_DOWN_NAME);
     this.setWaveContent(binder.createAndBindUi(this));
 
-    myDownLoadPanel.getElement().getStyle().setProperty("webkitBorderImage",
+    Element shelf1 = DOM.createDiv();
+    shelf1.getStyle().setProperty("webkitBorderImage",
         "url(" + res.bookshelfmain().getSafeUri().asString() + ") 25 50 20 50/25px 50px 20px 50px");
+    Element shelf2 = DOM.createDiv();
+    shelf2.getStyle().setProperty("webkitBorderImage",
+        "url(" + res.bookshelfmain().getSafeUri().asString() + ") 25 50 20 50/25px 50px 20px 50px");
+    Element shelf3 = DOM.createDiv();
+    shelf3.getStyle().setProperty("webkitBorderImage",
+        "url(" + res.bookshelfmain().getSafeUri().asString() + ") 25 50 20 50/25px 50px 20px 50px");
+    Element shelf4 = DOM.createDiv();
+    shelf4.getStyle().setProperty("webkitBorderImage",
+        "url(" + res.bookshelfmain().getSafeUri().asString() + ") 25 50 20 50/25px 50px 20px 50px");
+
+    shelf.appendChild(shelf1);
+    shelf.appendChild(shelf2);
+    shelf.appendChild(shelf3);
+    shelf.appendChild(shelf4);
+
+    // myDownLoadPanel.getElement().getStyle().setProperty("webkitBorderImage",
+    // "url(" + res.bookshelfmain().getSafeUri().asString() + ") 25 50 20 50/25px 50px 20px 50px");
 
   }
 
@@ -184,14 +212,47 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
       final HTMLPanel imagePanel = new HTMLPanel("");
       issuePanel.add(imagePanel);
       issuePanel.add(new Label(issue.getTitle()));
-      issuePanel.addDomHandler(new ClickHandler() {
+
+      final Timer timer = new Timer() {
+
         @Override
-        public void onClick(final ClickEvent event) {
-          EntityProxyId<IssueProxy> stableId = issue.stableId();
-          placeController.goTo(places.get().setPath(IssueNews.class.getName()).setParameter(
-              stableId));
+        public void run() {
+          isStart = false;
+          logger.info(issue.getTitle());
         }
-      }, ClickEvent.getType());
+
+      };
+
+      issuePanel.addDomHandler(new MouseDownHandler() {
+
+        @Override
+        public void onMouseDown(final MouseDownEvent event) {
+          timer.schedule(2000);
+        }
+      }, MouseDownEvent.getType());
+
+      issuePanel.addDomHandler(new MouseUpHandler() {
+
+        @Override
+        public void onMouseUp(final MouseUpEvent event) {
+          timer.cancel();
+          if (isStart) {
+            EntityProxyId<IssueProxy> stableId = issue.stableId();
+            placeController.goTo(places.get().setPath(IssueNews.class.getName()).setParameter(
+                stableId));
+          }
+          isStart = true;
+        }
+      }, MouseUpEvent.getType());
+
+      // issuePanel.addDomHandler(new ClickHandler() {
+      // @Override
+      // public void onClick(final ClickEvent event) {
+      // EntityProxyId<IssueProxy> stableId = issue.stableId();
+      // placeController.goTo(places.get().setPath(IssueNews.class.getName()).setParameter(
+      // stableId));
+      // }
+      // }, ClickEvent.getType());
 
       if (isDownloadFinish) {
         ProgressWidget progressWidget = progresses.get();

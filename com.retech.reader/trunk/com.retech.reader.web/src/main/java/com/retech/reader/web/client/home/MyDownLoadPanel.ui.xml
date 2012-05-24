@@ -3,14 +3,14 @@
   xmlns:w="urn:import:com.google.gwt.widget.client" xmlns:c="urn:import:com.google.gwt.user.cellview.client">
   <ui:with field='res' type='com.retech.reader.web.client.style.ReaderResources' />
   <ui:style>
-  
     .downloadPanel {
       text-align: center;
       overflow: auto;
+      position: absolute;
     }
     
     .downloadPanel>* {
-      margin: 5px;
+      margin: 24px 40px 24px 40px;
       float: left;
       cursor: pointer;
     }
@@ -24,7 +24,14 @@
       -webkit-box-pack: center;
     }
     
+    .shelf>div{
+  		height: 120px;
+
+  }
   </ui:style>
-  <g:FlowPanel ui:field="myDownLoadPanel" styleName="{style.downloadPanel}">
-  </g:FlowPanel>
+  <g:HTMLPanel>
+    <g:FlowPanel ui:field="myDownLoadPanel" styleName="{style.downloadPanel}">
+    </g:FlowPanel>
+    <div ui:field="shelf" class="{style.shelf}"></div>
+  </g:HTMLPanel>
 </ui:UiBinder> 
