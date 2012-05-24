@@ -3,6 +3,7 @@ package com.retech.reader.web.client.style;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.ImageResource;
 
 import java.util.logging.Logger;
 
@@ -16,16 +17,21 @@ public class ReaderResources {
 
     // ImageResource retechcorpLogo();
 
+    ImageResource loading();
+
     @Source("style.css")
     Style style();
   }
 
   public interface Style extends CssResource {
+    String contentButtomBar();
+
     String contentHtmlPanel();
 
     String contentSectionView();
 
     String contentTopBar();
+
   }
 
   private static Bundle BUNDLE;

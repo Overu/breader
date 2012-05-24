@@ -3,6 +3,8 @@ package com.retech.reader.web.client.mobile.ui;
 import com.goodow.wave.bootstrap.shared.MapBinder;
 import com.goodow.wave.client.shell.WaveShell;
 import com.goodow.wave.client.wavepanel.WavePanel;
+import com.goodow.wave.client.widget.toolbar.buttons.ToolBarClickButton;
+import com.goodow.wave.client.widget.toolbar.buttons.WaveToolBar;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.JsArray;
@@ -96,6 +98,7 @@ public class ContentEditor extends WavePanel implements Activity {
   private final KeyUtil keyUtil;
   private final MapBinder<String, IsWidget> isWidgetMapBinder;
   private final WaveShell waveShell;
+  private final WaveToolBar contentButtomBar;
   private int columnCount;
   private int columnIndex = 1;
   private int fingerCount = 0;
@@ -104,8 +107,8 @@ public class ContentEditor extends WavePanel implements Activity {
   private int startX2;
   private double changeScale;
   private double nowScale;
-
   private double fontSize = 1.5;
+  private boolean resizeCmdScheduled = false;
 
   private final ScheduledCommand resizeCmd = new ScheduledCommand() {
     @Override
@@ -115,12 +118,11 @@ public class ContentEditor extends WavePanel implements Activity {
     }
   };
 
-  private boolean resizeCmdScheduled = false;
-
   @Inject
   public ContentEditor(final PlaceController placeContorller, final ReaderFactory f,
       final Provider<BasePlace> place, final LocalStorage storage, final KeyUtil keyUtil,
-      final MapBinder<String, IsWidget> isWidgetMapBinder, final WaveShell waveShell) {
+      final MapBinder<String, IsWidget> isWidgetMapBinder, final WaveShell waveShell,
+      final WaveToolBar contentButtomBar) {
     this.placeContorller = placeContorller;
     this.f = f;
     this.place = place;
@@ -128,16 +130,30 @@ public class ContentEditor extends WavePanel implements Activity {
     this.keyUtil = keyUtil;
     this.waveShell = waveShell;
     this.isWidgetMapBinder = isWidgetMapBinder;
+    this.contentButtomBar = contentButtomBar;
 
     flowPanel = new FlowPanel();
     html = new HTML();
-    final Style htmlStyle = html.getElement().getStyle();
-    html.addStyleName(ReaderResources.INSTANCE().style().contentHtmlPanel());
-    htmlStyle.setFontSize(fontSize, Unit.EM);
-    this.getElement().getStyle().setMarginTop(1, Unit.EM);
-    flowPanel.add(html);
 
+    final Style htmlStyle = html.getElement().getStyle();
+    this.getElement().getStyle().setMarginTop(1, Unit.EM);
+    htmlStyle.setFontSize(fontSize, Unit.EM);
+    html.addStyleName(ReaderResources.INSTANCE().style().contentHtmlPanel());
+    contentButtomBar.addStyleName(ReaderResources.INSTANCE().style().contentButtomBar());
+
+    ToolBarClickButton collect = contentButtomBar.addClickButton();
+    collect.setText(IssueProxy.ISSUE_STATE_COLLECT);
+
+    ToolBarClickButton contact = contentButtomBar.addClickButton();
+    contact.setText("分享");
+
+    ToolBarClickButton comment = contentButtomBar.addClickButton();
+    comment.setText("评论");
+
+    flowPanel.add(html);
+    flowPanel.add(contentButtomBar);
     this.setWaveContent(flowPanel);
+    // this.add(buttomBar);
 
     this.addDomHandler(new TouchStartHandler() {
 
@@ -189,7 +205,8 @@ public class ContentEditor extends WavePanel implements Activity {
             if ((subtractX1 > 0 && subtractX2 < 0) || (subtractX1 < 0 && subtractX2 > 0)) {
               nowScale = fontSize + (changeScale - 1.0);
               htmlStyle.setFontSize(nowScale, Unit.EM);
-              logger.info("scale:" + changeScale + ";fontSize:" + fontSize + (changeScale - 1.0));
+              // logger.info("scale:" + changeScale + ";fontSize:" + fontSize + (changeScale -
+              // 1.0));
               return;
             }
             if (subtractX1 > 0 && subtractX2 > 0) {
@@ -292,13 +309,18 @@ public class ContentEditor extends WavePanel implements Activity {
         int clientY = event.getClientY();
         if (clientY >= offsetHeight * 0.25 && clientY <= offsetHeight * 0.75
             && clientX >= offsetWidth * 0.25 && clientX <= offsetWidth * 0.75) {
-          Style style = waveShell.getTopBar().getElement().getStyle();
-          if (style.getTop().equals(TOPBAR_TOP + "px")) {
-            style.clearTop();
-            style.setOpacity(1);
+          Style waveShellStyle = waveShell.getTopBar().getElement().getStyle();
+          Style contentButtomBarStyle = contentButtomBar.getElement().getStyle();
+          if (waveShellStyle.getTop().equals(TOPBAR_TOP + Unit.PX.getType())) {
+            waveShellStyle.clearTop();
+            waveShellStyle.setOpacity(1);
+            contentButtomBarStyle.setOpacity(1);
+            contentButtomBarStyle.clearBottom();
           } else {
-            style.setTop(TOPBAR_TOP, Unit.PX);
-            style.clearOpacity();
+            waveShellStyle.setTop(TOPBAR_TOP, Unit.PX);
+            waveShellStyle.clearOpacity();
+            contentButtomBarStyle.setBottom(TOPBAR_TOP, Unit.PX);
+            contentButtomBarStyle.clearOpacity();
           }
         }
 
@@ -344,6 +366,7 @@ public class ContentEditor extends WavePanel implements Activity {
 
     waveShell.getTopBar().getElement().getStyle().setTop(TOPBAR_TOP, Unit.PX);
     waveShell.getTopBar().addStyleName(ReaderResources.INSTANCE().style().contentTopBar());
+    contentButtomBar.getElement().getStyle().setBottom(TOPBAR_TOP, Unit.PX);
     onDeviceorientation();
 
     // contentHeight = Window.getClientHeight() - 73;
@@ -531,7 +554,7 @@ public class ContentEditor extends WavePanel implements Activity {
   }
 
   private void onDeviceorientation() {
-    Window.alert("onDeviceorientation");
+    // Window.alert("onDeviceorientation");
     contentHeight = Window.getClientHeight() - 9 - 16;
     contentWidth = Window.getClientWidth() - 14;
     Style htmlStyle = html.getElement().getStyle();

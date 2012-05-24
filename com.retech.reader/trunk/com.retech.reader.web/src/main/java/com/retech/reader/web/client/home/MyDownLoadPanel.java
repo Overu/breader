@@ -71,6 +71,8 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
   interface Resources extends ClientBundle {
     ImageResource addIssue();
+
+    ImageResource bookshelfmain();
   }
 
   interface Template extends SafeHtmlTemplates {
@@ -112,6 +114,9 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
     this.progresses = progresses;
     // this.getWaveTitle().setText(IssueProxy.ISSUE_DOWN_NAME);
     this.setWaveContent(binder.createAndBindUi(this));
+
+    myDownLoadPanel.getElement().getStyle().setProperty("webkitBorderImage",
+        "url(" + res.bookshelfmain().getSafeUri().asString() + ") 25 50 20 50/25px 50px 20px 50px");
 
   }
 

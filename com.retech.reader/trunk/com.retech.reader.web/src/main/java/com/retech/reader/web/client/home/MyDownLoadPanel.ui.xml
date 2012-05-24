@@ -4,10 +4,9 @@
   <ui:with field='res' type='com.retech.reader.web.client.style.ReaderResources' />
   <ui:style>
   
-    
     .downloadPanel {
       text-align: center;
-      cursor: pointer;
+      overflow: auto;
     }
     
     .downloadPanel>* {
