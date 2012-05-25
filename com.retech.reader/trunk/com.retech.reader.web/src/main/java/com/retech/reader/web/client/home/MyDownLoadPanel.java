@@ -379,6 +379,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
   private void downLoadIssue(final IssueDownloadMessage issueDownloadMessage,
       final EntityProxyId<IssueProxy> issueId) {
+
     new BaseReceiver<IssueProxy>() {
 
       @Override
@@ -388,6 +389,19 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
           @Override
           public void onSuccessAndCached(final List<SectionProxy> sections) {
+
+            new BaseReceiver<PageProxy>() {
+
+              @Override
+              public void onSuccessAndCached(final PageProxy pageProxy) {
+              }
+
+              @Override
+              public Request<PageProxy> provideRequest() {
+                return f.pageContext().findFirstPageByIssue(issueProxy).with(PageProxy.WITH);
+              }
+            }.setKeyForProxy(issueId, PageProxy.class.getName()).fire();
+
             firePageBySection(issueDownloadMessage, sections, issueProxy);
           }
 
