@@ -20,10 +20,12 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseUpEvent;
-import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.TouchEndEvent;
+import com.google.gwt.event.dom.client.TouchEndHandler;
+import com.google.gwt.event.dom.client.TouchStartEvent;
+import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.ClientBundle;
@@ -223,19 +225,27 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
       };
 
-      issuePanel.addDomHandler(new MouseDownHandler() {
+      issuePanel.addDomHandler(new TouchStartHandler() {
 
         @Override
-        public void onMouseDown(final MouseDownEvent event) {
+        public void onTouchStart(final TouchStartEvent event) {
           timer.schedule(2000);
-        }
-      }, MouseDownEvent.getType());
 
-      issuePanel.addDomHandler(new MouseUpHandler() {
+        }
+      }, TouchStartEvent.getType());
+
+      issuePanel.addDomHandler(new TouchEndHandler() {
 
         @Override
-        public void onMouseUp(final MouseUpEvent event) {
+        public void onTouchEnd(final TouchEndEvent event) {
           timer.cancel();
+        }
+
+      }, TouchEndEvent.getType());
+
+      issuePanel.addDomHandler(new ClickHandler() {
+        @Override
+        public void onClick(final ClickEvent event) {
           if (isStart) {
             EntityProxyId<IssueProxy> stableId = issue.stableId();
             placeController.goTo(places.get().setPath(IssueNews.class.getName()).setParameter(
@@ -243,16 +253,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
           }
           isStart = true;
         }
-      }, MouseUpEvent.getType());
-
-      // issuePanel.addDomHandler(new ClickHandler() {
-      // @Override
-      // public void onClick(final ClickEvent event) {
-      // EntityProxyId<IssueProxy> stableId = issue.stableId();
-      // placeController.goTo(places.get().setPath(IssueNews.class.getName()).setParameter(
-      // stableId));
-      // }
-      // }, ClickEvent.getType());
+      }, ClickEvent.getType());
 
       if (isDownloadFinish) {
         ProgressWidget progressWidget = progresses.get();
