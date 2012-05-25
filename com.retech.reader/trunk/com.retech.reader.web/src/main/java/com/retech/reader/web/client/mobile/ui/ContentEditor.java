@@ -546,11 +546,11 @@ public class ContentEditor extends WavePanel implements Activity {
   private void nextSectionIndex(final int sectionIndex, final boolean isNextSection) {
     if (sectionIndex > sections.size() - 1 && pageIndex + 2 > pages.size()) {
       this.sectionIndex = sections.size() - 1;
-      logger.info("最后一页");
+      // logger.info("最后一页");
       return;
     } else if (sectionIndex < 0) {
       this.sectionIndex = 0;
-      logger.info("第一页");
+      // logger.info("第一页");
       return;
     }
     findPages(sections.get(sectionIndex), true, isNextSection);
