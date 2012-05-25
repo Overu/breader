@@ -20,8 +20,13 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Style.Display;
+import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.dom.client.TouchEndEvent;
 import com.google.gwt.event.dom.client.TouchEndHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
@@ -29,6 +34,7 @@ import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -81,6 +87,15 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
     ImageResource addIssue();
 
     ImageResource bookshelfmain();
+
+    @Source("mydownloadStyle.css")
+    Style mydownloadStyle();
+  }
+
+  interface Style extends CssResource {
+
+    String jiggly();
+
   }
 
   interface Template extends SafeHtmlTemplates {
@@ -93,7 +108,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
   private static final Logger logger = Logger.getLogger(MyDownLoadPanel.class.getName());
 
-  private static Resources res = GWT.create(Resources.class);
+  private static Resources res;
   private static Binder binder = GWT.create(Binder.class);
   private static Template template = GWT.create(Template.class);
 
@@ -114,6 +129,13 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
   // private List<IssueProxy> issueDownloadFinish;
 
+  static {
+    logger.finest("static init start");
+    res = GWT.create(Resources.class);
+    res.mydownloadStyle().ensureInjected();
+    logger.finest("static init end");
+  }
+
   @Inject
   MyDownLoadPanel(final ReaderFactory f, final Provider<BasePlace> places,
       final PlaceController placeController, final KeyUtil keyUtil, final LocalStorage storage,
@@ -126,6 +148,10 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
     this.progresses = progresses;
     // this.getWaveTitle().setText(IssueProxy.ISSUE_DOWN_NAME);
     this.setWaveContent(binder.createAndBindUi(this));
+
+    String portraitCss =
+        "@-webkit-keyframes jiggle { 0% { -webkit-transform: rotate(-1deg);} 50% { -webkit-transform: rotate (1deg);}}";
+    StyleInjector.injectAtEnd(portraitCss);
 
     Element shelf1 = DOM.createDiv();
     shelf1.getStyle().setProperty("webkitBorderImage",
@@ -210,17 +236,22 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
   private void displayIssue(final List<IssueProxy> proxys, final boolean isDownloadFinish) {
     for (final IssueProxy issue : proxys) {
-      HTMLPanel issuePanel = new HTMLPanel("");
+      final HTMLPanel issuePanel = new HTMLPanel("");
       final HTMLPanel imagePanel = new HTMLPanel("");
       issuePanel.add(imagePanel);
       issuePanel.add(new Label(issue.getTitle()));
 
+      final String jigglyStyleName = res.mydownloadStyle().jiggly();
       final Timer timer = new Timer() {
 
         @Override
         public void run() {
           isStart = false;
-          logger.info(issue.getTitle());
+          if (issuePanel.getStyleName().equals(jigglyStyleName)) {
+            issuePanel.removeStyleName(jigglyStyleName);
+          } else {
+            issuePanel.addStyleName(jigglyStyleName);
+          }
         }
 
       };
@@ -229,7 +260,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
         @Override
         public void onTouchStart(final TouchStartEvent event) {
-          timer.schedule(2000);
+          timer.schedule(1000);
 
         }
       }, TouchStartEvent.getType());
@@ -243,9 +274,41 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
       }, TouchEndEvent.getType());
 
+      issuePanel.addDomHandler(new MouseDownHandler() {
+
+        @Override
+        public void onMouseDown(final MouseDownEvent event) {
+          timer.schedule(1000);
+        }
+
+      }, MouseDownEvent.getType());
+
+      issuePanel.addDomHandler(new MouseUpHandler() {
+
+        @Override
+        public void onMouseUp(final MouseUpEvent event) {
+          timer.cancel();
+        }
+      }, MouseUpEvent.getType());
+
       issuePanel.addDomHandler(new ClickHandler() {
         @Override
         public void onClick(final ClickEvent event) {
+          if (issuePanel.getStyleName().equals(jigglyStyleName)) {
+            if (event.getX() < 12 && event.getY() < 12) {
+              List<IssueProxy> issueDownloadFinish =
+                  storage.get(keyUtil.listKey(IssueProxy.ISSUE_DOWN_FINISH));
+              if (issueDownloadFinish == null) {
+                return;
+              }
+              if (issueDownloadFinish.contains(issue)) {
+                issueDownloadFinish.remove(issue);
+                myDownLoadPanel.remove(issuePanel);
+              }
+              storage.put(keyUtil.listKey(IssueProxy.ISSUE_DOWN_FINISH), issueDownloadFinish);
+            }
+            return;
+          }
           if (isStart) {
             EntityProxyId<IssueProxy> stableId = issue.stableId();
             placeController.goTo(places.get().setPath(IssueNews.class.getName()).setParameter(

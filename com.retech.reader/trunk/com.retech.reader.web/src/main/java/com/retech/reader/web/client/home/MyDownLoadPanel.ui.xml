@@ -13,6 +13,7 @@
       margin: 24px 40px 24px 40px;
       float: left;
       cursor: pointer;
+      text-shadow: 12px 3px 3px #aaa;
     }
     
     .downloadPanel>*>*:first-child {
@@ -22,6 +23,7 @@
       display: -webkit-box;
       -webkit-box-align: center;
       -webkit-box-pack: center;
+      -webkit-box-shadow: 12px 3px 3px #aaa;
     }
     
     .shelf>div{

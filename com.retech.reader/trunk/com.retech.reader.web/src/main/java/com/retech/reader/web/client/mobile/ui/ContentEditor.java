@@ -150,6 +150,9 @@ public class ContentEditor extends WavePanel implements Activity {
     ToolBarClickButton comment = contentButtomBar.addClickButton();
     comment.setText("评论");
 
+    ToolBarClickButton summary = contentButtomBar.addClickButton();
+    summary.setText("摘要");
+
     flowPanel.add(html);
     flowPanel.add(contentButtomBar);
     this.setWaveContent(flowPanel);
