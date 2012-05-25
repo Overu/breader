@@ -6,6 +6,14 @@ import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.event.dom.client.TouchEndEvent;
+import com.google.gwt.event.dom.client.TouchEndHandler;
+import com.google.gwt.event.dom.client.TouchStartEvent;
+import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.ClientBundle;
@@ -16,8 +24,10 @@ import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeUri;
 import com.google.gwt.safehtml.shared.UriUtils;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
@@ -82,6 +92,8 @@ public class LibraryView extends WavePanel implements Activity {
   private static final Resources res = GWT.create(Resources.class);
   private final KeyUtil keyUtil;
 
+  private boolean isStart = true;
+
   @Inject
   LibraryView(final ReaderFactory f, final Provider<BasePlace> places, final LocalStorage storage,
       final PlaceController placeController, final KeyUtil keyUtil) {
@@ -105,6 +117,7 @@ public class LibraryView extends WavePanel implements Activity {
     // add(toDo);
 
     setWaveContent(binder.createAndBindUi(this));
+
   }
 
   @Override
@@ -153,18 +166,92 @@ public class LibraryView extends WavePanel implements Activity {
 
   private void displayIssue(final List<IssueProxy> proxys, final boolean isIssue) {
     for (final IssueProxy issue : proxys) {
-      HTMLPanel issuePanel = new HTMLPanel("");
+      final HTMLPanel issuePanel = new HTMLPanel("");
       final HTMLPanel imagePanel = new HTMLPanel("");
       issuePanel.add(imagePanel);
       issuePanel.add(new Label(issue.getTitle()));
+
+      final String jigglyStyleName = MyDownLoadPanel.getRes().mydownloadStyle().jiggly();
+      final Timer timer = new Timer() {
+
+        @Override
+        public void run() {
+          isStart = false;
+          if (issuePanel.getStyleName().equals(jigglyStyleName)) {
+            issuePanel.removeStyleName(jigglyStyleName);
+          } else {
+            issuePanel.addStyleName(jigglyStyleName);
+          }
+        }
+
+      };
+
+      issuePanel.addDomHandler(new TouchStartHandler() {
+
+        @Override
+        public void onTouchStart(final TouchStartEvent event) {
+          timer.schedule(1000);
+
+        }
+      }, TouchStartEvent.getType());
+
+      issuePanel.addDomHandler(new TouchEndHandler() {
+
+        @Override
+        public void onTouchEnd(final TouchEndEvent event) {
+          timer.cancel();
+        }
+
+      }, TouchEndEvent.getType());
+
+      issuePanel.addDomHandler(new MouseDownHandler() {
+
+        @Override
+        public void onMouseDown(final MouseDownEvent event) {
+          timer.schedule(1000);
+        }
+
+      }, MouseDownEvent.getType());
+
+      issuePanel.addDomHandler(new MouseUpHandler() {
+
+        @Override
+        public void onMouseUp(final MouseUpEvent event) {
+          timer.cancel();
+        }
+      }, MouseUpEvent.getType());
+
       issuePanel.addDomHandler(new ClickHandler() {
         @Override
         public void onClick(final ClickEvent event) {
-          EntityProxyId<IssueProxy> stableId = issue.stableId();
-          placeController.goTo(places.get().setPath(IssueNews.class.getName()).setParameter(
-              stableId));
+          if (issuePanel.getStyleName().equals(jigglyStyleName)) {
+            if (event.getX() < 12 && event.getY() < 12) {
+              List<IssueProxy> myIssues = storage.get(keyUtil.listKey(IssueProxy.MY_ISSUES));
+              if (myIssues == null) {
+                return;
+              }
+              if (myIssues.contains(issue)) {
+                myIssues.remove(issue);
+                libPanel.remove(issuePanel);
+              }
+              if (myIssues.size() == 0) {
+                Storage.getLocalStorageIfSupported().removeItem(
+                    keyUtil.listKey(IssueProxy.MY_ISSUES));
+                return;
+              }
+              storage.put(keyUtil.listKey(IssueProxy.MY_ISSUES), myIssues);
+            }
+            return;
+          }
+          if (isStart) {
+            EntityProxyId<IssueProxy> stableId = issue.stableId();
+            placeController.goTo(places.get().setPath(IssueNews.class.getName()).setParameter(
+                stableId));
+          }
+          isStart = true;
         }
       }, ClickEvent.getType());
+
       libPanel.add(issuePanel);
 
       new BaseReceiver<ResourceProxy>() {

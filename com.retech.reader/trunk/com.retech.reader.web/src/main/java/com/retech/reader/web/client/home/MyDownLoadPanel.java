@@ -110,7 +110,12 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
   private static Resources res;
   private static Binder binder = GWT.create(Binder.class);
+
   private static Template template = GWT.create(Template.class);
+
+  public static Resources getRes() {
+    return res;
+  }
 
   @UiField
   FlowPanel myDownLoadPanel;
@@ -121,13 +126,14 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
   private final ReaderFactory f;
   private final KeyUtil keyUtil;
   private final LocalStorage storage;
-  private final Provider<ProgressWidget> progresses;
 
-  private boolean isStart = true;
+  private final Provider<ProgressWidget> progresses;
 
   // private List<IssueProxy> issueDownload;
 
   // private List<IssueProxy> issueDownloadFinish;
+
+  private boolean isStart = true;
 
   static {
     logger.finest("static init start");
@@ -150,7 +156,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
     this.setWaveContent(binder.createAndBindUi(this));
 
     String portraitCss =
-        "@-webkit-keyframes jiggle { 0% { -webkit-transform: rotate(-1deg);} 50% { -webkit-transform: rotate (1deg);}}";
+        "@-webkit-keyframes jiggle { 0% { -webkit-transform: rotate(-2deg);} 50% { -webkit-transform: rotate (2deg);}}";
     StyleInjector.injectAtEnd(portraitCss);
 
     Element shelf1 = DOM.createDiv();
@@ -165,11 +171,15 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
     Element shelf4 = DOM.createDiv();
     shelf4.getStyle().setProperty("webkitBorderImage",
         "url(" + res.bookshelfmain().getSafeUri().asString() + ") 25 50 20 50/25px 50px 20px 50px");
+    Element shelf5 = DOM.createDiv();
+    shelf5.getStyle().setProperty("webkitBorderImage",
+        "url(" + res.bookshelfmain().getSafeUri().asString() + ") 25 50 20 50/25px 50px 20px 50px");
 
     shelf.appendChild(shelf1);
     shelf.appendChild(shelf2);
     shelf.appendChild(shelf3);
     shelf.appendChild(shelf4);
+    shelf.appendChild(shelf5);
 
     // myDownLoadPanel.getElement().getStyle().setProperty("webkitBorderImage",
     // "url(" + res.bookshelfmain().getSafeUri().asString() + ") 25 50 20 50/25px 50px 20px 50px");
@@ -198,6 +208,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
       @Override
       public void onSuccessAndCached(final List<IssueProxy> helpIssue) {
+        String s = "";
         List<IssueProxy> issueDownloadFinish =
             storage.get(keyUtil.listKey(IssueProxy.ISSUE_DOWN_FINISH));
         myDownLoadPanel.clear();
@@ -304,6 +315,11 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
               if (issueDownloadFinish.contains(issue)) {
                 issueDownloadFinish.remove(issue);
                 myDownLoadPanel.remove(issuePanel);
+              }
+              if (issueDownloadFinish.size() == 0) {
+                Storage.getLocalStorageIfSupported().removeItem(
+                    keyUtil.listKey(IssueProxy.ISSUE_DOWN_FINISH));
+                return;
               }
               storage.put(keyUtil.listKey(IssueProxy.ISSUE_DOWN_FINISH), issueDownloadFinish);
             }
@@ -457,4 +473,5 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
       }.setKeyForProxy(pageProxy.stableId(), ResourceProxy.class.getName()).fire();
     }
   }
+
 }
