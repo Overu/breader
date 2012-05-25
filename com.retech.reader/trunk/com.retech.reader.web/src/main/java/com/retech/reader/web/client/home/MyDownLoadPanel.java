@@ -174,12 +174,16 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
     Element shelf5 = DOM.createDiv();
     shelf5.getStyle().setProperty("webkitBorderImage",
         "url(" + res.bookshelfmain().getSafeUri().asString() + ") 25 50 20 50/25px 50px 20px 50px");
+    Element shelf6 = DOM.createDiv();
+    shelf6.getStyle().setProperty("webkitBorderImage",
+        "url(" + res.bookshelfmain().getSafeUri().asString() + ") 25 50 20 50/25px 50px 20px 50px");
 
     shelf.appendChild(shelf1);
     shelf.appendChild(shelf2);
     shelf.appendChild(shelf3);
     shelf.appendChild(shelf4);
     shelf.appendChild(shelf5);
+    shelf.appendChild(shelf6);
 
     // myDownLoadPanel.getElement().getStyle().setProperty("webkitBorderImage",
     // "url(" + res.bookshelfmain().getSafeUri().asString() + ") 25 50 20 50/25px 50px 20px 50px");
@@ -271,7 +275,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
         @Override
         public void onTouchStart(final TouchStartEvent event) {
-          timer.schedule(1000);
+          timer.schedule(700);
 
         }
       }, TouchStartEvent.getType());
@@ -289,7 +293,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
         @Override
         public void onMouseDown(final MouseDownEvent event) {
-          timer.schedule(1000);
+          timer.schedule(700);
         }
 
       }, MouseDownEvent.getType());

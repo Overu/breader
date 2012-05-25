@@ -190,7 +190,7 @@ public class LibraryView extends WavePanel implements Activity {
 
         @Override
         public void onTouchStart(final TouchStartEvent event) {
-          timer.schedule(1000);
+          timer.schedule(700);
 
         }
       }, TouchStartEvent.getType());
@@ -208,7 +208,7 @@ public class LibraryView extends WavePanel implements Activity {
 
         @Override
         public void onMouseDown(final MouseDownEvent event) {
-          timer.schedule(1000);
+          timer.schedule(700);
         }
 
       }, MouseDownEvent.getType());

@@ -30,6 +30,7 @@ import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.Request;
 
+import com.retech.reader.web.client.home.MyDownLoadPanel;
 import com.retech.reader.web.shared.proxy.CategoryProxy;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.PageProxy;
@@ -210,7 +211,7 @@ public class IssueNews extends WavePanel implements Activity {
         downloadButton.setState(State.DISABLED);
         downloadButton.setText(IssueProxy.ISSUE_STATE_DOWN_FINISH);
         storage.put(keyUtil.listKey(IssueProxy.ISSUE_DOWN), issueDownload);
-        placeController.goTo(places.get().setPath("/"));
+        placeController.goTo(places.get().setPath(MyDownLoadPanel.class.getName()));
       }
     });
   }
