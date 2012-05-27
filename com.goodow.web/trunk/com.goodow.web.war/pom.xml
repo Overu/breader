@@ -8,7 +8,7 @@
     <artifactId>com.goodow.web</artifactId>
     <version>1.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>${project.groupId}.war</artifactId>
+  <artifactId>com.goodow.web.war</artifactId>
   <packaging>war</packaging>
   <dependencies>
     <dependency>
