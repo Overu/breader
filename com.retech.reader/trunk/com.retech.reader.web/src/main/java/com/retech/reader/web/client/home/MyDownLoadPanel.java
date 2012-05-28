@@ -94,7 +94,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
   interface Style extends CssResource {
 
-    String jiggly();
+    String myDownLoadPanel();
 
   }
 
@@ -212,7 +212,6 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
 
       @Override
       public void onSuccessAndCached(final List<IssueProxy> helpIssue) {
-        String s = "";
         List<IssueProxy> issueDownloadFinish =
             storage.get(keyUtil.listKey(IssueProxy.ISSUE_DOWN_FINISH));
         myDownLoadPanel.clear();
@@ -256,16 +255,16 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
       issuePanel.add(imagePanel);
       issuePanel.add(new Label(issue.getTitle()));
 
-      final String jigglyStyleName = res.mydownloadStyle().jiggly();
+      final String myDownLoadPanelStyleName = res.mydownloadStyle().myDownLoadPanel();
       final Timer timer = new Timer() {
 
         @Override
         public void run() {
           isStart = false;
-          if (issuePanel.getStyleName().equals(jigglyStyleName)) {
-            issuePanel.removeStyleName(jigglyStyleName);
+          if (myDownLoadPanel.getStyleName().contains(myDownLoadPanelStyleName)) {
+            myDownLoadPanel.removeStyleName(myDownLoadPanelStyleName);
           } else {
-            issuePanel.addStyleName(jigglyStyleName);
+            myDownLoadPanel.addStyleName(myDownLoadPanelStyleName);
           }
         }
 
@@ -309,7 +308,7 @@ public class MyDownLoadPanel extends WavePanel implements Activity {
       issuePanel.addDomHandler(new ClickHandler() {
         @Override
         public void onClick(final ClickEvent event) {
-          if (issuePanel.getStyleName().equals(jigglyStyleName)) {
+          if (myDownLoadPanel.getStyleName().contains(myDownLoadPanelStyleName)) {
             if (event.getX() < 12 && event.getY() < 12) {
               List<IssueProxy> issueDownloadFinish =
                   storage.get(keyUtil.listKey(IssueProxy.ISSUE_DOWN_FINISH));

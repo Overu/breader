@@ -3,6 +3,7 @@ package com.retech.reader.web.client.mobile.ui;
 import com.goodow.wave.bootstrap.shared.MapBinder;
 import com.goodow.wave.client.shell.WaveShell;
 import com.goodow.wave.client.wavepanel.WavePanel;
+import com.goodow.wave.client.widget.toolbar.buttons.ToolBarButtonView.State;
 import com.goodow.wave.client.widget.toolbar.buttons.ToolBarClickButton;
 import com.goodow.wave.client.widget.toolbar.buttons.WaveToolBar;
 
@@ -60,6 +61,7 @@ import org.cloudlet.web.service.shared.KeyUtil;
 import org.cloudlet.web.service.shared.LocalStorage;
 import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,9 +69,9 @@ import java.util.logging.Logger;
 @Singleton
 public class ContentEditor extends WavePanel implements Activity {
 
+  private static final Logger logger = Logger.getLogger(ContentEditor.class.getName());
   public static final String LAST_PAGE = "now_reader";
   private static final int TOPBAR_TOP = -40;
-  private static final Logger logger = Logger.getLogger(ContentEditor.class.getName());
 
   public static native void addEventListener(Command command)/*-{
                                                               var resizeTimer = null;
@@ -88,11 +90,11 @@ public class ContentEditor extends WavePanel implements Activity {
   private final ReaderFactory f;
   private List<PageProxy> pages;
   private List<SectionProxy> sections;
-  private PageProxy proxy;
+  private PageProxy pageProxy;
+  private IssueProxy issueProxy;
   private int sectionIndex;
   private int pageIndex;
-  int contentHeight;
-  int contentWidth;
+  private int contentWidth;
   private final Provider<BasePlace> place;
   private final LocalStorage storage;
   private final KeyUtil keyUtil;
@@ -102,7 +104,6 @@ public class ContentEditor extends WavePanel implements Activity {
   private int columnCount;
   private int columnIndex = 1;
   private int fingerCount = 0;
-  private boolean scheduledGesture = false;
   private int startX1;
   private int startX2;
   private double changeScale;
@@ -117,6 +118,8 @@ public class ContentEditor extends WavePanel implements Activity {
       onDeviceorientation();
     }
   };
+
+  private ToolBarClickButton collect;
 
   @Inject
   public ContentEditor(final PlaceController placeContorller, final ReaderFactory f,
@@ -141,7 +144,7 @@ public class ContentEditor extends WavePanel implements Activity {
     html.addStyleName(ReaderResources.INSTANCE().style().contentHtmlPanel());
     contentButtomBar.addStyleName(ReaderResources.INSTANCE().style().contentButtomBar());
 
-    ToolBarClickButton collect = contentButtomBar.addClickButton();
+    collect = contentButtomBar.addClickButton();
     collect.setText(IssueProxy.ISSUE_STATE_COLLECT);
 
     ToolBarClickButton contact = contentButtomBar.addClickButton();
@@ -152,6 +155,24 @@ public class ContentEditor extends WavePanel implements Activity {
 
     ToolBarClickButton summary = contentButtomBar.addClickButton();
     summary.setText("摘要");
+
+    collect.addClickHandler(new ClickHandler() {
+
+      @Override
+      public void onClick(final ClickEvent event) {
+        List<IssueProxy> issueBook = storage.get(keyUtil.listKey(IssueProxy.MY_ISSUES));
+        if (issueBook == null) {
+          issueBook = new ArrayList<IssueProxy>();
+        }
+        if (!issueBook.contains(issueProxy)) {
+          issueBook.add(issueProxy);
+          // logger.info(IssueProxy.MY_ISSUE_STATE_COLLECTED);
+          collect.setText(IssueProxy.ISSUE_STATE_COLLECTED);
+          collect.setState(State.DISABLED);
+        }
+        storage.put(keyUtil.listKey(IssueProxy.MY_ISSUES), issueBook);
+      }
+    });
 
     flowPanel.add(html);
     flowPanel.add(contentButtomBar);
@@ -372,48 +393,17 @@ public class ContentEditor extends WavePanel implements Activity {
     contentButtomBar.getElement().getStyle().setBottom(TOPBAR_TOP, Unit.PX);
     onDeviceorientation();
 
-    // contentHeight = Window.getClientHeight() - 73;
-
-    // final EntityProxyId<IssueProxy> issueId =
-    // ((BasePlace) placeContorller.getWhere()).getParam(IssueProxy.class);
-
-    // if (issueId != null) {
-    // PageProxy pageProxy = storage.get(keyUtil.proxyKey(issueId, LAST_PAGE));
-    //
-    // if (pageProxy != null) {
-    // pageStart(pageProxy);
-    // Storage.getLocalStorageIfSupported().removeItem(keyUtil.proxyKey(issueId, LAST_PAGE));
-    // // placeContorller.goTo(place.get().setPath(ContentEditor.class.getName()).setParameter(
-    // // pageProxy.stableId()));
-    // return;
-    // }
-
-    // new BaseReceiver<IssueProxy>() {
-    //
-    // @Override
-    // public void onSuccessAndCached(final IssueProxy issueProxy) {
-    //
-    // new BaseReceiver<PageProxy>() {
-    //
-    // @Override
-    // public void onSuccessAndCached(final PageProxy pageProxy) {
-    // pageStart(pageProxy);
-    // }
-    //
-    // @Override
-    // public Request<PageProxy> provideRequest() {
-    // return f.pageContext().findFirstPageByIssue(issueProxy).with(PageProxy.WITH);
-    // }
-    // }.setKeyForProxy(issueId, PageProxy.class.getName()).fire();
-    // }
-    //
-    // @Override
-    // public Request<IssueProxy> provideRequest() {
-    // return f.find(issueId);
-    // }
-    // }.setKeyForProxy(issueId).fire();
-    // return;
-    // }
+    List<IssueProxy> issueBook = storage.get(keyUtil.listKey(IssueProxy.MY_ISSUES));
+    if (issueBook == null) {
+      issueBook = new ArrayList<IssueProxy>();
+    }
+    if (!issueBook.contains(issueProxy)) {
+      collect.setState(State.ENABLED);
+      collect.setText(IssueProxy.ISSUE_STATE_COLLECT);
+    } else {
+      collect.setState(State.DISABLED);
+      collect.setText(IssueProxy.ISSUE_STATE_COLLECTED);
+    }
 
     final EntityProxyId<PageProxy> pageId =
         ((BasePlace) placeContorller.getWhere()).getParam(PageProxy.class);
@@ -481,16 +471,16 @@ public class ContentEditor extends WavePanel implements Activity {
         // ContentEditor.this.getWaveTitle().setText(proxy.getTitle());
         html.setHTML(response.getDataString());
         if (pageProxy.getPageNum() != 1) {
-          storage.put(keyUtil.proxyAndKey(proxy.getSection().getIssue().stableId(), LAST_PAGE),
-              proxy);
+          storage.put(keyUtil.proxyAndKey(pageProxy.getSection().getIssue().stableId(), LAST_PAGE),
+              pageProxy);
         }
       }
 
       @Override
       public Request<ResourceProxy> provideRequest() {
-        return f.resource().getResource(proxy);
+        return f.resource().getResource(pageProxy);
       }
-    }.setKeyForProxy(proxy.stableId(), ResourceProxy.class.getName()).fire();
+    }.setKeyForProxy(pageProxy.stableId(), ResourceProxy.class.getName()).fire();
   }
 
   private void findPages(final SectionProxy sectionProxy, final boolean isNextPage,
@@ -517,7 +507,7 @@ public class ContentEditor extends WavePanel implements Activity {
   }
 
   private void goTo(final int offset) {
-    pageIndex = pages.indexOf(proxy);
+    pageIndex = pages.indexOf(pageProxy);
     int index = pageIndex + offset;
     if (index < 0) {
       nextSectionIndex(--sectionIndex, false);
@@ -558,7 +548,7 @@ public class ContentEditor extends WavePanel implements Activity {
 
   private void onDeviceorientation() {
     // Window.alert("onDeviceorientation");
-    contentHeight = Window.getClientHeight() - 9 - 16;
+    int contentHeight = Window.getClientHeight() - 25;
     contentWidth = Window.getClientWidth() - 14;
     Style htmlStyle = html.getElement().getStyle();
     htmlStyle.setProperty("webkitColumnWidth", contentWidth + "px");
@@ -569,7 +559,8 @@ public class ContentEditor extends WavePanel implements Activity {
   private void pageStart(final PageProxy pageProxy) {
     final SectionProxy sectionProxy = pageProxy.getSection();
     IssueProxy issue = sectionProxy.getIssue();
-    this.proxy = pageProxy;
+    this.pageProxy = pageProxy;
+    this.issueProxy = issue;
     display(pageProxy);
 
     new BaseReceiver<List<SectionProxy>>() {

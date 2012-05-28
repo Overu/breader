@@ -171,16 +171,16 @@ public class LibraryView extends WavePanel implements Activity {
       issuePanel.add(imagePanel);
       issuePanel.add(new Label(issue.getTitle()));
 
-      final String jigglyStyleName = MyDownLoadPanel.getRes().mydownloadStyle().jiggly();
+      final String libPanelStyleName = MyDownLoadPanel.getRes().mydownloadStyle().myDownLoadPanel();
       final Timer timer = new Timer() {
 
         @Override
         public void run() {
           isStart = false;
-          if (issuePanel.getStyleName().equals(jigglyStyleName)) {
-            issuePanel.removeStyleName(jigglyStyleName);
+          if (libPanel.getStyleName().contains(libPanelStyleName)) {
+            libPanel.removeStyleName(libPanelStyleName);
           } else {
-            issuePanel.addStyleName(jigglyStyleName);
+            libPanel.addStyleName(libPanelStyleName);
           }
         }
 
@@ -224,22 +224,22 @@ public class LibraryView extends WavePanel implements Activity {
       issuePanel.addDomHandler(new ClickHandler() {
         @Override
         public void onClick(final ClickEvent event) {
-          if (issuePanel.getStyleName().equals(jigglyStyleName)) {
+          if (libPanel.getStyleName().contains(libPanelStyleName)) {
             if (event.getX() < 12 && event.getY() < 12) {
-              List<IssueProxy> myIssues = storage.get(keyUtil.listKey(IssueProxy.MY_ISSUES));
-              if (myIssues == null) {
+              List<IssueProxy> issueBook = storage.get(keyUtil.listKey(IssueProxy.MY_ISSUES));
+              if (issueBook == null) {
                 return;
               }
-              if (myIssues.contains(issue)) {
-                myIssues.remove(issue);
+              if (issueBook.contains(issue)) {
+                issueBook.remove(issue);
                 libPanel.remove(issuePanel);
               }
-              if (myIssues.size() == 0) {
+              if (issueBook.size() == 0) {
                 Storage.getLocalStorageIfSupported().removeItem(
                     keyUtil.listKey(IssueProxy.MY_ISSUES));
                 return;
               }
-              storage.put(keyUtil.listKey(IssueProxy.MY_ISSUES), myIssues);
+              storage.put(keyUtil.listKey(IssueProxy.MY_ISSUES), issueBook);
             }
             return;
           }
