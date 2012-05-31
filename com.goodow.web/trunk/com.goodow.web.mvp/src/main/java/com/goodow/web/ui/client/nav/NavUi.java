@@ -13,6 +13,10 @@
  */
 package com.goodow.web.ui.client.nav;
 
+import com.goodow.web.mvp.shared.ActivityAware;
+import com.goodow.web.mvp.shared.ActivityState;
+import com.goodow.web.mvp.shared.layout.Nav;
+
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DecoratorPanel;
@@ -21,9 +25,6 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
-import org.cloudlet.web.mvp.shared.layout.Nav;
 
 import java.util.logging.Logger;
 

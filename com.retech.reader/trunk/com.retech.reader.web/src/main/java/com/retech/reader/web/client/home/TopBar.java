@@ -16,6 +16,7 @@ package com.retech.reader.web.client.home;
 import com.goodow.wave.client.wavepanel.WavePanel;
 import com.goodow.wave.client.widget.toolbar.buttons.ToolBarClickButton;
 import com.goodow.wave.client.widget.toolbar.buttons.WaveToolBar;
+import com.goodow.web.mvp.shared.BasePlace;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
@@ -33,7 +34,6 @@ import com.retech.reader.web.client.mobile.ui.CategoryListEditor;
 import com.retech.reader.web.shared.proxy.CategoryProxy;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 
-import org.cloudlet.web.mvp.shared.BasePlace;
 
 @Singleton
 public class TopBar extends WavePanel {

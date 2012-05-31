@@ -1,5 +1,8 @@
 package com.retech.reader.web.client.mobile.ui;
 
+import com.goodow.web.mvp.shared.rpc.BaseEditor;
+import com.goodow.web.service.shared.rpc.BaseContext;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Style.Unit;
@@ -16,8 +19,6 @@ import com.google.web.bindery.requestfactory.gwt.client.RequestFactoryEditorDriv
 
 import com.retech.reader.web.shared.proxy.IssueProxy;
 
-import org.cloudlet.web.mvp.shared.rpc.BaseEditor;
-import org.cloudlet.web.service.shared.rpc.BaseContext;
 
 @Singleton
 public class TestEditor extends BaseEditor<IssueProxy> {

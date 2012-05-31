@@ -13,6 +13,10 @@
  */
 package com.goodow.web.ui.client.nav;
 
+import com.goodow.web.mvp.shared.ActivityAware;
+import com.goodow.web.mvp.shared.ActivityState;
+import com.goodow.web.mvp.shared.tree.TreeNodePlace;
+
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.logging.client.LogConfiguration;
@@ -29,9 +33,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
-import org.cloudlet.web.mvp.shared.tree.TreeNodePlace;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,7 +48,7 @@ public class TagsUi extends Composite implements ActivityAware {
   /**
    * The last selected menu node.
    */
-  private org.cloudlet.web.mvp.shared.tree.TreeNodeProxy lastTop;
+  private com.goodow.web.mvp.shared.tree.TreeNodeProxy lastTop;
 
   /**
    * The main widget.
@@ -58,7 +59,7 @@ public class TagsUi extends Composite implements ActivityAware {
 
   private final Logger logger = Logger.getLogger(getClass().getName());
 
-  private final SingleSelectionModel<org.cloudlet.web.mvp.shared.tree.TreeNodeProxy> selectionModel;
+  private final SingleSelectionModel<com.goodow.web.mvp.shared.tree.TreeNodeProxy> selectionModel;
 
   private final NavTreeViewModel treeViewModel;
 
@@ -72,8 +73,8 @@ public class TagsUi extends Composite implements ActivityAware {
 
         if (!selectionModel.isSelected(place.getTreeNode())) {
           openTreeNodeWhenSelected(tree.getRootTreeNode(),
-              org.cloudlet.web.mvp.shared.BasePlace.PATH_SEPARATOR + place.getPath()
-                  + org.cloudlet.web.mvp.shared.BasePlace.PATH_SEPARATOR);
+              com.goodow.web.mvp.shared.BasePlace.PATH_SEPARATOR + place.getPath()
+                  + com.goodow.web.mvp.shared.BasePlace.PATH_SEPARATOR);
         }
       }
     }
@@ -85,7 +86,7 @@ public class TagsUi extends Composite implements ActivityAware {
 
   @Inject
   private TagsUi(final NavTreeViewModel treeViewModel,
-      final SingleSelectionModel<org.cloudlet.web.mvp.shared.tree.TreeNodeProxy> selectionModel,
+      final SingleSelectionModel<com.goodow.web.mvp.shared.tree.TreeNodeProxy> selectionModel,
       final Resources resources, final PlaceController placeController,
       final Provider<TreeNodePlace> placeProvider) {
     this.placeController = placeController;
@@ -99,7 +100,7 @@ public class TagsUi extends Composite implements ActivityAware {
     this.selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
       @Override
       public void onSelectionChange(final SelectionChangeEvent event) {
-        org.cloudlet.web.mvp.shared.tree.TreeNodeProxy lastSelected =
+        com.goodow.web.mvp.shared.tree.TreeNodeProxy lastSelected =
             selectionModel.getSelectedObject();
 
         TreeNodePlace place = placeProvider.get().setPath(lastSelected.getPath());
@@ -124,7 +125,7 @@ public class TagsUi extends Composite implements ActivityAware {
 
     Place where = placeController.getWhere();
     if (where instanceof TreeNodePlace) {
-      org.cloudlet.web.mvp.shared.tree.TreeNodeProxy top = ((TreeNodePlace) where).getTopNode();
+      com.goodow.web.mvp.shared.tree.TreeNodeProxy top = ((TreeNodePlace) where).getTopNode();
       if (lastTop == null || lastTop != top) {
         createTree(top);
         lastTop = top;
@@ -142,7 +143,7 @@ public class TagsUi extends Composite implements ActivityAware {
   /**
    * Create the {@link CellTree}.
    */
-  private CellTree createTree(final org.cloudlet.web.mvp.shared.tree.TreeNodeProxy root) {
+  private CellTree createTree(final com.goodow.web.mvp.shared.tree.TreeNodeProxy root) {
     tree = new CellTree(treeViewModel, root, resources);
     tree.setAnimationEnabled(true);
     layout.clear();
@@ -153,8 +154,8 @@ public class TagsUi extends Composite implements ActivityAware {
   private void openTreeNodeWhenSelected(final TreeNode parent, final String path) {
     logger.finest("openTreeNodeWhenSelected");
     for (int i = 0, len = parent.getChildCount(); i < len; i++) {
-      org.cloudlet.web.mvp.shared.tree.TreeNodeProxy childNode =
-          (org.cloudlet.web.mvp.shared.tree.TreeNodeProxy) parent.getChildValue(i);
+      com.goodow.web.mvp.shared.tree.TreeNodeProxy childNode =
+          (com.goodow.web.mvp.shared.tree.TreeNodeProxy) parent.getChildValue(i);
       String childId = childNode.getPath();
       if (path.startsWith(childId)) {
         TreeNode childOpen = parent.setChildOpen(i, true, true);

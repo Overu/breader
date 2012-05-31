@@ -1,6 +1,7 @@
 package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.wave.client.wavepanel.WavePanel;
+import com.goodow.web.mvp.shared.BasePlace;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.event.shared.EventBus;
@@ -16,7 +17,6 @@ import com.google.inject.Singleton;
 import com.retech.reader.web.shared.proxy.CategoryProxy;
 import com.retech.reader.web.shared.rpc.CategoryDataProvider;
 
-import org.cloudlet.web.mvp.shared.BasePlace;
 
 @Singleton
 public class CategoryListEditor extends WavePanel implements Activity {

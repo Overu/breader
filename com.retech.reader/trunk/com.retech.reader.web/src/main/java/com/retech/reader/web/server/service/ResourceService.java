@@ -1,10 +1,11 @@
 package com.retech.reader.web.server.service;
 
+import com.goodow.web.service.server.jpa.BaseService;
+
 import com.retech.reader.web.server.domain.Issue;
 import com.retech.reader.web.server.domain.Page;
 import com.retech.reader.web.server.domain.Resource;
 
-import org.cloudlet.web.service.server.jpa.BaseService;
 
 public class ResourceService extends BaseService<Resource> {
 

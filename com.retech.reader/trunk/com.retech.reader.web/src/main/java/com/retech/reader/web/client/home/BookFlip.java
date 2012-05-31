@@ -3,6 +3,9 @@ package com.retech.reader.web.client.home;
 import com.goodow.wave.client.wavepanel.WavePanel;
 import com.goodow.wave.client.wavepanel.WavePanelResources;
 import com.goodow.web.feature.client.FeatureDetection;
+import com.goodow.web.mvp.shared.BasePlace;
+import com.goodow.web.service.shared.LocalStorage;
+import com.goodow.web.service.shared.rpc.BaseReceiver;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
@@ -43,9 +46,6 @@ import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.rpc.IssueContext;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.mvp.shared.BasePlace;
-import org.cloudlet.web.service.shared.LocalStorage;
-import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,6 +1,8 @@
 package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.wave.client.wavepanel.WavePanel;
+import com.goodow.web.mvp.shared.BasePlace;
+import com.goodow.web.service.shared.rpc.BaseReceiver;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.dom.client.Style.Display;
@@ -18,8 +20,6 @@ import com.google.web.bindery.requestfactory.shared.Request;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.mvp.shared.BasePlace;
-import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 @Singleton
 public class SectionBrowserView extends WavePanel implements Activity {

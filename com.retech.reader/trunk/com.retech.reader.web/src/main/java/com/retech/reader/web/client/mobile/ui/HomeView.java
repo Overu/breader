@@ -1,5 +1,7 @@
 package com.retech.reader.web.client.mobile.ui;
 
+import com.goodow.web.mvp.shared.BasePlace;
+
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -18,7 +20,6 @@ import com.google.inject.Provider;
 
 import com.retech.reader.web.shared.proxy.IssueProxy;
 
-import org.cloudlet.web.mvp.shared.BasePlace;
 
 import java.util.ArrayList;
 import java.util.List;

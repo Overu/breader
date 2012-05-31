@@ -13,6 +13,13 @@
  */
 package com.goodow.web.dev.client.ui;
 
+import com.goodow.web.mvp.shared.ActivityAware;
+import com.goodow.web.mvp.shared.ActivityState;
+import com.goodow.web.mvp.shared.BasePlace;
+import com.goodow.web.mvp.shared.tree.TreeNodeProxy;
+import com.goodow.web.mvp.shared.tree.rpc.TreeNodeDataProvider;
+import com.goodow.web.mvp.shared.tree.rpc.TreeNodeFactory;
+
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -35,12 +42,6 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
-import org.cloudlet.web.mvp.shared.BasePlace;
-import org.cloudlet.web.mvp.shared.tree.TreeNodeProxy;
-import org.cloudlet.web.mvp.shared.tree.rpc.TreeNodeDataProvider;
-import org.cloudlet.web.mvp.shared.tree.rpc.TreeNodeFactory;
 
 public class TreeNodeListView extends Composite implements ActivityAware {
   interface Binder extends UiBinder<Widget, TreeNodeListView> {

@@ -23,6 +23,7 @@ import com.goodow.wave.client.wavepanel.blip.TreeTest;
 import com.goodow.wave.client.wavepanel.blip.WaveTest;
 import com.goodow.wave.client.wavepanel.title.WaveTitleResources;
 import com.goodow.wave.client.widget.button.icon.IconButtonTemplate;
+import com.goodow.web.mvp.shared.BasePlace;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.cell.client.Cell;
@@ -56,7 +57,6 @@ import com.retech.reader.web.client.home.BookFlip;
 import com.retech.reader.web.client.home.SearchPanel;
 import com.retech.reader.web.client.mobile.ui.bar.SettingsView;
 
-import org.cloudlet.web.mvp.shared.BasePlace;
 
 import java.util.ArrayList;
 import java.util.List;

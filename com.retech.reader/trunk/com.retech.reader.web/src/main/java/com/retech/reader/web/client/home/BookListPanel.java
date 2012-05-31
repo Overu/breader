@@ -2,6 +2,8 @@ package com.retech.reader.web.client.home;
 
 import com.goodow.wave.client.wavepanel.WavePanel;
 import com.goodow.wave.client.widget.toolbar.buttons.WaveToolBar;
+import com.goodow.web.mvp.shared.BasePlace;
+import com.goodow.web.mvp.shared.ProvideActivities;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
@@ -21,8 +23,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
-import org.cloudlet.web.mvp.shared.BasePlace;
-import org.cloudlet.web.mvp.shared.ProvideActivities;
 
 import java.util.Arrays;
 import java.util.List;

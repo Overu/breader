@@ -13,6 +13,9 @@
  */
 package com.goodow.wave.client.shell;
 
+import com.goodow.web.mvp.shared.Default;
+import com.goodow.web.mvp.shared.SimpleActivityMapper;
+
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Document;
@@ -28,8 +31,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;
 
-import org.cloudlet.web.mvp.shared.Default;
-import org.cloudlet.web.mvp.shared.SimpleActivityMapper;
 
 import java.util.logging.Logger;
 

@@ -13,6 +13,11 @@
  */
 package com.goodow.web.ui.client.shell;
 
+import com.goodow.web.mvp.shared.Default;
+import com.goodow.web.mvp.shared.SimpleActivityMapper;
+import com.goodow.web.mvp.shared.layout.Footer;
+import com.goodow.web.mvp.shared.layout.Nav;
+import com.goodow.web.mvp.shared.layout.Search;
 import com.goodow.web.ui.client.help.KeyboardShortcuts;
 
 import com.google.gwt.activity.shared.ActivityManager;
@@ -39,11 +44,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;
 
-import org.cloudlet.web.mvp.shared.Default;
-import org.cloudlet.web.mvp.shared.SimpleActivityMapper;
-import org.cloudlet.web.mvp.shared.layout.Footer;
-import org.cloudlet.web.mvp.shared.layout.Nav;
-import org.cloudlet.web.mvp.shared.layout.Search;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

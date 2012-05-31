@@ -1,13 +1,13 @@
 package com.retech.reader.web.shared.proxy;
 
 import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
+import com.goodow.web.service.shared.rpc.BaseEntityProxy;
 
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
 import com.retech.reader.web.server.domain.Page;
 
-import org.cloudlet.web.service.shared.rpc.BaseEntityProxy;
 
 import java.util.List;
 

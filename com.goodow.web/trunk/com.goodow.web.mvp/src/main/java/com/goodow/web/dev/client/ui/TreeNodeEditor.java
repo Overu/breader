@@ -13,6 +13,13 @@
  */
 package com.goodow.web.dev.client.ui;
 
+import com.goodow.web.mvp.shared.ActivityAware;
+import com.goodow.web.mvp.shared.ActivityState;
+import com.goodow.web.mvp.shared.BasePlace;
+import com.goodow.web.mvp.shared.tree.TreeNodeProxy;
+import com.goodow.web.mvp.shared.tree.rpc.TreeNodeContext;
+import com.goodow.web.mvp.shared.tree.rpc.TreeNodeFactory;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.ui.client.ValueBoxEditorDecorator;
@@ -32,12 +39,6 @@ import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
-import org.cloudlet.web.mvp.shared.BasePlace;
-import org.cloudlet.web.mvp.shared.tree.TreeNodeProxy;
-import org.cloudlet.web.mvp.shared.tree.rpc.TreeNodeContext;
-import org.cloudlet.web.mvp.shared.tree.rpc.TreeNodeFactory;
 
 import java.util.Map;
 import java.util.Set;

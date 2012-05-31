@@ -1,11 +1,12 @@
 package com.retech.reader.web.server.service;
 
+import com.goodow.web.service.server.jpa.BaseService;
+
 import com.google.inject.persist.finder.Finder;
 
 import com.retech.reader.web.server.domain.Category;
 import com.retech.reader.web.server.domain.Issue;
 
-import org.cloudlet.web.service.server.jpa.BaseService;
 
 public class CategoryService extends BaseService<Category> {
 

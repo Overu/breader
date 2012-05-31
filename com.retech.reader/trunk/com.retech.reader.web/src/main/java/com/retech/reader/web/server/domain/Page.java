@@ -1,10 +1,11 @@
 package com.retech.reader.web.server.domain;
 
+import com.goodow.web.service.server.jpa.BaseDomain;
+
 import com.google.inject.Inject;
 
 import com.retech.reader.web.server.service.PageService;
 
-import org.cloudlet.web.service.server.jpa.BaseDomain;
 
 import java.util.List;
 

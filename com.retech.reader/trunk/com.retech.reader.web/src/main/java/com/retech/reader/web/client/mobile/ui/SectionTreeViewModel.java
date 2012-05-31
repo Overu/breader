@@ -1,5 +1,7 @@
 package com.retech.reader.web.client.mobile.ui;
 
+import com.goodow.web.mvp.shared.BasePlace;
+
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.place.shared.PlaceController;
@@ -19,7 +21,6 @@ import com.retech.reader.web.shared.proxy.SectionProxy;
 import com.retech.reader.web.shared.rpc.PageDataProvider;
 import com.retech.reader.web.shared.rpc.SectionDataProvider;
 
-import org.cloudlet.web.mvp.shared.BasePlace;
 
 public class SectionTreeViewModel implements TreeViewModel {
   private final SectionDataProvider sectionDataProvider;

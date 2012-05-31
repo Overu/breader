@@ -1,5 +1,7 @@
 package com.retech.reader.web.shared.rpc;
 
+import com.goodow.web.service.shared.rpc.BaseReceiver;
+
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -10,7 +12,6 @@ import com.google.web.bindery.requestfactory.shared.Request;
 import com.retech.reader.web.shared.common.SQLConstant;
 import com.retech.reader.web.shared.proxy.CategoryProxy;
 
-import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 import java.util.List;
 

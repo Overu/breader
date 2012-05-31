@@ -1,6 +1,7 @@
 package com.retech.reader.web.client.mobile.ui.talk;
 
 import com.goodow.wave.client.wavepanel.WavePanel;
+import com.goodow.web.service.shared.rpc.BaseReceiver;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -16,7 +17,6 @@ import com.google.web.bindery.requestfactory.shared.Request;
 
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 import java.util.logging.Logger;
 

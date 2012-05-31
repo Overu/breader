@@ -1,9 +1,10 @@
 package com.retech.reader.web.server.domain;
 
+import com.goodow.web.service.server.jpa.BaseDomain;
+
 import com.gooodow.wave.shared.media.MimeType;
 
 import org.apache.commons.lang.StringUtils;
-import org.cloudlet.web.service.server.jpa.BaseDomain;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;

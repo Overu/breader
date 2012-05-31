@@ -1,6 +1,8 @@
 package com.retech.reader.web.client.mobile.ui;
 
 import com.goodow.wave.client.wavepanel.WavePanel;
+import com.goodow.web.mvp.shared.BasePlace;
+import com.goodow.web.service.shared.rpc.BaseReceiver;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.dom.client.Element;
@@ -23,8 +25,6 @@ import com.retech.reader.web.shared.proxy.ResourceProxy;
 import com.retech.reader.web.shared.rpc.BookDataProvider;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
-import org.cloudlet.web.mvp.shared.BasePlace;
-import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 import java.util.List;
 
@@ -48,7 +48,7 @@ public class BookListEditor extends WavePanel implements Activity {
   // SimplePanel simplePanel;
 
   private final PlaceController placeController;
-  private final Provider<org.cloudlet.web.mvp.shared.BasePlace> place;
+  private final Provider<com.goodow.web.mvp.shared.BasePlace> place;
   private final ReaderFactory f;
   private final BookDataProvider dataProvider;
   private CellList<IssueProxy> cellList;

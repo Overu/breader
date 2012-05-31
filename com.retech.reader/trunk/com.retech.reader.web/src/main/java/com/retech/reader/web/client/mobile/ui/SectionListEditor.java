@@ -1,5 +1,10 @@
 package com.retech.reader.web.client.mobile.ui;
 
+import com.goodow.web.mvp.shared.BasePlace;
+import com.goodow.web.mvp.shared.rpc.BaseListEditor;
+import com.goodow.web.mvp.shared.rpc.RangeLabelPager;
+import com.goodow.web.mvp.shared.rpc.ShowMorePagerPanel;
+
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.core.client.GWT;
@@ -19,10 +24,6 @@ import com.retech.reader.web.shared.proxy.PageProxy;
 import com.retech.reader.web.shared.proxy.SectionProxy;
 import com.retech.reader.web.shared.rpc.SectionDataProvider;
 
-import org.cloudlet.web.mvp.shared.BasePlace;
-import org.cloudlet.web.mvp.shared.rpc.BaseListEditor;
-import org.cloudlet.web.mvp.shared.rpc.RangeLabelPager;
-import org.cloudlet.web.mvp.shared.rpc.ShowMorePagerPanel;
 
 @Singleton
 public class SectionListEditor extends BaseListEditor<SectionProxy> implements Activity {

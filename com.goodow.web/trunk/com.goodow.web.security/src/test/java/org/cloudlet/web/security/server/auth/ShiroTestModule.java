@@ -1,5 +1,7 @@
 package org.cloudlet.web.security.server.auth;
 
+import com.goodow.web.security.server.auth.JpaRealm;
+
 import com.google.inject.name.Names;
 
 import org.apache.shiro.guice.ShiroModule;

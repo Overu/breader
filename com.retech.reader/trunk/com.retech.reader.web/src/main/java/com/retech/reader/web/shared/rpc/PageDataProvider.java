@@ -1,5 +1,9 @@
 package com.retech.reader.web.shared.rpc;
 
+import com.goodow.web.service.shared.KeyUtil;
+import com.goodow.web.service.shared.LocalStorage;
+import com.goodow.web.service.shared.rpc.BaseReceiver;
+
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.Range;
@@ -9,9 +13,6 @@ import com.google.web.bindery.requestfactory.shared.Request;
 import com.retech.reader.web.shared.proxy.PageProxy;
 import com.retech.reader.web.shared.proxy.SectionProxy;
 
-import org.cloudlet.web.service.shared.KeyUtil;
-import org.cloudlet.web.service.shared.LocalStorage;
-import org.cloudlet.web.service.shared.rpc.BaseReceiver;
 
 import java.util.List;
 

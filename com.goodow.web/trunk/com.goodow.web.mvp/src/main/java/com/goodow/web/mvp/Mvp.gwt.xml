@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <inherits name="com.goodow.web.security.Security"/>
+  <inherits name='com.google.gwt.modernizr.Gwtmodernizr'/>
+  
+  <source path="client" />
+  <source path="shared" />
+  
+  <super-source path="super" />
+  
+  <extend-configuration-property name="client.ioc.ginModules"
+		value="com.goodow.web.mvp.client.ioc.MvpGinModule" />
+  <extend-configuration-property name="shared.ioc.ginModules"
+		value="com.goodow.web.mvp.shared.ioc.MvpGinModule" />
+</module>

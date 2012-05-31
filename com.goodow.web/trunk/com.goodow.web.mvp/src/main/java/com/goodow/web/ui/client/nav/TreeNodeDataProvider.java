@@ -13,6 +13,13 @@
  */
 package com.goodow.web.ui.client.nav;
 
+import com.goodow.web.mvp.shared.ActivityAware;
+import com.goodow.web.mvp.shared.ActivityState;
+import com.goodow.web.mvp.shared.tree.TreeNodePlace;
+import com.goodow.web.mvp.shared.tree.TreeNodeProxy;
+import com.goodow.web.mvp.shared.tree.event.RefreshEvent;
+import com.goodow.web.mvp.shared.tree.event.RefreshRequestEvent;
+
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.TakesValue;
@@ -23,12 +30,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.web.bindery.event.shared.EventBus;
 
-import org.cloudlet.web.mvp.shared.ActivityAware;
-import org.cloudlet.web.mvp.shared.ActivityState;
-import org.cloudlet.web.mvp.shared.tree.TreeNodePlace;
-import org.cloudlet.web.mvp.shared.tree.TreeNodeProxy;
-import org.cloudlet.web.mvp.shared.tree.event.RefreshEvent;
-import org.cloudlet.web.mvp.shared.tree.event.RefreshRequestEvent;
 
 import java.util.List;
 import java.util.logging.Logger;

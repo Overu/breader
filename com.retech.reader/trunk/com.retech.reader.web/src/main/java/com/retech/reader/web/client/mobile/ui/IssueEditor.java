@@ -1,5 +1,7 @@
 package com.retech.reader.web.client.mobile.ui;
 
+import com.goodow.web.mvp.shared.ProvideActivities;
+
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -9,7 +11,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import org.cloudlet.web.mvp.shared.ProvideActivities;
 
 import java.util.Arrays;
 import java.util.List;

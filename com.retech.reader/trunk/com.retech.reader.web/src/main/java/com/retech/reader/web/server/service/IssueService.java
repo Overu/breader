@@ -1,5 +1,7 @@
 package com.retech.reader.web.server.service;
 
+import com.goodow.web.service.server.jpa.BaseService;
+
 import com.google.inject.persist.Transactional;
 import com.google.inject.persist.finder.Finder;
 import com.google.inject.persist.finder.FirstResult;
@@ -11,7 +13,6 @@ import com.retech.reader.web.server.domain.Page;
 import com.retech.reader.web.server.domain.Resource;
 import com.retech.reader.web.server.domain.Section;
 
-import org.cloudlet.web.service.server.jpa.BaseService;
 
 import java.util.ArrayList;
 import java.util.Date;

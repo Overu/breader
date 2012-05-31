@@ -17,6 +17,7 @@ import com.goodow.wave.bootstrap.shared.MapBinder;
 import com.goodow.web.dev.client.ui.ShellUiDev;
 import com.goodow.web.dev.client.ui.TreeNodeEditor;
 import com.goodow.web.dev.client.ui.TreeNodeListView;
+import com.goodow.web.mvp.shared.tree.TreeNodeProxy;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -25,7 +26,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
-import org.cloudlet.web.mvp.shared.tree.TreeNodeProxy;
 
 import java.util.logging.Logger;
 

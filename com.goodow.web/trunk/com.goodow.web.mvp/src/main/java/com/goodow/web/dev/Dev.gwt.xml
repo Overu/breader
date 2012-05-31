@@ -2,8 +2,8 @@
 <module rename-to="web">
   <inherits name="com.goodow.wave.bootstrap.Bootstrap" />
   <inherits name="com.goodow.web.logging.Logging" />
-  <inherits name="org.cloudlet.web.service.Service" />
-  <inherits name="org.cloudlet.web.mvp.Mvp" />
+  <inherits name="com.goodow.web.service.Service" />
+  <inherits name="com.goodow.web.mvp.Mvp" />
   <inherits name='com.google.gwt.modernizr.Gwtmodernizr'/>
   <inherits name='com.goodow.wave.client.Client' />
 

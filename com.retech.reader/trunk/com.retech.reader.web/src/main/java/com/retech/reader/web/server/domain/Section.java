@@ -1,6 +1,6 @@
 package com.retech.reader.web.server.domain;
 
-import org.cloudlet.web.service.server.jpa.BaseDomain;
+import com.goodow.web.service.server.jpa.BaseDomain;
 
 import java.util.List;
 
