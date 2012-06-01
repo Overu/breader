@@ -16,7 +16,7 @@
       <property name="javax.persistence.jdbc.password" value="" />
       <property name="hibernate.hbm2ddl.auto" value="none" />
       <property name="hibernate.show_sql" value="true" />
-      <property name="hibernate.connection.provider_class" value=com.goodow.web.service.server.jpa.DatabaseConnectionProvider />
+      <property name="hibernate.connection.provider_class" value="com.goodow.web.service.server.jpa.DatabaseConnectionProvider" />
       <!-- <property name="hibernate.connection.characterEncoding" value="utf8" /> <property name="hibernate.connection.charSet" 
         value="utf8" /> <property name="hibernate.connection.default-character-set" value="utf8" /> -->
     </properties>
