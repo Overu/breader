@@ -1,4 +1,4 @@
-package org.cloudlet.web.security.server.auth;
+package com.goodow.web.security.server.auth;
 
 import com.goodow.web.security.server.auth.JpaRealm;
 
