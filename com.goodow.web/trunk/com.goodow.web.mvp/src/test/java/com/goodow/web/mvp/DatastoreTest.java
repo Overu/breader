@@ -1,4 +1,4 @@
-package org.cloudlet.web.mvp;
+package com.goodow.web.mvp;
 
 import com.goodow.wave.test.BaseTest;
 import com.goodow.web.mvp.server.tree.domain.TreeNode;
