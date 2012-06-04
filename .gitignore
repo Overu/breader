@@ -1,6 +1,8 @@
-# Created by get-third-party-deps script.
-/third_party
-/third_party_src
+.project
+.classpath
+.settings
+
+target
 
 # Ant build output.
 /build
