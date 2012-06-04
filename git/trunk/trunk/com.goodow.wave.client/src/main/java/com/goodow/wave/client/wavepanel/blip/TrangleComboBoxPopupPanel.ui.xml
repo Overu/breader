@@ -1,0 +1,30 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style>
+    .root {
+      z-index: 1000;
+      background-color: white;
+    }
+    
+    .root>div {
+      margin: 0 1px;
+      padding: 3px 7px 3px 12px;
+      color: hsl(218, 100%, 33%);
+      cursor: pointer;
+      background-color: white;
+    }
+    
+    .root>div:HOVER {
+      background-color: hsl(218, 100%, 63%);
+      color: white;
+    }
+  </ui:style>
+
+  <g:HTMLPanel addStyleNames="{style.root}">
+    <div>Add folder</div>
+    <div>Rename</div>
+    <div>Delete</div>
+    <div>Move up</div>
+    <div>Set color</div>
+  </g:HTMLPanel>
+</ui:UiBinder>

@@ -1,0 +1,25 @@
+@CHARSET "utf-8";
+
+@sprite .toplevelToolbarWidget {
+  gwt-image: "waveToolbarEmpty";
+  display: -webkit-box;
+  z-index: 0;
+  height: 2em;
+  background-size: contain;
+}
+
+@sprite .toplevelToolbarWidget>div:active {
+  gwt-image: "waveToolbarActive";
+  background-size: contain;
+  height: initial;
+}
+
+.toplevelToolbarWidget>* {
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+}
+
+.submenuToolbarWidget{
+  padding: 2px 0;
+}

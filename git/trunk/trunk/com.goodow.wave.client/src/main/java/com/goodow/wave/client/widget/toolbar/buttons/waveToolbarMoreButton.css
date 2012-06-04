@@ -1,0 +1,7 @@
+@CHARSET "utf-8";
+
+div.showMoreButton {
+  float: right;
+  -webkit-box-flex:0;
+  min-width: 0;
+}

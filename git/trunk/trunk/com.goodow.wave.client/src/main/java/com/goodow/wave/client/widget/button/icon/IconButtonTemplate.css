@@ -1,0 +1,19 @@
+@CHARSET "UTF-8";
+
+.visualNumeralElement {
+  -webkit-border-radius: 8px;
+  padding: 0 8px;
+  color: white;
+  /* font-size: 9pt; */
+  font-weight: bold;
+  background-color: hsl(71, 100%, 37%);
+}
+
+.iconButtonDisabled {
+  opacity: 0.5;
+  cursor: default !important;
+}
+
+.iconButtonDisabled:active,.iconButtonDisabled:hover {
+  background-image: none;
+}

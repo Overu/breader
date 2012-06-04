@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <inherits name="com.goodow.wave.client.widget.progress.Progress" />
+  <inherits name="com.goodow.wave.client.widget.toolbar.Toolbar" />
+  <inherits name="com.goodow.wave.client.widget.loading.Loading" />
+  
+  <inherits name="com.goodow.wave.client.search.Search" />
+  <inherits name="com.goodow.wave.client.account.Account" />
+  <inherits name="com.goodow.wave.client.wavepanel.WavePanel" />
+  <inherits name="com.gooodow.wave.shared.media.Media" />
+  <source path=""/>
+</module>

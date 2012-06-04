@@ -1,0 +1,67 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+  <ui:style>
+    .root {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      padding: 2px 4px 2px 4px;
+    }
+    
+    .colors>div {
+      width: 10px;
+      height: 10px;
+      padding: 2px;
+      border: 1px solid white;
+      margin: 2px;
+      float: left;
+    }
+    
+    .colors>div:HOVER {
+      outline: 1px solid blue;
+      cursor: pointer;
+    }
+    
+    .nocolor {
+      padding: 2px 0 2px 0;
+      text-align: center;
+      color: black;
+      text-decoration: underline;
+    }
+    
+    .nocolor:HOVER {
+      background-color: hsl(211, 89%, 89%);
+      cursor: pointer;
+    }
+  </ui:style>
+  <g:HTMLPanel addStyleNames="{style.root}">
+    <div ui:field="colors" class="{style.colors}">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div>
+      <div ui:field="noColor" class="{style.nocolor}">No color</div>
+    </div>
+  </g:HTMLPanel>
+</ui:UiBinder>
