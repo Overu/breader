@@ -5,7 +5,7 @@
 # Created by the Workspace Mechanic Preference Recorder
 #Mon Aug 09 19:46:21 CST 2010
 file_export_version=3.0
-# /instance/com.google.eclipse.mechanic/mechanicSourceDirectories=http://dev.retechcorp.com/svn/retech/org.cloudlet.web/trunk/tools/eclipse/settings/mechanic/Tasks.json
+/instance/com.google.eclipse.mechanic/mechanicSourceDirectories=http://goodow.googlecode.com/git/tools/settings/eclipse/plugins/mechanic/Tasks.json
 # 以下四个变量设置, 仅供开发GWT源码项目时需要. 
 #/instance/org.eclipse.core.resources/pathvariable.GWT_ROOT=/home/larry/dev/tools/lib/google-web-toolkit-read-only/trunk
 #/instance/org.eclipse.jdt.core/org.eclipse.jdt.core.classpathVariable.GWT_TOOLS=/home/larry/dev/tools/lib/google-web-toolkit-read-only/tools
