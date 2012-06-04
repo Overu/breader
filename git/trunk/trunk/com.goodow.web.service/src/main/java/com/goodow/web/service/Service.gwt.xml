@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='boot'>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.goodow.web.logging.Logging'/>
+  <inherits name='com.googlecode.gwtphonegap.PhoneGap' />
+      
+  <!-- Specify the paths for translatable code                    -->
+  <source path="" includes="*.java" />
+  <source path='client' />
+  <source path='shared' />
+  
+  <extend-configuration-property name="client.ioc.ginModules"
+    value="com.goodow.web.service.client.ioc.ServiceGinModule" />
+</module>

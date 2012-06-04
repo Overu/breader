@@ -1,0 +1,10 @@
+/*
+ * This file is used by SummaryWidget to patch the CSS styles used in DataGrid.
+ * The style rules defined in this file are appended to the default styles in
+ * DataGrid's CssResource. If there are conflicts, the styles defined in this
+ * file take precedence over the defaults because these styles appear after the
+ * default styles.
+ */
+.dataGridCell {
+  cursor: pointer;
+}

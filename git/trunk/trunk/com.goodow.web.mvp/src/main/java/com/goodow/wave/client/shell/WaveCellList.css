@@ -1,0 +1,29 @@
+.cellListEvenItem,.cellListOddItem {
+  border-bottom: 1px solid #bbb;
+  padding: 12px 20px; 
+  font-size : 1.5em;
+  color: #333;
+}
+
+.cellListWidget {
+  
+}
+/*
+.cellListWidget>div>div:FOCUS {
+  background-color: hsl(82, 43%, 45%)!important;
+  color: white;
+}
+*/
+.cellListKeyboardSelectedItem {
+  background-color: inherit;
+}
+
+.cellListWidget>div>div:HOVER {
+  background-color: #EDEDED;
+}
+
+.cellListSelectedItem {
+  background-color: hsl(82, 43%, 45%) !important;
+  color: white !important;
+  background: inherit;
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="web">
+  <inherits name="com.goodow.wave.bootstrap.Bootstrap" />
+  <inherits name="com.goodow.web.logging.Logging" />
+  <inherits name="com.goodow.web.service.Service" />
+  <inherits name="com.goodow.web.mvp.Mvp" />
+  <inherits name='com.google.gwt.modernizr.Gwtmodernizr'/>
+  <inherits name='com.goodow.wave.client.Client' />
+
+  <source path="client" />
+  <source path="shared" />
+
+</module>
