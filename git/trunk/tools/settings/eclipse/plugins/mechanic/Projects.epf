@@ -1,0 +1,38 @@
+# @title Project-specific configuration
+# @description project specific settings
+# @audit_type RECONCILE
+#
+# Created by the Workspace Mechanic Preference Recorder
+#Sun Oct 30 14:34:28 CST 2011
+file_export_version=3.0
+# Google App Engine
+# /project/com.goodow.web.view/com.google.appengine.eclipse.core/gaeHrdEnabled=true
+# /project/com.goodow.web.view/com.google.appengine.eclipse.core/ormEnhancementInclusions=src/main/java/org/cloudlet/web/**/domain/*.java
+
+# Annotation Processing Tool
+/project/com.goodow.web.view/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.debug.localVariable=generate
+/project/com.goodow.web.view/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.codegen.unusedLocal=preserve
+/project/com.goodow.web.view/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.processAnnotations=enabled
+/project/com.goodow.web.view/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.aptEnabled=true
+/project/com.goodow.web.view/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.reconcileEnabled=true
+/project/com.goodow.web.view/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.debug.lineNumber=generate
+/project/com.goodow.web.view/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.debug.sourceFile=generate
+/project/com.goodow.web.view/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.genSrcDir=target/generated-sources/apt
+
+/project/org.cloudlet.web.mvp/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.processAnnotations=enabled
+/project/org.cloudlet.web.mvp/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.aptEnabled=true
+/project/org.cloudlet.web.mvp/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.reconcileEnabled=true
+/project/org.cloudlet.web.mvp/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.genSrcDir=target/generated-sources/apt
+
+/project/com.retech.reader.web/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.processAnnotations=enabled
+/project/com.retech.reader.web/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.aptEnabled=true
+/project/com.retech.reader.web/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.reconcileEnabled=true
+/project/com.retech.reader.web/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.genSrcDir=target/generated-sources/apt
+
+/project/com.retech.reader.web/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.debug.localVariable=generate
+/project/com.retech.reader.web/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.codegen.unusedLocal=preserve
+/project/com.retech.reader.web/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.debug.lineNumber=generate
+# /project/com.retech.reader.web/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.debug.sourceFile=generate
+
+# /project/com.goodow.web.view/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.processorOptions/enhanceAPI=JPA
+# /project/com.goodow.web.view/org.eclipse.jdt.apt.core/org.eclipse.jdt.apt.processorOptions/verbose=true
