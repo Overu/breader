@@ -1,0 +1,47 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:c="urn:import:com.google.gwt.user.cellview.client" xmlns:w="urn:import:com.google.gwt.widget.client"
+  xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:r="urn:import:com.retech.reader.web.client.mobile.ui">
+
+  <ui:style>
+    .top {
+    	width: 100%;
+    	background: black;
+    }
+    
+    .top .button {
+    	float: left;
+    	color: white;
+    	width: 100%;
+    }
+  </ui:style>
+
+  <g:DockLayoutPanel unit='PX'>
+    <g:north size='40'>
+      <g:HTMLPanel styleName="{style.top}">
+        <table class="{style.top}" cellspacing="2" cellpadding="0">
+          <tr>
+            <td align="center" style="width:20%;">
+              <w:TextButton styleName="{style.button}">最新</w:TextButton>
+            </td>
+            <td align="center" style="width:20%;">
+              <w:TextButton styleName="{style.button}">排行</w:TextButton>
+            </td>
+            <td align="center" style="width:20%;">
+              <w:TextButton styleName="{style.button}">分类</w:TextButton>
+            </td>
+            <td align="center" style="width:20%;">
+              <w:TextButton ui:field="deleteButton" styleName="{style.button}">下载</w:TextButton>
+            </td>
+            <td align="center" style="width:20%;">
+              <w:TextButton ui:field="uploadBtn" decoration="NEGATIVE" styleName="{style.button}">上传</w:TextButton>
+            </td>
+          </tr>
+        </table>
+      </g:HTMLPanel>
+    </g:north>
+    <g:center>
+      <r:BookListEditor />
+    </g:center>
+  </g:DockLayoutPanel>
+
+</ui:UiBinder> 

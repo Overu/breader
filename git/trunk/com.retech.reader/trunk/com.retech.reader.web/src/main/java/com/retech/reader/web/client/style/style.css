@@ -1,0 +1,57 @@
+@CHARSET "UTF-8";
+
+body {
+  font-family: arial;
+  font-size: 1em;
+  background: #333 !important;
+}
+
+.contentSectionView {
+  -webkit-transition: all 1s;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  margin: 0px;
+  background-color: white;
+}
+
+.contentHtmlPanel {
+  left: 0;
+  overflow: visible;
+  -webkit-transition: all 0.5s;
+  -webkit-column-gap: 0em;
+  position: relative;
+  line-height: 1.5em;
+  font-family: '\6977\4F53';
+  text-indent: 2em;
+}
+
+.contentHtmlPanel>p {
+  padding: 0 20px 0 30px;
+  -webkit-margin-after: 0;
+  -webkit-margin-before: 0;
+}
+
+.contentTopBar {
+  position: absolute;
+  left: 7px;
+  right: 0;
+  -webkit-transition: all 0.3s;
+  z-index: 150;
+  opacity: 0;
+}
+
+.contentButtomBar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  bottom: 0;
+  -webkit-transition: all 0.3s;
+}
+
+/*
+.contentSectionView:HOVER {
+  left: 0px;
+}
+*/
