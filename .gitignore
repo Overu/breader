@@ -1,8 +1,9 @@
+# Eclipse settings.
 .project
 .classpath
 /.settings
 
-# Maven build output
+# Maven build output.
 /target
 
 # Ant build output.
