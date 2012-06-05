@@ -1,9 +1,11 @@
+# Eclipse settings.
 .project
 .classpath
 .settings
+.DS_Store
 
-# maven output
-/target
+# Maven build output.
+target
 
 # Ant build output.
 /build
