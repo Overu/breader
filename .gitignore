@@ -1,7 +1,8 @@
 .project
 .classpath
 
-target
+# Maven build output
+/target
 
 # Ant build output.
 /build
