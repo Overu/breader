@@ -443,4 +443,10 @@
       </plugins>
     </pluginManagement>
   </build>
+  
+  <modules>
+    <module>com.goodow.wave</module>
+    <module>com.goodow.web</module>
+    <module>com.retech.reader</module>
+  </modules>
 </project>
