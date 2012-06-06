@@ -13,7 +13,6 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>com.goodow</module>
     <module>com.goodow.wave.bootstrap</module>
     <module>com.goodow.wave.test</module>
     <module>com.goodow.wave.shared</module>
