@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.service.shared;
+package com.goodow.web.core.shared;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

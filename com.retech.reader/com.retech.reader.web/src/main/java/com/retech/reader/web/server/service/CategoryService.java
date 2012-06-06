@@ -1,6 +1,6 @@
 package com.retech.reader.web.server.service;
 
-import com.goodow.web.core.server.BaseService;
+import com.goodow.web.core.server.ServerContentService;
 
 import com.google.inject.persist.finder.Finder;
 
@@ -8,7 +8,7 @@ import com.retech.reader.web.server.domain.Category;
 import com.retech.reader.web.server.domain.Issue;
 
 
-public class CategoryService extends BaseService<Category> {
+public class CategoryService extends ServerContentService<Category> {
 
   @Finder(query = "select count(d) from Issue d where d.category=?")
   public Long count(final Category category) {

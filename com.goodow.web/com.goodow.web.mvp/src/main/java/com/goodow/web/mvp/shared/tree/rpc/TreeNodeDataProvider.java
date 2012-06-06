@@ -1,7 +1,7 @@
 package com.goodow.web.mvp.shared.tree.rpc;
 
+import com.goodow.web.core.shared.QueryUtil;
 import com.goodow.web.mvp.shared.tree.TreeNodeProxy;
-import com.goodow.web.service.shared.QueryUtil;
 
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;

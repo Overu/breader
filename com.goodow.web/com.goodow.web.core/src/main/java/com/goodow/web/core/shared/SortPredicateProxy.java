@@ -1,4 +1,4 @@
-package com.goodow.web.service.shared;
+package com.goodow.web.core.shared;
 
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
 import com.google.web.bindery.requestfactory.shared.ValueProxy;

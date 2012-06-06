@@ -1,5 +1,12 @@
 package com.goodow.web.core.server;
 
+import com.goodow.web.core.shared.Entity;
+import com.goodow.web.core.shared.Operation;
+import com.goodow.web.core.shared.Service;
+
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -9,12 +16,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
-import com.goodow.web.core.shared.Operation;
-import com.goodow.web.core.shared.Service;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-
-public class ServerService implements Service {
+public class ServerService<E extends Entity> implements Service<E> {
 
   @Inject
   protected Provider<EntityManager> em;

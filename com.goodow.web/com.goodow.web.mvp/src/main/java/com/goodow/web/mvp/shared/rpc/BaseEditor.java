@@ -1,10 +1,10 @@
 package com.goodow.web.mvp.shared.rpc;
 
+import com.goodow.web.core.shared.LocalStorage;
+import com.goodow.web.core.shared.rpc.BaseContext;
+import com.goodow.web.core.shared.rpc.BaseEntityProxy;
+import com.goodow.web.core.shared.rpc.BaseReceiver;
 import com.goodow.web.mvp.shared.BasePlace;
-import com.goodow.web.service.shared.LocalStorage;
-import com.goodow.web.service.shared.rpc.BaseContext;
-import com.goodow.web.service.shared.rpc.BaseEntityProxy;
-import com.goodow.web.service.shared.rpc.BaseReceiver;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.Callback;

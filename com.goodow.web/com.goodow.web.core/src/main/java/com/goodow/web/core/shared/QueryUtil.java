@@ -1,6 +1,6 @@
-package com.goodow.web.service.shared;
+package com.goodow.web.core.shared;
 
-import com.goodow.web.service.shared.SortPredicateProxy.SortDirection;
+import com.goodow.web.core.shared.SortPredicateProxy.SortDirection;
 
 import com.google.gwt.user.cellview.client.AbstractCellTable;
 import com.google.gwt.user.cellview.client.Column;

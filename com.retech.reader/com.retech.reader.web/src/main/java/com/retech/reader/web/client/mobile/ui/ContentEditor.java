@@ -6,10 +6,10 @@ import com.goodow.wave.client.wavepanel.WavePanel;
 import com.goodow.wave.client.widget.toolbar.buttons.ToolBarButtonView.State;
 import com.goodow.wave.client.widget.toolbar.buttons.ToolBarClickButton;
 import com.goodow.wave.client.widget.toolbar.buttons.WaveToolBar;
+import com.goodow.web.core.shared.KeyUtil;
+import com.goodow.web.core.shared.LocalStorage;
+import com.goodow.web.core.shared.rpc.BaseReceiver;
 import com.goodow.web.mvp.shared.BasePlace;
-import com.goodow.web.service.shared.KeyUtil;
-import com.goodow.web.service.shared.LocalStorage;
-import com.goodow.web.service.shared.rpc.BaseReceiver;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.core.client.JsArray;

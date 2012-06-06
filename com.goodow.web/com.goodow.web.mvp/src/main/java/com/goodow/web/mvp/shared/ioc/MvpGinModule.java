@@ -1,13 +1,13 @@
 package com.goodow.web.mvp.shared.ioc;
 
 import com.goodow.wave.bootstrap.shared.MapBinder;
+import com.goodow.web.core.shared.LocalStorageProxyStore;
 import com.goodow.web.mvp.shared.BaseActivity;
 import com.goodow.web.mvp.shared.BasePlace;
 import com.goodow.web.mvp.shared.Default;
 import com.goodow.web.mvp.shared.SimpleActivityMapper;
 import com.goodow.web.mvp.shared.SimplePlaceHistoryMapper;
 import com.goodow.web.mvp.shared.SimplePlaceTokenizer;
-import com.goodow.web.service.shared.LocalStorageProxyStore;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.place.shared.Place;

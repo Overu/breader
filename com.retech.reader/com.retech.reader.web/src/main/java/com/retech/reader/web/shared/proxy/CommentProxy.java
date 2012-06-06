@@ -1,7 +1,7 @@
 package com.retech.reader.web.shared.proxy;
 
 import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
-import com.goodow.web.service.shared.rpc.BaseEntityProxy;
+import com.goodow.web.core.shared.rpc.BaseEntityProxy;
 
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
 

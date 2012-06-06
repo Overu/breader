@@ -1,6 +1,7 @@
 package com.goodow.web.core.server;
 
 import com.goodow.web.security.shared.Content;
+import com.goodow.web.security.shared.ContentService;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -12,16 +13,19 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-public abstract class BaseService<T extends Content> {
+public abstract class ServerContentService<E extends Content> extends ServerService<E> implements
+    ContentService<E> {
+
   @Inject
   protected transient Provider<EntityManager> em;
-  protected Class<T> domainClass;
+
+  protected Class<E> domainClass;
 
   @SuppressWarnings("unchecked")
-  protected BaseService() {
+  protected ServerContentService() {
     domainClass =
-        (Class<T>) TypeUtils.ensureBaseType(TypeUtils.getSingleParameterization(BaseService.class,
-            getClass().getGenericSuperclass()));
+        (Class<E>) TypeUtils.ensureBaseType(TypeUtils.getSingleParameterization(
+            ServerContentService.class, getClass().getGenericSuperclass()));
   }
 
   @Transactional
@@ -32,7 +36,7 @@ public abstract class BaseService<T extends Content> {
 
   @SuppressWarnings("unchecked")
   @Transactional
-  public List<T> find(final int start, final int length) {
+  public List<E> find(final int start, final int length) {
     StringBuilder sb = new StringBuilder();
     sb.append("select d from ");
     sb.append(domainClass.getName());
@@ -44,23 +48,8 @@ public abstract class BaseService<T extends Content> {
     return query.getResultList();
   }
 
-  /**
-   * 该方法只能为public
-   * 
-   * @param domain
-   */
-  @Deprecated
-  @SuppressWarnings("unchecked")
-  public void put(final Object domain) {
-    if (domainClass.isAssignableFrom(domain.getClass())) {
-      put((T) domain);
-    } else {
-      throw new IllegalArgumentException();
-    }
-  }
-
   @Transactional
-  public void put(final T domain) {
+  public void put(final E domain) {
     if (domain.getId() == null) {
       em.get().persist(domain);
     } else {
@@ -75,16 +64,31 @@ public abstract class BaseService<T extends Content> {
    */
   @Deprecated
   @SuppressWarnings("unchecked")
-  public void remove(final Object domain) {
+  public void put(final Object domain) {
     if (domainClass.isAssignableFrom(domain.getClass())) {
-      remove((T) domain);
+      put((E) domain);
     } else {
       throw new IllegalArgumentException();
     }
   }
 
   @Transactional
-  public void remove(final T domain) {
+  public void remove(final E domain) {
     em.get().remove(domain);
+  }
+
+  /**
+   * 该方法只能为public
+   * 
+   * @param domain
+   */
+  @Deprecated
+  @SuppressWarnings("unchecked")
+  public void remove(final Object domain) {
+    if (domainClass.isAssignableFrom(domain.getClass())) {
+      remove((E) domain);
+    } else {
+      throw new IllegalArgumentException();
+    }
   }
 }

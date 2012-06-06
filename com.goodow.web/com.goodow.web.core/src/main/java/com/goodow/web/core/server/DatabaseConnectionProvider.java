@@ -1,17 +1,17 @@
 package com.goodow.web.core.server;
 
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.Singleton;
+
+import org.hibernate.service.jdbc.connections.internal.DriverManagerConnectionProviderImpl;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.hibernate.service.jdbc.connections.internal.DriverManagerConnectionProviderImpl;
-
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-import com.google.inject.Singleton;
 
 @Singleton
 public class DatabaseConnectionProvider extends DriverManagerConnectionProviderImpl {

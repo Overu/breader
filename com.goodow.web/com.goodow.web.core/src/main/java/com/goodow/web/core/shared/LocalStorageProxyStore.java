@@ -1,4 +1,4 @@
-package com.goodow.web.service.shared;
+package com.goodow.web.core.shared;
 
 import com.google.gwt.storage.client.Storage;
 import com.google.inject.Inject;

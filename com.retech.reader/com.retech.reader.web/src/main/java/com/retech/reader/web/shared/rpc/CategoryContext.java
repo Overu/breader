@@ -1,7 +1,7 @@
 package com.retech.reader.web.shared.rpc;
 
 import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
-import com.goodow.web.service.shared.rpc.BaseContext;
+import com.goodow.web.core.shared.rpc.BaseContext;
 
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.Service;

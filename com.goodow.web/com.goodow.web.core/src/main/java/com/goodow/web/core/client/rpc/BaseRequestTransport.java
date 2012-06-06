@@ -1,4 +1,4 @@
-package com.goodow.web.service.client.rpc;
+package com.goodow.web.core.client.rpc;
 
 import com.goodow.wave.client.widget.loading.LoadingIndicator;
 import com.goodow.web.feature.client.FeatureDetection;

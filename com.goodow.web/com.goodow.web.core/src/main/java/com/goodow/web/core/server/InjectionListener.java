@@ -1,4 +1,4 @@
-package com.goodow.web.service.server;
+package com.goodow.web.core.server;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;

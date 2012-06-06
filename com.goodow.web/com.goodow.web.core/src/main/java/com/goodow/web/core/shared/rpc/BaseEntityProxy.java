@@ -1,4 +1,4 @@
-package com.goodow.web.service.shared.rpc;
+package com.goodow.web.core.shared.rpc;
 
 import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
 

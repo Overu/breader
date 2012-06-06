@@ -1,7 +1,6 @@
-package com.goodow.web.service.server.jpa;
+package com.goodow.web.core.server;
 
-import com.goodow.web.service.server.Sort;
-import com.goodow.web.service.shared.SortPredicateProxy;
+import com.goodow.web.core.shared.SortPredicateProxy;
 
 import com.google.common.collect.MapMaker;
 import com.google.inject.Inject;

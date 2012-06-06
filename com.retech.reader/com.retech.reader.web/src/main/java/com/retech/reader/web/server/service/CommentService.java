@@ -1,6 +1,6 @@
 package com.retech.reader.web.server.service;
 
-import com.goodow.web.core.server.BaseService;
+import com.goodow.web.core.server.ServerContentService;
 
 import com.google.inject.persist.Transactional;
 import com.google.inject.persist.finder.Finder;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CommentService extends BaseService<Comment> {
+public class CommentService extends ServerContentService<Comment> {
 
   @Finder(query = "select c from Comment c where c.issue.id = ?", returnAs = ArrayList.class)
   public List<Comment> find(final long issueId, @FirstResult final int start,

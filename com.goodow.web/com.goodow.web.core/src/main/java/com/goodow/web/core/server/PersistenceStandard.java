@@ -1,4 +1,4 @@
-package com.goodow.web.service.server.jpa;
+package com.goodow.web.core.server;
 
 public enum PersistenceStandard {
 

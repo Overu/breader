@@ -1,13 +1,13 @@
 package com.retech.reader.web.server.service;
 
-import com.goodow.web.core.server.BaseService;
+import com.goodow.web.core.server.ServerContentService;
 
 import com.retech.reader.web.server.domain.Issue;
 import com.retech.reader.web.server.domain.Page;
 import com.retech.reader.web.server.domain.Resource;
 
 
-public class ResourceService extends BaseService<Resource> {
+public class ResourceService extends ServerContentService<Resource> {
 
   public String getDataString(final Long id) {
     return em.get().find(Resource.class, id).getDataString();

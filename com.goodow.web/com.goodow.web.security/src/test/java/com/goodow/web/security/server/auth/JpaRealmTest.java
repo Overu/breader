@@ -1,7 +1,7 @@
 package com.goodow.web.security.server.auth;
 
 import com.goodow.wave.test.BaseTest;
-import com.goodow.web.core.server.BaseService;
+import com.goodow.web.core.server.ServerContentService;
 import com.goodow.web.security.server.domain.Permission;
 import com.goodow.web.security.server.domain.Role;
 import com.goodow.web.security.server.domain.User;
@@ -32,11 +32,11 @@ public class JpaRealmTest extends BaseTest {
     @Override
     protected void configure() {
       super.configure();
-      bind(new TypeLiteral<BaseService<Role>>() {
-      }).toInstance(new BaseService<Role>() {
+      bind(new TypeLiteral<ServerContentService<Role>>() {
+      }).toInstance(new ServerContentService<Role>() {
       });
-      bind(new TypeLiteral<BaseService<Permission>>() {
-      }).toInstance(new BaseService<Permission>() {
+      bind(new TypeLiteral<ServerContentService<Permission>>() {
+      }).toInstance(new ServerContentService<Permission>() {
       });
     }
   }
@@ -54,9 +54,9 @@ public class JpaRealmTest extends BaseTest {
   @Inject
   SecurityManager securityManager;
   @Inject
-  private BaseService<Role> roleService;
+  private ServerContentService<Role> roleService;
   @Inject
-  private BaseService<Permission> permissionService;
+  private ServerContentService<Permission> permissionService;
   @Inject
   private Provider<EntityManager> em;
 

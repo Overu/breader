@@ -1,4 +1,4 @@
-package com.goodow.web.service.server;
+package com.goodow.web.core.server;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

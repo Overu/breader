@@ -1,6 +1,6 @@
 package com.retech.reader.web.server.service;
 
-import com.goodow.web.core.server.BaseService;
+import com.goodow.web.core.server.ServerContentService;
 
 import com.google.inject.persist.finder.Finder;
 import com.google.inject.persist.finder.FirstResult;
@@ -13,7 +13,7 @@ import com.retech.reader.web.server.domain.Section;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SectionService extends BaseService<Section> {
+public class SectionService extends ServerContentService<Section> {
 
   @Finder(query = "select d from com.retech.reader.web.server.domain.Section d where d.issue = ?", returnAs = ArrayList.class)
   public List<Section> findByBook(final Issue book, @FirstResult final int start,

@@ -1,9 +1,8 @@
-package com.goodow.web.service.server.jpa;
+package com.goodow.web.core.server;
 
 import static com.google.inject.matcher.Matchers.annotatedWith;
 import static com.google.inject.matcher.Matchers.any;
 
-import com.goodow.web.service.server.InjectionListener;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.persist.finder.Finder;

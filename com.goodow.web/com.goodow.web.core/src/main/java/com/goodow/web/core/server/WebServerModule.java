@@ -1,10 +1,11 @@
 package com.goodow.web.core.server;
 
-import java.util.logging.Logger;
-
-import com.goodow.web.core.server.jpa.JpaPersistModule;
 import com.goodow.web.core.shared.Message;
+
 import com.google.inject.AbstractModule;
+import com.google.inject.persist.jpa.JpaPersistModule;
+
+import java.util.logging.Logger;
 
 public class WebServerModule extends AbstractModule {
 

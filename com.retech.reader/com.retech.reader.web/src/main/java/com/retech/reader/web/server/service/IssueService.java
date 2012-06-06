@@ -1,6 +1,6 @@
 package com.retech.reader.web.server.service;
 
-import com.goodow.web.core.server.BaseService;
+import com.goodow.web.core.server.ServerContentService;
 
 import com.google.inject.persist.Transactional;
 import com.google.inject.persist.finder.Finder;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class IssueService extends BaseService<Issue> {
+public class IssueService extends ServerContentService<Issue> {
 
   @Finder(query = "select d from com.retech.reader.web.server.domain.Issue d where d.category = ?", returnAs = ArrayList.class)
   public List<Issue> find(final Category category) {

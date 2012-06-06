@@ -1,7 +1,7 @@
 package com.goodow.web.mvp.server.tree.domain;
 
+import com.goodow.web.core.server.InjectionListener;
 import com.goodow.web.security.shared.Content;
-import com.goodow.web.service.server.InjectionListener;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

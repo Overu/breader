@@ -1,11 +1,9 @@
 package com.goodow.web.core.server.servlet;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Logger;
-
+import com.goodow.web.core.server.DatabaseConnectionFilter;
 import com.goodow.web.core.server.DatabaseConnectionProvider;
 import com.goodow.web.core.server.WebServiceServlet;
+
 import com.google.inject.persist.PersistFilter;
 import com.google.inject.servlet.ServletModule;
 import com.google.web.bindery.autobean.shared.AutoBeanFactory;
@@ -13,6 +11,10 @@ import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.impl.BaseProxyCategory;
 import com.google.web.bindery.requestfactory.shared.impl.EntityProxyCategory;
 import com.google.web.bindery.requestfactory.shared.impl.ValueProxyCategory;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
 
 public class WebServletModule extends ServletModule {
   @AutoBeanFactory.Category(value = {

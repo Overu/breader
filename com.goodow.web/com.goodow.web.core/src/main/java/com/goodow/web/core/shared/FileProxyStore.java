@@ -1,4 +1,4 @@
-package com.goodow.web.service.shared;
+package com.goodow.web.core.shared;
 
 import com.goodow.web.feature.client.FeatureDetection;
 

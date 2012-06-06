@@ -1,4 +1,8 @@
-package com.goodow.web.core.server.servlet;
+package com.goodow.web.core.server;
+
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+import com.google.inject.Singleton;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,11 +17,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-
-import com.goodow.web.core.server.DatabaseConnectionProvider;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-import com.google.inject.Singleton;
 
 @Singleton
 public class DatabaseConnectionFilter implements Filter {

@@ -1,7 +1,7 @@
-package com.goodow.web.service.shared.rpc;
+package com.goodow.web.core.shared.rpc;
 
 import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
-import com.goodow.web.core.server.BaseService;
+import com.goodow.web.core.server.ServerContentService;
 
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
@@ -14,7 +14,7 @@ import com.google.web.bindery.requestfactory.shared.Service;
  * @author larry
  * 
  */
-@Service(value = BaseService.class, locator = RequestFactoryLocator.class)
+@Service(value = ServerContentService.class, locator = RequestFactoryLocator.class)
 public interface BaseContext extends RequestContext {
   Request<Long> count();
 
