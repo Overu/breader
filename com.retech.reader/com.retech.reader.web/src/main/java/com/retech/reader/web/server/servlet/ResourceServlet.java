@@ -16,21 +16,26 @@ import javax.servlet.http.HttpServletResponse;
 @Singleton
 public class ResourceServlet extends HttpServlet {
 
-  private final ResourceService resourceService;
+	/**
+	 * service
+	 */
+	private final ResourceService resourceService;
 
-  @Inject
-  ResourceServlet(final ResourceService resourceService) {
-    this.resourceService = resourceService;
-  }
+	@Inject
+	ResourceServlet(final ResourceService resourceService) {
+		this.resourceService = resourceService;
+	}
 
-  @Override
-  protected void doGet(final HttpServletRequest req, final HttpServletResponse resp)
-      throws ServletException, IOException {
-    resp.setStatus(HttpServletResponse.SC_OK);
-    resp.setContentType("text/html; charset=utf-8");
-    PrintWriter writer = resp.getWriter();
-    writer.print(resourceService.getDataString(Long.parseLong(req.getParameter("id"))));
-    writer.flush();
-  }
+	@Override
+	protected void doGet(final HttpServletRequest req,
+			final HttpServletResponse resp) throws ServletException,
+			IOException {
+		resp.setStatus(HttpServletResponse.SC_OK);
+		resp.setContentType("text/html; charset=utf-8");
+		PrintWriter writer = resp.getWriter();
+		writer.print(resourceService.getDataString(Long.parseLong(req
+				.getParameter("id"))));
+		writer.flush();
+	}
 
 }
