@@ -448,5 +448,6 @@
     <module>com.goodow.wave</module>
     <module>com.goodow.web</module>
     <module>com.retech.reader</module>
+    <module>com.goodow.web/com.goodow.web.war</module>
   </modules>
 </project>
