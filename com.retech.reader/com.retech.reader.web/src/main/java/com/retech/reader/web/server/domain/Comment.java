@@ -1,6 +1,6 @@
 package com.retech.reader.web.server.domain;
 
-import com.goodow.web.service.server.jpa.BaseDomain;
+import com.goodow.web.security.shared.Content;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Comment extends BaseDomain {
+public class Comment extends Content {
 
   private String mac;
 

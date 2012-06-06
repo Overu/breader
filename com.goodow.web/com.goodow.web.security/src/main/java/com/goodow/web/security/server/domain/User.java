@@ -1,6 +1,6 @@
 package com.goodow.web.security.server.domain;
 
-import com.goodow.web.service.server.jpa.BaseDomain;
+import com.goodow.web.security.shared.Content;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class User extends BaseDomain {
+public class User extends Content {
   @NotNull(message = "你必须指定用户名")
   private String userName;
   private String password;

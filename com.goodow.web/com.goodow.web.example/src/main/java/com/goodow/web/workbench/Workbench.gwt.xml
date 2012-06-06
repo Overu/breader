@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module  rename-to='web'>
+	<inherits name="org.cloudlet.web.ui.layout.Layout" />
+
+	<extend-configuration-property name="client.ioc.ginModules"
+		value="org.cloudlet.web.ui.workbench.client.ClientWorkbenchGinModule" />
+
+	<source path='client' />
+	<source path='shared' />
+</module>

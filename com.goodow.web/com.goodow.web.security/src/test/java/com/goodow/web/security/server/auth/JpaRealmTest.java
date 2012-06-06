@@ -1,12 +1,11 @@
 package com.goodow.web.security.server.auth;
 
 import com.goodow.wave.test.BaseTest;
-import com.goodow.web.security.server.auth.JpaRealm;
+import com.goodow.web.core.server.BaseService;
 import com.goodow.web.security.server.domain.Permission;
 import com.goodow.web.security.server.domain.Role;
 import com.goodow.web.security.server.domain.User;
 import com.goodow.web.security.server.service.UserService;
-import com.goodow.web.service.server.jpa.BaseService;
 
 import com.google.inject.Inject;
 import com.google.inject.Module;

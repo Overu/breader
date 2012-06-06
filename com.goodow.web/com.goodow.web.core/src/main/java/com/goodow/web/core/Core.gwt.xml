@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="core">
+  <inherits name="org.cloudlet.web.boot.Boot" />
+
+  <extend-configuration-property name="shared.ioc.ginModules"
+    value="org.cloudlet.web.core.client.CoreClientPlugin" />
+  <extend-configuration-property name="client.ioc.ginModules"
+    value="org.cloudlet.web.core.client.CoreClientModule" />
+
+  <source path="" includes="*.java" excludes="RoleType.java" />
+  <source path='client' excludes="codegen/*.*" />
+  <source path='shared' />
+
+</module>

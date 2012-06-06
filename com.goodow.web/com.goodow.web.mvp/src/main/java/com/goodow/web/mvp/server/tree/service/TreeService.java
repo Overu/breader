@@ -1,15 +1,14 @@
 package com.goodow.web.mvp.server.tree.service;
 
+import com.goodow.web.core.server.BaseService;
 import com.goodow.web.mvp.server.tree.domain.TreeNode;
 import com.goodow.web.service.server.Sort;
-import com.goodow.web.service.server.jpa.BaseService;
 import com.goodow.web.service.shared.SortPredicateProxy;
 
 import com.google.inject.persist.Transactional;
 import com.google.inject.persist.finder.Finder;
 import com.google.inject.persist.finder.FirstResult;
 import com.google.inject.persist.finder.MaxResults;
-
 
 import java.util.ArrayList;
 import java.util.List;

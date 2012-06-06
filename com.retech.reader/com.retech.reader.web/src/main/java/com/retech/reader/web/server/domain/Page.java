@@ -1,11 +1,10 @@
 package com.retech.reader.web.server.domain;
 
-import com.goodow.web.service.server.jpa.BaseDomain;
+import com.goodow.web.security.shared.Content;
 
 import com.google.inject.Inject;
 
 import com.retech.reader.web.server.service.PageService;
-
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 @Entity
-public class Page extends BaseDomain implements HasResource {
+public class Page extends Content implements HasResource {
 
   private int pageNum;
   private String title;

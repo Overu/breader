@@ -1,6 +1,6 @@
 package com.retech.reader.web.server.service;
 
-import com.goodow.web.service.server.jpa.BaseService;
+import com.goodow.web.core.server.BaseService;
 
 import com.google.inject.persist.finder.Finder;
 

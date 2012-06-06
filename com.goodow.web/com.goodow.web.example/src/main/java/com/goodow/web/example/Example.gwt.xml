@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='example'>
+  <inherits name='org.cloudlet.web.security.Security' />
+
+  <extend-configuration-property name="shared.ioc.ginModules"
+    value="org.cloudlet.web.example.client.ExampleClientPlugin" />
+  <extend-configuration-property name="client.ioc.ginModules"
+    value="org.cloudlet.web.example.client.ExampleClientModule" />
+
+  <source path="" includes="*.java" />
+  <source path='client' />
+  <source path='shared' />
+
+</module>

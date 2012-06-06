@@ -1,11 +1,10 @@
 package com.retech.reader.web.server.domain;
 
-import com.goodow.web.service.server.jpa.BaseDomain;
+import com.goodow.web.security.shared.Content;
 
 import com.google.inject.Inject;
 
 import com.retech.reader.web.server.service.CategoryService;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Category extends BaseDomain {
+public class Category extends Content {
 
   private String title;
 

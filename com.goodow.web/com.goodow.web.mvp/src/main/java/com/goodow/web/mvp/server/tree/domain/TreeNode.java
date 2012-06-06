@@ -1,11 +1,10 @@
 package com.goodow.web.mvp.server.tree.domain;
 
+import com.goodow.web.security.shared.Content;
 import com.goodow.web.service.server.InjectionListener;
-import com.goodow.web.service.server.jpa.BaseDomain;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 @EntityListeners(InjectionListener.class)
-public class TreeNode extends BaseDomain {
+public class TreeNode extends Content {
 
   private String path;
   private String name;

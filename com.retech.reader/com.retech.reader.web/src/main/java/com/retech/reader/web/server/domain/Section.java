@@ -1,6 +1,6 @@
 package com.retech.reader.web.server.domain;
 
-import com.goodow.web.service.server.jpa.BaseDomain;
+import com.goodow.web.security.shared.Content;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Section extends BaseDomain implements HasResource {
+public class Section extends Content implements HasResource {
 
   private String title;
 

@@ -1,13 +1,12 @@
 package com.retech.reader.web.server.service;
 
-import com.goodow.web.service.server.jpa.BaseService;
+import com.goodow.web.core.server.BaseService;
 
 import com.google.inject.persist.finder.Finder;
 
 import com.retech.reader.web.server.domain.Issue;
 import com.retech.reader.web.server.domain.Page;
 import com.retech.reader.web.server.domain.Section;
-
 
 import java.util.List;
 

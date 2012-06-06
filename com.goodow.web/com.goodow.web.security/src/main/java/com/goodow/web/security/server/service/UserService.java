@@ -1,8 +1,8 @@
 package com.goodow.web.security.server.service;
 
+import com.goodow.web.core.server.BaseService;
 import com.goodow.web.security.server.auth.JpaRealm;
 import com.goodow.web.security.server.domain.User;
-import com.goodow.web.service.server.jpa.BaseService;
 
 import com.google.inject.persist.Transactional;
 

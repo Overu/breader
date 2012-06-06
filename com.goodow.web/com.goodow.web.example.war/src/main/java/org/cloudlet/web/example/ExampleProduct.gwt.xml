@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='example'>
+  <inherits name='org.cloudlet.web.example.Example' />
+  <source path="" includes="*.java" />
+  <source path='client' />
+  <source path='shared' />
+
+</module>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="security">
+  <inherits name="org.cloudlet.web.core.Core" />
+
+  <extend-configuration-property name="client.ioc.ginModules"
+    value="org.cloudlet.web.security.client.SecurityClientModule" />
+
+  <source path='client' />
+  <source path='shared' />
+
+</module>

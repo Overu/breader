@@ -10,6 +10,18 @@
 
   <dependencies>
     <dependency>
+      <groupId>com.goodow.web</groupId>
+      <artifactId>com.goodow.web.core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.goodow.web</groupId>
+      <artifactId>com.goodow.web.core</artifactId>
+      <version>${project.version}</version>
+      <classifier>client</classifier>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>com.goodow.wave</groupId>
       <artifactId>com.goodow.wave.client</artifactId>
       <version>${project.version}</version>
@@ -43,7 +55,7 @@
     </dependency>
     <dependency>
       <groupId>com.goodow.web</groupId>
-      <artifactId>com.goodow.web.service</artifactId>
+      <artifactId>com.goodow.web.core</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
       <scope>provided</scope>

@@ -1,6 +1,6 @@
 package com.retech.reader.web.server.domain;
 
-import com.goodow.web.service.server.jpa.BaseDomain;
+import com.goodow.web.security.shared.Content;
 
 import com.gooodow.wave.shared.media.MimeType;
 
@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
-public class Resource extends BaseDomain {
+public class Resource extends Content {
 
   @Enumerated(EnumType.STRING)
   private MimeType mimeType;
