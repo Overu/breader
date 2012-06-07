@@ -5,9 +5,9 @@ import com.goodow.wave.test.BaseTest;
 import com.google.inject.Inject;
 
 import com.gooodow.wave.shared.media.MimeType;
-import com.retech.reader.web.server.domain.Page;
-import com.retech.reader.web.server.domain.Resource;
-import com.retech.reader.web.server.service.PageService;
+import com.retech.reader.web.server.JpaPageService;
+import com.retech.reader.web.shared.Page;
+import com.retech.reader.web.shared.Resource;
 import com.retech.reader.web.shared.common.SQLConstant;
 
 import org.junit.Test;
@@ -15,7 +15,7 @@ import org.junit.Test;
 public class PageServiceTest extends BaseTest {
 
   @Inject
-  private PageService pageService;
+  private JpaPageService pageService;
 
   @Test
   public void testFindResources() {

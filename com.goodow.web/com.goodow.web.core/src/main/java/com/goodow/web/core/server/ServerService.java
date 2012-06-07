@@ -3,7 +3,7 @@ package com.goodow.web.core.server;
 import com.goodow.web.core.shared.Entity;
 import com.goodow.web.core.shared.Operation;
 import com.goodow.web.core.shared.Service;
-import com.goodow.web.security.server.ServerContentService;
+import com.goodow.web.security.server.ContentServiceImpl;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -31,7 +31,7 @@ public class ServerService<E extends Entity> implements Service<E> {
   protected ServerService() {
     domainClass =
         (Class<E>) TypeUtils.ensureBaseType(TypeUtils.getSingleParameterization(
-            ServerContentService.class, getClass().getGenericSuperclass()));
+            ContentServiceImpl.class, getClass().getGenericSuperclass()));
   }
 
   @Override

@@ -4,9 +4,9 @@ import com.goodow.wave.test.BaseTest;
 
 import com.google.inject.Inject;
 
-import com.retech.reader.web.server.domain.Issue;
-import com.retech.reader.web.server.service.AdService;
-import com.retech.reader.web.server.service.IssueService;
+import com.retech.reader.web.server.AdService;
+import com.retech.reader.web.server.IssueServiceImpl;
+import com.retech.reader.web.shared.Issue;
 
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class IssueServiceTest extends BaseTest {
 
   @Inject
-  private IssueService issueService;
+  private IssueServiceImpl issueService;
 
   @Inject
   private AdService adService;

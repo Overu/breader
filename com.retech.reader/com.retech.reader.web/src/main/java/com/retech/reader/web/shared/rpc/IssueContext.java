@@ -6,7 +6,7 @@ import com.goodow.web.core.shared.rpc.BaseContext;
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.Service;
 
-import com.retech.reader.web.server.service.IssueService;
+import com.retech.reader.web.server.IssueServiceImpl;
 import com.retech.reader.web.shared.proxy.CategoryProxy;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.PageProxy;
@@ -14,7 +14,7 @@ import com.retech.reader.web.shared.proxy.PageProxy;
 
 import java.util.List;
 
-@Service(value = IssueService.class, locator = RequestFactoryLocator.class)
+@Service(value = IssueServiceImpl.class, locator = RequestFactoryLocator.class)
 public interface IssueContext extends BaseContext {
   @Deprecated
   Request<List<IssueProxy>> find(CategoryProxy categoryProxy);

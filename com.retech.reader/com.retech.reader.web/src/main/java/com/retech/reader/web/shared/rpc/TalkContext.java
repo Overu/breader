@@ -6,7 +6,7 @@ import com.goodow.web.core.shared.rpc.BaseContext;
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.Service;
 
-import com.retech.reader.web.server.service.TalkService;
+import com.retech.reader.web.server.TalkService;
 
 
 @Service(value = TalkService.class, locator = RequestFactoryLocator.class)

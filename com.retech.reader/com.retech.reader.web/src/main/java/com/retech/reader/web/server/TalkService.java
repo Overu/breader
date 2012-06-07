@@ -1,16 +1,16 @@
-package com.retech.reader.web.server.service;
+package com.retech.reader.web.server;
 
 import com.goodow.web.logging.server.servlet.ChannelPresenceSevlet;
-import com.goodow.web.security.server.ServerContentService;
-import com.goodow.web.security.shared.Content;
 
 import com.google.appengine.api.channel.ChannelMessage;
 import com.google.appengine.api.channel.ChannelService;
 import com.google.appengine.api.channel.ChannelServiceFactory;
 import com.google.inject.Inject;
 
-public class TalkService extends ServerContentService<Content> {
+public class TalkService {
+
   private final ChannelPresenceSevlet channelPresenceSevlet;
+
   ChannelService channelService = ChannelServiceFactory.getChannelService();
 
   @Inject

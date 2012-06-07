@@ -6,7 +6,7 @@ import com.goodow.web.core.shared.rpc.BaseEntityProxy;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
-import com.retech.reader.web.server.domain.Page;
+import com.retech.reader.web.shared.Page;
 
 
 import java.util.List;

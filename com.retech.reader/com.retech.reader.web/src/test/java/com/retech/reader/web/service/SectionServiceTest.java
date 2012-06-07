@@ -8,10 +8,10 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.requestfactory.shared.RequestTransport;
 import com.google.web.bindery.requestfactory.vm.RequestFactorySource;
 
-import com.retech.reader.web.server.domain.Page;
-import com.retech.reader.web.server.domain.Section;
-import com.retech.reader.web.server.service.PageService;
-import com.retech.reader.web.server.service.SectionService;
+import com.retech.reader.web.server.JpaPageService;
+import com.retech.reader.web.server.JpaSectionService;
+import com.retech.reader.web.shared.Page;
+import com.retech.reader.web.shared.Section;
 import com.retech.reader.web.shared.rpc.ReaderFactory;
 
 import org.junit.Before;
@@ -21,9 +21,9 @@ import javax.persistence.EntityManager;
 
 public class SectionServiceTest extends BaseTest {
   @Inject
-  SectionService service;
+  JpaSectionService service;
   @Inject
-  PageService pageService;
+  JpaPageService pageService;
   @Inject
   Provider<EntityManager> em;
   @Inject

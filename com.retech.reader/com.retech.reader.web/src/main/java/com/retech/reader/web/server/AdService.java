@@ -1,11 +1,11 @@
-package com.retech.reader.web.server.service;
+package com.retech.reader.web.server;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.finder.Finder;
 import com.google.inject.persist.finder.FirstResult;
 import com.google.inject.persist.finder.MaxResults;
 
-import com.retech.reader.web.server.domain.Issue;
+import com.retech.reader.web.shared.Issue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 public class AdService {
 
   @Inject
-  IssueService issueService;
+  IssueServiceImpl issueService;
 
   public List<Issue> findRecommend(@FirstResult final int start, @MaxResults final int length,
       final boolean brevity) {

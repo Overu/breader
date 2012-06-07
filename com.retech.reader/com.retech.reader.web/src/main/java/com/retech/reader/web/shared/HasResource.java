@@ -1,4 +1,4 @@
-package com.retech.reader.web.server.domain;
+package com.retech.reader.web.shared;
 
 public interface HasResource {
 

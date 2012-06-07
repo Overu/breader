@@ -1,10 +1,10 @@
-package com.retech.reader.web.server.domain;
+package com.retech.reader.web.shared;
 
 import com.goodow.web.security.shared.Content;
 
 import com.google.inject.Inject;
 
-import com.retech.reader.web.server.service.PageService;
+import com.retech.reader.web.server.JpaPageService;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class Page extends Content implements HasResource {
 
   @Inject
   @Transient
-  private PageService pageService;
+  private JpaPageService pageService;
 
   @OneToMany(mappedBy = "page")
   private List<Resource> resources;

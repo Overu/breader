@@ -1,6 +1,6 @@
 package com.goodow.web.security.server.service;
 
-import com.goodow.web.security.server.ServerContentService;
+import com.goodow.web.security.server.ContentServiceImpl;
 import com.goodow.web.security.server.auth.JpaRealm;
 import com.goodow.web.security.server.domain.User;
 
@@ -14,7 +14,7 @@ import org.apache.shiro.util.ByteSource;
 import javax.persistence.NoResultException;
 
 @Transactional
-public class UserService extends ServerContentService<User> {
+public class UserService extends ContentServiceImpl<User> {
   public User findUserByUsername(final String userName) {
     User toRtn = null;
     try {

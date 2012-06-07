@@ -3,7 +3,7 @@ package com.retech.reader.web.server.servlet;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import com.retech.reader.web.server.service.ResourceService;
+import com.retech.reader.web.server.JpaResourceService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,10 +19,10 @@ public class ResourceServlet extends HttpServlet {
 	/**
 	 * service
 	 */
-	private final ResourceService resourceService;
+	private final JpaResourceService resourceService;
 
 	@Inject
-	ResourceServlet(final ResourceService resourceService) {
+	ResourceServlet(final JpaResourceService resourceService) {
 		this.resourceService = resourceService;
 	}
 

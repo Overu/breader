@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-public abstract class ServerContentService<E extends Content> extends ServerService<E> implements
+public abstract class ContentServiceImpl<E extends Content> extends ServerService<E> implements
     ContentService<E> {
 
   @Transactional

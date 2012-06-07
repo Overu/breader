@@ -6,7 +6,7 @@ import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.Service;
 
-import com.retech.reader.web.server.service.AdService;
+import com.retech.reader.web.server.AdService;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 
 

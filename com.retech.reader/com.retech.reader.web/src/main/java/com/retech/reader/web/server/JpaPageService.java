@@ -1,17 +1,19 @@
-package com.retech.reader.web.server.service;
+package com.retech.reader.web.server;
 
-import com.goodow.web.security.server.ServerContentService;
+import com.goodow.web.security.server.ContentServiceImpl;
 
 import com.google.inject.persist.finder.Finder;
 
-import com.retech.reader.web.server.domain.Issue;
-import com.retech.reader.web.server.domain.Page;
-import com.retech.reader.web.server.domain.Section;
+import com.retech.reader.web.shared.Issue;
+import com.retech.reader.web.shared.Page;
+import com.retech.reader.web.shared.PageService;
+import com.retech.reader.web.shared.Section;
 
 import java.util.List;
 
-public class PageService extends ServerContentService<Page> {
+public class JpaPageService extends ContentServiceImpl<Page> implements PageService {
 
+  @Override
   @Finder(query = "select p from Page p where p.section.issue = ? and p.section.sequence = 1")
   public Page findFirstPageByIssue(final Issue issue) {
     throw new AssertionError();
@@ -24,6 +26,7 @@ public class PageService extends ServerContentService<Page> {
   // throw new AssertionError();
   // }
 
+  @Override
   public List<Page> findPagesBySection(final Section domain) {
     return domain.getPages();
   }

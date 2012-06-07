@@ -5,7 +5,7 @@ package com.goodow.web.example.server;
 
 import com.goodow.web.example.shared.Library;
 import com.goodow.web.example.shared.LibraryService;
-import com.goodow.web.security.server.ServerContentService;
+import com.goodow.web.security.server.ContentServiceImpl;
 
 import com.google.inject.persist.Transactional;
 
@@ -17,7 +17,7 @@ import javax.annotation.Generated;
  * Documentation 22.
  */
 @Generated("cloudlet")
-public class ServerLibraryService extends ServerContentService<Library> implements LibraryService {
+public class ServerLibraryService extends ContentServiceImpl<Library> implements LibraryService {
   @Override
   @Transactional
   public Library save(final Library library, final boolean flag, final int size) {

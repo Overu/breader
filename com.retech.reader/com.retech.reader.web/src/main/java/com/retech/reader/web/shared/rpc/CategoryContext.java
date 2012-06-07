@@ -6,14 +6,14 @@ import com.goodow.web.core.shared.rpc.BaseContext;
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.Service;
 
-import com.retech.reader.web.server.service.CategoryService;
+import com.retech.reader.web.server.CategoryServiceImpl;
 import com.retech.reader.web.shared.proxy.CategoryProxy;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 
 
 import java.util.List;
 
-@Service(value = CategoryService.class, locator = RequestFactoryLocator.class)
+@Service(value = CategoryServiceImpl.class, locator = RequestFactoryLocator.class)
 public interface CategoryContext extends BaseContext {
 
   Request<List<CategoryProxy>> find(int start, int length);

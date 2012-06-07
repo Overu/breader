@@ -5,7 +5,7 @@ import com.goodow.web.core.shared.rpc.BaseEntityProxy;
 
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
-import com.retech.reader.web.server.domain.Comment;
+import com.retech.reader.web.shared.Comment;
 
 
 import java.util.Date;

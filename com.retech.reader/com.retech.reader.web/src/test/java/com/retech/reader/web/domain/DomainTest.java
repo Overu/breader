@@ -7,16 +7,16 @@ import com.google.inject.Provider;
 
 import com.gooodow.wave.shared.media.MimeType;
 import com.retech.reader.web.domain.testdata.TestDataUtil;
-import com.retech.reader.web.server.domain.Category;
-import com.retech.reader.web.server.domain.Issue;
-import com.retech.reader.web.server.domain.Page;
-import com.retech.reader.web.server.domain.Resource;
-import com.retech.reader.web.server.domain.Section;
-import com.retech.reader.web.server.service.CategoryService;
-import com.retech.reader.web.server.service.IssueService;
-import com.retech.reader.web.server.service.PageService;
-import com.retech.reader.web.server.service.ResourceService;
-import com.retech.reader.web.server.service.SectionService;
+import com.retech.reader.web.server.CategoryServiceImpl;
+import com.retech.reader.web.server.IssueServiceImpl;
+import com.retech.reader.web.server.JpaPageService;
+import com.retech.reader.web.server.JpaResourceService;
+import com.retech.reader.web.server.JpaSectionService;
+import com.retech.reader.web.shared.Category;
+import com.retech.reader.web.shared.Issue;
+import com.retech.reader.web.shared.Page;
+import com.retech.reader.web.shared.Resource;
+import com.retech.reader.web.shared.Section;
 
 import org.junit.Test;
 
@@ -51,20 +51,20 @@ public class DomainTest extends BaseTest {
   private Provider<Category> categories;
 
   @Inject
-  private CategoryService categoryService;
+  private CategoryServiceImpl categoryService;
   @Inject
   private Provider<Issue> issues;
 
   @Inject
-  private IssueService issueService;
+  private IssueServiceImpl issueService;
   @Inject
   private Provider<Page> pages;
   @Inject
-  private PageService pageService;
+  private JpaPageService pageService;
   @Inject
   private Provider<Section> sections;
   @Inject
-  private SectionService sectionService;
+  private JpaSectionService sectionService;
   @Inject
   private Provider<Resource> resources;
 
@@ -75,7 +75,7 @@ public class DomainTest extends BaseTest {
   // private SectionService contentService;
 
   @Inject
-  private ResourceService resourceService;
+  private JpaResourceService resourceService;
 
   @Test
   public void testInsertData() throws IOException {
