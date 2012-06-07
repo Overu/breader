@@ -1,2 +1,2 @@
-com.goodow.web.example.server.ServerExampleModule
+com.goodow.web.example.server.ExampleServerPlugin
 com.goodow.web.example.server.ExampleServerModule
