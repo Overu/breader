@@ -1,9 +1,9 @@
 package com.goodow.web.security.server.auth;
 
 import com.goodow.wave.test.BaseTest;
+import com.goodow.web.security.server.UserServiceImpl;
 import com.goodow.web.security.server.auth.JpaRealm;
-import com.goodow.web.security.server.domain.User;
-import com.goodow.web.security.server.service.UserService;
+import com.goodow.web.security.shared.User;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -42,7 +42,7 @@ public class DataImportTest extends BaseTest {
   @Inject
   private Provider<User> users;
   @Inject
-  private UserService userService;
+  private UserServiceImpl userService;
   @Inject
   SecurityManager securityManager;
 

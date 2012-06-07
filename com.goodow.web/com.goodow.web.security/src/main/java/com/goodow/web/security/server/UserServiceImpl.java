@@ -1,8 +1,8 @@
-package com.goodow.web.security.server.service;
+package com.goodow.web.security.server;
 
-import com.goodow.web.security.server.ContentServiceImpl;
 import com.goodow.web.security.server.auth.JpaRealm;
-import com.goodow.web.security.server.domain.User;
+import com.goodow.web.security.shared.User;
+import com.goodow.web.security.shared.UserService;
 
 import com.google.inject.persist.Transactional;
 
@@ -14,7 +14,9 @@ import org.apache.shiro.util.ByteSource;
 import javax.persistence.NoResultException;
 
 @Transactional
-public class UserService extends ContentServiceImpl<User> {
+public class UserServiceImpl extends ContentServiceImpl<User> implements UserService {
+
+  @Override
   public User findUserByUsername(final String userName) {
     User toRtn = null;
     try {
@@ -28,6 +30,7 @@ public class UserService extends ContentServiceImpl<User> {
     return toRtn;
   }
 
+  @Override
   @RequiresAuthentication
   public void updatePassword(final String userName, final String newPwd) {
     User user = findUserByUsername(userName);

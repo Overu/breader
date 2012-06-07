@@ -2,10 +2,10 @@ package com.goodow.web.security.server.auth;
 
 import com.goodow.wave.test.BaseTest;
 import com.goodow.web.security.server.ContentServiceImpl;
-import com.goodow.web.security.server.domain.Permission;
-import com.goodow.web.security.server.domain.Role;
-import com.goodow.web.security.server.domain.User;
-import com.goodow.web.security.server.service.UserService;
+import com.goodow.web.security.server.UserServiceImpl;
+import com.goodow.web.security.shared.Permission;
+import com.goodow.web.security.shared.Role;
+import com.goodow.web.security.shared.User;
 
 import com.google.inject.Inject;
 import com.google.inject.Module;
@@ -46,7 +46,7 @@ public class JpaRealmTest extends BaseTest {
   @Inject
   private Provider<User> users;
   @Inject
-  private UserService userService;
+  private UserServiceImpl userService;
   @Inject
   private Provider<Role> roles;
   @Inject

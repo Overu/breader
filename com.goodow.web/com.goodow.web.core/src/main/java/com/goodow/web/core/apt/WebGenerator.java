@@ -654,7 +654,19 @@ public class WebGenerator extends AbstractProcessor {
           }
           w.print("addProperty(").print(typeName).print(".as()");
           w.print(", \"").print(field.getSimpleName()).print("\"");
+
           TypeMirror typeMirror = field.asType();
+          boolean many = false;
+
+          if (typeMirror instanceof DeclaredType) {
+            DeclaredType dt = (DeclaredType) typeMirror;
+            TypeElement e = (TypeElement) dt.asElement();
+            if (List.class.getName().equals(e.getQualifiedName().toString())) {
+              typeMirror = dt.getTypeArguments().get(0);
+              many = true;
+            }
+          }
+
           TypeKind typeKind = typeMirror.getKind();
 
           String paramTypeFullName;
@@ -678,7 +690,7 @@ public class WebGenerator extends AbstractProcessor {
           w.print(", ").type(paramPkgName + "." + paramPkgSimpleName).print(".").print(
               paramTypeSimpleName).print(".as()");
 
-          w.print(", ").print("false");
+          w.print(", ").print(Boolean.toString(many));
 
           w.println(");");
         }
@@ -887,16 +899,6 @@ public class WebGenerator extends AbstractProcessor {
     return propName;
   }
 
-  private Set<TypeElement> getXmlTypes(final PackageElement pkg) {
-    Set<TypeElement> servicesTypes = new HashSet<TypeElement>();
-    for (TypeElement type : ElementFilter.typesIn(pkg.getEnclosedElements())) {
-      if (type.getAnnotation(XmlType.class) != null) {
-        servicesTypes.add(type);
-      }
-    }
-    return servicesTypes;
-  }
-
   private String getReturnTypeName(final TypeMirror rt) {
     switch (rt.getKind()) {
       case VOID:
@@ -929,5 +931,15 @@ public class WebGenerator extends AbstractProcessor {
       serviceType = typeElements.get(entityType.getQualifiedName() + Service.class.getSimpleName());
     }
     return serviceType;
+  }
+
+  private Set<TypeElement> getXmlTypes(final PackageElement pkg) {
+    Set<TypeElement> servicesTypes = new HashSet<TypeElement>();
+    for (TypeElement type : ElementFilter.typesIn(pkg.getEnclosedElements())) {
+      if (type.getAnnotation(XmlType.class) != null) {
+        servicesTypes.add(type);
+      }
+    }
+    return servicesTypes;
   }
 }

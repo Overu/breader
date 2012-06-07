@@ -1,15 +1,18 @@
-package com.goodow.web.security.server.domain;
-
-import com.goodow.web.security.shared.Content;
+package com.goodow.web.security.shared;
 
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlType
 @Entity
+@Table(name = "t_user")
 public class User extends Content {
+
   @NotNull(message = "你必须指定用户名")
   private String userName;
   private String password;

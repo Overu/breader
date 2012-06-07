@@ -5,15 +5,24 @@ import com.goodow.wave.client.shell.WaveShellResources.CellListResources;
 import com.goodow.web.core.client.rpc.BaseRequestTransport;
 import com.goodow.web.core.shared.FileProxyStore;
 import com.goodow.web.core.shared.rpc.BaseReceiver;
+import com.goodow.web.feature.client.ApplicationCache;
+import com.goodow.web.feature.client.Connectivity;
+import com.goodow.web.feature.client.Connectivity.Listener;
 import com.goodow.web.mvp.shared.BasePlace;
+import com.goodow.web.security.shared.Auth;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.GWT.UncaughtExceptionHandler;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Provides;
@@ -21,8 +30,11 @@ import com.google.inject.Singleton;
 import com.google.inject.servlet.RequestParameters;
 import com.google.web.bindery.requestfactory.shared.RequestTransport;
 
+import org.apache.shiro.authz.AuthorizationException;
+
 import java.util.Collections;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class MvpGinModule extends AbstractGinModule {
@@ -37,6 +49,13 @@ public final class MvpGinModule extends AbstractGinModule {
     @Inject
     private PlaceHistoryHandler placeHistoryHandler;
 
+    @Inject
+    private PlaceController placeController;
+
+    @Inject
+    @Auth
+    private Place authRequestPlace;
+
     @Override
     public Binder get() {
       logger.finest("EagerSingleton start");
@@ -45,6 +64,50 @@ public final class MvpGinModule extends AbstractGinModule {
         @Override
         public void execute() {
           placeHistoryHandler.handleCurrentHistory();
+        }
+      });
+
+      GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+        @Override
+        public void onUncaughtException(final Throwable e) {
+          if (getInitCause(e) instanceof AuthorizationException) {
+            if (authRequestPlace instanceof BasePlace) {
+              ((BasePlace) authRequestPlace).setParameter(Auth.CONTINUE, Window.Location.getHref());
+            }
+            placeController.goTo(authRequestPlace);
+            return;
+          }
+          logger.log(Level.WARNING, "未捕获异常", e);
+        }
+
+        private Throwable getInitCause(final Throwable e) {
+          if (e != null && e.getCause() != null) {
+            return getInitCause(e.getCause());
+          }
+          return e;
+        }
+      });
+      Connectivity.addEventListener(new Listener() {
+
+        @Override
+        public void onOffline() {
+          logger.info("网络中断");
+        }
+
+        @Override
+        public void onOnline() {
+          logger.info("网络恢复");
+        }
+      });
+      ApplicationCache.addEventListener(new Command() {
+
+        @Override
+        public void execute() {
+          if (GWT.isProdMode()) {// && Window.confirm("检测到新版本,是否立即升级?")) {
+            Window.alert("睿泰阅读已升级至最新版本");
+            Storage.getLocalStorageIfSupported().clear();
+            Window.Location.reload();
+          }
         }
       });
 

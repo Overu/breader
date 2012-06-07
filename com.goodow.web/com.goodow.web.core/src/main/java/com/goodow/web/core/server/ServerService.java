@@ -3,7 +3,7 @@ package com.goodow.web.core.server;
 import com.goodow.web.core.shared.Entity;
 import com.goodow.web.core.shared.Operation;
 import com.goodow.web.core.shared.Service;
-import com.goodow.web.security.server.ContentServiceImpl;
+import com.goodow.web.core.shared.Wrapper;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -31,7 +31,7 @@ public class ServerService<E extends Entity> implements Service<E> {
   protected ServerService() {
     domainClass =
         (Class<E>) TypeUtils.ensureBaseType(TypeUtils.getSingleParameterization(
-            ContentServiceImpl.class, getClass().getGenericSuperclass()));
+            ServerService.class, getClass().getGenericSuperclass()));
   }
 
   @Override
@@ -52,8 +52,8 @@ public class ServerService<E extends Entity> implements Service<E> {
   }
 
   @Override
-  public <T2> T2 invoke(final Operation operation, final Object... args) {
-    Method method = getJavaMethod(operation.getName());
+  public <T2> T2 invoke(final Wrapper<Operation> operation, final Object... args) {
+    Method method = getJavaMethod(operation.as().getName());
     try {
       return (T2) method.invoke(this, args);
     } catch (IllegalArgumentException e) {

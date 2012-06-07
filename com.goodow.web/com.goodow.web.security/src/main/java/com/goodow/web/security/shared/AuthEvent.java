@@ -6,11 +6,10 @@ import com.google.gwt.event.shared.EventHandler;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.Event;
 
-
 import java.io.Serializable;
 import java.util.logging.Logger;
 
-class AuthEvent extends Event<Handler> implements Serializable {
+public class AuthEvent extends Event<Handler> implements Serializable {
 
   public interface Handler extends EventHandler {
 

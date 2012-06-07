@@ -8,6 +8,7 @@ import com.goodow.web.mvp.shared.Default;
 import com.goodow.web.mvp.shared.SimpleActivityMapper;
 import com.goodow.web.mvp.shared.SimplePlaceHistoryMapper;
 import com.goodow.web.mvp.shared.SimplePlaceTokenizer;
+import com.goodow.web.security.shared.Auth;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.place.shared.Place;
@@ -26,7 +27,6 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.requestfactory.shared.ProxySerializer;
 import com.google.web.bindery.requestfactory.shared.ProxyStore;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
-
 
 import java.util.logging.Logger;
 
@@ -84,6 +84,13 @@ public final class MvpGinModule extends AbstractGinModule {
   @Singleton
   Place defaultPlaceProvider(final BasePlace place) {
     place.setPath(BasePlace.PATH_SEPARATOR);
+    return place;
+  }
+
+  @Provides
+  @Auth
+  Place loginPlaceProvider(final BasePlace place) {
+    place.setPath(Auth.PLACE_REQUEST_AUTH);
     return place;
   }
 

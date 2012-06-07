@@ -1,12 +1,15 @@
-package com.goodow.web.security.server.domain;
-
-import com.goodow.web.security.shared.Content;
+package com.goodow.web.security.shared;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
+@XmlType
+@Table(name = "t_permission")
 public class Permission extends Content {
+
   @NotNull(message = "你必须指定权限名称")
   private String permissionName;
 

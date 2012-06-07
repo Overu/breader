@@ -1,9 +1,9 @@
 package com.goodow.web.security.server.auth;
 
-import com.goodow.web.security.server.domain.Permission;
-import com.goodow.web.security.server.domain.Role;
-import com.goodow.web.security.server.domain.User;
-import com.goodow.web.security.server.service.UserService;
+import com.goodow.web.security.server.UserServiceImpl;
+import com.goodow.web.security.shared.Permission;
+import com.goodow.web.security.shared.Role;
+import com.goodow.web.security.shared.User;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -32,10 +32,10 @@ public class JpaRealm extends AuthorizingRealm {
 
   public static final String ALGORITHM_NAME = Sha1Hash.ALGORITHM_NAME;
   private final Provider<EntityManager> em;
-  private final UserService userService;
+  private final UserServiceImpl userService;
 
   @Inject
-  JpaRealm(final Provider<EntityManager> em, final UserService userService) {
+  JpaRealm(final Provider<EntityManager> em, final UserServiceImpl userService) {
     this.em = em;
     this.userService = userService;
 
