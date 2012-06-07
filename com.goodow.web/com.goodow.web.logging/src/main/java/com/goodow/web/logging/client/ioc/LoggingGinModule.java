@@ -14,7 +14,6 @@
 package com.goodow.web.logging.client.ioc;
 
 import com.goodow.web.logging.client.LogHandler;
-import com.goodow.web.logging.shared.rpc.ChannelContextProvider;
 
 import com.google.gwt.appengine.channel.client.Channel;
 import com.google.gwt.appengine.channel.client.ChannelFactory;
@@ -24,12 +23,8 @@ import com.google.gwt.appengine.channel.client.SocketListener;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.google.web.bindery.requestfactory.gwt.client.RequestFactoryLogHandler;
-import com.google.web.bindery.requestfactory.gwt.client.RequestFactoryLogHandler.LoggingRequestProvider;
-import com.google.web.bindery.requestfactory.shared.Receiver;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,29 +35,32 @@ public class LoggingGinModule extends AbstractGinModule {
     private static final Logger wireLogger = Logger.getLogger("WireActivityLogger");
 
     @Inject
-    public Binder(final LogHandler logHandler, final ChannelContextProvider channelContextProvider,
-        final LoggingRequestProvider loggingRequestProvider) {
+    public Binder(final LogHandler logHandler
+    // , final ChannelContextProvider channelContextProvider
+    // , final LoggingRequestProvider loggingRequestProvider
+    ) {
       logger.finest("EagerSingleton start");
 
       Logger rootLogger = Logger.getLogger("");
       rootLogger.addHandler(logHandler);
       ArrayList<String> ignoredLoggerNames = new ArrayList<String>();
       // ignoredLoggerNames.add(LoggingGinModule.class.getName());
-      rootLogger.addHandler(new RequestFactoryLogHandler(loggingRequestProvider, Level.WARNING,
-          ignoredLoggerNames));
+
+      // rootLogger.addHandler(new RequestFactoryLogHandler(loggingRequestProvider, Level.WARNING,
+      // ignoredLoggerNames));
 
       // if (GWT.isProdMode() && Connectivity.isOnline()) {
-      if (false) {
-        logger.finest("request token");
-        channelContextProvider.channelContext().getToken("logging." + new Date().toString()).fire(
-            new Receiver<String>() {
-
-              @Override
-              public void onSuccess(final String response) {
-                openChannel(response);
-              }
-            });
-      }
+      // if (false) {
+      // logger.finest("request token");
+      // channelContextProvider.channelContext().getToken("logging." + new Date().toString()).fire(
+      // new Receiver<String>() {
+      //
+      // @Override
+      // public void onSuccess(final String response) {
+      // openChannel(response);
+      // }
+      // });
+      // }
 
       logger.finest("EagerSingleton end");
     }

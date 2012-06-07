@@ -2,6 +2,9 @@ package com.goodow.web.mvp.client.ioc;
 
 import com.goodow.wave.client.shell.WaveShell;
 import com.goodow.wave.client.shell.WaveShellResources.CellListResources;
+import com.goodow.web.core.client.rpc.BaseRequestTransport;
+import com.goodow.web.core.shared.FileProxyStore;
+import com.goodow.web.core.shared.rpc.BaseReceiver;
 import com.goodow.web.mvp.shared.BasePlace;
 
 import com.google.gwt.core.client.Scheduler;
@@ -16,7 +19,7 @@ import com.google.inject.Provider;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.servlet.RequestParameters;
-
+import com.google.web.bindery.requestfactory.shared.RequestTransport;
 
 import java.util.Collections;
 import java.util.Map;
@@ -54,6 +57,11 @@ public final class MvpGinModule extends AbstractGinModule {
 
   @Override
   protected void configure() {
+
+    bind(RequestTransport.class).to(BaseRequestTransport.class).in(Singleton.class);
+    bind(FileProxyStore.class).asEagerSingleton();
+    requestStaticInjection(BaseReceiver.class);
+
     bind(Binder.class).toProvider(BinderProvider.class).asEagerSingleton();
 
     bind(CellList.Resources.class).to(CellListResources.class).in(Singleton.class);

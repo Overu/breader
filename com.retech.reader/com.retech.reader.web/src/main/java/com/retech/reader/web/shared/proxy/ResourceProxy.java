@@ -9,16 +9,12 @@ import com.google.web.bindery.requestfactory.shared.ProxyFor;
 import com.gooodow.wave.shared.media.MimeType;
 import com.retech.reader.web.server.domain.Resource;
 
-
 @ProxyFor(value = Resource.class, locator = RequestFactoryLocator.class)
 public interface ResourceProxy extends BaseEntityProxy {
 
   String getDataString();
 
   String getFilename();
-
-  @Deprecated
-  Long getId();
 
   MimeType getMimeType();
 

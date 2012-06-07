@@ -45,7 +45,7 @@ public class FileProxyStore {
                                                    };
 
                                                    var suc = function(grantedBytes) {
-                                                   $entry(@com.goodow.web.service.shared.FileProxyStore::requestQuotaOnSuccess(ILcom/google/gwt/core/client/Callback;)(grantedBytes,callback));
+                                                   $entry(@com.goodow.web.core.shared.FileProxyStore::requestQuotaOnSuccess(ILcom/google/gwt/core/client/Callback;)(grantedBytes,callback));
                                                    };
 
                                                    $wnd.webkitStorageInfo.requestQuota(fileSystemType, size, $entry(suc), $entry(fail));

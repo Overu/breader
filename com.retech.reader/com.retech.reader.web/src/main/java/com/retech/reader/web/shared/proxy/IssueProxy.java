@@ -8,7 +8,6 @@ import com.google.web.bindery.requestfactory.shared.ProxyFor;
 
 import com.retech.reader.web.server.domain.Issue;
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -37,9 +36,6 @@ public interface IssueProxy extends BaseEntityProxy {
   Date getCreateTime();
 
   String getDetail();
-
-  @Deprecated
-  Long getId();
 
   @Deprecated
   ResourceProxy getImage();

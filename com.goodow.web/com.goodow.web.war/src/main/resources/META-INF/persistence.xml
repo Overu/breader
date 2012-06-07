@@ -4,6 +4,7 @@
   version="2.0">
 
   <persistence-unit name="persist.jpaUnit">
+    <jar-file>file:WEB-INF/lib/com.goodow.web.core.jar</jar-file>
     <jar-file>file:WEB-INF/lib/com.retech.reader.web${jarFile.version}.jar</jar-file>
     <class>com.goodow.wave.server.media.AttachmentMetadata</class>
     <properties>
