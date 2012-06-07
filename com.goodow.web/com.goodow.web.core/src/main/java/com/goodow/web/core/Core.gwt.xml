@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to="core">
-  <inherits name="org.cloudlet.web.boot.Boot" />
-
+  <inherits name="com.google.web.bindery.requestfactory.RequestFactory" />
+  <inherits name="com.goodow.wave.bootstrap.Bootstrap" />
+  <inherits name='com.goodow.web.logging.Logging'/>
+  <inherits name='com.googlecode.gwtphonegap.PhoneGap' />
   <extend-configuration-property name="shared.ioc.ginModules"
-    value="org.cloudlet.web.core.client.CoreClientPlugin" />
+    value="com.goodow.web.core.client.CoreClientPlugin" />
   <extend-configuration-property name="client.ioc.ginModules"
-    value="org.cloudlet.web.core.client.CoreClientModule" />
+    value="com.goodow.web.core.client.CoreClientModule" />
 
   <source path="" includes="*.java" excludes="RoleType.java" />
   <source path='client' excludes="codegen/*.*" />

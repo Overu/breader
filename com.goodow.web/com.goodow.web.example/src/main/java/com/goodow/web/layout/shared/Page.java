@@ -1,13 +1,11 @@
 package com.goodow.web.layout.shared;
 
-
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import com.goodow.web.core.shared.EntityType;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.security.shared.Content;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "t_page")
@@ -15,10 +13,8 @@ public class Page extends Content {
 
   private String path;
 
-  @OneToOne
   private Page parent;
 
-  @OneToOne
   private Layer layer;
 
   private String title;

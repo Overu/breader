@@ -5,8 +5,8 @@
   version="1.0">
   <persistence-unit name="persist.jpaUnit" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <jar-file>file:WEB-INF/lib/org.cloudlet.web.core.jar</jar-file>
-    <jar-file>file:WEB-INF/lib/org.cloudlet.web.example.jar</jar-file>
+    <jar-file>file:WEB-INF/lib/com.goodow.web.core.jar</jar-file>
+    <jar-file>file:WEB-INF/lib/com.goodow.web.example.jar</jar-file>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
       <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />

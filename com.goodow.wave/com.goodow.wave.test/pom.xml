@@ -37,6 +37,12 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-validator</artifactId>
       <version>4.1.0.Final</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <!-- <dependency> <groupId>org.apache.geronimo.specs</groupId> <artifactId>geronimo-jpa_2.0_spec</artifactId> 
       </dependency> <dependency> <groupId>org.datanucleus</groupId> <artifactId>datanucleus-core</artifactId> 
