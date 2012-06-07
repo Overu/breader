@@ -3,9 +3,9 @@
  */
 package com.goodow.web.example.server;
 
-import com.goodow.web.core.server.ServerContentService;
 import com.goodow.web.example.shared.Library;
 import com.goodow.web.example.shared.LibraryService;
+import com.goodow.web.security.server.ServerContentService;
 
 import com.google.inject.persist.Transactional;
 

@@ -1,32 +1,17 @@
-package com.goodow.web.core.server;
+package com.goodow.web.security.server;
 
+import com.goodow.web.core.server.ServerService;
 import com.goodow.web.security.shared.Content;
 import com.goodow.web.security.shared.ContentService;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.persist.Transactional;
-import com.google.web.bindery.autobean.vm.impl.TypeUtils;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 public abstract class ServerContentService<E extends Content> extends ServerService<E> implements
     ContentService<E> {
-
-  @Inject
-  protected transient Provider<EntityManager> em;
-
-  protected Class<E> domainClass;
-
-  @SuppressWarnings("unchecked")
-  protected ServerContentService() {
-    domainClass =
-        (Class<E>) TypeUtils.ensureBaseType(TypeUtils.getSingleParameterization(
-            ServerContentService.class, getClass().getGenericSuperclass()));
-  }
 
   @Transactional
   public long count() {

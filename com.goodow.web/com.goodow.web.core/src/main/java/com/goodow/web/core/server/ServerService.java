@@ -3,9 +3,11 @@ package com.goodow.web.core.server;
 import com.goodow.web.core.shared.Entity;
 import com.goodow.web.core.shared.Operation;
 import com.goodow.web.core.shared.Service;
+import com.goodow.web.security.server.ServerContentService;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.web.bindery.autobean.vm.impl.TypeUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,10 +20,19 @@ import javax.persistence.EntityManager;
 
 public class ServerService<E extends Entity> implements Service<E> {
 
-  @Inject
-  protected Provider<EntityManager> em;
-
   protected Map<String, Method> methods;
+
+  @Inject
+  protected transient Provider<EntityManager> em;
+
+  protected Class<E> domainClass;
+
+  @SuppressWarnings("unchecked")
+  protected ServerService() {
+    domainClass =
+        (Class<E>) TypeUtils.ensureBaseType(TypeUtils.getSingleParameterization(
+            ServerContentService.class, getClass().getGenericSuperclass()));
+  }
 
   @Override
   public <T> T find(final Class<T> clazz, final String id) {

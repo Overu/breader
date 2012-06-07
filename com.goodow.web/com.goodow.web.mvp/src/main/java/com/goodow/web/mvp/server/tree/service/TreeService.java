@@ -1,9 +1,9 @@
 package com.goodow.web.mvp.server.tree.service;
 
-import com.goodow.web.core.server.ServerContentService;
 import com.goodow.web.core.server.Sort;
 import com.goodow.web.core.shared.SortPredicateProxy;
 import com.goodow.web.mvp.server.tree.domain.TreeNode;
+import com.goodow.web.security.server.ServerContentService;
 
 import com.google.inject.persist.Transactional;
 import com.google.inject.persist.finder.Finder;

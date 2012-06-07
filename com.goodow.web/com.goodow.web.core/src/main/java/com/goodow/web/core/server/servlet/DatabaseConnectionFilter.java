@@ -1,4 +1,6 @@
-package com.goodow.web.core.server;
+package com.goodow.web.core.server.servlet;
+
+import com.goodow.web.core.server.DatabaseConnectionProvider;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

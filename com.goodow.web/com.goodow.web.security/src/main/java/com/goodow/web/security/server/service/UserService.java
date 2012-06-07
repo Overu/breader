@@ -1,6 +1,6 @@
 package com.goodow.web.security.server.service;
 
-import com.goodow.web.core.server.ServerContentService;
+import com.goodow.web.security.server.ServerContentService;
 import com.goodow.web.security.server.auth.JpaRealm;
 import com.goodow.web.security.server.domain.User;
 

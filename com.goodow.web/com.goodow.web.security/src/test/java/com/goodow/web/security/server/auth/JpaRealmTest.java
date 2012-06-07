@@ -1,7 +1,7 @@
 package com.goodow.web.security.server.auth;
 
 import com.goodow.wave.test.BaseTest;
-import com.goodow.web.core.server.ServerContentService;
+import com.goodow.web.security.server.ServerContentService;
 import com.goodow.web.security.server.domain.Permission;
 import com.goodow.web.security.server.domain.Role;
 import com.goodow.web.security.server.domain.User;

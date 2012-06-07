@@ -1,7 +1,7 @@
 package com.retech.reader.web.server.service;
 
-import com.goodow.web.core.server.ServerContentService;
 import com.goodow.web.logging.server.servlet.ChannelPresenceSevlet;
+import com.goodow.web.security.server.ServerContentService;
 import com.goodow.web.security.shared.Content;
 
 import com.google.appengine.api.channel.ChannelMessage;

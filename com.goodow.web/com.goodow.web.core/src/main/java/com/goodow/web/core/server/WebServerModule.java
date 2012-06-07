@@ -3,7 +3,6 @@ package com.goodow.web.core.server;
 import com.goodow.web.core.shared.Message;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.persist.jpa.JpaPersistModule;
 
 import java.util.logging.Logger;
 
@@ -15,9 +14,7 @@ public class WebServerModule extends AbstractModule {
   protected void configure() {
     logger.finest("Install JpaServiceModule begin");
 
-    bind(Message.class).toProvider(MessageService.class);
-
-    install(new JpaPersistModule("persist.jpaUnit")); // TODO read from config;
+    bind(Message.class).toProvider(MessageProvider.class);
 
     // bind(RemoteServiceLocator.class); // TODO why bind RemoteServiceLocator?
 

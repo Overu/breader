@@ -1,8 +1,6 @@
 package com.goodow.web.core.server.servlet;
 
-import com.goodow.web.core.server.DatabaseConnectionFilter;
 import com.goodow.web.core.server.DatabaseConnectionProvider;
-import com.goodow.web.core.server.WebServiceServlet;
 
 import com.google.inject.persist.PersistFilter;
 import com.google.inject.servlet.ServletModule;

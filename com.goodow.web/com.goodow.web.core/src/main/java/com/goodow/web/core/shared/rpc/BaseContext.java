@@ -1,7 +1,7 @@
 package com.goodow.web.core.shared.rpc;
 
 import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
-import com.goodow.web.core.server.ServerContentService;
+import com.goodow.web.security.server.ServerContentService;
 
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;

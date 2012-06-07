@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.core.server;
+package com.goodow.web.core.server.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.goodow.web.core.server.SimpleRequestProcessor;
 import com.goodow.web.core.shared.Message;
 import com.google.gwt.user.server.rpc.RPCServletUtils;
 import com.google.inject.Inject;

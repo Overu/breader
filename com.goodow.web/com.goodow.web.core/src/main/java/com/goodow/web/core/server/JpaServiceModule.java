@@ -22,8 +22,6 @@ public final class JpaServiceModule extends AbstractModule {
 
     install(new JpaPersistModule("persist.jpaUnit")); // TODO read from config;
 
-    // bind(RemoteServiceLocator.class); // TODO why bind RemoteServiceLocator?
-
     requestStaticInjection(InjectionListener.class);
 
     MethodInterceptor finderInterceptor = new JpaFinderProxy();
