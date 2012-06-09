@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
     <inherits name='com.goodow.web.security.Security' />
-	<extend-configuration-property name="client.ioc.ginModules"
+	<extend-configuration-property name="gin.module"
 		value="com.goodow.web.layout.client.LayoutClientModule" />
 	<!-- <source path="" includes="*.java" excludes="RoleType.java" /> -->
 	<source path='client' />

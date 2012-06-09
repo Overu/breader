@@ -17,8 +17,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 
-@GinModules(value = {BootstrapGinModule.class}, properties = {
-    "shared.ioc.ginModules", "client.ioc.ginModules"})
+@GinModules(value = {BootstrapGinModule.class}, properties = {"gin.module"})
 public interface BootstrapInjector extends Ginjector {
   GWT get();
 }

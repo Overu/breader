@@ -19,8 +19,7 @@
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.goodow.wave.bootstrap.client.Bootstrap'/>
   
-  <define-configuration-property name="client.ioc.ginModules" is-multi-valued="true" />
-  <define-configuration-property name="shared.ioc.ginModules" is-multi-valued="true" />
+  <define-configuration-property name="gin.module" is-multi-valued="true" />
   
   <!-- Specify the paths for translatable code                    -->
   <source path='client' />

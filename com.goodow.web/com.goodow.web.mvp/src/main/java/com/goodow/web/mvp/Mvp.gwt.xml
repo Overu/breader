@@ -8,8 +8,8 @@
   
   <super-source path="super" />
   
-  <extend-configuration-property name="client.ioc.ginModules"
+  <extend-configuration-property name="gin.module"
 		value="com.goodow.web.mvp.client.ioc.MvpGinModule" />
-  <extend-configuration-property name="shared.ioc.ginModules"
+  <extend-configuration-property name="gin.module"
 		value="com.goodow.web.mvp.shared.ioc.MvpGinModule" />
 </module>

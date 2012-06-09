@@ -11,11 +11,11 @@
     <super-source path="super" />
 
     <extend-configuration-property
-        name="client.ioc.ginModules"
+        name="gin.module"
         value="com.goodow.web.security.client.SecurityClientModule" />
 
     <extend-configuration-property
-        name="shared.ioc.ginModules"
+        name="gin.module"
         value="com.goodow.web.security.shared.SecuritySharedModule" />
 
 </module>

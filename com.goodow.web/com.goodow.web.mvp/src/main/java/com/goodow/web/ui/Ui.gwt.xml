@@ -5,9 +5,9 @@
   <source path="client" />
   <source path="shared" />
 
-  <extend-configuration-property name="client.ioc.ginModules"
+  <extend-configuration-property name="gin.module"
     value="com.goodow.web.ui.client.ioc.UiGinModule" />
-  <extend-configuration-property name="shared.ioc.ginModules"
+  <extend-configuration-property name="gin.module"
     value="com.goodow.web.mvp.shared.layout.LayoutGinModule" />
 
 </module>

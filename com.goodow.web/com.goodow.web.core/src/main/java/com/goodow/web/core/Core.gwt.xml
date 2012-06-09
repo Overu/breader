@@ -4,9 +4,9 @@
   <inherits name="com.goodow.wave.bootstrap.Bootstrap" />
   <inherits name='com.goodow.web.logging.Logging'/>
   <inherits name='com.googlecode.gwtphonegap.PhoneGap' />
-  <extend-configuration-property name="shared.ioc.ginModules"
+  <extend-configuration-property name="gin.module"
     value="com.goodow.web.core.client.CoreClientPlugin" />
-  <extend-configuration-property name="client.ioc.ginModules"
+  <extend-configuration-property name="gin.module"
     value="com.goodow.web.core.client.CoreClientModule" />
 
   <source path="" includes="*.java" excludes="RoleType.java" />

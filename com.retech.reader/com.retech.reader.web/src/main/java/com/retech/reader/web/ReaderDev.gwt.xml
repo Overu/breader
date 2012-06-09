@@ -5,7 +5,7 @@
   <source path="client" />
   <source path="shared" />
 
-  <extend-configuration-property name="client.ioc.ginModules"
+  <extend-configuration-property name="gin.module"
     value="com.retech.reader.web.client.mobile.ioc.ReaderMobileGinModule" />
 
   <define-linker name="appcachelinker" class="com.goodow.web.dev.rebind.AppCacheLinker" />

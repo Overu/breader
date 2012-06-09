@@ -23,6 +23,6 @@
   <set-configuration-property name="compiler.emulatedStack.recordLineNumbers"
     value="true" /> -->
 
-  <extend-configuration-property name="client.ioc.ginModules"
+  <extend-configuration-property name="gin.module"
     value="com.goodow.web.logging.client.ioc.LoggingGinModule" />
 </module>
