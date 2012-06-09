@@ -29,8 +29,6 @@ import com.google.inject.Singleton;
 import com.google.inject.servlet.RequestParameters;
 import com.google.web.bindery.requestfactory.shared.RequestTransport;
 
-import org.apache.shiro.authz.AuthorizationException;
-
 import java.util.Collections;
 import java.util.Map;
 import java.util.logging.Level;
@@ -44,17 +42,8 @@ public final class MvpGinModule extends AbstractGinModule {
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     @Inject
-    private PlaceHistoryHandler placeHistoryHandler;
-
-    @Inject
-    private PlaceController placeController;
-
-    @Inject
-    @Auth
-    private Place authRequestPlace;
-
-    @Inject
-    public Binder() {
+    public Binder(final PlaceHistoryHandler placeHistoryHandler,
+        final PlaceController placeController, @Auth final Place authRequestPlace) {
       logger.finest("EagerSingleton start");
 
       Scheduler.get().scheduleFinally(new ScheduledCommand() {
@@ -67,13 +56,13 @@ public final class MvpGinModule extends AbstractGinModule {
       GWT.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
         @Override
         public void onUncaughtException(final Throwable e) {
-          if (getInitCause(e) instanceof AuthorizationException) {
-            if (authRequestPlace instanceof BasePlace) {
-              ((BasePlace) authRequestPlace).setParameter(Auth.CONTINUE, Window.Location.getHref());
-            }
-            placeController.goTo(authRequestPlace);
-            return;
-          }
+          // if (getInitCause(e) instanceof AuthorizationException) {
+          // if (authRequestPlace instanceof BasePlace) {
+          // ((BasePlace) authRequestPlace).setParameter(Auth.CONTINUE, Window.Location.getHref());
+          // }
+          // placeController.goTo(authRequestPlace);
+          // return;
+          // }
           logger.log(Level.WARNING, "未捕获异常", e);
         }
 

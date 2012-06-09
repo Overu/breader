@@ -10,11 +10,13 @@ import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;
 
 import org.apache.shiro.authz.AuthorizationException;
+import org.hibernate.cfg.Configuration;
 
 import java.util.logging.Logger;
 
 @Singleton
 public final class Subject {
+
   private boolean authenticated;
   // private String principal;
   private boolean remembered;
@@ -28,14 +30,15 @@ public final class Subject {
   private final Provider<AuthRequestEvent> authRequestEvent;
 
   @Inject
-  Subject(EventBus eventBus, Provider<AuthRequestEvent> authRequestEvent) {
+  Subject(final EventBus eventBus, final Provider<AuthRequestEvent> authRequestEvent) {
+    Configuration cfg = null;
     this.eventBus = eventBus;
     this.authRequestEvent = authRequestEvent;
     authenticated = "true".equalsIgnoreCase(Cookies.getCookie(DEFAULT_AUTHENTICATED_COOKIE_NAME));
     remembered = !isAuthenticated() && Cookies.getCookie(DEFAULT_REMEMBER_ME_COOKIE_NAME) != null;
   }
 
-  public void checkPermission(String token) throws AuthorizationException {
+  public void checkPermission(final String token) throws AuthorizationException {
     if (isAuthenticated() || isRemembered()) {
       return;
     }
@@ -59,7 +62,7 @@ public final class Subject {
     setRemembered(false);
   }
 
-  public void setAuthenticated(boolean authenticated) {
+  public void setAuthenticated(final boolean authenticated) {
     logger.finest("set authenticated to " + authenticated);
     this.authenticated = authenticated;
     if (!authenticated) {
@@ -69,7 +72,7 @@ public final class Subject {
     }
   }
 
-  public void setRemembered(boolean remembered) {
+  public void setRemembered(final boolean remembered) {
     logger.finest("set remembered to " + remembered);
     this.remembered = remembered;
     if (!remembered) {
