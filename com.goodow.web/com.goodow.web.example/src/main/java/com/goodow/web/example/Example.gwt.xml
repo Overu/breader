@@ -3,8 +3,6 @@
     
   <inherits name='com.goodow.web.security.Security' />
 
-  <extend-configuration-property name="shared.ioc.ginModules"
-    value="com.goodow.web.example.client.ExampleClientPlugin" />
   <extend-configuration-property name="client.ioc.ginModules"
     value="com.goodow.web.example.client.ExampleClientModule" />
 
