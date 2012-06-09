@@ -7,9 +7,9 @@ import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.Response;
 import com.goodow.web.core.shared.Service;
 import com.goodow.web.core.shared.WebPlatform;
+
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-
 
 public class ServerMessage extends Message {
 
@@ -27,7 +27,7 @@ public class ServerMessage extends Message {
       if (s == null) {
         s = injector.getInstance(entityType.getServiceClass());
       }
-      return (Entity) s.find(entityType.getDefinitionClass(), id.getStableId());
+      return (Entity) s.find(id.getStableId());
     } else {
       return entityType.create();
     }

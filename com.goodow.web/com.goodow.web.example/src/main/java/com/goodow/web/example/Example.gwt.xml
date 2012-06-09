@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='example'>
+    
   <inherits name='com.goodow.web.security.Security' />
 
   <extend-configuration-property name="shared.ioc.ginModules"

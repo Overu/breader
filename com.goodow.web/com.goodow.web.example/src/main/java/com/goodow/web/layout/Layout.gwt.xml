@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
-	<inherits name='org.cloudlet.web.runtime.boot.Boot' />
-	<inherits name='org.cloudlet.web.runtime.remote.Remote' />
-	<inherits name="org.cloudlet.gd.logging.Logging" />
-	<!-- <inherits name='org.cloudlet.gd.mvp.Mvp' /> -->
-
 	<extend-configuration-property name="client.ioc.ginModules"
-		value="org.cloudlet.web.layout.client.ClientLayoutModule" />
+		value="com.goodow.web.layout.client.ClientLayoutModule" />
 	<extend-configuration-property name="shared.ioc.ginModules"
-		value="org.cloudlet.web.layout.shared.SharedLayoutModule" />
+		value="com.goodow.web.layout.shared.SharedLayoutModule" />
 
 	<source path="" includes="*.java" excludes="RoleType.java" />
 	<source path='client' />

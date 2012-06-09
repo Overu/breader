@@ -14,6 +14,7 @@
 package com.goodow.web.security.shared;
 
 public interface UserService extends ContentService<User> {
+
   User findUserByUsername(final String userName);
 
   void updatePassword(final String userName, final String newPwd);

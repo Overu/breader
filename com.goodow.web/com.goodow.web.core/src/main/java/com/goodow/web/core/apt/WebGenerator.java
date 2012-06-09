@@ -1,7 +1,7 @@
 package com.goodow.web.core.apt;
 
 import com.goodow.web.core.client.ClientService;
-import com.goodow.web.core.server.ServerService;
+import com.goodow.web.core.server.ServiceImpl;
 import com.goodow.web.core.shared.Accessor;
 import com.goodow.web.core.shared.Entity;
 import com.goodow.web.core.shared.EntityInfo;
@@ -105,7 +105,7 @@ public class WebGenerator extends AbstractProcessor {
       generateFactory(pkg);
       generatePackage(pkg);
       generateModule(pkg, ClientService.class);
-      generateModule(pkg, ServerService.class);
+      generateModule(pkg, ServiceImpl.class);
     }
 
     return false;

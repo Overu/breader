@@ -11,6 +11,7 @@ import com.google.web.bindery.autobean.vm.impl.TypeUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -18,25 +19,31 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
-public class ServerService<E extends Entity> implements Service<E> {
+public class ServiceImpl<E extends Entity> implements Service<E> {
 
   protected Map<String, Method> methods;
 
   @Inject
   protected transient Provider<EntityManager> em;
 
-  protected Class<E> domainClass;
+  private Class<E> domainClass;
 
   @SuppressWarnings("unchecked")
-  protected ServerService() {
+  protected ServiceImpl() {
+    Type genericSuperClass = getClass().getGenericSuperclass();
     domainClass =
-        (Class<E>) TypeUtils.ensureBaseType(TypeUtils.getSingleParameterization(
-            ServerService.class, getClass().getGenericSuperclass()));
+        (Class<E>) TypeUtils.ensureBaseType(TypeUtils.getSingleParameterization(Service.class,
+            genericSuperClass));
   }
 
   @Override
-  public <T> T find(final Class<T> clazz, final String id) {
-    return em.get().find(clazz, id);
+  public E find(final String id) {
+    return em.get().find(getEntityClass(), id);
+  }
+
+  @Override
+  public Class<E> getEntityClass() {
+    return domainClass;
   }
 
   public <M> M getJavaMethod(final String name) {

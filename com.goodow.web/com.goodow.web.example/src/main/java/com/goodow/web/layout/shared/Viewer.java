@@ -1,4 +1,4 @@
-package com.goodow.web.layout;
+package com.goodow.web.layout.shared;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
