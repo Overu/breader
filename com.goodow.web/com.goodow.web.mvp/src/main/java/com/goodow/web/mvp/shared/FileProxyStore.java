@@ -1,5 +1,6 @@
-package com.goodow.web.core.shared;
+package com.goodow.web.mvp.shared;
 
+import com.goodow.web.core.shared.KeyUtil;
 import com.goodow.web.feature.client.FeatureDetection;
 
 import com.google.gwt.core.client.Callback;
@@ -45,7 +46,7 @@ public class FileProxyStore {
                                                    };
 
                                                    var suc = function(grantedBytes) {
-                                                   $entry(@com.goodow.web.core.shared.FileProxyStore::requestQuotaOnSuccess(ILcom/google/gwt/core/client/Callback;)(grantedBytes,callback));
+                                                   $entry(@com.goodow.web.mvp.shared.FileProxyStore::requestQuotaOnSuccess(ILcom/google/gwt/core/client/Callback;)(grantedBytes,callback));
                                                    };
 
                                                    $wnd.webkitStorageInfo.requestQuota(fileSystemType, size, $entry(suc), $entry(fail));

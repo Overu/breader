@@ -1,8 +1,8 @@
-package com.goodow.web.core.shared.rpc;
+package com.goodow.web.mvp.shared.tree.rpc;
 
-import com.goodow.web.core.shared.FileProxyStore;
 import com.goodow.web.core.shared.KeyUtil;
-import com.goodow.web.core.shared.LocalStorage;
+import com.goodow.web.mvp.shared.FileProxyStore;
+import com.goodow.web.mvp.shared.LocalStorage;
 
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.Scheduler;

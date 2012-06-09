@@ -1,7 +1,7 @@
 package com.retech.reader.web.client.mobile.ui.talk;
 
 import com.goodow.wave.client.wavepanel.WavePanel;
-import com.goodow.web.core.shared.rpc.BaseReceiver;
+import com.goodow.web.mvp.shared.tree.rpc.BaseReceiver;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;

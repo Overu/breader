@@ -1,7 +1,7 @@
 package com.retech.reader.web.client.mobile.ui;
 
-import com.goodow.web.core.shared.rpc.BaseContext;
 import com.goodow.web.mvp.shared.rpc.BaseEditor;
+import com.goodow.web.mvp.shared.tree.rpc.BaseContext;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;

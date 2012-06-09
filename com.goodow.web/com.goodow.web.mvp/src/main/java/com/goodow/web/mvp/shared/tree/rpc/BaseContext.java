@@ -1,7 +1,7 @@
-package com.goodow.web.core.shared.rpc;
+package com.goodow.web.mvp.shared.tree.rpc;
 
 import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
-import com.goodow.web.core.shared.rpc.BaseEntityProxy;
+import com.goodow.web.mvp.shared.tree.rpc.BaseEntityProxy;
 import com.goodow.web.security.server.ContentServiceImpl;
 
 import com.google.web.bindery.requestfactory.shared.Request;

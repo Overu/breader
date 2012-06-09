@@ -1,6 +1,6 @@
 package com.goodow.web.mvp.shared.rpc;
 
-import com.goodow.web.core.shared.rpc.BaseEntityProxy;
+import com.goodow.web.mvp.shared.tree.rpc.BaseEntityProxy;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.cell.client.Cell;

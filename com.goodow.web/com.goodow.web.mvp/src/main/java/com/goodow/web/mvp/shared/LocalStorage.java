@@ -1,10 +1,11 @@
-package com.goodow.web.core.shared;
+package com.goodow.web.mvp.shared;
 
 import static com.goodow.web.core.shared.KeyUtil.LIST_SEPARATOR;
 import static com.goodow.web.core.shared.KeyUtil.PROXY_SEPARATOR;
 import static com.goodow.web.core.shared.KeyUtil.SET_SEPARATOR;
 
-import com.goodow.web.core.shared.rpc.BaseEntityProxy;
+import com.goodow.web.core.shared.KeyUtil;
+import com.goodow.web.mvp.shared.tree.rpc.BaseEntityProxy;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

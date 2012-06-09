@@ -3,12 +3,12 @@ package com.goodow.web.mvp.client.ioc;
 import com.goodow.wave.client.shell.WaveShell;
 import com.goodow.wave.client.shell.WaveShellResources.CellListResources;
 import com.goodow.web.core.client.rpc.BaseRequestTransport;
-import com.goodow.web.core.shared.FileProxyStore;
-import com.goodow.web.core.shared.rpc.BaseReceiver;
 import com.goodow.web.feature.client.ApplicationCache;
 import com.goodow.web.feature.client.Connectivity;
 import com.goodow.web.feature.client.Connectivity.Listener;
 import com.goodow.web.mvp.shared.BasePlace;
+import com.goodow.web.mvp.shared.FileProxyStore;
+import com.goodow.web.mvp.shared.tree.rpc.BaseReceiver;
 import com.goodow.web.security.shared.Auth;
 
 import com.google.gwt.core.client.GWT;
@@ -24,7 +24,6 @@ import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.servlet.RequestParameters;
@@ -38,12 +37,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class MvpGinModule extends AbstractGinModule {
-  @Singleton
-  public static class Binder {
-  }
 
   @Singleton
-  public static class BinderProvider implements Provider<Binder> {
+  public static class Binder {
+
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     @Inject
@@ -56,8 +53,8 @@ public final class MvpGinModule extends AbstractGinModule {
     @Auth
     private Place authRequestPlace;
 
-    @Override
-    public Binder get() {
+    @Inject
+    public Binder() {
       logger.finest("EagerSingleton start");
 
       Scheduler.get().scheduleFinally(new ScheduledCommand() {
@@ -112,7 +109,6 @@ public final class MvpGinModule extends AbstractGinModule {
       });
 
       logger.finest("EagerSingleton end");
-      return null;
     }
   }
 
@@ -125,7 +121,7 @@ public final class MvpGinModule extends AbstractGinModule {
     bind(FileProxyStore.class).asEagerSingleton();
     requestStaticInjection(BaseReceiver.class);
 
-    bind(Binder.class).toProvider(BinderProvider.class).asEagerSingleton();
+    bind(Binder.class).asEagerSingleton();
 
     bind(CellList.Resources.class).to(CellListResources.class).in(Singleton.class);
     bind(WaveShell.class).asEagerSingleton();

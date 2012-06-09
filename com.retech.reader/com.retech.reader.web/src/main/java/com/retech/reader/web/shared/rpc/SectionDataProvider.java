@@ -1,8 +1,8 @@
 package com.retech.reader.web.shared.rpc;
 
-import com.goodow.web.core.shared.LocalStorage;
-import com.goodow.web.core.shared.rpc.BaseReceiver;
 import com.goodow.web.mvp.shared.BasePlace;
+import com.goodow.web.mvp.shared.LocalStorage;
+import com.goodow.web.mvp.shared.tree.rpc.BaseReceiver;
 
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.view.client.AsyncDataProvider;
