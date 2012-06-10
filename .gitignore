@@ -1,7 +1,9 @@
-# Eclipse settings.
+# Created by Eclipse.
 .project
 .classpath
 .settings
+
+# Created by OS.
 .DS_Store
 
 # Maven build output.
