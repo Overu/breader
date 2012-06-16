@@ -1,12 +1,10 @@
 package com.goodow.web.workbench.client;
 
-import java.util.logging.Logger;
-
-import com.goodow.web.layout.client.ui.FlexPanel;
 import com.goodow.web.layout.client.ui.PageActivityMapper;
 import com.goodow.web.layout.client.ui.PagePresenterMapper;
 import com.goodow.web.layout.client.ui.Presenter;
 import com.goodow.web.layout.client.ui.WidgetRegistry;
+
 import com.google.gwt.activity.shared.ActivityManager;
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.inject.client.AbstractGinModule;
@@ -24,6 +22,8 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;
 
+import java.util.logging.Logger;
+
 public class ClientWorkbenchGinModule extends AbstractGinModule {
 
   @Singleton
@@ -38,8 +38,8 @@ public class ClientWorkbenchGinModule extends AbstractGinModule {
   @Singleton
   public static class Render {
     @Inject
-    public Render(final PlaceHistoryHandler historyHandler,
-        final Provider<FlexPanel> panelProvider, final EventBus eventBus) {
+    public Render(final PlaceHistoryHandler historyHandler, final EventBus eventBus,
+        final Shell shell) {
       SimplePanel panel = new SimplePanel();
       RootPanel.get().add(panel);
 
@@ -51,7 +51,7 @@ public class ClientWorkbenchGinModule extends AbstractGinModule {
 
       //
       // Label loading = new Label("Loading");
-      // RootPanel.get().add(loading);
+      RootPanel.get().add(shell);
     }
   }
 
