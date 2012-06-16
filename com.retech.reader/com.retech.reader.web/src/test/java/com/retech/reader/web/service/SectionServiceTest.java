@@ -8,8 +8,8 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.requestfactory.shared.RequestTransport;
 import com.google.web.bindery.requestfactory.vm.RequestFactorySource;
 
-import com.retech.reader.web.server.JpaPageService;
-import com.retech.reader.web.server.JpaSectionService;
+import com.retech.reader.web.jpa.JpaPageService;
+import com.retech.reader.web.jpa.JpaSectionService;
 import com.retech.reader.web.shared.Page;
 import com.retech.reader.web.shared.Section;
 import com.retech.reader.web.shared.rpc.ReaderFactory;

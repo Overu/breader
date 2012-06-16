@@ -53,6 +53,16 @@
       <artifactId>hibernate-validator</artifactId>
     </dependency>
 
+    <!-- Security -->
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-guice</artifactId>
+    </dependency>
+
     <!-- Google Web Toolkit (GWT) -->
     <dependency>
       <groupId>com.google.gwt</groupId>

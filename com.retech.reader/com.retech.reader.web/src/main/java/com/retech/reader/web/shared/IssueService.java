@@ -1,13 +1,13 @@
 package com.retech.reader.web.shared;
 
-import com.goodow.web.security.shared.ContentService;
+import com.goodow.web.mvp.shared.BaseService;
 
 import com.google.inject.persist.finder.FirstResult;
 import com.google.inject.persist.finder.MaxResults;
 
 import java.util.List;
 
-public interface IssueService extends ContentService<Issue> {
+public interface IssueService extends BaseService<Issue> {
 
   List<Issue> find(final Category category);
 

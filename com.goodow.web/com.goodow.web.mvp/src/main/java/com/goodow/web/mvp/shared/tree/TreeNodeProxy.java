@@ -1,7 +1,7 @@
 package com.goodow.web.mvp.shared.tree;
 
 import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
-import com.goodow.web.mvp.server.tree.domain.TreeNode;
+import com.goodow.web.mvp.shared.TreeNode;
 
 import com.google.web.bindery.requestfactory.shared.EntityProxy;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;

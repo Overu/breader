@@ -7,9 +7,9 @@ import com.google.inject.Provider;
 
 import com.gooodow.wave.shared.media.MimeType;
 import com.retech.reader.web.domain.testdata.TestDataUtil;
-import com.retech.reader.web.server.JpaPageService;
-import com.retech.reader.web.server.JpaResourceService;
-import com.retech.reader.web.server.JpaSectionService;
+import com.retech.reader.web.jpa.JpaPageService;
+import com.retech.reader.web.jpa.JpaResourceService;
+import com.retech.reader.web.jpa.JpaSectionService;
 import com.retech.reader.web.shared.Category;
 import com.retech.reader.web.shared.CategoryService;
 import com.retech.reader.web.shared.Issue;

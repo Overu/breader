@@ -1,6 +1,6 @@
 package com.retech.reader.web.shared;
 
-import com.goodow.web.security.shared.Content;
+import com.goodow.web.core.shared.Content;
 
 import com.gooodow.wave.shared.media.MimeType;
 

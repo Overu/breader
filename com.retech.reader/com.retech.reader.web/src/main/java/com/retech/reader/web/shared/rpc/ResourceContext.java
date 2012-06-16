@@ -6,7 +6,7 @@ import com.goodow.web.mvp.shared.tree.rpc.BaseContext;
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.Service;
 
-import com.retech.reader.web.server.JpaResourceService;
+import com.retech.reader.web.jpa.JpaResourceService;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.PageProxy;
 import com.retech.reader.web.shared.proxy.ResourceProxy;

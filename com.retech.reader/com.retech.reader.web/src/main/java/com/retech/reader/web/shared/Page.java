@@ -1,10 +1,10 @@
 package com.retech.reader.web.shared;
 
-import com.goodow.web.security.shared.Content;
+import com.goodow.web.core.shared.Content;
 
 import com.google.inject.Inject;
 
-import com.retech.reader.web.server.JpaPageService;
+import com.retech.reader.web.jpa.JpaPageService;
 
 import java.util.List;
 

@@ -11,6 +11,6 @@
 
   <source path="" includes="*.java" excludes="RoleType.java" />
   <source path='client' excludes="codegen/*.*" />
-  <source path='shared' />
+  <source path='shared' excludes="RoleType.java" />
 
 </module>

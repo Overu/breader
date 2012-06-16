@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='example'>
     
-  <inherits name='com.goodow.web.security.Security' />
+  <inherits name='com.goodow.web.core.Core' />
 
   <extend-configuration-property name="gin.module"
     value="com.goodow.web.example.client.ExampleClientModule" />
 
+  <extend-configuration-property name="gin.module"
+    value="com.goodow.web.example.client.ExampleClientPlugin" />
   <source path="" includes="*.java" />
   <source path='client' />
   <source path='shared' />

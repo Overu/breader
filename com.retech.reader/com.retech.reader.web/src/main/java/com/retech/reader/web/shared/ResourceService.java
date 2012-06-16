@@ -1,8 +1,8 @@
 package com.retech.reader.web.shared;
 
-import com.goodow.web.security.shared.ContentService;
+import com.goodow.web.mvp.shared.BaseService;
 
-public interface ResourceService extends ContentService<Resource> {
+public interface ResourceService extends BaseService<Resource> {
 
   String getDataString(final Long id);
 

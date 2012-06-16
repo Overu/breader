@@ -1,8 +1,8 @@
 package com.goodow.web.mvp;
 
 import com.goodow.wave.test.BaseTest;
-import com.goodow.web.mvp.server.tree.domain.TreeNode;
-import com.goodow.web.mvp.server.tree.service.TreeService;
+import com.goodow.web.mvp.jpa.TreeService;
+import com.goodow.web.mvp.shared.TreeNode;
 
 import com.google.inject.Inject;
 

@@ -1,4 +1,2 @@
-com.goodow.web.core.server.JpaServiceModule
-com.goodow.web.core.server.WebServerModule
 com.goodow.web.core.server.CoreServerModule
-com.goodow.web.security.server.SecurityServerModule
+com.goodow.web.core.jpa.CoreJpaModule

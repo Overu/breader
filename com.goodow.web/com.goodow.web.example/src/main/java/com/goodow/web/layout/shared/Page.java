@@ -1,8 +1,8 @@
 package com.goodow.web.layout.shared;
 
+import com.goodow.web.core.shared.Content;
 import com.goodow.web.core.shared.EntityType;
 import com.goodow.web.core.shared.Request;
-import com.goodow.web.security.shared.Content;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

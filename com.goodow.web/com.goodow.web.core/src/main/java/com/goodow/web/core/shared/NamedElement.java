@@ -3,7 +3,7 @@ package com.goodow.web.core.shared;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType
-public abstract class NamedElement extends Entity {
+public abstract class NamedElement extends Content {
 
   public static final String NAME = "name";
 

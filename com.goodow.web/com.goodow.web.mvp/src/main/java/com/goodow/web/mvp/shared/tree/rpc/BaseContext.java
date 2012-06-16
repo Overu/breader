@@ -1,8 +1,8 @@
 package com.goodow.web.mvp.shared.tree.rpc;
 
 import com.goodow.wave.server.requestfactory.RequestFactoryLocator;
+import com.goodow.web.mvp.jpa.JpaBaseService;
 import com.goodow.web.mvp.shared.tree.rpc.BaseEntityProxy;
-import com.goodow.web.security.server.ContentServiceImpl;
 
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
@@ -15,7 +15,7 @@ import com.google.web.bindery.requestfactory.shared.Service;
  * @author larry
  * 
  */
-@Service(value = ContentServiceImpl.class, locator = RequestFactoryLocator.class)
+@Service(value = JpaBaseService.class, locator = RequestFactoryLocator.class)
 public interface BaseContext extends RequestContext {
 
   Request<Long> count();

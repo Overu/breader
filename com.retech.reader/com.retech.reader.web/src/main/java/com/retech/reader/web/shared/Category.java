@@ -1,10 +1,10 @@
 package com.retech.reader.web.shared;
 
-import com.goodow.web.security.shared.Content;
+import com.goodow.web.core.shared.Content;
 
 import com.google.inject.Inject;
 
-import com.retech.reader.web.server.CategoryServiceImpl;
+import com.retech.reader.web.jpa.JpaCategoryService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class Category extends Content {
   private List<Issue> issues = new ArrayList<Issue>();
 
   @Inject
-  private transient CategoryServiceImpl service;
+  private transient JpaCategoryService service;
 
   public int getCount() {
     return service.count(this).intValue();

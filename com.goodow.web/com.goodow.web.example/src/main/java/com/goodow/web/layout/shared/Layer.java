@@ -1,5 +1,8 @@
 package com.goodow.web.layout.shared;
 
+import com.goodow.web.core.shared.Content;
+import com.goodow.web.core.shared.EntityType;
+import com.goodow.web.core.shared.Request;
 
 import java.util.List;
 
@@ -9,10 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.goodow.web.core.shared.EntityType;
-import com.goodow.web.core.shared.Request;
-import com.goodow.web.security.shared.Content;
 
 @Entity
 @Table(name = "t_layer")

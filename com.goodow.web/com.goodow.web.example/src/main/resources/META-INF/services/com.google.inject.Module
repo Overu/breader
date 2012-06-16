@@ -1,2 +1,2 @@
 com.goodow.web.example.server.ExampleServerPlugin
-com.goodow.web.example.server.ExampleServerModule
+com.goodow.web.example.jpa.ExampleJpaModule

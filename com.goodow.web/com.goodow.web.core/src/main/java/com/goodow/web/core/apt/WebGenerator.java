@@ -1,7 +1,7 @@
 package com.goodow.web.core.apt;
 
 import com.goodow.web.core.client.ClientService;
-import com.goodow.web.core.server.ServiceImpl;
+import com.goodow.web.core.jpa.JpaService;
 import com.goodow.web.core.shared.Accessor;
 import com.goodow.web.core.shared.Entity;
 import com.goodow.web.core.shared.EntityInfo;
@@ -14,7 +14,6 @@ import com.goodow.web.core.shared.Service;
 import com.goodow.web.core.shared.ValueInfo;
 
 import com.google.inject.Inject;
-import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
 import java.io.IOException;
@@ -41,6 +40,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.PackageElement;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.TypeParameterElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeKind;
@@ -105,7 +105,7 @@ public class WebGenerator extends AbstractProcessor {
       generateFactory(pkg);
       generatePackage(pkg);
       generateModule(pkg, ClientService.class);
-      generateModule(pkg, ServiceImpl.class);
+      generateModule(pkg, JpaService.class);
     }
 
     return false;
@@ -177,6 +177,10 @@ public class WebGenerator extends AbstractProcessor {
     module = module.substring(0, 1).toUpperCase() + module.substring(1);
     boolean async = ClientService.class.equals(baseSerivceClass);
 
+    if (!async) {
+      return null;
+    }
+
     String sharedPkgName = pkg.getQualifiedName().toString();
     int index = sharedPkgName.lastIndexOf(".");
     String pkgName = sharedPkgName.substring(0, index) + "." + module.toLowerCase();
@@ -229,9 +233,6 @@ public class WebGenerator extends AbstractProcessor {
       w.indent();
       w.print("requestStaticInjection(").print(factorySimpleName).println(".class);");
       w.println("bind(Startup.class).asEagerSingleton();");
-      w.outdent();
-
-      w.println("}");
 
       if (!async) {
         for (TypeElement entityType : getXmlTypes(pkg)) {
@@ -244,30 +245,22 @@ public class WebGenerator extends AbstractProcessor {
 
           String typeName = entityType.getSimpleName().toString();
 
-          w.println();
-          w.annotation(Provides.class);
-          w.annotation(Singleton.class);
-
           String serviceInstanceName = typeName + Service.class.getSimpleName();
 
           // if (serviceType == null) {
           // w.type(Service.class.getName()).print("<").type(entityType.getQualifiedName().toString())
           // .print(">");
           // } else {
-          w.type(serviceType.getQualifiedName().toString());
+          w.print("bind(").type(serviceType.getQualifiedName().toString()).print(".class).to(");
           // }
-
-          w.print(" get").print(serviceInstanceName).print("(");
-
           w.type(pkgName + "." + module + serviceType.getSimpleName().toString());
-
-          w.print(" service) {").println();
-          w.indent();
-          w.println("return service;");
-          w.outdent();
-          w.println("}");
+          w.print(".class);").println();
         }
       }
+
+      w.outdent();
+
+      w.println("}");
 
       w.outdent();
 
@@ -278,6 +271,7 @@ public class WebGenerator extends AbstractProcessor {
     }
 
     for (TypeElement entityType : getXmlTypes(pkg)) {
+
       generateServiceImplementation(entityType, module, async, baseSerivceClass);
     }
 
@@ -699,6 +693,14 @@ public class WebGenerator extends AbstractProcessor {
         TypeElement serviceType = getServiceType(xmlType);
         if (serviceType != null
             && !serviceType.getQualifiedName().toString().equals(Service.class.getName())) {
+          Map<String, List<? extends TypeMirror>> typeVars =
+              new HashMap<String, List<? extends TypeMirror>>();
+          for (TypeParameterElement tpe : serviceType.getTypeParameters()) {
+            String s = tpe.getSimpleName().toString();
+            Element e = tpe.getGenericElement();
+            typeVars.put(s, tpe.getBounds());
+          }
+
           w.print("addOperations(").print(typeName).print(".as()");
           for (ExecutableElement method : ElementFilter
               .methodsIn(serviceType.getEnclosedElements())) {
@@ -709,6 +711,7 @@ public class WebGenerator extends AbstractProcessor {
 
           for (ExecutableElement method : ElementFilter
               .methodsIn(serviceType.getEnclosedElements())) {
+
             if (method.getParameters().size() > 0) {
 
               for (VariableElement pEl : method.getParameters()) {
@@ -722,23 +725,38 @@ public class WebGenerator extends AbstractProcessor {
                 String paramTypeSimpleName;
 
                 paramTypeFullName = typeMirror.toString();
-                if (typeKind.isPrimitive()) {
-                  paramPkgName = Entity.class.getPackage().getName();
-                  paramTypeSimpleName = paramTypeFullName.toUpperCase();
+                if (typeKind == TypeKind.TYPEVAR) {
+                  List<? extends TypeMirror> bounds = typeVars.get(paramTypeFullName);
+                  w.print(", null");
                 } else {
-                  paramPkgName = paramTypeFullName.substring(0, paramTypeFullName.lastIndexOf("."));
-                  paramTypeSimpleName = paramTypeFullName.substring(paramPkgName.length() + 1);
-                  if (paramPkgName.equals("java.lang")) {
+                  if (typeKind.isPrimitive()) {
                     paramPkgName = Entity.class.getPackage().getName();
+                    paramTypeSimpleName = paramTypeFullName.toUpperCase();
+                  } else {
+                    if (paramTypeFullName.lastIndexOf(".") < 0) {
+                      System.out.println("debug");
+                      // for (TypeParameterElement tpe : method.getTypeParameters()) {
+                      // String s = tpe.getSimpleName().toString();
+                      // Element e = tpe.getGenericElement();
+                      // System.out.println(s);
+                      // }
+                    }
+                    paramPkgName =
+                        paramTypeFullName.substring(0, paramTypeFullName.lastIndexOf("."));
+                    paramTypeSimpleName = paramTypeFullName.substring(paramPkgName.length() + 1);
+                    if (paramPkgName.equals("java.lang")) {
+                      paramPkgName = Entity.class.getPackage().getName();
+                    }
                   }
+
+                  String paramPkgPrefix = getPrefix(paramPkgName);
+                  String paramPkgSimpleName = paramPkgPrefix + "Package";
+                  w.print(", ").type(paramPkgName + "." + paramPkgSimpleName).print(".").print(
+                      paramTypeSimpleName).print(".as()");
                 }
 
-                String paramPkgPrefix = getPrefix(paramPkgName);
-                String paramPkgSimpleName = paramPkgPrefix + "Package";
-                w.print(", ").type(paramPkgName + "." + paramPkgSimpleName).print(".").print(
-                    paramTypeSimpleName).print(".as()");
-
                 w.println(");");
+
               }
               w.println();
             }
@@ -800,10 +818,62 @@ public class WebGenerator extends AbstractProcessor {
 
       String typeName = entityType.getQualifiedName().toString();
 
-      w.print("public class ").print(serviceName).print(" extends ").type(baseServiceClass);
+      w.print("public class ").print(serviceName);
+
+      List<? extends TypeParameterElement> typeVars = serviceType.getTypeParameters();
+      if (!typeVars.isEmpty()) {
+        w.print("<");
+        boolean first = true;
+        for (TypeParameterElement tpe : typeVars) {
+          if (first) {
+            first = false;
+          } else {
+            w.print(", ");
+          }
+          w.print(tpe.getSimpleName().toString()).print(" extends ");
+          for (TypeMirror b : tpe.getBounds()) {
+            w.type(b.toString());
+            break;
+          }
+        }
+        w.print(">");
+      }
+
+      w.print(" extends ").type(baseServiceClass);
+      w.print("<");
+      if (!typeVars.isEmpty()) {
+
+        boolean first = true;
+        for (TypeParameterElement tpe : typeVars) {
+          if (first) {
+            first = false;
+          } else {
+            w.print(", ");
+          }
+          w.print(tpe.getSimpleName().toString());
+        }
+      } else {
+        w.type(typeName);
+      }
+      w.print(">");
 
       if (!async) {
         w.print(" implements ").type(serviceType.getQualifiedName().toString());
+
+        if (!typeVars.isEmpty()) {
+          w.print("<");
+          boolean first = true;
+          for (TypeParameterElement tpe : typeVars) {
+            if (first) {
+              first = false;
+            } else {
+              w.print(", ");
+            }
+            w.print(tpe.getSimpleName().toString());
+          }
+          w.print(">");
+        }
+
       }
 
       w.print(" {");
@@ -823,9 +893,15 @@ public class WebGenerator extends AbstractProcessor {
 
         if (async) {
           w.type(Request.class).print("<");
+          if (rt.getKind() == TypeKind.VOID) {
+            w.print("Void");
+          } else {
+            w.type(rt.toString());
+          }
+        } else {
+          w.type(rt.toString());
         }
 
-        w.type(rt.toString());
         if (async) {
           w.print(">");
         }

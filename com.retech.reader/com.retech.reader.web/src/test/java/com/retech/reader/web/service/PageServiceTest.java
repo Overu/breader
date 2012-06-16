@@ -5,7 +5,7 @@ import com.goodow.wave.test.BaseTest;
 import com.google.inject.Inject;
 
 import com.gooodow.wave.shared.media.MimeType;
-import com.retech.reader.web.server.JpaPageService;
+import com.retech.reader.web.jpa.JpaPageService;
 import com.retech.reader.web.shared.Page;
 import com.retech.reader.web.shared.Resource;
 import com.retech.reader.web.shared.common.SQLConstant;

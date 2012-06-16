@@ -1,6 +1,6 @@
 package com.goodow.web.example.server;
 
-import com.goodow.web.core.server.ServerModule;
+import com.goodow.web.core.jpa.JpaModule;
 import com.goodow.web.example.shared.ExampleFactory;
 import com.goodow.web.example.shared.ExamplePackage;
 import com.goodow.web.example.shared.Library;
@@ -8,7 +8,7 @@ import com.goodow.web.example.shared.LibraryService;
 
 import com.google.inject.Inject;
 
-public final class ExampleServerPlugin extends ServerModule {
+public final class ExampleServerPlugin extends JpaModule {
 
   public static class Startup {
     @Inject

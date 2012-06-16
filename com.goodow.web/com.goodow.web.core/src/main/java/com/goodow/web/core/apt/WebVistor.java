@@ -10,7 +10,6 @@ import javax.lang.model.type.PrimitiveType;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.type.TypeVariable;
 import javax.lang.model.type.TypeVisitor;
-import javax.lang.model.type.UnionType;
 import javax.lang.model.type.WildcardType;
 
 public class WebVistor implements TypeVisitor<Void, Void> {
@@ -86,11 +85,5 @@ public class WebVistor implements TypeVisitor<Void, Void> {
     System.out.println("visit 12");
     return null;
   }
-
-@Override
-public Void visitUnion(UnionType t, Void p) {
-	// TODO Auto-generated method stub
-	return null;
-}
 
 }

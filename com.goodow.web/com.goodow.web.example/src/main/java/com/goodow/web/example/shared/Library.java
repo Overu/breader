@@ -1,7 +1,7 @@
 package com.goodow.web.example.shared;
 
+import com.goodow.web.core.shared.Content;
 import com.goodow.web.core.shared.EntityType;
-import com.goodow.web.security.shared.Content;
 
 import javax.annotation.Generated;
 import javax.persistence.Entity;

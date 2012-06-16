@@ -6,7 +6,7 @@ import com.goodow.web.mvp.shared.tree.rpc.BaseContext;
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.Service;
 
-import com.retech.reader.web.server.CommentServiceImpl;
+import com.retech.reader.web.jpa.CommentServiceImpl;
 
 
 @Service(value = CommentServiceImpl.class, locator = RequestFactoryLocator.class)
