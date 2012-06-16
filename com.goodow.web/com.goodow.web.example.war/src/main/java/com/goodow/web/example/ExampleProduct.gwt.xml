@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to="example" >
     <inherits name="com.goodow.wave.bootstrap.BootStrap" />
+    <inherits name="com.goodow.web.example.Example" />
     <inherits name="com.goodow.web.workbench.Workbench" />
     <source
         includes="*.java"

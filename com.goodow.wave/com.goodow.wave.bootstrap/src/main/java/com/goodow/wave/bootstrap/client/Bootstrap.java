@@ -18,9 +18,9 @@ import com.google.gwt.core.client.GWT;
 
 final class Bootstrap implements EntryPoint {
 
-	@Override
-	public void onModuleLoad() {
-		BootstrapInjector injector = GWT.create(BootstrapInjector.class);
-		injector.get();
-	}
+  @Override
+  public void onModuleLoad() {
+    BootstrapInjector injector = GWT.create(BootstrapInjector.class);
+    injector.get();
+  }
 }

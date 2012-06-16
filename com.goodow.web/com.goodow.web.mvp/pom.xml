@@ -31,11 +31,6 @@
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>${project.groupId}.security</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
       <artifactId>${project.groupId}.logging</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
