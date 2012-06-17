@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="reader" >
+    <inherits name="com.goodow.wave.bootstrap.BootStrap" />
+    <inherits name="com.goodow.web.reader.Reader" />
+    <source
+        includes="*.java"
+        path="" />
+    <source path="client" />
+    <source path="shared" />
+</module>

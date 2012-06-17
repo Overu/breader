@@ -1,0 +1,32 @@
+<appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+  <application>goodow-dev</application>
+  <!-- <application>goodow-test</application> -->
+  <version>1</version>
+
+  <!-- Configure serving/caching of GWT files -->
+  <static-files>
+    <include path="**" />
+
+    <!-- The following line requires App Engine 1.3.2 SDK -->
+    <include path="**.nocache.*" expiration="0s" />
+
+    <include path="**.cache.*" expiration="365d" />
+    <exclude path="**.gwt.rpc" />
+  </static-files>
+
+  <system-properties>
+    <property name="java.util.logging.config.file" value="WEB-INF/classes/logging.properties" />
+    <property name="ol.persistence.standard" value="JPA" />
+
+    <!-- <property name="rdbms.server" value="local" /> <property name="rdbms.driver" value="com.mysql.jdbc.Driver" 
+      /> <property name="rdbms.url" value="jdbc:mysql://dev.retechcorp.com/learning?useInformationSchema=true&amp;useUnicode=true&amp;characterEncoding=UTF8&amp;useServerPrepStmts=true" 
+      /> -->
+  </system-properties>
+  <resource-files />
+
+  <threadsafe>true</threadsafe>
+  
+  <inbound-services>
+    <service>channel_presence</service>
+  </inbound-services>
+</appengine-web-app>
