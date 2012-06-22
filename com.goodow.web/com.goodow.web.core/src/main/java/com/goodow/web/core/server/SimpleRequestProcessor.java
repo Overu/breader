@@ -15,7 +15,7 @@ package com.goodow.web.core.server;
 
 import org.json.JSONException;
 
-import com.goodow.web.core.shared.EntityType;
+import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Operation;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.Response;
@@ -50,7 +50,7 @@ public class SimpleRequestProcessor {
     try {
       req = builder.parse(payload);
       Operation operation = req.getOperation();
-      EntityType entityType = operation.getDeclaringType();
+      ObjectType entityType = operation.getDeclaringType();
       Class<? extends Service> serviceClass = entityType.getServiceClass();
       Service service = injector.getInstance(serviceClass);
       Object result = service.invoke(operation, req.getArgs());

@@ -7,7 +7,7 @@ public abstract class ValueInfo<T> implements Wrapper<ValueType>, TextReader<T>,
   private final ValueType valueType;
 
   public ValueInfo(final Class<T> clazz) {
-    valueType = CoreFactory.ValueType.get();
+    valueType = new ValueType();
     String name = ClassUtil.getSimpleName(clazz);
     valueType.setName(name);
     valueType.setDefinitionClass(clazz);

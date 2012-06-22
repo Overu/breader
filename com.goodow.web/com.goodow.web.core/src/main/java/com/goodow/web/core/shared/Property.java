@@ -5,11 +5,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public class Property extends TypedElement {
 
-  private EntityType declaringType;
+  private ObjectType declaringType;
 
   private boolean containment; // TODO set containment
 
-  public EntityType getDeclaringType() {
+  public ObjectType getDeclaringType() {
     return declaringType;
   }
 
@@ -21,13 +21,8 @@ public class Property extends TypedElement {
     this.containment = containment;
   }
 
-  public void setDeclaringType(final EntityType declaringType) {
+  public void setDeclaringType(final ObjectType declaringType) {
     this.declaringType = declaringType;
-  }
-
-  @Override
-  public EntityType type() {
-    return CorePackage.Property.as();
   }
 
 }

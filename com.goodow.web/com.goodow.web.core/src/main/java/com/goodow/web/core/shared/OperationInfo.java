@@ -8,7 +8,7 @@ public class OperationInfo<T> implements Wrapper<Operation> {
   private final Operation operation;
 
   public OperationInfo(final String name) {
-    operation = CoreFactory.Operation.get();
+    operation = new Operation();
     operation.setName(name);
   }
 

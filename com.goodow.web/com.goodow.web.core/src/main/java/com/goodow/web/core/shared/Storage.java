@@ -2,8 +2,8 @@ package com.goodow.web.core.shared;
 
 public interface Storage {
 
-  Entity getEntity(EntityId id);
+  WebObject getEntity(EntityId id);
 
-  void setEntity(Entity entity);
+  void setEntity(WebObject entity);
 
 }

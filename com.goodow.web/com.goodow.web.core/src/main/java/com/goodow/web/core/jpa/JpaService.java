@@ -1,6 +1,6 @@
 package com.goodow.web.core.jpa;
 
-import com.goodow.web.core.shared.Entity;
+import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.Operation;
 import com.goodow.web.core.shared.Service;
 import com.goodow.web.core.shared.Wrapper;
@@ -19,7 +19,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
-public class JpaService<E extends Entity> implements Service<E> {
+public class JpaService<E extends WebObject> implements Service<E> {
 
   protected Map<String, Method> methods;
 

@@ -1,23 +1,24 @@
 package com.goodow.web.core.server;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.goodow.web.core.shared.CorePackage;
-import com.goodow.web.core.shared.Entity;
+import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.EntityId;
-import com.goodow.web.core.shared.EntityType;
+import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Operation;
 import com.goodow.web.core.shared.Parameter;
 import com.goodow.web.core.shared.Property;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.Response;
-import com.goodow.web.core.shared.Type;
+import com.goodow.web.core.shared.WebType;
 import com.goodow.web.core.shared.ValueType;
 import com.goodow.web.core.shared.WebPlatform;
+
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class JsonBuilder {
 
@@ -51,7 +52,7 @@ public class JsonBuilder {
       int i = 0;
       for (Parameter param : operation.getParameters().values()) {
         JSONArray values = json.getJSONArray("parameters");
-        Type type = param.getType();
+        WebType type = param.getType();
         Object obj = values.get(i);
         args[i] = parse(request, type, obj);
         i++;
@@ -69,25 +70,26 @@ public class JsonBuilder {
       throws JSONException {
     JSONObject jsonObject = new JSONObject();
     Object obj = response.getResult();
-    Type type = request.getOperation().getType();
+    WebType type = request.getOperation().getType();
     serialize(request, jsonObject, "result", obj, type);
     jsonObject.put("success", true);
     return jsonObject.toString();
   }
 
-  private Object parse(final Request<?> request, final Type type, final Object obj)
+  private Object parse(final Request<?> request, final WebType type, final Object obj)
       throws JSONException {
+    Class<?> dc = type.getDefinitionClass();
     if (obj == null || obj.equals(JSONObject.NULL)) {
       return null;
     } else if (obj instanceof JSONObject) {
       JSONObject jsonObject = (JSONObject) obj;
       return parseEntity(request, jsonObject);
     } else if (type instanceof ValueType) {
-      if (type == CorePackage.Boolean.as() || type == CorePackage.BOOLEAN.as()) {
+      if (boolean.class.equals(dc) || Boolean.class.equals(dc)) {
         return (Boolean) obj;
-      } else if (type == CorePackage.INT.as() || type == CorePackage.Integer.as()) {
+      } else if (int.class.equals(dc) || Integer.class.equals(dc)) {
         return ((Number) obj).intValue();
-      } else if (type == CorePackage.LONG.as() || type == CorePackage.Long.as()) {
+      } else if (long.class.equals(dc) || Long.class.equals(dc)) {
         return ((Number) obj).longValue();
       } else {
         return (String) obj;
@@ -106,7 +108,7 @@ public class JsonBuilder {
     } else {
       String eId = jsonObject.getString("e_id");
       EntityId id = EntityId.parseId(eId);
-      Entity entity = request.getEntity(id);
+      WebObject entity = request.getEntity(id);
       for (Property prop : entity.type().getAllProperties().values()) {
         if (jsonObject.has(prop.getName())) {
           Object jsonValue = jsonObject.get(prop.getName());
@@ -119,27 +121,29 @@ public class JsonBuilder {
   }
 
   private void serialize(final Request<?> request, final JSONObject parent, final String key,
-      final Object value, final Type type) throws JSONException {
+      final Object value, final WebType type) throws JSONException {
     if (value == null) {
       parent.put(key, JSONObject.NULL);
     } else if (type instanceof ValueType) {
       parent.put(key, value);
     } else {
-      Entity entity = (Entity) value;
-      EntityId eid = request.getEntityId(entity);
+      WebObject entity = (WebObject) value;
       JSONObject jsonObject = new JSONObject();
-      jsonObject.put("e_id", eid.toString());
+      if (entity instanceof WebEntity) {
+        EntityId eid = request.getEntityId((WebEntity) entity);
+        jsonObject.put("e_id", eid.toString());
+      }
       for (Property prop : entity.type().getAllProperties().values()) {
         Object propValue = entity.get(prop);
-        Type propType = prop.getType();
-        if (propType instanceof EntityType) {
-          Entity entityValue = (Entity) propValue;
+        WebType propType = prop.getType();
+        if (propType instanceof ObjectType) {
+          WebObject entityValue = (WebObject) propValue;
           if (entityValue == null) {
             jsonObject.put(prop.getName(), JSONObject.NULL);
           } else if (prop.isContainment()) {
             serialize(request, jsonObject, prop.getName(), propValue, prop.getType());
-          } else {
-            EntityId id = request.getEntityId(entityValue);
+          } else if (entityValue instanceof WebEntity) {
+            EntityId id = request.getEntityId((WebEntity) entityValue);
             jsonObject.put(prop.getName(), id.toString());
           }
         } else {

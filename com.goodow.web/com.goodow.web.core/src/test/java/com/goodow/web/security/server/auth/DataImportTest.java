@@ -63,7 +63,10 @@ public class DataImportTest extends BaseTest {
       String hashedPwd =
           new SimpleHash(JpaRealm.ALGORITHM_NAME, pwd.toCharArray(), ByteSource.Util.bytes(pwd))
               .toHex();
-      user = users.get().setUserName(userName).setPassword(hashedPwd).setPasswordSalt(pwd);
+      user = users.get();
+      user.setLoginId(userName);
+      user.setPassword(hashedPwd);
+      user.setPasswordSalt(pwd);
       userService.put(user);
     }
 

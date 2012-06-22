@@ -8,13 +8,18 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 @Entity
 @Table(name = "t_user")
-public class User extends Content {
+public class User extends WebEntity implements Principal {
 
   @NotNull(message = "你必须指定用户名")
-  private String userName;
+  private String loginId;
+
   private String password;
 
   private String passwordSalt;
+
+  public String getLoginId() {
+    return loginId;
+  }
 
   public String getPassword() {
     return password;
@@ -24,8 +29,8 @@ public class User extends Content {
     return passwordSalt;
   }
 
-  public String getUserName() {
-    return userName;
+  public void setLoginId(final String userName) {
+    this.loginId = userName;
   }
 
   public User setPassword(final String password) {
@@ -35,11 +40,6 @@ public class User extends Content {
 
   public User setPasswordSalt(final String passwordSalt) {
     this.passwordSalt = passwordSalt;
-    return this;
-  }
-
-  public User setUserName(final String userName) {
-    this.userName = userName;
     return this;
   }
 

@@ -3,7 +3,7 @@ package com.goodow.web.core.shared;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType
-public abstract class NamedElement extends Content {
+public abstract class NamedElement extends WebEntity {
 
   public static final String NAME = "name";
 
@@ -17,8 +17,4 @@ public abstract class NamedElement extends Content {
     this.name = value;
   }
 
-  @Override
-  public EntityType type() {
-    return CorePackage.NamedElement.as();
-  }
 }

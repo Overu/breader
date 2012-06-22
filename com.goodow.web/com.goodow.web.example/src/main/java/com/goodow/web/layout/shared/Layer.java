@@ -1,7 +1,7 @@
 package com.goodow.web.layout.shared;
 
-import com.goodow.web.core.shared.Content;
-import com.goodow.web.core.shared.EntityType;
+import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Request;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "t_layer")
-public class Layer extends Content {
+public class Layer extends WebEntity {
 
   private String title;
 
@@ -95,7 +95,7 @@ public class Layer extends Content {
   }
 
   @Override
-  public EntityType type() {
+  public ObjectType type() {
     return null;
   }
 

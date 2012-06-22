@@ -1,11 +1,11 @@
 package com.goodow.web.core.jpa;
 
-import com.goodow.web.core.shared.Content;
+import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.core.shared.ContentService;
 
 import com.google.inject.persist.Transactional;
 
-public class JpaContentService<E extends Content> extends JpaService<E> implements
+public class JpaContentService<E extends WebEntity> extends JpaService<E> implements
     ContentService<E> {
   @Override
   @Transactional

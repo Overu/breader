@@ -4,16 +4,16 @@ import com.goodow.web.core.shared.util.ClassUtil;
 
 import com.google.inject.Provider;
 
-public class EntityInfo<T extends Entity> implements Wrapper<EntityType>, TextReader<T>,
+public class EntityInfo<T extends WebObject> implements Wrapper<ObjectType>, TextReader<T>,
     TextWriter<T> {
 
-  private final EntityType entityType;
+  private final ObjectType entityType;
   private final Provider<T> provider;
 
   public EntityInfo(final Class<T> clazz, final Provider<T> provider,
       final Class<? extends Service> serviceClass) {
     this.provider = provider;
-    entityType = CoreFactory.EntityType.get();
+    entityType = new ObjectType();
     String name = ClassUtil.getSimpleName(clazz);
     entityType.setName(name);
     entityType.setDefinitionClass(clazz);
@@ -24,7 +24,7 @@ public class EntityInfo<T extends Entity> implements Wrapper<EntityType>, TextRe
   }
 
   @Override
-  public EntityType as() {
+  public ObjectType as() {
     return entityType;
   }
 

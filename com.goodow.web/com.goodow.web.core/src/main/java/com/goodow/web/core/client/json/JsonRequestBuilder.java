@@ -1,15 +1,16 @@
 package com.goodow.web.core.client.json;
 
-import com.goodow.web.core.shared.CorePackage;
-import com.goodow.web.core.shared.Entity;
+import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.EntityId;
-import com.goodow.web.core.shared.EntityType;
+import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Parameter;
 import com.goodow.web.core.shared.Property;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.Response;
-import com.goodow.web.core.shared.Type;
+import com.goodow.web.core.shared.WebType;
 import com.goodow.web.core.shared.ValueType;
+
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNull;
@@ -24,7 +25,7 @@ import com.google.inject.Singleton;
 public class JsonRequestBuilder {
 
   public void parse(final Request request, final Response response, final JSONObject obj) {
-    Type type = request.getOperation().getType();
+    WebType type = request.getOperation().getType();
     JSONBoolean success = obj.get("success").isBoolean();
     response.setSuccess(success.booleanValue());
     if (success != null && response.isSuccess()) {
@@ -53,10 +54,12 @@ public class JsonRequestBuilder {
         Object arg = args[i];
         JSONValue jsonValue = create(request, param.getType(), arg, false);
         jsonArgs.set(i, jsonValue);
-        if (param.getType() instanceof EntityType) {
+        if (param.getType() instanceof ObjectType) {
           // TODO many=true
-          Entity entity = (Entity) arg;
-          request.getEntityId(entity);
+          if (arg instanceof WebEntity) {
+            WebEntity entity = (WebEntity) arg;
+            request.getEntityId(entity);
+          }
         }
         i++;
       }
@@ -66,7 +69,7 @@ public class JsonRequestBuilder {
     if (!request.getEntities().isEmpty()) {
       JSONArray entities = new JSONArray();
       for (EntityId eid : request.getEntityIds()) {
-        Entity entity = request.getEntity(eid);
+        WebObject entity = request.getEntity(eid);
         JSONValue jsonValue = create(request, entity.type(), entity, true);
         entities.set(entities.size(), jsonValue);
       }
@@ -75,26 +78,30 @@ public class JsonRequestBuilder {
     return obj;
   }
 
-  private JSONValue create(final Request<?> request, final Type type, final Object obj,
+  private JSONValue create(final Request<?> request, final WebType type, final Object obj,
       final boolean convert) {
     if (obj == null) {
       return JSONNull.getInstance();
     } else if (type instanceof ValueType) {
-      if (type == CorePackage.Boolean.as() || type == CorePackage.BOOLEAN.as()) {
+      Class<?> dc = type.getDefinitionClass();
+      if (boolean.class.equals(dc) || Boolean.class.equals(dc)) {
         return JSONBoolean.getInstance((Boolean) obj);
-      } else if (type == CorePackage.INT.as() || type == CorePackage.Integer.as()) {
+      } else if (int.class.equals(dc) || Integer.class.equals(dc)) {
         return new JSONNumber((Integer) obj);
-      } else if (type == CorePackage.LONG.as() || type == CorePackage.Long.as()) {
+      } else if (long.class.equals(dc) || Long.class.equals(dc)) {
         return new JSONNumber((Long) obj);
       } else {
         return new JSONString((String) obj);
       }
     } else {
-      Entity entity = (Entity) obj;
-      EntityId eid = request.getEntityId(entity);
+      WebObject entity = (WebObject) obj;
+
       if (convert) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("e_id", new JSONString(eid.toString()));
+        if (entity instanceof WebEntity) {
+          EntityId eid = request.getEntityId((WebEntity) entity);
+          jsonObject.put("e_id", new JSONString(eid.toString()));
+        }
         for (Property prop : entity.type().getAllProperties().values()) {
           Object value = entity.get(prop);
           JSONValue jsonValue = create(request, prop.getType(), value, false);
@@ -102,33 +109,35 @@ public class JsonRequestBuilder {
         }
         return jsonObject;
       } else {
-        return new JSONString(eid.toString());
+        return new JSONString(request.getEntityId((WebEntity) entity).toString());
       }
     }
   }
 
-  private Object parse(final Request<?> request, final Type type, final JSONValue json) {
+  private Object parse(final Request<?> request, final WebType type, final JSONValue json) {
     if (json == null || json.isNull() != null) {
       return null;
     } else if (type instanceof ValueType) {
-      if (type == CorePackage.Boolean.as() || type == CorePackage.BOOLEAN.as()) {
+      Class<?> dc = type.getDefinitionClass();
+      if (boolean.class.equals(dc) || Boolean.class.equals(dc)) {
         return json.isBoolean().booleanValue();
-      } else if (type == CorePackage.INT.as() || type == CorePackage.Integer.as()) {
+      } else if (int.class.equals(dc) || Integer.class.equals(dc)) {
         return (int) json.isNumber().doubleValue();
-      } else if (type == CorePackage.LONG.as() || type == CorePackage.Long.as()) {
+      } else if (long.class.equals(dc) || Long.class.equals(dc)) {
         return (long) json.isNumber().doubleValue();
       } else {
         return json.isString().stringValue();
       }
     } else {
-      EntityType entityType = (EntityType) type;
-      Entity entity;
+      ObjectType entityType = (ObjectType) type;
+      WebObject entity;
       JSONString jsonString = json.isString();
       if (jsonString != null) {
         String key = json.isString().stringValue();
         EntityId id = EntityId.parseId(key);
-        entity = request.getEntity(id);
-        entity.setId(id.getStableId());
+        WebEntity content = request.getEntity(id);
+        content.setId(id.getStableId());
+        entity = content;
       } else {
         JSONObject jsonObj = json.isObject();
         JSONString eId = jsonObj.get("e_id").isString();

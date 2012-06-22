@@ -3,7 +3,6 @@ package com.goodow.web.example.test;
 import com.goodow.web.core.server.JsonBuilder;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.Response;
-import com.goodow.web.example.shared.ExamplePackage;
 import com.goodow.web.example.shared.Library;
 import com.goodow.web.example.shared.LibraryService;
 
@@ -37,12 +36,12 @@ public class LibraryTest extends ExampleTest {
     Library library = new Library();
     library.setTitle(generateId(Library.class));
     Library result = libraryService.save(library, true, 10);
-    Request req = request.get();
-    req.setOperation(ExamplePackage.LibraryService_save.as());
-    Response res = response.get();
-    res.setResult(result);
-    String s = builder.serialize(req, res);
-    System.out.println(s);
+    // Request req = request.get();
+    // req.setOperation(ExamplePackage.LibraryService_save.as());
+    // Response res = response.get();
+    // res.setResult(result);
+    // String s = builder.serialize(req, res);
+    // System.out.println(s);
   }
 
   @Test

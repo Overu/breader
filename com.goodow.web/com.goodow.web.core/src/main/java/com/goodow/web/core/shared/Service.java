@@ -1,6 +1,6 @@
 package com.goodow.web.core.shared;
 
-public interface Service<E extends Entity> {
+public interface Service<E extends WebObject> {
 
   E find(String id);
 

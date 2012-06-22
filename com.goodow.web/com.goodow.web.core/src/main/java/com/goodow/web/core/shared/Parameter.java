@@ -15,8 +15,4 @@ public class Parameter extends TypedElement {
     this.operation = operation;
   }
 
-  @Override
-  public EntityType type() {
-    return CorePackage.Parameter.as();
-  }
 }

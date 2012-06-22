@@ -5,11 +5,11 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public abstract class TypedElement extends NamedElement {
 
-  protected Type type;
+  protected WebType type;
 
   private boolean many;
 
-  public Type getType() {
+  public WebType getType() {
     return type;
   }
 
@@ -21,13 +21,8 @@ public abstract class TypedElement extends NamedElement {
     this.many = many;
   }
 
-  public void setType(final Type type) {
+  public void setType(final WebType type) {
     this.type = type;
-  }
-
-  @Override
-  public EntityType type() {
-    return CorePackage.TypedElement.as();
   }
 
 }

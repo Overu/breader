@@ -2,15 +2,13 @@ package com.goodow.web.core.client;
 
 import static com.google.gwt.user.client.rpc.RpcRequestBuilder.STRONG_NAME_HEADER;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.goodow.web.core.client.json.JsonRequestBuilder;
-import com.goodow.web.core.shared.Entity;
+import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.core.shared.EntityId;
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Response;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
@@ -23,6 +21,9 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Singleton
 public class ClientMessage extends Message implements RequestCallback {
@@ -49,7 +50,7 @@ public class ClientMessage extends Message implements RequestCallback {
    * @see org.cloudlet.web.core.shared.Message#find(org.cloudlet.web.core.shared.EntityId)
    */
   @Override
-  public Entity find(final EntityId eId) {
+  public WebEntity find(final EntityId eId) {
     // TODO Auto-generated method stub
     return null;
   }

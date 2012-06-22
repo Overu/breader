@@ -1,6 +1,6 @@
 package com.goodow.web.core.client;
 
-import com.goodow.web.core.shared.Entity;
+import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.Operation;
 import com.goodow.web.core.shared.Request;
@@ -10,7 +10,7 @@ import com.goodow.web.core.shared.Wrapper;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-public class ClientService<E extends Entity> {
+public class ClientService<E extends WebObject> {
 
   @Inject
   Provider<Message> message;

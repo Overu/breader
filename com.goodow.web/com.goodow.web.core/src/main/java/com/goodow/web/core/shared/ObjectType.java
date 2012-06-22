@@ -8,7 +8,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType
-public class EntityType extends Type implements Wrapper<EntityType> {
+public class ObjectType extends WebType implements Wrapper<ObjectType> {
 
   public static final String OPERATIONS = "operations";
 
@@ -16,7 +16,7 @@ public class EntityType extends Type implements Wrapper<EntityType> {
 
   private boolean _abstract;
 
-  private EntityType superType;
+  private ObjectType superType;
 
   private transient Class<? extends Service> serviceClass;
 
@@ -28,7 +28,7 @@ public class EntityType extends Type implements Wrapper<EntityType> {
 
   private transient Map<String, Operation> operations = new HashMap<String, Operation>();
 
-  private transient Provider<? extends Entity> provider;
+  private transient Provider<? extends WebObject> provider;
 
   private transient Accessor accessor;
 
@@ -41,11 +41,11 @@ public class EntityType extends Type implements Wrapper<EntityType> {
   }
 
   @Override
-  public EntityType as() {
+  public ObjectType as() {
     return this;
   }
 
-  public Entity create() {
+  public WebObject create() {
     return provider.get();
   }
 
@@ -94,7 +94,7 @@ public class EntityType extends Type implements Wrapper<EntityType> {
 
   public Class<? extends Service> getServiceClass() {
     if (serviceClass == null) {
-      if (Entity.class.equals(definitionClass)) {
+      if (WebObject.class.equals(definitionClass)) {
         serviceClass = (Class<? extends Service>) Service.class;
       } else {
         serviceClass = getSuperType().getServiceClass();
@@ -103,7 +103,7 @@ public class EntityType extends Type implements Wrapper<EntityType> {
     return serviceClass;
   }
 
-  public EntityType getSuperType() {
+  public ObjectType getSuperType() {
     return superType;
   }
 
@@ -119,7 +119,7 @@ public class EntityType extends Type implements Wrapper<EntityType> {
     this.accessor = accessor;
   }
 
-  public void setProvider(final Provider<? extends Entity> provider) {
+  public void setProvider(final Provider<? extends WebObject> provider) {
     this.provider = provider;
   }
 
@@ -127,12 +127,8 @@ public class EntityType extends Type implements Wrapper<EntityType> {
     this.serviceClass = serviceClass;
   }
 
-  public void setSuperType(final EntityType superType) {
+  public void setSuperType(final ObjectType superType) {
     this.superType = superType;
   }
 
-  @Override
-  public EntityType type() {
-    return CorePackage.EntityType.as();
-  }
 }

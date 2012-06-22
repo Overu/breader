@@ -51,4 +51,12 @@ public class BaseCorePackage extends Package {
       return null;
     }
   };
+
+  public static final ValueInfo<Principal> Principal = new ValueInfo<Principal>(Principal.class) {
+    @Override
+    public Principal readFrom(final java.lang.String stringValue) {
+      // TODO
+      return null;
+    }
+  };
 }

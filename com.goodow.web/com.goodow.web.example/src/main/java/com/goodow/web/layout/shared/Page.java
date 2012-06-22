@@ -1,7 +1,7 @@
 package com.goodow.web.layout.shared;
 
-import com.goodow.web.core.shared.Content;
-import com.goodow.web.core.shared.EntityType;
+import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Request;
 
 import javax.persistence.Entity;
@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "t_page")
-public class Page extends Content {
+public class Page extends WebEntity {
 
   private String path;
 
@@ -90,7 +90,7 @@ public class Page extends Content {
   }
 
   @Override
-  public EntityType type() {
+  public ObjectType type() {
     return null;
   }
 

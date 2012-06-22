@@ -14,7 +14,7 @@ public class Operation extends TypedElement implements Wrapper<Operation> {
 
   private transient Map<String, Parameter> parameters = new LinkedHashMap<String, Parameter>();
 
-  private EntityType declaringType;
+  private ObjectType declaringType;
 
   private transient String qualifiedName;
 
@@ -23,7 +23,7 @@ public class Operation extends TypedElement implements Wrapper<Operation> {
     return this;
   }
 
-  public EntityType getDeclaringType() {
+  public ObjectType getDeclaringType() {
     return declaringType;
   }
 
@@ -46,13 +46,13 @@ public class Operation extends TypedElement implements Wrapper<Operation> {
 
   public String getQualifiedName() {
     if (qualifiedName == null) {
-      EntityType type = getDeclaringType();
+      ObjectType type = getDeclaringType();
       qualifiedName = type.getQualifiedName() + "." + getName();
     }
     return qualifiedName;
   }
 
-  public void setDeclaringType(final EntityType containingType) {
+  public void setDeclaringType(final ObjectType containingType) {
     this.declaringType = containingType;
   }
 
@@ -62,11 +62,6 @@ public class Operation extends TypedElement implements Wrapper<Operation> {
 
   public void setPath(final String value) {
     this.path = value;
-  }
-
-  @Override
-  public EntityType type() {
-    return CorePackage.Operation.as();
   }
 
 }

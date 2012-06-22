@@ -3,7 +3,7 @@ package com.goodow.web.core.shared;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType
-public class Type extends NamedElement {
+public class WebType extends NamedElement {
 
   protected transient Class<?> definitionClass;
 
@@ -50,7 +50,7 @@ public class Type extends NamedElement {
   }
 
   @Override
-  public EntityType type() {
+  public ObjectType type() {
     return null;
   }
 

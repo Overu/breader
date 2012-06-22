@@ -1,6 +1,6 @@
 package com.goodow.web.core.shared;
 
-public interface ContentService<E extends Content> extends Service<E> {
+public interface ContentService<E extends WebEntity> extends Service<E> {
 
   void put(final E content);
 

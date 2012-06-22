@@ -1,9 +1,7 @@
 package com.goodow.web.example.shared;
 
-import com.goodow.web.core.shared.Content;
-import com.goodow.web.core.shared.EntityType;
+import com.goodow.web.core.shared.WebEntity;
 
-import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlType;
@@ -11,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 @Entity
 @Table(name = "t_library")
-public class Library extends Content {
+public class Library extends WebEntity {
 
   protected String title;
 
@@ -22,11 +20,4 @@ public class Library extends Content {
   public void setTitle(final String title) {
     this.title = title;
   }
-
-  @Override
-  @Generated("")
-  public EntityType type() {
-    return ExamplePackage.Library.as();
-  }
-
 }

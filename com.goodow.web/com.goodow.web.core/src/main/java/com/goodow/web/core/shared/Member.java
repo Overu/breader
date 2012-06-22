@@ -2,23 +2,23 @@ package com.goodow.web.core.shared;
 
 import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.TypeDef;
+import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@TypeDef(name = "role", typeClass = RoleType.class)
+@TypeDefs({
+    @TypeDef(name = "role", typeClass = RoleType.class),
+    @TypeDef(name = "principal", typeClass = PrincipalType.class)})
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "t_member")
-public class Member extends Content {
+public class Member extends WebEntity {
 
-  @OneToOne
-  private User user;
-
-  @OneToOne
-  private Group group;
+  @org.hibernate.annotations.Type(type = "principal")
+  @Columns(columns = {@Column(name = "principalType"), @Column(name = "principalName")})
+  private Principal principal;
 
   @org.hibernate.annotations.Type(type = "role")
   @Columns(columns = {@Column(name = "roleType"), @Column(name = "roleName")})
@@ -31,32 +31,24 @@ public class Member extends Content {
     return comment;
   }
 
-  public Group getGroup() {
-    return group;
+  public Principal getPrincipal() {
+    return principal;
   }
 
   public Role getRole() {
     return role;
   }
 
-  public User getUser() {
-    return user;
-  }
-
   public void setComment(final String comment) {
     this.comment = comment;
   }
 
-  public void setGroup(final Group group) {
-    this.group = group;
+  public void setPrincipal(final Principal principal) {
+    this.principal = principal;
   }
 
   public void setRole(final Role role) {
     this.role = role;
-  }
-
-  public void setUser(final User user) {
-    this.user = user;
   }
 
 }

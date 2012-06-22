@@ -8,30 +8,25 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public class Package extends NamedElement {
 
-  private transient Map<String, Type> types = new HashMap<String, Type>();
+  private transient Map<String, WebType> types = new HashMap<String, WebType>();
 
-  public void addType(final Type type) {
+  public void addType(final WebType type) {
     types.put(type.getName(), type);
   }
 
-  public Type getType(final String name) {
-    Type type = types.get(name);
+  public WebType getType(final String name) {
+    WebType type = types.get(name);
     return type;
   }
 
-  @Override
-  public EntityType type() {
-    return CorePackage.Package.as();
-  }
-
-  protected void addEntityTypes(final EntityType... types) {
-    for (EntityType type : types) {
+  protected void addEntityTypes(final ObjectType... types) {
+    for (ObjectType type : types) {
       type.setPackage(this);
       addType(type);
     }
   }
 
-  protected <T> void addOperations(final EntityType type, final OperationInfo<?>... operations) {
+  protected <T> void addOperations(final ObjectType type, final OperationInfo<?>... operations) {
     for (OperationInfo<?> baseOperation : operations) {
       Operation operation = baseOperation.as();
       operation.setDeclaringType(type);
@@ -39,16 +34,16 @@ public class Package extends NamedElement {
     }
   }
 
-  protected void addParameter(final Operation operation, final String name, final Type c) {
-    Parameter param = CoreFactory.Parameter.get();
+  protected void addParameter(final Operation operation, final String name, final WebType c) {
+    Parameter param = new Parameter();
     param.setName(name);
     param.setType(c);
     operation.getParameters().put(name, param);
   }
 
-  protected <T> void addProperty(final EntityType entityType, final String name, final Type type,
+  protected <T> void addProperty(final ObjectType entityType, final String name, final WebType type,
       final boolean many) {
-    Property property = CoreFactory.Property.get();
+    Property property = new Property();
     property.setName(name);
     property.setType(type);
     property.setMany(many);

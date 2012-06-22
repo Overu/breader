@@ -1,8 +1,8 @@
 package com.goodow.web.core.server;
 
-import com.goodow.web.core.shared.Entity;
+import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.core.shared.EntityId;
-import com.goodow.web.core.shared.EntityType;
+import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.Response;
 import com.goodow.web.core.shared.Service;
@@ -20,16 +20,16 @@ public class ServerMessage extends Message {
   private Injector injector;
 
   @Override
-  public Entity find(final EntityId id) {
-    EntityType entityType = platform.getEntityType(id.getEntityType());
+  public WebEntity find(final EntityId id) {
+    ObjectType entityType = platform.getEntityType(id.getEntityType());
     if (id.getStableId() != null) {
       Service s = entityType.getService();
       if (s == null) {
         s = injector.getInstance(entityType.getServiceClass());
       }
-      return (Entity) s.find(id.getStableId());
+      return (WebEntity) s.find(id.getStableId());
     } else {
-      return entityType.create();
+      return (WebEntity) entityType.create();
     }
   }
 

@@ -10,15 +10,15 @@ public class WebPlatform {
 
   Map<String, Package> packages = new HashMap<String, Package>();
 
-  public EntityType getEntityType(final String fullName) {
-    Type type = getType(fullName);
-    return (EntityType) type;
+  public ObjectType getEntityType(final String fullName) {
+    WebType type = getType(fullName);
+    return (ObjectType) type;
   }
 
   public Operation getOperation(final String fullName) {
     int index = fullName.lastIndexOf(".");
     String typeName = fullName.substring(0, index);
-    EntityType pkg = getEntityType(typeName);
+    ObjectType pkg = getEntityType(typeName);
     if (pkg != null) {
       String simpleName = fullName.substring(index + 1);
       return pkg.getOperation(simpleName);
@@ -35,7 +35,7 @@ public class WebPlatform {
     return packages;
   }
 
-  public Type getType(final String fullName) {
+  public WebType getType(final String fullName) {
     int index = fullName.lastIndexOf(".");
     String pkgName = fullName.substring(0, index);
     Package pkg = getPackage(pkgName);

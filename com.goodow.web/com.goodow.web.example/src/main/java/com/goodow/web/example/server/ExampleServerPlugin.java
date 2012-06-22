@@ -1,8 +1,6 @@
 package com.goodow.web.example.server;
 
 import com.goodow.web.core.jpa.JpaModule;
-import com.goodow.web.example.shared.ExampleFactory;
-import com.goodow.web.example.shared.ExamplePackage;
 import com.goodow.web.example.shared.Library;
 import com.goodow.web.example.shared.LibraryService;
 
@@ -13,7 +11,7 @@ public final class ExampleServerPlugin extends JpaModule {
   public static class Startup {
     @Inject
     public Startup(final LibraryService libraryService) {
-      Library lib = ExampleFactory.Library.get();
+      Library lib = new Library();
       lib.setId("mylib");
       lib.setTitle("Frank");
       libraryService.save(lib, true, 10);
@@ -22,7 +20,7 @@ public final class ExampleServerPlugin extends JpaModule {
 
   @Override
   protected void configure() {
-    bind(ExamplePackage.class).asEagerSingleton();
+    // bind(ExamplePackage.class).asEagerSingleton();
     // bind(Startup.class).asEagerSingleton();
   }
 

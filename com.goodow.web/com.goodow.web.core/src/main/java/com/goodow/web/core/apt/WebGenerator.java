@@ -3,7 +3,7 @@ package com.goodow.web.core.apt;
 import com.goodow.web.core.client.ClientService;
 import com.goodow.web.core.jpa.JpaService;
 import com.goodow.web.core.shared.Accessor;
-import com.goodow.web.core.shared.Entity;
+import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.EntityInfo;
 import com.goodow.web.core.shared.EnumInfo;
 import com.goodow.web.core.shared.Factory;
@@ -127,7 +127,7 @@ public class WebGenerator extends AbstractProcessor {
     try {
       SourceWriter w = openWriter(pkgName, factoryName, pkg);
 
-      w.importPackage(Entity.class.getPackage());
+      w.importPackage(WebObject.class.getPackage());
       w.importPackage(Singleton.class.getPackage());
       w.println();
 
@@ -189,7 +189,7 @@ public class WebGenerator extends AbstractProcessor {
     String pkgSimpleName = prefix + "Package";
     String factorySimpleName = prefix + "Factory";
 
-    String coreSharedPkg = Entity.class.getPackage().getName();
+    String coreSharedPkg = WebObject.class.getPackage().getName();
     String corePkg = coreSharedPkg.substring(0, coreSharedPkg.lastIndexOf("."));
     String coreModulePkg = corePkg + "." + module.toLowerCase();
     String baseModuleName = coreModulePkg + "." + module + "Module";
@@ -197,11 +197,11 @@ public class WebGenerator extends AbstractProcessor {
     try {
       SourceWriter w = openWriter(pkgName, moduleName, pkg);
 
-      w.importPackage(Entity.class.getPackage());
+      w.importPackage(WebObject.class.getPackage());
       w.importPackage(Singleton.class.getPackage());
       w.importPackage(coreModulePkg);
       w.importPackage(sharedPkgName);
-      String corePackage = Entity.class.getPackage().getName();
+      String corePackage = WebObject.class.getPackage().getName();
       w.importPackage(corePackage.substring(0, corePackage.lastIndexOf(".")) + "."
           + module.toLowerCase());
       w.println();
@@ -287,7 +287,7 @@ public class WebGenerator extends AbstractProcessor {
     try {
       SourceWriter w = openWriter(pkgName, pkgSimpleName, pkg);
 
-      w.importPackage(Entity.class.getPackage());
+      w.importPackage(WebObject.class.getPackage());
       w.println();
 
       w.print("@").print(Singleton.class.getName()).println();
@@ -308,7 +308,7 @@ public class WebGenerator extends AbstractProcessor {
 
         String superAccessor = null;
 
-        if (!Entity.class.getName().equals(typeName)) {
+        if (!WebObject.class.getName().equals(typeName)) {
           TypeMirror superClass = xmlType.getSuperclass();
           String superClassFullName = superClass.toString();
           int index = superClassFullName.lastIndexOf(".");
@@ -669,13 +669,13 @@ public class WebGenerator extends AbstractProcessor {
 
           paramTypeFullName = typeMirror.toString();
           if (typeKind.isPrimitive()) {
-            paramPkgName = Entity.class.getPackage().getName();
+            paramPkgName = WebObject.class.getPackage().getName();
             paramTypeSimpleName = paramTypeFullName.toUpperCase();
           } else {
             paramPkgName = paramTypeFullName.substring(0, paramTypeFullName.lastIndexOf("."));
             paramTypeSimpleName = paramTypeFullName.substring(paramPkgName.length() + 1);
             if (paramPkgName.equals("java.lang")) {
-              paramPkgName = Entity.class.getPackage().getName();
+              paramPkgName = WebObject.class.getPackage().getName();
             }
           }
 
@@ -730,7 +730,7 @@ public class WebGenerator extends AbstractProcessor {
                   w.print(", null");
                 } else {
                   if (typeKind.isPrimitive()) {
-                    paramPkgName = Entity.class.getPackage().getName();
+                    paramPkgName = WebObject.class.getPackage().getName();
                     paramTypeSimpleName = paramTypeFullName.toUpperCase();
                   } else {
                     if (paramTypeFullName.lastIndexOf(".") < 0) {
@@ -745,7 +745,7 @@ public class WebGenerator extends AbstractProcessor {
                         paramTypeFullName.substring(0, paramTypeFullName.lastIndexOf("."));
                     paramTypeSimpleName = paramTypeFullName.substring(paramPkgName.length() + 1);
                     if (paramPkgName.equals("java.lang")) {
-                      paramPkgName = Entity.class.getPackage().getName();
+                      paramPkgName = WebObject.class.getPackage().getName();
                     }
                   }
 
@@ -1001,7 +1001,7 @@ public class WebGenerator extends AbstractProcessor {
 
   private TypeElement getServiceType(final TypeElement entityType) {
     TypeElement serviceType;
-    if (entityType.getQualifiedName().toString().equals(Entity.class.getName())) {
+    if (entityType.getQualifiedName().toString().equals(WebObject.class.getName())) {
       serviceType = typeElements.get(Service.class.getName());
     } else {
       serviceType = typeElements.get(entityType.getQualifiedName() + Service.class.getSimpleName());
