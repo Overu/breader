@@ -1,6 +1,6 @@
 package com.retech.reader.web.shared;
 
-import com.goodow.web.core.shared.Content;
+import com.goodow.web.core.shared.WebEntity;
 
 import com.gooodow.wave.shared.media.MimeType;
 
@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
-public class Resource extends Content {
+public class Resource extends WebEntity {
 
   @Enumerated(EnumType.STRING)
   private MimeType mimeType;

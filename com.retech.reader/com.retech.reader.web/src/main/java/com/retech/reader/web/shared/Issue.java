@@ -1,6 +1,6 @@
 package com.retech.reader.web.shared;
 
-import com.goodow.web.core.shared.Content;
+import com.goodow.web.core.shared.WebEntity;
 
 import java.util.Date;
 import java.util.List;
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Issue extends Content implements HasResource {
+public class Issue extends WebEntity implements HasResource {
 
   @NotNull(message = "你必须指定一个名称")
   @Size(min = 3, message = "名称不得少于3个字符")

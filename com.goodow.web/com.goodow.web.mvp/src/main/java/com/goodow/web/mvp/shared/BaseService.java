@@ -1,11 +1,11 @@
 package com.goodow.web.mvp.shared;
 
-import com.goodow.web.core.shared.Content;
+import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.core.shared.ContentService;
 
 import java.util.List;
 
-public interface BaseService<E extends Content> extends ContentService<E> {
+public interface BaseService<E extends WebEntity> extends ContentService<E> {
 
   long count();
 

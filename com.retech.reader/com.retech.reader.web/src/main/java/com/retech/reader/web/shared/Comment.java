@@ -1,6 +1,6 @@
 package com.retech.reader.web.shared;
 
-import com.goodow.web.core.shared.Content;
+import com.goodow.web.core.shared.WebEntity;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Comment extends Content {
+public class Comment extends WebEntity {
 
   private String mac;
 

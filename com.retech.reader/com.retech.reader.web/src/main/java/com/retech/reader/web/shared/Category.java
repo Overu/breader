@@ -1,6 +1,6 @@
 package com.retech.reader.web.shared;
 
-import com.goodow.web.core.shared.Content;
+import com.goodow.web.core.shared.WebEntity;
 
 import com.google.inject.Inject;
 
@@ -14,7 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Category extends Content {
+public class Category extends WebEntity {
 
   private String title;
 

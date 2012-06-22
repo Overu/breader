@@ -1,6 +1,6 @@
 package com.retech.reader.web.shared;
 
-import com.goodow.web.core.shared.Content;
+import com.goodow.web.core.shared.WebEntity;
 
 import com.google.inject.Inject;
 
@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 @Entity
-public class Page extends Content implements HasResource {
+public class Page extends WebEntity implements HasResource {
 
   private int pageNum;
   private String title;

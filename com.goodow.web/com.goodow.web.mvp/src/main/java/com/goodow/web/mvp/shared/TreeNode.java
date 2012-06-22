@@ -1,7 +1,7 @@
 package com.goodow.web.mvp.shared;
 
 import com.goodow.web.core.jpa.InjectionListener;
-import com.goodow.web.core.shared.Content;
+import com.goodow.web.core.shared.WebEntity;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 @EntityListeners(InjectionListener.class)
-public class TreeNode extends Content {
+public class TreeNode extends WebEntity {
 
   private String path;
   private String name;

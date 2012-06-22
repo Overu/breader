@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.goodow.web.mobile"
+  version="0.0.2" versionCode="4">
+
+  <name>睿通天下</name>
+
+  <description>
+    睿泰书城客户端。
+  </description>
+
+  <author href="http://dev.goodow.com" email="dev@goodow.com">
+    睿泰科技
+  </author>
+
+  <icon src="icons/icon.png" default="true" />
+  <!-- iOS requires specific dimensions for icons; classic iPhone screens, Retina displays, and iPad 
+    screens respectively -->
+  <icon src="icons/icon.png" width="57" height="57" />
+  <icon src="icons/icon.png" width="72" height="72" />
+  <gap:splash src="icons/icon.png" />
+
+  <feature name="http://api.phonegap.com/1.0/network" />
+  <!-- <feature name="http://api.phonegap.com/1.0/file"/> <feature name="http://plugins.phonegap.com/ChildBrowser/2.0.0" 
+    /> -->
+
+  <access origin="*" />
+
+  <!-- <preference name="android-installLocation" value="preferExternal" /> -->
+  <preference name="orientation" value="default" />
+  <preference name="fullscreen" value="true" />
+  <preference name="stay-in-webview" value="true" />
+</widget>

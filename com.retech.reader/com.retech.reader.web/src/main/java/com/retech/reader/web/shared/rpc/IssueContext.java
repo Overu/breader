@@ -11,7 +11,6 @@ import com.retech.reader.web.shared.proxy.CategoryProxy;
 import com.retech.reader.web.shared.proxy.IssueProxy;
 import com.retech.reader.web.shared.proxy.PageProxy;
 
-
 import java.util.List;
 
 @Service(value = JpaIssueService.class, locator = RequestFactoryLocator.class)
