@@ -27,4 +27,32 @@ public class Articial extends WebEntity {
   @XmlElement
   private String body;
 
+  /**
+   * @return the body
+   */
+  public String getBody() {
+    return body;
+  }
+
+  /**
+   * @return the title
+   */
+  public String getTitle() {
+    return title;
+  }
+
+  /**
+   * @param body the body to set
+   */
+  public void setBody(final String body) {
+    this.body = body;
+  }
+
+  /**
+   * @param title the title to set
+   */
+  public void setTitle(final String title) {
+    this.title = title;
+  }
+
 }

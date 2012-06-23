@@ -81,23 +81,23 @@ public class DomainTest extends BaseTest {
   public void testInsertData() throws IOException {
     em.get().getTransaction().begin();
     Category c1 = categories.get().setTitle("搜索");
-    categoryService.put(c1);
+    categoryService.save(c1);
     Category c2 = categories.get().setTitle("特色");
-    categoryService.put(c2);
+    categoryService.save(c2);
     Category c3 = categories.get().setTitle("推荐");
-    categoryService.put(c3);
+    categoryService.save(c3);
     Category c4 = categories.get().setTitle("科技");
-    categoryService.put(c4);
+    categoryService.save(c4);
     Category c5 = categories.get().setTitle("生活");
-    categoryService.put(c5);
+    categoryService.save(c5);
     Category c6 = categories.get().setTitle("旅游");
-    categoryService.put(c6);
+    categoryService.save(c6);
     Category c7 = categories.get().setTitle("时尚");
-    categoryService.put(c7);
+    categoryService.save(c7);
     Category c8 = categories.get().setTitle("体育");
-    categoryService.put(c8);
+    categoryService.save(c8);
     Category c9 = categories.get().setTitle("我的图书");
-    categoryService.put(c9);
+    categoryService.save(c9);
     for (int c = 1; c < 2; c++) {
       Issue i1 =
           issues
@@ -110,7 +110,7 @@ public class DomainTest extends BaseTest {
               .setCreateTime(StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss"))
               .setDetail(
                   "乔布斯是改变世界的天才，他凭敏锐的触觉和过人的智慧，勇于变革，不断创新，引领全球资讯科技和电子产品的潮流，把电脑和电子产品变得简约化、平民化，让曾经是昂贵稀罕的电子产品变为现代人生活的一部分。");
-      issueService.put(i1);
+      issueService.save(i1);
       int sequence = 1;
       int pageCount = 1;
       putPage(1, pageCount++, putSection("封面", i1, sequence++));
@@ -140,7 +140,7 @@ public class DomainTest extends BaseTest {
                       TestDataUtil.getImage(2, 1))).setCreateTime(
                   StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss")).setCategory(
                   c5).setTitle("影资讯").setDetail("“筷子兄弟”新作受好评 《父亲》引爆亲情共鸣");
-      issueService.put(i2);
+      issueService.save(i2);
       int sequence = 1;
       int pageCount = 1;
       putPage(2, pageCount++, putSection("封面", i2, sequence++));
@@ -159,7 +159,7 @@ public class DomainTest extends BaseTest {
                       TestDataUtil.getImage(3, 1))).setCreateTime(
                   StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss")).setCategory(
                   c5).setTitle("选购指南").setDetail("简约之美 主流一体机电脑推荐");
-      issueService.put(issue);
+      issueService.save(issue);
       int sequence = 1;
       int pageCount = 1;
       putPage(3, pageCount++, putSection("封面", issue, sequence++));
@@ -179,7 +179,7 @@ public class DomainTest extends BaseTest {
                   StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss")).setCategory(
                   c6).setTitle("新旅行").setDetail(
                   "坐在美国盐湖城山谷雪场的缆车上，刚刚过了一个山头，下边是黑压压的松树，缆车下行，然后上行，阳光真好，晒在人身上暖洋洋的，也无风，所以一点都不觉得冷。");
-      issueService.put(issue);
+      issueService.save(issue);
       int sequence = 1;
       int pageCount = 1;
       putPage(4, pageCount++, putSection("封面", issue, sequence++));
@@ -200,7 +200,7 @@ public class DomainTest extends BaseTest {
                       TestDataUtil.getImage(5, 1))).setCreateTime(
                   StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss")).setCategory(
                   c8).setTitle("超体育").setDetail("西班牙德比：巴塞罗那胜皇家马德里");
-      issueService.put(issue);
+      issueService.save(issue);
       int sequence = 1;
       int pageCount = 1;
       putPage(5, pageCount++, putSection("封面", issue, sequence++));
@@ -224,7 +224,7 @@ public class DomainTest extends BaseTest {
               .setTitle("游遍天下")
               .setDetail(
                   "这期《游遍天下》是2011年的收官之作，回想一年的工作历程，编辑部某位风华绝代之人爆料了一件真事：朋友的孩子高一地理年级第一，因为喜欢看《游遍天下》，所以喜欢上了地理，孩子的书架上整齐地码着几十本《游遍天下》。我不善于煽情，也不屑于别人的这种表达，但那刻，我很感动，我们的工作有了更深的意义。");
-      issueService.put(issue);
+      issueService.save(issue);
       int sequence = 1;
       int pageCount = 1;
       putPage(6, pageCount++, putSection("封面", issue, sequence++));
@@ -248,7 +248,7 @@ public class DomainTest extends BaseTest {
               .setTitle("用户手册")
               .setDetail(
                   "近几年电影界风生水起，异常红火，于是有N多新鲜肉小生盯上了电影这块大阵地，向大银幕发起了猛烈攻击！一时之间，银幕上的新鲜小生空降兵攻城略地，看得我们眼花缭乱。");
-      issueService.put(issue);
+      issueService.save(issue);
       int sequence = 1;
       int pageCount = 1;
       putPage(7, pageCount++, putSection("封面", issue, sequence++));
@@ -272,7 +272,7 @@ public class DomainTest extends BaseTest {
               .setTitle("当月潮流")
               .setDetail(
                   "记忆中，一进入腊月，大人们就要开始忙活了。每当我们从外边带着浑身的雪花跑进屋时，总是能看到大人们在灶头忙碌的背影，从腊月到正月，也总是能够把家乡的小吃全部吃个遍。如今长大了，为了生存漂泊在外，每年进入腊月，最想家乡的小吃，总能让人魂牵梦绕！");
-      issueService.put(issue);
+      issueService.save(issue);
       int sequence = 1;
       int pageCount = 1;
       putPage(8, pageCount++, putSection("封面", issue, sequence++));
@@ -292,7 +292,7 @@ public class DomainTest extends BaseTest {
                       TestDataUtil.getImage(9, 1))).setCreateTime(
                   StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss")).setCategory(
                   c7).setTitle("B&G").setDetail("美女学英语");
-      issueService.put(issue);
+      issueService.save(issue);
       int sequence = 1;
       int pageCount = 1;
       putPage(9, pageCount++, putSection("封面", issue, sequence++));
@@ -312,7 +312,7 @@ public class DomainTest extends BaseTest {
               StringToDate("2012-0" + c + "-01 00:00:00", "yyyy-MM-dd HH:mm:ss")).setCategory(c7)
               .setTitle("TREND").setDetail(
                   "谁说皮草只是女性的时尚独享？本季秋冬也让皮草陪型男们过个美丽的圣诞节，让皮草的奢华之风与男性的阳刚之气制造出最in的混搭潮流。");
-      issueService.put(issue);
+      issueService.save(issue);
       int sequence = 1;
       int pageCount = 1;
       putPage(10, pageCount++, putSection("封面", issue, sequence++));
@@ -332,12 +332,12 @@ public class DomainTest extends BaseTest {
     String title1 = new String(TestDataUtil.getHtml(folder, pageCount));
     Page page = pages.get().setSection(section).setPageNum(pageCount);
     page.setTitle(title1.substring(title1.indexOf("<title>") + 7, title1.indexOf("</title>")));
-    pageService.put(page);
+    pageService.save(page);
     Resource singleHtml =
         resources.get().setName(TestDataUtil.getHtmlFilename(pageCount)).setData(
             TestDataUtil.getSingleHtml(folder, pageCount)).setMimeType(MimeType.TEXT_HTML);
     singleHtml.setPage(page);
-    resourceService.put(singleHtml);
+    resourceService.save(singleHtml);
     // Resource html =
     // resources.get().setName(TestDataUtil.getHtmlFilename(pageCount)).setData(
     // TestDataUtil.getHtml(folder, pageCount)).setMimeType(MimeType.TEXT_HTML);
@@ -350,7 +350,7 @@ public class DomainTest extends BaseTest {
     // resources.get().setName(TestDataUtil.getImageFilename(pageCount)).setData(
     // TestDataUtil.getImage(folder, pageCount)).setMimeType(MimeType.IMAGE_JPEG);
     // resourceService.put(image);
-    pageService.put(page.setMainResourceFilename(singleHtml.getFilename()));
+    pageService.save(page.setMainResourceFilename(singleHtml.getFilename()));
     // pageResourceService.put(pageResources.get().setPage(page).setResource(singleHtml));
     // pageService.put(page.setMainResourceFilename(html.getFilename()));
     // pageResourceService.put(pageResources.get().setPage(page).setResource(html));
@@ -360,7 +360,7 @@ public class DomainTest extends BaseTest {
 
   private Section putSection(final String title, final Issue issue, final int sequence) {
     Section section = sections.get().setIssue(issue).setTitle(title).setSequence(sequence);
-    sectionService.put(section);
+    sectionService.save(section);
     return section;
   }
 

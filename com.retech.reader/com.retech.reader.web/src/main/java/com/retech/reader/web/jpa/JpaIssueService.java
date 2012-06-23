@@ -132,14 +132,14 @@ public class JpaIssueService extends JpaBaseService<Issue> implements IssueServi
 
   @Override
   @Transactional
-  public void put(final Issue domain) {
+  public void save(final Issue domain) {
     domain.setUpdateTime(new Date());
     if (domain.getId() == null) {
 
       // domain.setCreateTime(new Date());
       domain.setViewCount(0);
 
-      super.put(domain);
+      super.save(domain);
     }
   }
 

@@ -11,7 +11,7 @@ public class EntityInfo<T extends WebObject> implements Wrapper<ObjectType>, Tex
   private final Provider<T> provider;
 
   public EntityInfo(final Class<T> clazz, final Provider<T> provider,
-      final Class<? extends Service> serviceClass) {
+      final Class<? extends WebService> serviceClass) {
     this.provider = provider;
     entityType = new ObjectType();
     String name = ClassUtil.getSimpleName(clazz);

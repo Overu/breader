@@ -1,12 +1,13 @@
 package com.goodow.web.core.jpa;
 
-import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.Operation;
-import com.goodow.web.core.shared.Service;
+import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebService;
 import com.goodow.web.core.shared.Wrapper;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.persist.Transactional;
 import com.google.web.bindery.autobean.vm.impl.TypeUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,7 +20,7 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 
-public class JpaService<E extends WebObject> implements Service<E> {
+public class JpaWebService<E extends WebEntity> implements WebService<E> {
 
   protected Map<String, Method> methods;
 
@@ -29,10 +30,10 @@ public class JpaService<E extends WebObject> implements Service<E> {
   private Class<E> domainClass;
 
   @SuppressWarnings("unchecked")
-  protected JpaService() {
+  protected JpaWebService() {
     Type genericSuperClass = getClass().getGenericSuperclass();
     domainClass =
-        (Class<E>) TypeUtils.ensureBaseType(TypeUtils.getSingleParameterization(Service.class,
+        (Class<E>) TypeUtils.ensureBaseType(TypeUtils.getSingleParameterization(WebService.class,
             genericSuperClass));
   }
 
@@ -49,7 +50,7 @@ public class JpaService<E extends WebObject> implements Service<E> {
   public <M> M getJavaMethod(final String name) {
     if (methods == null) {
       methods = new HashMap<String, Method>();
-      for (Class<? extends Service> intf : getServiceInterfaces(getClass())) {
+      for (Class<? extends WebService> intf : getServiceInterfaces(getClass())) {
         for (Method m : intf.getDeclaredMethods()) {
           methods.put(m.getName(), m);
         }
@@ -76,15 +77,31 @@ public class JpaService<E extends WebObject> implements Service<E> {
     return null;
   }
 
+  @Override
+  @Transactional
+  public void save(final E domain) {
+    if (domain.getId() == null) {
+      em.get().persist(domain);
+    } else {
+      em.get().merge(domain);
+    }
+  }
+
+  @Override
+  @Transactional
+  public void remove(final E domain) {
+    em.get().remove(domain);
+  }
+
   protected EntityManager em() {
     return em.get();
   }
 
-  private Set<Class<? extends Service>> getServiceInterfaces(final Class clazz) {
-    Set<Class<? extends Service>> result = new HashSet<Class<? extends Service>>();
+  private Set<Class<? extends WebService>> getServiceInterfaces(final Class clazz) {
+    Set<Class<? extends WebService>> result = new HashSet<Class<? extends WebService>>();
     for (Class<?> intf : clazz.getInterfaces()) {
-      if (Service.class.isAssignableFrom(intf)) {
-        result.add((Class<? extends Service>) intf);
+      if (WebService.class.isAssignableFrom(intf)) {
+        result.add((Class<? extends WebService>) intf);
       }
     }
     if (!Object.class.equals(clazz)) {

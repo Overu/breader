@@ -1,17 +1,18 @@
 package com.goodow.web.core.apt;
 
-import com.goodow.web.core.client.ClientService;
-import com.goodow.web.core.jpa.JpaService;
+import com.goodow.web.core.client.ClientWebService;
+import com.goodow.web.core.jpa.JpaWebService;
 import com.goodow.web.core.shared.Accessor;
-import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.EntityInfo;
 import com.goodow.web.core.shared.EnumInfo;
 import com.goodow.web.core.shared.Factory;
 import com.goodow.web.core.shared.OperationInfo;
 import com.goodow.web.core.shared.Package;
 import com.goodow.web.core.shared.Request;
-import com.goodow.web.core.shared.Service;
 import com.goodow.web.core.shared.ValueInfo;
+import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebObject;
+import com.goodow.web.core.shared.WebService;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -104,8 +105,8 @@ public class WebGenerator extends AbstractProcessor {
     for (PackageElement pkg : ElementFilter.packagesIn(roundEnv.getRootElements())) {
       generateFactory(pkg);
       generatePackage(pkg);
-      generateModule(pkg, ClientService.class);
-      generateModule(pkg, JpaService.class);
+      generateModule(pkg, ClientWebService.class);
+      generateModule(pkg, JpaWebService.class);
     }
 
     return false;
@@ -117,6 +118,175 @@ public class WebGenerator extends AbstractProcessor {
     JavaFileObject genFile = filer.createSourceFile(className, originatingElements);
     SourceWriter result = new SourceWriter(className, genFile.openWriter());
     return result;
+  }
+
+  private void generateClientService(final TypeElement entityType, final String module,
+      final boolean async, final Class<?> baseServiceClass) {
+    PackageElement pkg = (PackageElement) entityType.getEnclosingElement();
+    String pkgName = pkg.getQualifiedName().toString();
+    String prefix = getPrefix(pkg);
+    String pkgSimpleName = prefix + "Package";
+    int index = pkgName.lastIndexOf(".");
+    String implPackageName = pkgName.substring(0, index) + "." + module.toLowerCase();
+
+    TypeElement serviceType = getServiceType(entityType);
+    if (serviceType == null) {
+      return;
+    }
+
+    try {
+      String serviceName = module + serviceType.getSimpleName().toString();
+
+      String implClassName = implPackageName + "." + serviceName;
+      if ("ServerLibraryService".equals(serviceName)) {
+        System.out.println("debug");
+      }
+
+      TypeElement typeEl = typeElements.get(implClassName);
+      if (typeEl != null) {
+        for (AnnotationMirror m : typeEl.getAnnotationMirrors()) {
+          System.out.println(m);
+        }
+        for (Element e : typeEl.getEnclosedElements()) {
+          System.out.println(e);
+        }
+        return;
+      }
+
+      SourceWriter w = openWriter(implPackageName, serviceName, entityType);
+
+      w.importPackage(pkgName);
+      w.importPackage(baseServiceClass.getPackage());
+      w.importPackage(Request.class.getPackage());
+
+      String typeName = entityType.getQualifiedName().toString();
+
+      w.print("public class ").print(serviceName);
+
+      List<? extends TypeParameterElement> typeVars = serviceType.getTypeParameters();
+      if (!typeVars.isEmpty()) {
+        w.print("<");
+        boolean first = true;
+        for (TypeParameterElement tpe : typeVars) {
+          if (first) {
+            first = false;
+          } else {
+            w.print(", ");
+          }
+          w.print(tpe.getSimpleName().toString()).print(" extends ");
+          for (TypeMirror b : tpe.getBounds()) {
+            w.type(b.toString());
+            break;
+          }
+        }
+        w.print(">");
+      }
+
+      w.print(" extends ").type(baseServiceClass);
+      w.print("<");
+      if (!typeVars.isEmpty()) {
+
+        boolean first = true;
+        for (TypeParameterElement tpe : typeVars) {
+          if (first) {
+            first = false;
+          } else {
+            w.print(", ");
+          }
+          w.print(tpe.getSimpleName().toString());
+        }
+      } else {
+        w.type(typeName);
+      }
+      w.print(">");
+
+      if (!async) {
+        w.print(" implements ").type(serviceType.getQualifiedName().toString());
+
+        if (!typeVars.isEmpty()) {
+          w.print("<");
+          boolean first = true;
+          for (TypeParameterElement tpe : typeVars) {
+            if (first) {
+              first = false;
+            } else {
+              w.print(", ");
+            }
+            w.print(tpe.getSimpleName().toString());
+          }
+          w.print(">");
+        }
+
+      }
+
+      w.print(" {");
+
+      w.indent();
+
+      for (ExecutableElement method : ElementFilter.methodsIn(serviceType.getEnclosedElements())) {
+
+        TypeMirror rt = method.getReturnType();
+        w.println();
+
+        if (!async) {
+          w.println("@Override");
+        }
+
+        w.print("public ");
+
+        if (async) {
+          w.type(Request.class).print("<");
+          if (rt.getKind() == TypeKind.VOID) {
+            w.print("Void");
+          } else {
+            w.type(rt.toString());
+          }
+        } else {
+          w.type(rt.toString());
+        }
+
+        if (async) {
+          w.print(">");
+        }
+        w.print(" ").print(method.getSimpleName()).print("(");
+
+        boolean first = true;
+        for (VariableElement p : method.getParameters()) {
+          if (first) {
+            first = false;
+          } else {
+            w.print(", ");
+          }
+          w.type(p.asType().toString()).print(" ").print(p.getSimpleName());
+        }
+        w.println(") {");
+
+        w.indent();
+
+        if (async) {
+          w.print("return ");
+        } else if (rt.getKind() != TypeKind.VOID) {
+          w.print("return ");
+        }
+
+        w.print("invoke(").print(pkgSimpleName).print(".").print(getOperationName(method));
+        for (VariableElement p : method.getParameters()) {
+          w.print(", ");
+          w.print(p.getSimpleName());
+        }
+        w.println(");");
+        w.outdent();
+
+        w.println("}");
+      }
+
+      w.outdent();
+
+      w.println("}");
+      w.close();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   private String generateFactory(final PackageElement pkg) {
@@ -175,7 +345,7 @@ public class WebGenerator extends AbstractProcessor {
     String basePackageName = baseSerivceClass.getPackage().getName();
     String module = basePackageName.substring(basePackageName.lastIndexOf(".") + 1);
     module = module.substring(0, 1).toUpperCase() + module.substring(1);
-    boolean async = ClientService.class.equals(baseSerivceClass);
+    boolean async = ClientWebService.class.equals(baseSerivceClass);
 
     if (!async) {
       return null;
@@ -245,7 +415,7 @@ public class WebGenerator extends AbstractProcessor {
 
           String typeName = entityType.getSimpleName().toString();
 
-          String serviceInstanceName = typeName + Service.class.getSimpleName();
+          String serviceInstanceName = typeName + "WebService";
 
           // if (serviceType == null) {
           // w.type(Service.class.getName()).print("<").type(entityType.getQualifiedName().toString())
@@ -270,9 +440,8 @@ public class WebGenerator extends AbstractProcessor {
       e.printStackTrace();
     }
 
-    for (TypeElement entityType : getXmlTypes(pkg)) {
-
-      generateServiceImplementation(entityType, module, async, baseSerivceClass);
+    for (TypeElement webTypeEl : getXmlTypes(pkg)) {
+      generateClientService(webTypeEl, module, async, baseSerivceClass);
     }
 
     return moduleName;
@@ -574,7 +743,7 @@ public class WebGenerator extends AbstractProcessor {
         String typeName = xmlType.getSimpleName().toString();
         TypeElement serviceType = getServiceType(xmlType);
         if (serviceType != null
-            && !serviceType.getQualifiedName().toString().equals(Service.class.getName())) {
+            && !serviceType.getQualifiedName().toString().equals(WebService.class.getName())) {
           for (ExecutableElement method : ElementFilter
               .methodsIn(serviceType.getEnclosedElements())) {
             TypeMirror rt = method.getReturnType();
@@ -692,7 +861,7 @@ public class WebGenerator extends AbstractProcessor {
 
         TypeElement serviceType = getServiceType(xmlType);
         if (serviceType != null
-            && !serviceType.getQualifiedName().toString().equals(Service.class.getName())) {
+            && !serviceType.getQualifiedName().toString().equals(WebService.class.getName())) {
           Map<String, List<? extends TypeMirror>> typeVars =
               new HashMap<String, List<? extends TypeMirror>>();
           for (TypeParameterElement tpe : serviceType.getTypeParameters()) {
@@ -777,175 +946,6 @@ public class WebGenerator extends AbstractProcessor {
     return pkgSimpleName;
   }
 
-  private void generateServiceImplementation(final TypeElement entityType, final String module,
-      final boolean async, final Class<?> baseServiceClass) {
-    PackageElement pkg = (PackageElement) entityType.getEnclosingElement();
-    String pkgName = pkg.getQualifiedName().toString();
-    String prefix = getPrefix(pkg);
-    String pkgSimpleName = prefix + "Package";
-    int index = pkgName.lastIndexOf(".");
-    String implPackageName = pkgName.substring(0, index) + "." + module.toLowerCase();
-
-    TypeElement serviceType = getServiceType(entityType);
-    if (serviceType == null) {
-      return;
-    }
-
-    try {
-      String serviceName = module + serviceType.getSimpleName().toString();
-
-      String implClassName = implPackageName + "." + serviceName;
-      if ("ServerLibraryService".equals(serviceName)) {
-        System.out.println("debug");
-      }
-
-      TypeElement typeEl = typeElements.get(implClassName);
-      if (typeEl != null) {
-        for (AnnotationMirror m : typeEl.getAnnotationMirrors()) {
-          System.out.println(m);
-        }
-        for (Element e : typeEl.getEnclosedElements()) {
-          System.out.println(e);
-        }
-        return;
-      }
-
-      SourceWriter w = openWriter(implPackageName, serviceName, entityType);
-
-      w.importPackage(pkgName);
-      w.importPackage(baseServiceClass.getPackage());
-      w.importPackage(Request.class.getPackage());
-
-      String typeName = entityType.getQualifiedName().toString();
-
-      w.print("public class ").print(serviceName);
-
-      List<? extends TypeParameterElement> typeVars = serviceType.getTypeParameters();
-      if (!typeVars.isEmpty()) {
-        w.print("<");
-        boolean first = true;
-        for (TypeParameterElement tpe : typeVars) {
-          if (first) {
-            first = false;
-          } else {
-            w.print(", ");
-          }
-          w.print(tpe.getSimpleName().toString()).print(" extends ");
-          for (TypeMirror b : tpe.getBounds()) {
-            w.type(b.toString());
-            break;
-          }
-        }
-        w.print(">");
-      }
-
-      w.print(" extends ").type(baseServiceClass);
-      w.print("<");
-      if (!typeVars.isEmpty()) {
-
-        boolean first = true;
-        for (TypeParameterElement tpe : typeVars) {
-          if (first) {
-            first = false;
-          } else {
-            w.print(", ");
-          }
-          w.print(tpe.getSimpleName().toString());
-        }
-      } else {
-        w.type(typeName);
-      }
-      w.print(">");
-
-      if (!async) {
-        w.print(" implements ").type(serviceType.getQualifiedName().toString());
-
-        if (!typeVars.isEmpty()) {
-          w.print("<");
-          boolean first = true;
-          for (TypeParameterElement tpe : typeVars) {
-            if (first) {
-              first = false;
-            } else {
-              w.print(", ");
-            }
-            w.print(tpe.getSimpleName().toString());
-          }
-          w.print(">");
-        }
-
-      }
-
-      w.print(" {");
-
-      w.indent();
-
-      for (ExecutableElement method : ElementFilter.methodsIn(serviceType.getEnclosedElements())) {
-
-        TypeMirror rt = method.getReturnType();
-        w.println();
-
-        if (!async) {
-          w.println("@Override");
-        }
-
-        w.print("public ");
-
-        if (async) {
-          w.type(Request.class).print("<");
-          if (rt.getKind() == TypeKind.VOID) {
-            w.print("Void");
-          } else {
-            w.type(rt.toString());
-          }
-        } else {
-          w.type(rt.toString());
-        }
-
-        if (async) {
-          w.print(">");
-        }
-        w.print(" ").print(method.getSimpleName()).print("(");
-
-        boolean first = true;
-        for (VariableElement p : method.getParameters()) {
-          if (first) {
-            first = false;
-          } else {
-            w.print(", ");
-          }
-          w.type(p.asType().toString()).print(" ").print(p.getSimpleName());
-        }
-        w.println(") {");
-
-        w.indent();
-
-        if (async) {
-          w.print("return ");
-        } else if (rt.getKind() != TypeKind.VOID) {
-          w.print("return ");
-        }
-
-        w.print("invoke(").print(pkgSimpleName).print(".").print(getOperationName(method));
-        for (VariableElement p : method.getParameters()) {
-          w.print(", ");
-          w.print(p.getSimpleName());
-        }
-        w.println(");");
-        w.outdent();
-
-        w.println("}");
-      }
-
-      w.outdent();
-
-      w.println("}");
-      w.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-
   private Set<TypeElement> getEnumTypes(final PackageElement pkg) {
     Set<TypeElement> result = new HashSet<TypeElement>();
     for (TypeElement type : ElementFilter.typesIn(pkg.getEnclosedElements())) {
@@ -1001,10 +1001,10 @@ public class WebGenerator extends AbstractProcessor {
 
   private TypeElement getServiceType(final TypeElement entityType) {
     TypeElement serviceType;
-    if (entityType.getQualifiedName().toString().equals(WebObject.class.getName())) {
-      serviceType = typeElements.get(Service.class.getName());
+    if (entityType.getQualifiedName().toString().equals(WebEntity.class.getName())) {
+      serviceType = typeElements.get(WebService.class.getName());
     } else {
-      serviceType = typeElements.get(entityType.getQualifiedName() + Service.class.getSimpleName());
+      serviceType = typeElements.get(entityType.getQualifiedName() + "Service");
     }
     return serviceType;
   }

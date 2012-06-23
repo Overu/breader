@@ -67,7 +67,7 @@ public class DataImportTest extends BaseTest {
       user.setLoginId(userName);
       user.setPassword(hashedPwd);
       user.setPasswordSalt(pwd);
-      userService.put(user);
+      userService.save(user);
     }
 
     em.get().getTransaction().commit();

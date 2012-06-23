@@ -32,7 +32,7 @@ public class CommentServiceImpl extends JpaBaseService<Comment> implements Comme
     comment.setText(text);
     comment.setIssue(em.get().find(Issue.class, issueId));
     comment.setDate(new Date());
-    put(comment);
+    save(comment);
   }
 
 }

@@ -4,9 +4,8 @@ import static com.google.inject.matcher.Matchers.annotatedWith;
 import static com.google.inject.matcher.Matchers.any;
 
 import com.goodow.web.core.client.CoreClientPlugin.Startup;
-import com.goodow.web.core.shared.ContentService;
-import com.goodow.web.core.shared.Service;
 import com.goodow.web.core.shared.UserService;
+import com.goodow.web.core.shared.WebService;
 
 import com.google.inject.Singleton;
 import com.google.inject.persist.finder.Finder;
@@ -28,8 +27,7 @@ public class CoreJpaModule extends JpaModule {
 
     bind(Startup.class).asEagerSingleton();
     bind(UserService.class).to(JpaUserService.class);
-    bind(ContentService.class).to(JpaContentService.class);
-    bind(Service.class).to(JpaService.class);
+    bind(WebService.class).to(JpaWebService.class);
 
     install(new JpaPersistModule("persist.jpaUnit")); // TODO read from config;
 

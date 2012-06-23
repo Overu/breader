@@ -18,9 +18,9 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
 
   private ObjectType superType;
 
-  private transient Class<? extends Service> serviceClass;
+  private transient Class<? extends WebService> serviceClass;
 
-  private transient Service service;
+  private transient WebService service;
 
   private transient Map<String, Property> properties = new HashMap<String, Property>();
 
@@ -83,7 +83,7 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
     return getPackage().getName() + "." + getName();
   }
 
-  public Service getService() {
+  public WebService getService() {
     if (service == null) {
       if (superType != null) {
         service = superType.getService();
@@ -92,10 +92,10 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
     return service;
   }
 
-  public Class<? extends Service> getServiceClass() {
+  public Class<? extends WebService> getServiceClass() {
     if (serviceClass == null) {
       if (WebObject.class.equals(definitionClass)) {
-        serviceClass = (Class<? extends Service>) Service.class;
+        serviceClass = (Class<? extends WebService>) WebService.class;
       } else {
         serviceClass = getSuperType().getServiceClass();
       }
@@ -123,7 +123,7 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
     this.provider = provider;
   }
 
-  public void setServiceClass(final Class<? extends Service> serviceClass) {
+  public void setServiceClass(final Class<? extends WebService> serviceClass) {
     this.serviceClass = serviceClass;
   }
 

@@ -10,7 +10,7 @@ import com.goodow.web.core.shared.Wrapper;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-public class ClientService<E extends WebObject> {
+public class ClientWebService<E extends WebObject> {
 
   @Inject
   Provider<Message> message;

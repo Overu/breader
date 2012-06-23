@@ -1,6 +1,6 @@
 package com.goodow.web.mvp.jpa;
 
-import com.goodow.web.core.jpa.JpaContentService;
+import com.goodow.web.core.jpa.JpaWebService;
 import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.mvp.shared.BaseService;
 
@@ -10,8 +10,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-public class JpaBaseService<E extends WebEntity> extends JpaContentService<E> implements
-    BaseService<E> {
+public class JpaBaseService<E extends WebEntity> extends JpaWebService<E> implements BaseService<E> {
 
   @Override
   @Transactional
@@ -45,7 +44,7 @@ public class JpaBaseService<E extends WebEntity> extends JpaContentService<E> im
   @SuppressWarnings("unchecked")
   public void put(final Object domain) {
     if (getEntityClass().isAssignableFrom(domain.getClass())) {
-      put((E) domain);
+      save((E) domain);
     } else {
       throw new IllegalArgumentException();
     }
