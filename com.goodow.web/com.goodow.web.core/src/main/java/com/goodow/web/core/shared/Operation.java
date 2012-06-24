@@ -12,6 +12,8 @@ public class Operation extends TypedElement implements Wrapper<Operation> {
 
   private HttpMethod httpMethod;
 
+  private transient Object javaMethod;
+
   private transient Map<String, Parameter> parameters = new LinkedHashMap<String, Parameter>();
 
   private ObjectType declaringType;
@@ -29,6 +31,13 @@ public class Operation extends TypedElement implements Wrapper<Operation> {
 
   public HttpMethod getHttpMethod() {
     return httpMethod;
+  }
+
+  /**
+   * @return the javaMethod
+   */
+  public <T> T getJavaMethod() {
+    return (T) javaMethod;
   }
 
   public Parameter getParameter(final String name) {
@@ -58,6 +67,13 @@ public class Operation extends TypedElement implements Wrapper<Operation> {
 
   public void setHttpMethod(final HttpMethod httpMethod) {
     this.httpMethod = httpMethod;
+  }
+
+  /**
+   * @param javaMethod the javaMethod to set
+   */
+  public void setJavaMethod(final Object javaMethod) {
+    this.javaMethod = javaMethod;
   }
 
   public void setPath(final String value) {

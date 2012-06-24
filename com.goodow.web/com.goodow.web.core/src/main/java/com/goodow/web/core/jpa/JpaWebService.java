@@ -13,16 +13,10 @@ import com.google.web.bindery.autobean.vm.impl.TypeUtils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 
 public class JpaWebService<E extends WebEntity> implements WebService<E> {
-
-  protected Map<String, Method> methods;
 
   @Inject
   protected transient Provider<EntityManager> em;
@@ -47,21 +41,23 @@ public class JpaWebService<E extends WebEntity> implements WebService<E> {
     return domainClass;
   }
 
-  public <M> M getJavaMethod(final String name) {
-    if (methods == null) {
-      methods = new HashMap<String, Method>();
-      for (Class<? extends WebService> intf : getServiceInterfaces(getClass())) {
-        for (Method m : intf.getDeclaredMethods()) {
-          methods.put(m.getName(), m);
+  public Method getJavaMethod(final Operation operation) {
+    Method method = operation.getJavaMethod();
+    if (method == null) {
+      for (Method m : operation.getDeclaringType().getServiceClass().getDeclaredMethods()) {
+        if (m.getName().equals(operation.getName())) {
+          method = m;
+          operation.setJavaMethod(method);
+          break;
         }
       }
     }
-    return (M) methods.get(name);
+    return method;
   }
 
   @Override
   public <T2> T2 invoke(final Wrapper<Operation> operation, final Object... args) {
-    Method method = getJavaMethod(operation.as().getName());
+    Method method = getJavaMethod(operation.as());
     try {
       return (T2) method.invoke(this, args);
     } catch (IllegalArgumentException e) {
@@ -79,6 +75,12 @@ public class JpaWebService<E extends WebEntity> implements WebService<E> {
 
   @Override
   @Transactional
+  public void remove(final E domain) {
+    em.get().remove(domain);
+  }
+
+  @Override
+  @Transactional
   public void save(final E domain) {
     if (domain.getId() == null) {
       em.get().persist(domain);
@@ -87,27 +89,8 @@ public class JpaWebService<E extends WebEntity> implements WebService<E> {
     }
   }
 
-  @Override
-  @Transactional
-  public void remove(final E domain) {
-    em.get().remove(domain);
-  }
-
   protected EntityManager em() {
     return em.get();
-  }
-
-  private Set<Class<? extends WebService>> getServiceInterfaces(final Class clazz) {
-    Set<Class<? extends WebService>> result = new HashSet<Class<? extends WebService>>();
-    for (Class<?> intf : clazz.getInterfaces()) {
-      if (WebService.class.isAssignableFrom(intf)) {
-        result.add((Class<? extends WebService>) intf);
-      }
-    }
-    if (!Object.class.equals(clazz)) {
-      result.addAll(getServiceInterfaces(clazz.getSuperclass()));
-    }
-    return result;
   }
 
 }
