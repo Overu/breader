@@ -48,7 +48,9 @@ import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.ElementFilter;
 import javax.lang.model.util.Elements;
+import javax.tools.FileObject;
 import javax.tools.JavaFileObject;
+import javax.tools.StandardLocation;
 import javax.xml.bind.annotation.XmlType;
 
 @SupportedAnnotationTypes(value = {"*"})
@@ -351,6 +353,18 @@ public class WebGenerator extends AbstractProcessor {
       w.print("}");
       w.close();
     } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    try {
+      FileObject ginModuleFile =
+          filer.createResource(StandardLocation.SOURCE_OUTPUT, "",
+              "META-INF/services/com.google.gwt.inject.client.GinModule", pkg);
+      SourceWriter w = new SourceWriter(null, ginModuleFile.openWriter());
+      w.print(pkgName).print(".").print(moduleName);
+      w.close();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
       e.printStackTrace();
     }
 

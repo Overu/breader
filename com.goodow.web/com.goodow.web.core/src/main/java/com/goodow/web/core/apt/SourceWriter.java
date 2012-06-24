@@ -15,19 +15,18 @@ public class SourceWriter {
 
   private Set<String> imports;
 
-  private String className;
-
   public SourceWriter(final String className, final Writer writer) {
-    this.className = className;
     out = new PrintWriter(writer);
     imports = new HashSet<String>();
     imports.add("java.lang.*");
-    int index = className.lastIndexOf(".");
-    if (index > 0) {
-      String pkgName = className.substring(0, index);
-      imports.add(pkgName + ".*");
-      print("package ").print(pkgName).println(";");
-      println();
+    if (className != null) {
+      int index = className.lastIndexOf(".");
+      if (index > 0) {
+        String pkgName = className.substring(0, index);
+        imports.add(pkgName + ".*");
+        print("package ").print(pkgName).println(";");
+        println();
+      }
     }
   }
 

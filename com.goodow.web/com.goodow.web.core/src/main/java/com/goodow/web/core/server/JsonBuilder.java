@@ -109,7 +109,7 @@ public class JsonBuilder {
       String eId = jsonObject.getString("e_id");
       EntityId id = EntityId.parseId(eId);
       WebObject entity = request.getEntity(id);
-      for (Property prop : entity.type().getAllProperties().values()) {
+      for (Property prop : entity.getObjectType().getAllProperties().values()) {
         if (jsonObject.has(prop.getName())) {
           Object jsonValue = jsonObject.get(prop.getName());
           Object value = parse(request, prop.getType(), jsonValue);
@@ -133,7 +133,7 @@ public class JsonBuilder {
         EntityId eid = request.getEntityId((WebEntity) entity);
         jsonObject.put("e_id", eid.toString());
       }
-      for (Property prop : entity.type().getAllProperties().values()) {
+      for (Property prop : entity.getObjectType().getAllProperties().values()) {
         Object propValue = entity.get(prop);
         WebType propType = prop.getType();
         if (propType instanceof ObjectType) {

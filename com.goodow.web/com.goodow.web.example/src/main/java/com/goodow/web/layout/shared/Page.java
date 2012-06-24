@@ -1,8 +1,7 @@
 package com.goodow.web.layout.shared;
 
-import com.goodow.web.core.shared.WebEntity;
-import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Request;
+import com.goodow.web.core.shared.WebEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -87,11 +86,6 @@ public class Page extends WebEntity {
 
   public void setTitle(final String title) {
     this.title = title;
-  }
-
-  @Override
-  public ObjectType type() {
-    return null;
   }
 
 }

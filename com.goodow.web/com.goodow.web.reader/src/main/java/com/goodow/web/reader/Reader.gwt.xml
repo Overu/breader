@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='reader'>
-    
   <inherits name='com.goodow.web.core.Core' />
-
+  
+  <extend-configuration-property name="gin.module"
+    value="com.goodow.web.reader.shared.ReaderSharedModule" />
   <extend-configuration-property name="gin.module"
     value="com.goodow.web.reader.client.ReaderClientModule" />
-
-  <extend-configuration-property name="gin.module"
-    value="com.goodow.web.reader.client.ReaderClientPlugin" />
+  
   <source path="" includes="*.java" />
   <source path='client' />
   <source path='shared' />
-
 </module>

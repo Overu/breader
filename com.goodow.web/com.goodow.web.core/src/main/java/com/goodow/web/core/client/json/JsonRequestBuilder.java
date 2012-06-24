@@ -70,7 +70,7 @@ public class JsonRequestBuilder {
       JSONArray entities = new JSONArray();
       for (EntityId eid : request.getEntityIds()) {
         WebObject entity = request.getEntity(eid);
-        JSONValue jsonValue = create(request, entity.type(), entity, true);
+        JSONValue jsonValue = create(request, entity.getObjectType(), entity, true);
         entities.set(entities.size(), jsonValue);
       }
       obj.put("entities", entities);
@@ -102,7 +102,7 @@ public class JsonRequestBuilder {
           EntityId eid = request.getEntityId((WebEntity) entity);
           jsonObject.put("e_id", new JSONString(eid.toString()));
         }
-        for (Property prop : entity.type().getAllProperties().values()) {
+        for (Property prop : entity.getObjectType().getAllProperties().values()) {
           Object value = entity.get(prop);
           JSONValue jsonValue = create(request, prop.getType(), value, false);
           jsonObject.put(prop.getName(), jsonValue);
@@ -143,7 +143,7 @@ public class JsonRequestBuilder {
         JSONString eId = jsonObj.get("e_id").isString();
         EntityId id = EntityId.parseId(eId.stringValue());
         entity = request.getEntity(id);
-        for (Property prop : entity.type().getAllProperties().values()) {
+        for (Property prop : entity.getObjectType().getAllProperties().values()) {
           JSONValue jsonValue = jsonObj.get(prop.getName());
           Object value = parse(request, prop.getType(), jsonValue);
           entity.set(prop, value);

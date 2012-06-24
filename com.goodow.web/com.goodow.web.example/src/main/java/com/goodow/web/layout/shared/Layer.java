@@ -1,8 +1,7 @@
 package com.goodow.web.layout.shared;
 
-import com.goodow.web.core.shared.WebEntity;
-import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Request;
+import com.goodow.web.core.shared.WebEntity;
 
 import java.util.List;
 
@@ -92,11 +91,6 @@ public class Layer extends WebEntity {
 
   public void setWidgetId(final String widgetId) {
     this.widgetId = widgetId;
-  }
-
-  @Override
-  public ObjectType type() {
-    return null;
   }
 
 }

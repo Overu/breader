@@ -49,9 +49,4 @@ public class WebType extends NamedElement {
     this.textWriter = textWriter;
   }
 
-  @Override
-  public ObjectType type() {
-    return null;
-  }
-
 }

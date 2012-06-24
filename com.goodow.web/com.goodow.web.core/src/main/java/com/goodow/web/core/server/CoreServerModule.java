@@ -13,6 +13,7 @@ public class CoreServerModule extends AbstractModule {
   @Override
   protected void configure() {
     logger.finest("Install JpaServiceModule begin");
+    // requestStaticInjection(WebPlatform.class);
 
     bind(Message.class).toProvider(MessageProvider.class);
 

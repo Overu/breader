@@ -3,7 +3,7 @@ package com.goodow.web.core.jpa;
 import static com.google.inject.matcher.Matchers.annotatedWith;
 import static com.google.inject.matcher.Matchers.any;
 
-import com.goodow.web.core.client.CoreClientPlugin.Startup;
+import com.goodow.web.core.shared.CoreSharedModule.Startup;
 import com.goodow.web.core.shared.UserService;
 import com.goodow.web.core.shared.WebService;
 

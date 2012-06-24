@@ -7,16 +7,25 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public abstract class WebObject implements Serializable {
 
+  private ObjectType objectType;
+
   public Object get(final Property property) {
-    return type().getAccessor().getProperty(this, property);
+    return getObjectType().getAccessor().getProperty(this, property);
+  }
+
+  public ObjectType getObjectType() {
+    if (objectType == null) {
+      objectType = WebPlatform.getInstance().getEntityType(getClass().getName());
+    }
+    return objectType;
   }
 
   public void set(final Property property, final Object value) {
-    type().getAccessor().setProperty(this, property, value);
+    getObjectType().getAccessor().setProperty(this, property, value);
   }
 
-  public ObjectType type() {
-    // TODO
-    return null;
+  public void setObjectType(final ObjectType objectType) {
+    this.objectType = objectType;
   }
+
 }

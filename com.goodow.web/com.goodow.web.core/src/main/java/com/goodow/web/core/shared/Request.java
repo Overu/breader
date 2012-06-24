@@ -63,7 +63,7 @@ public class Request<T> implements Serializable {
   public EntityId getEntityId(final WebEntity entity) {
     EntityId id = entityIds.get(entity);
     if (id == null) {
-      id = new EntityId(entity.type().getQualifiedName());
+      id = new EntityId(entity.getObjectType().getQualifiedName());
       if (entity.getId() == null) {
         id.setClientId(Integer.toString(entities.size() + 1));
       } else {

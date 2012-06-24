@@ -1,12 +1,18 @@
 package com.goodow.web.core.shared;
 
+import com.google.inject.Singleton;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.inject.Singleton;
-
 @Singleton
 public class WebPlatform {
+
+  private static WebPlatform instance;
+
+  public static WebPlatform getInstance() {
+    return instance;
+  }
 
   Map<String, Package> packages = new HashMap<String, Package>();
 
