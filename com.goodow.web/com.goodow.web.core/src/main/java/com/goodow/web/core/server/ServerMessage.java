@@ -1,12 +1,10 @@
 package com.goodow.web.core.server;
 
-import com.goodow.web.core.shared.WebEntity;
-import com.goodow.web.core.shared.EntityId;
-import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Message;
+import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Response;
+import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.core.shared.WebService;
-import com.goodow.web.core.shared.WebPlatform;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -14,23 +12,16 @@ import com.google.inject.Injector;
 public class ServerMessage extends Message {
 
   @Inject
-  private WebPlatform platform;
-
-  @Inject
   private Injector injector;
 
   @Override
-  public WebEntity find(final EntityId id) {
-    ObjectType entityType = platform.getEntityType(id.getEntityType());
-    if (id.getStableId() != null) {
-      WebService s = entityType.getService();
-      if (s == null) {
-        s = injector.getInstance(entityType.getServiceClass());
-      }
-      return (WebEntity) s.find(id.getStableId());
-    } else {
-      return (WebEntity) entityType.create();
+  public WebEntity find(final ObjectType objectType, final String id) {
+    WebService<?> service = objectType.getService();
+    if (service == null) {
+      service = injector.getInstance(objectType.getServiceClass());
+      objectType.setService(service);
     }
+    return service.find(id);
   }
 
   @Override

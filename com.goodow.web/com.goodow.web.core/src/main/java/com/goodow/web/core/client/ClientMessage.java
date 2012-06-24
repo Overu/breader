@@ -3,11 +3,11 @@ package com.goodow.web.core.client;
 import static com.google.gwt.user.client.rpc.RpcRequestBuilder.STRONG_NAME_HEADER;
 
 import com.goodow.web.core.client.json.JsonRequestBuilder;
-import com.goodow.web.core.shared.WebEntity;
-import com.goodow.web.core.shared.EntityId;
 import com.goodow.web.core.shared.Message;
+import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Response;
+import com.goodow.web.core.shared.WebEntity;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
@@ -50,8 +50,7 @@ public class ClientMessage extends Message implements RequestCallback {
    * @see org.cloudlet.web.core.shared.Message#find(org.cloudlet.web.core.shared.EntityId)
    */
   @Override
-  public WebEntity find(final EntityId eId) {
-    // TODO Auto-generated method stub
+  public WebEntity find(final ObjectType objectType, final String id) {
     return null;
   }
 

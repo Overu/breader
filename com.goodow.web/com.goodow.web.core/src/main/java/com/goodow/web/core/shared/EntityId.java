@@ -25,17 +25,17 @@ public class EntityId {
 
   private String clientId;
 
-  private String entityType;
+  private String type;
 
-  public EntityId(final String entityType) {
-    this.entityType = entityType;
+  public EntityId(final String type) {
+    this.type = type;
   }
 
   @Override
   public boolean equals(final Object obj) {
     if (obj instanceof EntityId) {
       EntityId that = (EntityId) obj;
-      if (!this.entityType.equals(that.entityType)) {
+      if (!this.type.equals(that.type)) {
         return false;
       }
       if (this.clientId != null) {
@@ -51,8 +51,8 @@ public class EntityId {
     return clientId;
   }
 
-  public String getEntityType() {
-    return entityType;
+  public String getType() {
+    return type;
   }
 
   public String getStableId() {
@@ -64,9 +64,9 @@ public class EntityId {
     if (clientId == null && stableId == null) {
       return super.hashCode();
     } else if (clientId != null) {
-      return (entityType + "#" + clientId).hashCode();
+      return (type + "#" + clientId).hashCode();
     } else {
-      return (entityType + "@" + stableId).hashCode();
+      return (type + "@" + stableId).hashCode();
     }
   }
 
@@ -74,8 +74,8 @@ public class EntityId {
     this.clientId = clientId;
   }
 
-  public void setEntityType(final String entityType) {
-    this.entityType = entityType;
+  public void setType(final String entityType) {
+    this.type = entityType;
   }
 
   public void setStableId(final String stableId) {
@@ -87,7 +87,7 @@ public class EntityId {
     if (clientId == null && stableId == null) {
       return super.toString();
     }
-    String result = entityType + "@";
+    String result = type + "@";
     if (stableId != null) {
       result += stableId;
     }

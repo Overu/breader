@@ -1,7 +1,5 @@
 package com.goodow.web.core.server;
 
-import com.goodow.web.core.shared.WebEntity;
-import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.EntityId;
 import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Operation;
@@ -9,9 +7,11 @@ import com.goodow.web.core.shared.Parameter;
 import com.goodow.web.core.shared.Property;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.Response;
-import com.goodow.web.core.shared.WebType;
 import com.goodow.web.core.shared.ValueType;
+import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.WebPlatform;
+import com.goodow.web.core.shared.WebType;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -108,7 +108,7 @@ public class JsonBuilder {
     } else {
       String eId = jsonObject.getString("e_id");
       EntityId id = EntityId.parseId(eId);
-      WebObject entity = request.getEntity(id);
+      WebEntity entity = request.getEntity(id);
       for (Property prop : entity.getObjectType().getAllProperties().values()) {
         if (jsonObject.has(prop.getName())) {
           Object jsonValue = jsonObject.get(prop.getName());

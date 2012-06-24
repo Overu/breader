@@ -1,10 +1,12 @@
 package com.goodow.web.reader.test;
 
 import com.goodow.web.core.server.JsonBuilder;
+import com.goodow.web.core.shared.Accessor;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.Response;
 import com.goodow.web.reader.shared.Library;
 import com.goodow.web.reader.shared.LibraryService;
+import com.goodow.web.reader.shared.ReaderPackage;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -37,6 +39,8 @@ public class LibraryTest extends ExampleTest {
     library.setTitle(generateId(Library.class));
     Library result = libraryService.save(library, true, 10);
     System.out.println(result);
+    Accessor access = ReaderPackage.Library.as().getAccessor();
+    System.out.println(access);
   }
 
   @Test

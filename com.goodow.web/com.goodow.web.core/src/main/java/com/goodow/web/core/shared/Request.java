@@ -53,7 +53,7 @@ public class Request<T> implements Serializable {
   public WebEntity getEntity(final EntityId id) {
     WebEntity entity = entities.get(id);
     if (entity == null) {
-      entity = message.get().find(id);
+      entity = WebPlatform.getInstance().getOrCreateEntity(id);
       entities.put(id, entity);
       entityIds.put(entity, id);
     }

@@ -123,6 +123,10 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
     this.provider = provider;
   }
 
+  public void setService(final WebService service) {
+    this.service = service;
+  }
+
   public void setServiceClass(final Class<? extends WebService> serviceClass) {
     this.serviceClass = serviceClass;
   }

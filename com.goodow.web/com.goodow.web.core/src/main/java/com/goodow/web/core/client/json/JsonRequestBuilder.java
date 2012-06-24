@@ -1,15 +1,15 @@
 package com.goodow.web.core.client.json;
 
-import com.goodow.web.core.shared.WebEntity;
-import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.EntityId;
 import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Parameter;
 import com.goodow.web.core.shared.Property;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.Response;
-import com.goodow.web.core.shared.WebType;
 import com.goodow.web.core.shared.ValueType;
+import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebObject;
+import com.goodow.web.core.shared.WebType;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
@@ -130,26 +130,26 @@ public class JsonRequestBuilder {
       }
     } else {
       ObjectType entityType = (ObjectType) type;
-      WebObject entity;
+      WebObject obj;
       JSONString jsonString = json.isString();
       if (jsonString != null) {
         String key = json.isString().stringValue();
         EntityId id = EntityId.parseId(key);
-        WebEntity content = request.getEntity(id);
-        content.setId(id.getStableId());
-        entity = content;
+        WebEntity entity = request.getEntity(id);
+        entity.setId(id.getStableId());
+        obj = entity;
       } else {
         JSONObject jsonObj = json.isObject();
         JSONString eId = jsonObj.get("e_id").isString();
         EntityId id = EntityId.parseId(eId.stringValue());
-        entity = request.getEntity(id);
-        for (Property prop : entity.getObjectType().getAllProperties().values()) {
+        obj = request.getEntity(id);
+        for (Property prop : obj.getObjectType().getAllProperties().values()) {
           JSONValue jsonValue = jsonObj.get(prop.getName());
           Object value = parse(request, prop.getType(), jsonValue);
-          entity.set(prop, value);
+          obj.set(prop, value);
         }
       }
-      return entity;
+      return obj;
     }
   }
 }

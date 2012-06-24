@@ -1,6 +1,7 @@
 package com.goodow.web.core.shared;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import java.util.HashMap;
@@ -16,9 +17,12 @@ public class WebPlatform {
     return instance;
   }
 
+  public @Inject
+  Provider<Message> message;
+
   Map<String, Package> packages = new HashMap<String, Package>();
 
-  public ObjectType getEntityType(final String fullName) {
+  public ObjectType getObjectType(final String fullName) {
     WebType type = getType(fullName);
     return (ObjectType) type;
   }
@@ -26,13 +30,22 @@ public class WebPlatform {
   public Operation getOperation(final String fullName) {
     int index = fullName.lastIndexOf(".");
     String typeName = fullName.substring(0, index);
-    ObjectType pkg = getEntityType(typeName);
+    ObjectType pkg = getObjectType(typeName);
     if (pkg != null) {
       String simpleName = fullName.substring(index + 1);
       return pkg.getOperation(simpleName);
     }
     return null;
 
+  }
+
+  public WebEntity getOrCreateEntity(final EntityId id) {
+    ObjectType objectType = WebPlatform.getInstance().getObjectType(id.getType());
+    if (id.getStableId() != null) {
+      return message.get().find(objectType, id.getStableId());
+    } else {
+      return (WebEntity) objectType.create();
+    }
   }
 
   public Package getPackage(final String name) {

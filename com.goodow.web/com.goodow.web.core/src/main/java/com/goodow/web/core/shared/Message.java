@@ -15,7 +15,7 @@ public abstract class Message implements Serializable {
     requests.add(request);
   }
 
-  public abstract WebEntity find(EntityId eId);
+  public abstract WebEntity find(ObjectType objectType, String id);
 
   public boolean isActive() {
     return activeRequest != null;
