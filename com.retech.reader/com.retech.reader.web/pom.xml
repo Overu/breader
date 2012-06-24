@@ -41,18 +41,6 @@
     </dependency>
     <dependency>
       <groupId>com.goodow.web</groupId>
-      <artifactId>com.goodow.web.security</artifactId>
-      <version>${project.version}</version>
-      <classifier>client</classifier>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.goodow.web</groupId>
-      <artifactId>com.goodow.web.security</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.goodow.web</groupId>
       <artifactId>com.goodow.web.logging</artifactId>
       <version>${project.version}</version>
       <classifier>client</classifier>
