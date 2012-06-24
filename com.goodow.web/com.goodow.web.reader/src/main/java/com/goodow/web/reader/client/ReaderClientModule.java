@@ -6,7 +6,7 @@ import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.reader.shared.AsyncLibraryService;
 import com.goodow.web.reader.shared.Library;
-import com.goodow.web.reader.shared.ReaderFactory;
+import com.goodow.web.reader.shared.ReaderPackage;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.RepeatingCommand;
@@ -37,7 +37,7 @@ public final class ReaderClientModule extends AbstractGinModule {
     private void onStart(final AsyncLibraryService libraryService) {
       final Label l = new Label("hello");
       RootPanel.get().add(l);
-      final Library lib = ReaderFactory.Library.get();
+      final Library lib = ReaderPackage.Library.get();
       lib.setTitle("ggg");
       Request<Library> request = libraryService.save(lib, false, 5);
       request.fire(new Receiver<Library>() {

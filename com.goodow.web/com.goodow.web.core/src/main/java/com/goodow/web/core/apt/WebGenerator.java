@@ -2,9 +2,9 @@ package com.goodow.web.core.apt;
 
 import com.goodow.web.core.shared.Accessor;
 import com.goodow.web.core.shared.AsyncWebService;
-import com.goodow.web.core.shared.EntityInfo;
 import com.goodow.web.core.shared.EnumInfo;
 import com.goodow.web.core.shared.Factory;
+import com.goodow.web.core.shared.ObjectInfo;
 import com.goodow.web.core.shared.OperationInfo;
 import com.goodow.web.core.shared.Package;
 import com.goodow.web.core.shared.Request;
@@ -105,7 +105,6 @@ public class WebGenerator extends AbstractProcessor {
     }
 
     for (PackageElement pkg : ElementFilter.packagesIn(roundEnv.getRootElements())) {
-      generateFactory(pkg);
       generatePackage(pkg);
       generateModule(pkg);
 
@@ -327,9 +326,7 @@ public class WebGenerator extends AbstractProcessor {
       w.println("protected void configure() {");
 
       w.indent();
-      w.print("requestStaticInjection(").print(factorySimpleName).println(".class);");
       w.print("requestStaticInjection(").print(pkgSimpleName).println(".class);");
-
       w.outdent();
 
       w.println("}");
@@ -580,19 +577,13 @@ public class WebGenerator extends AbstractProcessor {
 
         boolean isAbstract = xmlType.getModifiers().contains(Modifier.ABSTRACT);
 
-        w.print("public static final ").type(EntityInfo.class).print(" ").print(typeName).print(
-            " = new ").type(EntityInfo.class).print("(");
+        w.print("public static final ").type(ObjectInfo.class).print("<").type(typeName)
+            .print("> ").print(typeName).print(" = new ").type(ObjectInfo.class).print("<").type(
+                typeName).print(">(");
         // w.print("\"").print(typeName).print("\"");
         // w.print(", ");
 
         w.type(xmlType.getQualifiedName().toString()).print(".class");
-
-        w.print(", ");
-        if (isAbstract) {
-          w.print("null");
-        } else {
-          w.print(factorySimpleName).print(".").print(typeName);
-        }
 
         w.print(", ");
         if (serviceClass != null) {
@@ -601,17 +592,20 @@ public class WebGenerator extends AbstractProcessor {
           w.print("null");
         }
 
-        // w.print(", ");
-        // TypeElement serviceType = getServiceType(resType);
-        // if (serviceType != null) {
-        // String serviceInstance = typeName +
-        // Service.class.getSimpleName();
-        // w.print(factorySimpleName).print(".").print(serviceInstance);
-        // } else {
-        // w.print("null");
-        // }
-
-        w.println(");");
+        w.print(")");
+        if (!isAbstract) {
+          w.println("{");
+          w.indent();
+          w.annotation(Override.class);
+          w.print("public ").print(typeName).print(" get() {").println();
+          w.indent();
+          w.print("return new ").print(typeName).print("();").println();
+          w.outdent();
+          w.println("}");
+          w.outdent();
+          w.println("}");
+        }
+        w.println(";");
       }
 
       List<String> valueTypes = new ArrayList<String>();
