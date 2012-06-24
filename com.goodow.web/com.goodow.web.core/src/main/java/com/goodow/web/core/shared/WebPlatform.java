@@ -1,5 +1,6 @@
 package com.goodow.web.core.shared;
 
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import java.util.Map;
 @Singleton
 public class WebPlatform {
 
+  @Inject
   private static WebPlatform instance;
 
   public static WebPlatform getInstance() {

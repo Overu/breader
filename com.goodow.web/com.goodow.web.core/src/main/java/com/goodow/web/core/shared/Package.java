@@ -1,5 +1,7 @@
 package com.goodow.web.core.shared;
 
+import com.google.inject.Inject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +11,12 @@ import javax.xml.bind.annotation.XmlType;
 public class Package extends NamedElement {
 
   private transient Map<String, WebType> types = new HashMap<String, WebType>();
+
+  @Inject
+  private static WebPlatform platform;
+
+  protected Package() {
+  }
 
   public void addType(final WebType type) {
     types.put(type.getName(), type);
@@ -41,8 +49,8 @@ public class Package extends NamedElement {
     operation.getParameters().put(name, param);
   }
 
-  protected <T> void addProperty(final ObjectType entityType, final String name, final WebType type,
-      final boolean many) {
+  protected <T> void addProperty(final ObjectType entityType, final String name,
+      final WebType type, final boolean many) {
     Property property = new Property();
     property.setName(name);
     property.setType(type);
@@ -55,6 +63,10 @@ public class Package extends NamedElement {
       type.setPackage(this);
       addType(type);
     }
+  }
+
+  protected void init() {
+    platform.getPackages().put(this.getName(), this);
   }
 
 }

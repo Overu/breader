@@ -683,12 +683,22 @@ public class WebGenerator extends AbstractProcessor {
         }
       }
 
-      w.print("public ").print(pkgSimpleName).print("() {").println();
+      w.annotation(Inject.class);
+      w.print("private static ").print(pkgSimpleName).println(" instance;");
+      w.print("public static ").print(pkgSimpleName).println(" getInstance() {");
+      w.indent();
+      w.print("return instance;").println();
+      w.outdent();
+      w.println("}");
+
+      w.print("protected ").print(pkgSimpleName).print("() {").println();
 
       w.indent();
 
       w.print("setName(\"").print(pkgName).println("\");");
+      w.print("init();");
       w.print("addEntityTypes(");
+
       boolean first = true;
       for (TypeElement xmlType : getXmlTypes(pkg)) {
         if (first) {
