@@ -39,7 +39,7 @@ public class LoggingGinModule extends AbstractGinModule {
     // , final ChannelContextProvider channelContextProvider
     // , final LoggingRequestProvider loggingRequestProvider
     ) {
-      logger.finest("EagerSingleton start");
+      logger.info("LoggingGinModule start");
 
       Logger rootLogger = Logger.getLogger("");
       rootLogger.addHandler(logHandler);

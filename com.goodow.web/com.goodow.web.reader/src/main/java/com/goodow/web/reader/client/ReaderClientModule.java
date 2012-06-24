@@ -14,11 +14,11 @@ import com.google.inject.Inject;
 import java.util.logging.Logger;
 
 public final class ReaderClientModule extends AbstractGinModule {
-
   public static class ReaderUI {
     @Inject
     public ReaderUI(final AsyncLibraryService libraryService) {
-      final Label l = new Label("hello");
+      logger.info("new ReaderUI");
+      final Label l = new Label("loading...");
       RootPanel.get().add(l);
       final Library lib = ReaderPackage.Library.get();
       lib.setTitle("ggg");
@@ -33,11 +33,11 @@ public final class ReaderClientModule extends AbstractGinModule {
     }
   }
 
-  private final Logger logger = Logger.getLogger(getClass().getName());
+  private static final Logger logger = Logger.getLogger(ReaderClientModule.class.getName());
 
   @Override
   protected void configure() {
-    logger.info("config ReaderClientModule");
+    logger.info("configure ReaderClientModule");
     bind(ReaderUI.class).asEagerSingleton();
   }
 
