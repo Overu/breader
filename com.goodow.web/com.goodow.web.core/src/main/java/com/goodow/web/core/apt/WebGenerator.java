@@ -3,7 +3,6 @@ package com.goodow.web.core.apt;
 import com.goodow.web.core.shared.Accessor;
 import com.goodow.web.core.shared.AsyncWebService;
 import com.goodow.web.core.shared.EnumInfo;
-import com.goodow.web.core.shared.Factory;
 import com.goodow.web.core.shared.ObjectInfo;
 import com.goodow.web.core.shared.OperationInfo;
 import com.goodow.web.core.shared.Package;
@@ -18,7 +17,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import java.io.IOException;
-import java.security.Provider;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -257,52 +255,11 @@ public class WebGenerator extends AbstractProcessor {
     }
   }
 
-  private String generateFactory(final PackageElement pkg) {
-    String pkgName = pkg.getQualifiedName().toString();
-    String prefix = getPrefix(pkg);
-    String factoryName = prefix + "Factory";
-
-    try {
-      SourceWriter w = openWriter(pkgName, factoryName, pkg);
-
-      w.importPackage(WebObject.class.getPackage());
-      w.importPackage(Singleton.class.getPackage());
-      w.println();
-
-      w.print("@").print(Singleton.class.getSimpleName()).println("");
-      w.print("public class ").print(factoryName).print(" extends ").type(Factory.class).println(
-          " {");
-
-      w.indent();
-
-      for (TypeElement xmlType : getXmlTypes(pkg)) {
-        String typeName = xmlType.getSimpleName().toString();
-
-        if (!xmlType.getModifiers().contains(Modifier.ABSTRACT)) {
-          w.println();
-          w.print("@").println(Inject.class.getSimpleName());
-          w.print("public static ").print(Provider.class.getSimpleName()).print("<")
-              .print(typeName).print("> ").print(typeName).println(";");
-        }
-
-      }
-
-      w.outdent();
-
-      w.print("}");
-      w.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return factoryName;
-  }
-
   private String generateModule(final PackageElement pkg) {
     String pkgName = pkg.getQualifiedName().toString();
     String prefix = getPrefix(pkgName);
     String moduleName = prefix + "SharedModule";
     String pkgSimpleName = prefix + "Package";
-    String factorySimpleName = prefix + "Factory";
 
     String baseModuleName = SharedModule.class.getName();
 
@@ -358,7 +315,6 @@ public class WebGenerator extends AbstractProcessor {
     String pkgName = pkg.getQualifiedName().toString();
     String prefix = getPrefix(pkg);
     String pkgSimpleName = prefix + "Package";
-    String factorySimpleName = prefix + "Factory";
 
     try {
       SourceWriter w = openWriter(pkgName, pkgSimpleName, pkg);
