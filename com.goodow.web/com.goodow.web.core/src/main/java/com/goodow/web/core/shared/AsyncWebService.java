@@ -1,16 +1,9 @@
-package com.goodow.web.core.client;
-
-import com.goodow.web.core.shared.WebObject;
-import com.goodow.web.core.shared.Message;
-import com.goodow.web.core.shared.Operation;
-import com.goodow.web.core.shared.Request;
-import com.goodow.web.core.shared.WebPlatform;
-import com.goodow.web.core.shared.Wrapper;
+package com.goodow.web.core.shared;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-public class ClientWebService<E extends WebObject> {
+public class AsyncWebService<E extends WebObject> {
 
   @Inject
   Provider<Message> message;

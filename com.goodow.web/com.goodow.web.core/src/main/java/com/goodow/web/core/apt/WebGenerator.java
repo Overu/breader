@@ -1,14 +1,14 @@
 package com.goodow.web.core.apt;
 
-import com.goodow.web.core.client.ClientWebService;
-import com.goodow.web.core.jpa.JpaWebService;
 import com.goodow.web.core.shared.Accessor;
+import com.goodow.web.core.shared.AsyncWebService;
 import com.goodow.web.core.shared.EntityInfo;
 import com.goodow.web.core.shared.EnumInfo;
 import com.goodow.web.core.shared.Factory;
 import com.goodow.web.core.shared.OperationInfo;
 import com.goodow.web.core.shared.Package;
 import com.goodow.web.core.shared.Request;
+import com.goodow.web.core.shared.SharedModule;
 import com.goodow.web.core.shared.ValueInfo;
 import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.core.shared.WebObject;
@@ -105,8 +105,11 @@ public class WebGenerator extends AbstractProcessor {
     for (PackageElement pkg : ElementFilter.packagesIn(roundEnv.getRootElements())) {
       generateFactory(pkg);
       generatePackage(pkg);
-      generateModule(pkg, ClientWebService.class);
-      generateModule(pkg, JpaWebService.class);
+      generateModule(pkg);
+
+      for (TypeElement webTypeEl : getXmlTypes(pkg)) {
+        generateAsyncService(webTypeEl);
+      }
     }
 
     return false;
@@ -120,14 +123,11 @@ public class WebGenerator extends AbstractProcessor {
     return result;
   }
 
-  private void generateClientService(final TypeElement entityType, final String module,
-      final boolean async, final Class<?> baseServiceClass) {
+  private void generateAsyncService(final TypeElement entityType) {
     PackageElement pkg = (PackageElement) entityType.getEnclosingElement();
     String pkgName = pkg.getQualifiedName().toString();
     String prefix = getPrefix(pkg);
     String pkgSimpleName = prefix + "Package";
-    int index = pkgName.lastIndexOf(".");
-    String implPackageName = pkgName.substring(0, index) + "." + module.toLowerCase();
 
     TypeElement serviceType = getServiceType(entityType);
     if (serviceType == null) {
@@ -135,9 +135,9 @@ public class WebGenerator extends AbstractProcessor {
     }
 
     try {
-      String serviceName = module + serviceType.getSimpleName().toString();
+      String serviceName = "Async" + serviceType.getSimpleName().toString();
 
-      String implClassName = implPackageName + "." + serviceName;
+      String implClassName = pkgName + "." + serviceName;
       if ("ServerLibraryService".equals(serviceName)) {
         System.out.println("debug");
       }
@@ -153,10 +153,9 @@ public class WebGenerator extends AbstractProcessor {
         return;
       }
 
-      SourceWriter w = openWriter(implPackageName, serviceName, entityType);
+      SourceWriter w = openWriter(pkgName, serviceName, entityType);
 
       w.importPackage(pkgName);
-      w.importPackage(baseServiceClass.getPackage());
       w.importPackage(Request.class.getPackage());
 
       String typeName = entityType.getQualifiedName().toString();
@@ -182,7 +181,7 @@ public class WebGenerator extends AbstractProcessor {
         w.print(">");
       }
 
-      w.print(" extends ").type(baseServiceClass);
+      w.print(" extends ").type(AsyncWebService.class);
       w.print("<");
       if (!typeVars.isEmpty()) {
 
@@ -200,25 +199,6 @@ public class WebGenerator extends AbstractProcessor {
       }
       w.print(">");
 
-      if (!async) {
-        w.print(" implements ").type(serviceType.getQualifiedName().toString());
-
-        if (!typeVars.isEmpty()) {
-          w.print("<");
-          boolean first = true;
-          for (TypeParameterElement tpe : typeVars) {
-            if (first) {
-              first = false;
-            } else {
-              w.print(", ");
-            }
-            w.print(tpe.getSimpleName().toString());
-          }
-          w.print(">");
-        }
-
-      }
-
       w.print(" {");
 
       w.indent();
@@ -228,26 +208,17 @@ public class WebGenerator extends AbstractProcessor {
         TypeMirror rt = method.getReturnType();
         w.println();
 
-        if (!async) {
-          w.println("@Override");
-        }
-
         w.print("public ");
 
-        if (async) {
-          w.type(Request.class).print("<");
-          if (rt.getKind() == TypeKind.VOID) {
-            w.print("Void");
-          } else {
-            w.type(rt.toString());
-          }
+        w.type(Request.class).print("<");
+        if (rt.getKind() == TypeKind.VOID) {
+          w.print("Void");
         } else {
           w.type(rt.toString());
         }
 
-        if (async) {
-          w.print(">");
-        }
+        w.print(">");
+
         w.print(" ").print(method.getSimpleName()).print("(");
 
         boolean first = true;
@@ -263,11 +234,7 @@ public class WebGenerator extends AbstractProcessor {
 
         w.indent();
 
-        if (async) {
-          w.print("return ");
-        } else if (rt.getKind() != TypeKind.VOID) {
-          w.print("return ");
-        }
+        w.print("return ");
 
         w.print("invoke(").print(pkgSimpleName).print(".").print(getOperationName(method));
         for (VariableElement p : method.getParameters()) {
@@ -317,17 +284,6 @@ public class WebGenerator extends AbstractProcessor {
               .print(typeName).print("> ").print(typeName).println(";");
         }
 
-        // TypeElement serviceType = getServiceType(resType);
-        // if (serviceType != null) {
-        // w.println();
-        // w.print("@").println(Inject.class.getSimpleName());
-        // String serviceTypeName =
-        // serviceType.getQualifiedName().toString();
-        // String serviceInstanceName = typeName +
-        // Service.class.getSimpleName();
-        // w.print("public static ").type(serviceTypeName).print(" ").print(serviceInstanceName)
-        // .println(";");
-        // }
       }
 
       w.outdent();
@@ -340,40 +296,22 @@ public class WebGenerator extends AbstractProcessor {
     return factoryName;
   }
 
-  private String generateModule(final PackageElement pkg, final Class<?> baseSerivceClass) {
-
-    String basePackageName = baseSerivceClass.getPackage().getName();
-    String module = basePackageName.substring(basePackageName.lastIndexOf(".") + 1);
-    module = module.substring(0, 1).toUpperCase() + module.substring(1);
-    boolean async = ClientWebService.class.equals(baseSerivceClass);
-
-    if (!async) {
-      return null;
-    }
-
-    String sharedPkgName = pkg.getQualifiedName().toString();
-    int index = sharedPkgName.lastIndexOf(".");
-    String pkgName = sharedPkgName.substring(0, index) + "." + module.toLowerCase();
-    String prefix = getPrefix(pkg);
-    String moduleName = prefix + module + "Module";
+  private String generateModule(final PackageElement pkg) {
+    String pkgName = pkg.getQualifiedName().toString();
+    String prefix = getPrefix(pkgName);
+    String moduleName = prefix + "SharedModule";
     String pkgSimpleName = prefix + "Package";
     String factorySimpleName = prefix + "Factory";
 
-    String coreSharedPkg = WebObject.class.getPackage().getName();
-    String corePkg = coreSharedPkg.substring(0, coreSharedPkg.lastIndexOf("."));
-    String coreModulePkg = corePkg + "." + module.toLowerCase();
-    String baseModuleName = coreModulePkg + "." + module + "Module";
+    String baseModuleName = SharedModule.class.getName();
 
     try {
       SourceWriter w = openWriter(pkgName, moduleName, pkg);
 
-      w.importPackage(WebObject.class.getPackage());
       w.importPackage(Singleton.class.getPackage());
-      w.importPackage(coreModulePkg);
-      w.importPackage(sharedPkgName);
-      String corePackage = WebObject.class.getPackage().getName();
-      w.importPackage(corePackage.substring(0, corePackage.lastIndexOf(".")) + "."
-          + module.toLowerCase());
+      w.importPackage(WebObject.class.getPackage());
+      w.importPackage(pkgName);
+
       w.println();
 
       w.print("@").print(Singleton.class.getSimpleName()).println("");
@@ -404,30 +342,6 @@ public class WebGenerator extends AbstractProcessor {
       w.print("requestStaticInjection(").print(factorySimpleName).println(".class);");
       w.println("bind(Startup.class).asEagerSingleton();");
 
-      if (!async) {
-        for (TypeElement entityType : getXmlTypes(pkg)) {
-
-          TypeElement serviceType = getServiceType(entityType);
-
-          if (serviceType == null) {
-            continue;
-          }
-
-          String typeName = entityType.getSimpleName().toString();
-
-          String serviceInstanceName = typeName + "WebService";
-
-          // if (serviceType == null) {
-          // w.type(Service.class.getName()).print("<").type(entityType.getQualifiedName().toString())
-          // .print(">");
-          // } else {
-          w.print("bind(").type(serviceType.getQualifiedName().toString()).print(".class).to(");
-          // }
-          w.type(pkgName + "." + module + serviceType.getSimpleName().toString());
-          w.print(".class);").println();
-        }
-      }
-
       w.outdent();
 
       w.println("}");
@@ -438,10 +352,6 @@ public class WebGenerator extends AbstractProcessor {
       w.close();
     } catch (IOException e) {
       e.printStackTrace();
-    }
-
-    for (TypeElement webTypeEl : getXmlTypes(pkg)) {
-      generateClientService(webTypeEl, module, async, baseSerivceClass);
     }
 
     return moduleName;
