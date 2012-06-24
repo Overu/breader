@@ -17,7 +17,7 @@ import com.google.inject.Inject;
 
 import java.util.logging.Logger;
 
-public final class ReaderClientPlugin extends AbstractGinModule {
+public final class ReaderClientModule extends AbstractGinModule {
 
   public static class Startup {
     @Inject

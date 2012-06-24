@@ -322,27 +322,13 @@ public class WebGenerator extends AbstractProcessor {
 
       w.indent();
 
-      w.println("public static class Startup {");
-
-      w.indent();
-      w.annotation(Inject.class);
-      w.print("public Startup(final ").print(pkgSimpleName).println(
-          " pkg, final WebPlatform platform) {");
-      w.indent();
-      w.println("platform.getPackages().put(pkg.getName(), pkg);");
-      w.outdent();
-      w.println("}");
-      w.outdent();
-
-      w.println("}");
-
       w.println();
       w.annotation(Override.class);
       w.println("protected void configure() {");
 
       w.indent();
       w.print("requestStaticInjection(").print(factorySimpleName).println(".class);");
-      w.println("bind(Startup.class).asEagerSingleton();");
+      w.print("requestStaticInjection(").print(pkgSimpleName).println(".class);");
 
       w.outdent();
 
