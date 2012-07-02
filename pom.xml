@@ -44,6 +44,13 @@
       </dependency>
       <dependency>
         <groupId>com.google.gwt</groupId>
+        <artifactId>gwt-elemental</artifactId>
+        <version>2.5.0-rc1</version>
+        <!-- "provided" so that we don't deploy -->
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.gwt</groupId>
         <artifactId>gwt-dev</artifactId>
         <version>${gwt.version}</version>
         <!-- "provided" so that we don't deploy -->

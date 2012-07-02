@@ -7,11 +7,11 @@
 .DS_Store
 
 # Maven build output.
-target
+target/
 
 # Ant build output.
-/build
+build/
 
 # Eclipse build output.
-/bin
-/test-classes
+bin/
+.gwt/
