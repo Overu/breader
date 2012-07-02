@@ -1,11 +1,11 @@
 package com.goodow.web.ui.client;
 
-import com.goodow.web.ui.client.activities.AnimationSelectedEvent;
 import com.goodow.web.ui.client.event.ActionEvent;
 import com.goodow.web.ui.client.event.ActionNames;
 import com.goodow.web.ui.client.places.MyPlace;
 
 import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.PlaceChangeEvent;
 import com.google.gwt.user.client.History;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
@@ -14,29 +14,24 @@ import com.googlecode.mgwt.dom.client.event.mouse.HandlerRegistrationCollection;
 import com.googlecode.mgwt.mvp.client.Animation;
 import com.googlecode.mgwt.mvp.client.history.HistoryHandler;
 import com.googlecode.mgwt.mvp.client.history.HistoryObserver;
-import com.googlecode.mgwt.ui.client.MGWT;
 
 public class AppHistoryObserver implements HistoryObserver {
 
   @Override
+  //
   public HandlerRegistration bind(final EventBus eventBus, final HistoryHandler historyHandler) {
-
     HandlerRegistration addHandler =
-        eventBus.addHandler(AnimationSelectedEvent.getType(), new AnimationSelectedEvent.Handler() {
-
+        eventBus.addHandler(PlaceChangeEvent.TYPE, new PlaceChangeEvent.Handler() {
           @Override
-          public void onAnimationSelected(final AnimationSelectedEvent event) {
-
-            Place place = event.getAnimation();
-
-            if (MGWT.getOsDetection().isTablet()) {
-
-              historyHandler.replaceCurrentPlace(place);
-              historyHandler.goTo(place, true);
-            } else {
-              historyHandler.goTo(place);
-            }
-
+          public void onPlaceChange(final PlaceChangeEvent event) {
+            Place place = event.getNewPlace();
+            // if (MGWT.getOsDetection().isTablet()) {
+            // historyHandler.replaceCurrentPlace(place);
+            // historyHandler.goTo(place, true);
+            // } else {
+            // historyHandler.goTo(place);
+            // }
+            // historyHandler.goTo(place);
           }
         });
 

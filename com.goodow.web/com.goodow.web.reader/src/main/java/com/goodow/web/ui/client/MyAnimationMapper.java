@@ -11,10 +11,6 @@ public class MyAnimationMapper implements AnimationMapper {
 
   @Override
   public Animation getAnimation(final Place oldPlace, final Place newPlace) {
-    if (oldPlace == null) {
-      return Animation.FADE;
-    }
-
     MyPlace place = (MyPlace) newPlace;
     return place.getAnimation();
   }

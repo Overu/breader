@@ -1,10 +1,11 @@
-package com.goodow.web.ui.client.activities;
+package com.goodow.web.ui.client;
 
 import com.goodow.web.ui.client.event.ActionEvent;
 import com.goodow.web.ui.client.event.ActionNames;
 import com.goodow.web.ui.client.places.MyPlace;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.inject.Inject;
 
@@ -24,6 +25,9 @@ public class MenuActivity extends MGWTAbstractActivity {
   private AnimationView view;
 
   private List<MyPlace> places;
+
+  @Inject
+  PlaceController placeController;
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
@@ -47,9 +51,8 @@ public class MenuActivity extends MGWTAbstractActivity {
           @Override
           public void onCellSelected(final CellSelectedEvent event) {
             int index = event.getIndex();
-
-            AnimationSelectedEvent.fire(eventBus, places.get(index));
-
+            MyPlace place = places.get(index);
+            placeController.goTo(place);
           }
         }));
 

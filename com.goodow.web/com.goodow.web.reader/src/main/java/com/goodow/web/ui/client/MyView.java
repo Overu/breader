@@ -1,4 +1,4 @@
-package com.goodow.web.ui.client.activities;
+package com.goodow.web.ui.client;
 
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -8,20 +8,21 @@ import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import com.googlecode.mgwt.ui.client.widget.Button;
 import com.googlecode.mgwt.ui.client.widget.RoundPanel;
 
-public class AnimationDoneView implements IsWidget {
+public class MyView implements IsWidget {
 
   private RoundPanel panel;
   private Button button;
+  HTML html;
 
   /**
 	 * 
 	 */
-  public AnimationDoneView() {
+  public MyView() {
     panel = new RoundPanel();
     panel.getElement().setAttribute("style", "text-align:center");
     panel.setHeight("200px");
 
-    HTML html =
+    html =
         new HTML(
             "<p style='text-align: center; position: relative; top: 75px; font-size: 20px'>great, yeah!<p>");
 
@@ -43,6 +44,10 @@ public class AnimationDoneView implements IsWidget {
 
   public HasTapHandlers getBackButton() {
     return button;
+  }
+
+  public void setTitle(final String title) {
+    html.setText(title);
   }
 
 }

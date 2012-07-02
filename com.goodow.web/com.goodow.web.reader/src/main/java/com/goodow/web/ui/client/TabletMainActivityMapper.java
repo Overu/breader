@@ -1,6 +1,5 @@
 package com.goodow.web.ui.client;
 
-import com.goodow.web.ui.client.activities.AnimationDoneActivity;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;
@@ -13,7 +12,9 @@ public class TabletMainActivityMapper implements ActivityMapper {
   private Place lastPlace;
 
   @Inject
-  private Provider<AnimationDoneActivity> activity;
+  private Provider<MyActivity> activity;
+
+  private Provider<UIRegistry> registry;
 
   @Override
   public Activity getActivity(final Place place) {

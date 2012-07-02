@@ -1,6 +1,5 @@
 package com.goodow.web.ui.client;
 
-import com.goodow.web.ui.client.activities.MenuActivity;
 
 import com.google.gwt.activity.shared.Activity;
 import com.google.gwt.activity.shared.ActivityMapper;

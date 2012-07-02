@@ -1,4 +1,4 @@
-package com.goodow.web.ui.client.activities;
+package com.goodow.web.ui.client;
 
 import com.goodow.web.ui.client.places.MyPlace;
 
