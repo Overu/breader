@@ -2,6 +2,7 @@ package com.goodow.web.core.shared;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType
@@ -13,6 +14,7 @@ public abstract class WebObject implements Serializable {
     return getObjectType().getAccessor().getProperty(this, property);
   }
 
+  @XmlTransient
   public ObjectType getObjectType() {
     if (objectType == null) {
       objectType = WebPlatform.getInstance().getObjectType(getClass().getName());

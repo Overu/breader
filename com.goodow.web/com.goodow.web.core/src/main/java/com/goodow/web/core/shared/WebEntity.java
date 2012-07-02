@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 @TypeDef(name = "principal", typeClass = RoleType.class)
@@ -24,6 +25,7 @@ public class WebEntity extends WebObject {
   @ManyToOne
   protected User owner;
 
+  @XmlTransient
   @org.hibernate.annotations.Type(type = "principal")
   @Columns(columns = {@Column(name = "tenantType"), @Column(name = "tenantName")})
   private Principal tenant;
@@ -36,6 +38,7 @@ public class WebEntity extends WebObject {
     return owner;
   }
 
+  @XmlTransient
   public Principal getTenant() {
     return tenant;
   }

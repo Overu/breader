@@ -1,97 +1,21 @@
 <!doctype html>
-<html manifest="web/appcache.nocache.manifest">
+<html manifest="reader.manifest">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, user-scalable=no">
-<link rel="shortcut icon" href="icons/favicon.ico" />
-<link rel="apple-touch-icon" href="icons/icon.png" />
-<link rel="apple-touch-icon-precomposed" href="icons/icon.png" />
-<title>Loading</title>
-<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-<script type="text/javascript" src="web/web.nocache.js"></script>
-<style type="text/css">
-#loading {
-  position: absolute;
-  text-align: center;
-  top: 35%;
-  left: 0;
-  right: 0;
-}
-
-#loading>*:first-child {
-  font-family: arial, sans-serif;
-  font-weight: bold;
-}
-
-#loading>*:last-child {
-  width: 70%;
-  max-width: 320px;
-  border: 1px solid #999;
-  padding: 1px;
-  height: 8px;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-@
--webkit-keyframes bk { 0% {
-  background-position: 0 0;
-}
-
-100%
-{
-background-position
-:
--16px
- 
-0;
-}
-}
-@
--webkit-keyframes fw { 0% {
-  width: 0;
-}
-
-100%
-{
-width
-:
-90%;
-
-  
-}
-}
-#animal {
-  width: 90%;
-  height: 100%;
-  background-color: #6188F5;
-  background-repeat: repeat-x;
-  background-position: 0 0;
-  background-size: 16px 8px;
-  background-image: -webkit-linear-gradient(315deg, transparent, transparent 33%, rgba(0, 0, 0, 0.12)
-    33%, rgba(0, 0, 0, 0.12) 66%, transparent 66%, transparent );
-  -webkit-animation: bk 0.8s linear 0 infinite, fw 2s ease-out;
-}
-</style>
+<link rel="apple-touch-icon" href="logo.png" />
+<link rel="apple-touch-startup-image" href="full.png">
+<style type="text/css"></style>
+<title>Loading...</title>
+<script type="text/javascript" language="javascript" src="reader/reader.nocache.js"></script>
 </head>
 <body>
-  <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
-    style="position: absolute; width: 0; height: 0; border: 0"></iframe>
-
-  <!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
-  <noscript>
-    <div
-      style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
-      Your web browser must have JavaScript enabled in order for this application to display
-      correctly.</div>
-  </noscript>
-  <div id='loading'>
-    <div>Loading…</div>
-    <div>
-      <div id="animal"></div>
-    </div>
-  </div>
+<!-- OPTIONAL: include this if you want history support -->
+<iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position: absolute; width: 0; height: 0; border: 0"></iframe>
+<noscript>
+<div
+	style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+Your web browser must have JavaScript enabled in order for this
+application to display correctly.</div>
+</noscript>
 </body>
 </html>

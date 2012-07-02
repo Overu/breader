@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <inherits name="com.googlecode.mgwt.MGWT" />
+    <inherits name="com.googlecode.mgwt.linker.Linker" />
+
+    <inherits name='com.goodow.web.core.Core' />    
+	<extend-configuration-property name="gin.module"
+		value="com.goodow.web.ui.client.UIClientModule" />
+	<source path='client' />
+	<source path='shared' />
+  
+    <add-linker name="permutationmaplinker" />
+
+    <extend-configuration-property name="html5manifestlinker_files" value="./" />
+    <extend-configuration-property name="html5manifestlinker_files" value="index.html" />
+    <extend-configuration-property name="html5manifestlinker_files" value="logo.png" />
+</module>

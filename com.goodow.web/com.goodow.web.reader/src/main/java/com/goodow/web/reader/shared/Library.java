@@ -4,9 +4,11 @@ import com.goodow.web.core.shared.WebEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType
+@XmlRootElement
 @Entity
 @Table(name = "t_library")
 public class Library extends WebEntity {

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to='reader'>
+
   <inherits name='com.goodow.web.core.Core' />
+  <inherits name='com.goodow.web.ui.UI' />  
   
   <extend-configuration-property name="gin.module"
     value="com.goodow.web.reader.shared.ReaderSharedModule" />

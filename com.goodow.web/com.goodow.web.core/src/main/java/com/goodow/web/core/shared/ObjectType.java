@@ -5,6 +5,7 @@ import com.google.inject.Provider;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType
@@ -49,6 +50,7 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
     return provider.get();
   }
 
+  @XmlTransient
   public Accessor getAccessor() {
     return accessor;
   }
@@ -83,6 +85,7 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
     return getPackage().getName() + "." + getName();
   }
 
+  @XmlTransient
   public WebService getService() {
     if (service == null) {
       if (superType != null) {
@@ -92,6 +95,7 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
     return service;
   }
 
+  @XmlTransient
   public Class<? extends WebService> getServiceClass() {
     if (serviceClass == null) {
       if (WebObject.class.equals(definitionClass)) {
