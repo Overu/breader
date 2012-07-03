@@ -29,16 +29,6 @@
 
     <!-- Google Web Toolkit (GWT) -->
     <dependency>
-      <groupId>com.googlecode.mgwt</groupId>
-      <artifactId>mgwt</artifactId>
-      <version>1.1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>com.googlecode.gwtphonegap</groupId>
-      <artifactId>gwtphonegap</artifactId>
-      <version>1.8.1.0</version>
-    </dependency>
-    <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
     </dependency>

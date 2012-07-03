@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module rename-to="core">
+  <inherits name="com.googlecode.mgwt.MGWT" />
+  <inherits name="com.googlecode.mgwt.linker.Linker" />
   <inherits name="com.google.web.bindery.requestfactory.RequestFactory" />
   <inherits name="com.goodow.wave.bootstrap.Bootstrap" />
   <inherits name='com.goodow.web.logging.Logging'/>
   <inherits name='com.googlecode.gwtphonegap.PhoneGap' />
 
+  <add-linker name="permutationmaplinker" />
+
+  <extend-configuration-property name="html5manifestlinker_files" value="./" />
+  <extend-configuration-property name="html5manifestlinker_files" value="index.html" />
+  <extend-configuration-property name="html5manifestlinker_files" value="logo.png" />
+    
   <extend-configuration-property name="gin.module"
     value="com.goodow.web.core.shared.CoreSharedModule" />
   <extend-configuration-property name="gin.module"
