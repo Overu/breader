@@ -1,9 +1,8 @@
 package com.goodow.web.core.client;
 
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Widget;
 
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import com.googlecode.mgwt.ui.client.MGWT;
@@ -13,7 +12,7 @@ import com.googlecode.mgwt.ui.client.widget.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
 import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 
-public abstract class DetailView implements IsWidget {
+public abstract class DetailView extends Composite {
 
   protected LayoutPanel main;
   protected ScrollPanel scrollPanel;
@@ -47,11 +46,8 @@ public abstract class DetailView implements IsWidget {
 
     main.add(headerPanel);
     main.add(scrollPanel);
-  }
 
-  @Override
-  public Widget asWidget() {
-    return main;
+    initWidget(main);
   }
 
   public HasTapHandlers getBackbutton() {
