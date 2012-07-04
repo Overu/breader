@@ -2,16 +2,28 @@ package com.goodow.web.reader.client;
 
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Request;
+import com.goodow.web.reader.client.style.ReaderResources;
 import com.goodow.web.reader.shared.AsyncLibraryService;
 import com.goodow.web.reader.shared.Library;
 import com.goodow.web.reader.shared.ReaderPackage;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.util.logging.Logger;
 
 public final class ReaderClientModule extends AbstractGinModule {
+
+  @Singleton
+  public static class Bind {
+
+    public Bind() {
+      ReaderResources.INSTANCE();
+    }
+
+  }
+
   public static class ReaderUI {
     @Inject
     public ReaderUI(final AsyncLibraryService libraryService) {
@@ -36,6 +48,7 @@ public final class ReaderClientModule extends AbstractGinModule {
   protected void configure() {
     logger.info("configure ReaderClientModule");
     // bind(ReaderUI.class).asEagerSingleton();
+    bind(Bind.class).asEagerSingleton();
   }
 
 }
