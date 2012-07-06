@@ -11,6 +11,7 @@ import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
 import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
+import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
 
 public abstract class DetailView extends Composite {
 
@@ -19,6 +20,7 @@ public abstract class DetailView extends Composite {
   protected HeaderPanel headerPanel;
   protected HeaderButton headerBackButton;
   protected HeaderButton headerMainButton;
+  protected ButtonBar footerPanel;
   protected HTML title;
 
   public DetailView() {
@@ -44,8 +46,11 @@ public abstract class DetailView extends Composite {
       headerPanel.setLeftWidget(headerBackButton);
     }
 
+    footerPanel = new ButtonBar();
+
     main.add(headerPanel);
     main.add(scrollPanel);
+    main.add(footerPanel);
 
     initWidget(main);
   }

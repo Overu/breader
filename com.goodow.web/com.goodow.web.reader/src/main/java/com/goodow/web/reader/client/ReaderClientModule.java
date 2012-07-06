@@ -1,6 +1,5 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.client.ReadView;
 import com.goodow.web.core.client.UIRegistry;
 import com.goodow.web.reader.client.style.ReaderResources;
 
@@ -24,7 +23,7 @@ public final class ReaderClientModule extends AbstractGinModule {
 
   public static class ReaderUI {
     @Inject
-    public ReaderUI(final UIRegistry registry, final AsyncProvider<ReadView> readView) {
+    public ReaderUI(final UIRegistry registry, final AsyncProvider<LibraryView> readView) {
       registry.addBinding("/read").toAsyncProvider(readView);
     }
   }
