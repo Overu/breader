@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Request<T> implements Serializable {
 
   @Inject
-  private transient RequestManager mgr;
+  private transient RequestProcessor processor;
 
   private transient Operation operation;
 
@@ -23,7 +23,7 @@ public class Request<T> implements Serializable {
   private String contentType;
 
   public Response fire() {
-    return mgr.send();
+    return processor.send();
   }
 
   public Response fire(final Receiver<T> receiver) {

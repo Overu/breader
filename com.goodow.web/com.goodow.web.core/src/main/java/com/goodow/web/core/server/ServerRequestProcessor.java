@@ -13,32 +13,23 @@
  */
 package com.goodow.web.core.server;
 
-import org.json.JSONException;
-
 import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Operation;
-import com.goodow.web.core.shared.Request;
+import com.goodow.web.core.shared.RequestProcessor;
 import com.goodow.web.core.shared.Response;
 import com.goodow.web.core.shared.WebService;
+
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
+import org.json.JSONException;
+
 @Singleton
-public class SimpleRequestProcessor {
-
-  // @Inject
-  // private ExceptionHandler exceptionHandler;
+public class ServerRequestProcessor extends RequestProcessor {
 
   @Inject
-  private Provider<Request> requestProvider;
-
-  @Inject
-  private Provider<Response> responseProvider;
-
-  @Inject
-  JsonBuilder builder;
+  JsonProvider provider;
 
   @Inject
   Injector injector;
@@ -48,14 +39,14 @@ public class SimpleRequestProcessor {
     // TODO read request from payload
     Response response = responseProvider.get();
     try {
-      req = builder.parse(payload);
+      req = provider.parse(payload);
       Operation operation = req.getOperation();
       ObjectType entityType = operation.getDeclaringType();
       Class<? extends WebService> serviceClass = entityType.getServiceClass();
       WebService service = injector.getInstance(serviceClass);
       Object result = service.invoke(operation, req.getArgs());
       response.setResult(result);
-      String body = builder.serialize(req, response);
+      String body = provider.serialize(req, response);
       return body;
     } catch (ReportableException e) {
       e.printStackTrace();
@@ -64,6 +55,12 @@ public class SimpleRequestProcessor {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+    return null;
+  }
+
+  @Override
+  public Response send() {
+    // TODO Auto-generated method stub
     return null;
   }
 

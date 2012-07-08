@@ -1,24 +1,19 @@
 package com.goodow.web.core.shared;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 public class AsyncWebService<E extends WebObject> {
 
   @Inject
-  RequestManager m;
+  RequestProcessor processor;
 
   @Inject
   WebPlatform platform;
 
-  @Inject
-  Provider<Request> requestProvider;
-
   public <T> Request<T> invoke(final Operation operation, final Object... args) {
-    Request<T> request = requestProvider.get();
+    Request<T> request = processor.newRequest();
     request.setOperation(operation);
     request.setArgs(args);
-    m.addRequest(request);
     return request;
   }
 

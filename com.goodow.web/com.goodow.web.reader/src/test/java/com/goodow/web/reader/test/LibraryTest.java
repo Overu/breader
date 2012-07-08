@@ -1,6 +1,6 @@
 package com.goodow.web.reader.test;
 
-import com.goodow.web.core.server.JsonBuilder;
+import com.goodow.web.core.server.JsonProvider;
 import com.goodow.web.core.shared.Accessor;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.Response;
@@ -27,7 +27,7 @@ public class LibraryTest extends ExampleTest {
   LibraryService libraryService;
 
   @Inject
-  JsonBuilder builder;
+  JsonProvider builder;
   @Inject
   Provider<Request> request;
   @Inject
