@@ -1,6 +1,7 @@
 package com.goodow.web.core.client.json;
 
 import com.goodow.web.core.shared.EntityId;
+import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Parameter;
 import com.goodow.web.core.shared.Property;
@@ -19,10 +20,14 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
-public class JsonRequestBuilder {
+public class GwtJSONProvider {
+
+  @Inject
+  Message message;
 
   public void parse(final Request request, final Response response, final JSONObject obj) {
     WebType type = request.getOperation().getType();
@@ -30,7 +35,7 @@ public class JsonRequestBuilder {
     response.setSuccess(success.booleanValue());
     if (success != null && response.isSuccess()) {
       JSONValue jsonResult = obj.get("result");
-      Object result = parse(request, type, jsonResult);
+      Object result = parse(type, jsonResult);
       response.setResult(result);
     } else {
       JSONObject error = obj.get("error").isObject();
@@ -52,13 +57,13 @@ public class JsonRequestBuilder {
       Object[] args = request.getArgs();
       for (Parameter param : request.getOperation().getParameters().values()) {
         Object arg = args[i];
-        JSONValue jsonValue = create(request, param.getType(), arg, false);
+        JSONValue jsonValue = create(param.getType(), arg, false);
         jsonArgs.set(i, jsonValue);
         if (param.getType() instanceof ObjectType) {
           // TODO many=true
           if (arg instanceof WebEntity) {
             WebEntity entity = (WebEntity) arg;
-            request.getEntityId(entity);
+            message.getEntityId(entity);
           }
         }
         i++;
@@ -66,11 +71,11 @@ public class JsonRequestBuilder {
       obj.put("parameters", jsonArgs);
     }
 
-    if (!request.getEntities().isEmpty()) {
+    if (!message.getEntities().isEmpty()) {
       JSONArray entities = new JSONArray();
-      for (EntityId eid : request.getEntityIds()) {
-        WebObject entity = request.getEntity(eid);
-        JSONValue jsonValue = create(request, entity.getObjectType(), entity, true);
+      for (EntityId eid : message.getEntityIds()) {
+        WebObject entity = message.getEntity(eid);
+        JSONValue jsonValue = create(entity.getObjectType(), entity, true);
         entities.set(entities.size(), jsonValue);
       }
       obj.put("entities", entities);
@@ -78,8 +83,7 @@ public class JsonRequestBuilder {
     return obj;
   }
 
-  private JSONValue create(final Request<?> request, final WebType type, final Object obj,
-      final boolean convert) {
+  private JSONValue create(final WebType type, final Object obj, final boolean convert) {
     if (obj == null) {
       return JSONNull.getInstance();
     } else if (type instanceof ValueType) {
@@ -99,22 +103,22 @@ public class JsonRequestBuilder {
       if (convert) {
         JSONObject jsonObject = new JSONObject();
         if (entity instanceof WebEntity) {
-          EntityId eid = request.getEntityId((WebEntity) entity);
+          EntityId eid = message.getEntityId((WebEntity) entity);
           jsonObject.put("e_id", new JSONString(eid.toString()));
         }
         for (Property prop : entity.getObjectType().getAllProperties().values()) {
           Object value = entity.get(prop);
-          JSONValue jsonValue = create(request, prop.getType(), value, false);
+          JSONValue jsonValue = create(prop.getType(), value, false);
           jsonObject.put(prop.getName(), jsonValue);
         }
         return jsonObject;
       } else {
-        return new JSONString(request.getEntityId((WebEntity) entity).toString());
+        return new JSONString(message.getEntityId((WebEntity) entity).toString());
       }
     }
   }
 
-  private Object parse(final Request<?> request, final WebType type, final JSONValue json) {
+  private Object parse(final WebType type, final JSONValue json) {
     if (json == null || json.isNull() != null) {
       return null;
     } else if (type instanceof ValueType) {
@@ -135,17 +139,17 @@ public class JsonRequestBuilder {
       if (jsonString != null) {
         String key = json.isString().stringValue();
         EntityId id = EntityId.parseId(key);
-        WebEntity entity = request.getEntity(id);
+        WebEntity entity = message.getEntity(id);
         entity.setId(id.getStableId());
         obj = entity;
       } else {
         JSONObject jsonObj = json.isObject();
         JSONString eId = jsonObj.get("e_id").isString();
         EntityId id = EntityId.parseId(eId.stringValue());
-        obj = request.getEntity(id);
+        obj = message.getEntity(id);
         for (Property prop : obj.getObjectType().getAllProperties().values()) {
           JSONValue jsonValue = jsonObj.get(prop.getName());
-          Object value = parse(request, prop.getType(), jsonValue);
+          Object value = parse(prop.getType(), jsonValue);
           obj.set(prop, value);
         }
       }

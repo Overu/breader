@@ -13,6 +13,13 @@
  */
 package com.goodow.web.core.servlet;
 
+import com.goodow.web.core.server.SimpleRequestProcessor;
+import com.goodow.web.core.shared.RequestManager;
+
+import com.google.gwt.user.server.rpc.RPCServletUtils;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
@@ -23,12 +30,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.goodow.web.core.server.SimpleRequestProcessor;
-import com.goodow.web.core.shared.Message;
-import com.google.gwt.user.server.rpc.RPCServletUtils;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 /**
  * Handles GWT RequestFactory JSON requests.
@@ -114,7 +115,7 @@ public class WebServiceServlet extends HttpServlet {
           System.out.println("<<< " + payload);
         }
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType(Message.JSON_CONTENT_TYPE_UTF8);
+        response.setContentType(RequestManager.JSON_CONTENT_TYPE_UTF8);
         response.setContentLength(payload.getBytes(JSON_CHARSET).length);
         // The Writer must be obtained after setting the content type
         PrintWriter writer = response.getWriter();

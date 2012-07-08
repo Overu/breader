@@ -1,25 +1,49 @@
 package com.goodow.web.core.shared;
 
 import java.io.Serializable;
-import java.util.Stack;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Message implements Serializable {
 
-  public static final String JSON_CONTENT_TYPE_UTF8 = "application/json; charset=utf-8";
+  private Map<EntityId, WebEntity> entities = new HashMap<EntityId, WebEntity>();
 
-  protected Stack<Request<?>> requests = new Stack<Request<?>>();
-
-  protected Request<?> activeRequest;
-
-  public void addRequest(final Request<?> request) {
-    requests.add(request);
-  }
+  private Map<WebEntity, EntityId> entityIds = new HashMap<WebEntity, EntityId>();
 
   public abstract WebEntity find(ObjectType objectType, String id);
 
-  public boolean isActive() {
-    return activeRequest != null;
+  public Collection<WebEntity> getEntities() {
+    return entities.values();
   }
 
-  public abstract Response send();
+  public WebEntity getEntity(final EntityId id) {
+    WebEntity entity = entities.get(id);
+    if (entity == null) {
+      entity = WebPlatform.getInstance().getOrCreateEntity(id);
+      entities.put(id, entity);
+      entityIds.put(entity, id);
+    }
+    return entity;
+  }
+
+  public EntityId getEntityId(final WebEntity entity) {
+    EntityId id = entityIds.get(entity);
+    if (id == null) {
+      id = new EntityId(entity.getObjectType().getQualifiedName());
+      if (entity.getId() == null) {
+        id.setClientId(Integer.toString(entities.size() + 1));
+      } else {
+        id.setStableId(entity.getId());
+      }
+      entities.put(id, entity);
+      entityIds.put(entity, id);
+    }
+    return id;
+  }
+
+  public Collection<EntityId> getEntityIds() {
+    return entities.keySet();
+  }
+
 }

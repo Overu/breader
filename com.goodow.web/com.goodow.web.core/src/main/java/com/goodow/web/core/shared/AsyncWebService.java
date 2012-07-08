@@ -6,7 +6,7 @@ import com.google.inject.Provider;
 public class AsyncWebService<E extends WebObject> {
 
   @Inject
-  Provider<Message> message;
+  RequestManager m;
 
   @Inject
   WebPlatform platform;
@@ -18,7 +18,6 @@ public class AsyncWebService<E extends WebObject> {
     Request<T> request = requestProvider.get();
     request.setOperation(operation);
     request.setArgs(args);
-    Message m = message.get();
     m.addRequest(request);
     return request;
   }

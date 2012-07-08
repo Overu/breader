@@ -1,12 +1,8 @@
 package com.goodow.web.core.shared;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -14,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Request<T> implements Serializable {
 
   @Inject
-  private transient Provider<Message> message;
+  private transient RequestManager mgr;
 
   private transient Operation operation;
 
@@ -26,12 +22,8 @@ public class Request<T> implements Serializable {
 
   private String contentType;
 
-  private Map<EntityId, WebEntity> entities = new HashMap<EntityId, WebEntity>();
-
-  private Map<WebEntity, EntityId> entityIds = new HashMap<WebEntity, EntityId>();
-
   public Response fire() {
-    return message.get().send();
+    return mgr.send();
   }
 
   public Response fire(final Receiver<T> receiver) {
@@ -44,39 +36,6 @@ public class Request<T> implements Serializable {
 
   public String getContentType() {
     return contentType;
-  }
-
-  public Collection<WebEntity> getEntities() {
-    return entities.values();
-  }
-
-  public WebEntity getEntity(final EntityId id) {
-    WebEntity entity = entities.get(id);
-    if (entity == null) {
-      entity = WebPlatform.getInstance().getOrCreateEntity(id);
-      entities.put(id, entity);
-      entityIds.put(entity, id);
-    }
-    return entity;
-  }
-
-  public EntityId getEntityId(final WebEntity entity) {
-    EntityId id = entityIds.get(entity);
-    if (id == null) {
-      id = new EntityId(entity.getObjectType().getQualifiedName());
-      if (entity.getId() == null) {
-        id.setClientId(Integer.toString(entities.size() + 1));
-      } else {
-        id.setStableId(entity.getId());
-      }
-      entities.put(id, entity);
-      entityIds.put(entity, id);
-    }
-    return id;
-  }
-
-  public Collection<EntityId> getEntityIds() {
-    return entities.keySet();
   }
 
   public Request<?> getNextRequest() {
