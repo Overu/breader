@@ -1,2 +1,2 @@
-com.goodow.wave.server.requestfactory.RequestFactoryServletModule
-com.goodow.wave.server.media.ioc.AttachmentServletModule
+#com.goodow.wave.server.requestfactory.RequestFactoryServletModule
+#com.goodow.wave.server.media.ioc.AttachmentServletModule

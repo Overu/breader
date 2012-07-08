@@ -65,17 +65,8 @@ public class MenuActivity extends MGWTAbstractActivity {
    */
   private List<MyPlace> createAnimations() {
     ArrayList<MyPlace> list = new ArrayList<MyPlace>();
-
-    list.add(new MyPlace(Animation.SLIDE, "Slide", "slide"));
-    list.add(new MyPlace(Animation.SLIDE_UP, "Slide up", "Slide up"));
-    list.add(new MyPlace(Animation.DISSOLVE, "Dissolve", "Dissolve"));
-    list.add(new MyPlace(Animation.FADE, "Fade", "Fade"));
-    list.add(new MyPlace(Animation.FLIP, "Flip", "Flip"));
-    list.add(new MyPlace(Animation.POP, "Pop", "Pop"));
-    list.add(new MyPlace(Animation.SWAP, "Swap", "Swap"));
-    list.add(new MyPlace(Animation.DISSOLVE, "Read", "/read"));
-    // list.add(new Animation("Cube"));
-
+    list.add(new MyPlace(Animation.SWAP, "书架", "/bookshelf"));
+    list.add(new MyPlace(Animation.FADE, "书城", "/bookstore"));
     return list;
   }
 

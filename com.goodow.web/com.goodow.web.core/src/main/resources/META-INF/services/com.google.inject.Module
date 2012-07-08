@@ -1,2 +1,2 @@
 com.goodow.web.core.server.CoreServerModule
-com.goodow.web.core.jpa.CoreJpaModule
+#com.goodow.web.core.jpa.CoreJpaModule

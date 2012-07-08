@@ -6,6 +6,10 @@
   <inherits name="com.goodow.wave.bootstrap.Bootstrap" />
   <inherits name='com.goodow.web.logging.Logging'/>
   <inherits name='com.googlecode.gwtphonegap.PhoneGap' />
+	
+  <set-property name="gwt.logging.simpleRemoteHandler" value="DISABLED" />
+  <set-property name="gwt.logging.popupHandler" value="DISABLED" />
+  <add-linker name="xsiframe" />
 
   <add-linker name="permutationmaplinker" />
 

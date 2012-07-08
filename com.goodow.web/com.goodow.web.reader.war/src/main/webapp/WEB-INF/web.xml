@@ -11,4 +11,12 @@
     <filter-name>guiceFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+   <servlet>
+                <servlet-name>phonegapfileapi</servlet-name>
+                <servlet-class>com.googlecode.gwtphonegap.server.file.FileRemoteServiceServlet</servlet-class>
+        </servlet>
+        <servlet-mapping>
+                <servlet-name>phonegapfileapi</servlet-name>
+                <url-pattern>/reader/phonegapfileapi</url-pattern>
+        </servlet-mapping>
 </web-app>

@@ -1,0 +1,49 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:mgwt="urn:import:com.googlecode.mgwt.ui.client.widget"
+	xmlns:mgwtb="urn:import:com.googlecode.mgwt.ui.client.widget.buttonbar">
+
+	<mgwt:LayoutPanel>
+		<mgwt:HeaderPanel>
+			<mgwt:left>
+				<mgwt:HeaderButton ui:field="backButton"
+					backButton="true" text="Modules"></mgwt:HeaderButton>
+			</mgwt:left>
+			<mgwt:center>
+				<g:HTML>File</g:HTML>
+			</mgwt:center>
+		</mgwt:HeaderPanel>
+		
+		
+		
+
+		<mgwt:ScrollPanel ui:field="scrollPanel"
+			scrollingEnabledX="false">
+			<g:FlowPanel>
+				<mgwt:CellList ui:field="cellList"></mgwt:CellList>
+			</g:FlowPanel>
+
+		</mgwt:ScrollPanel>
+		
+		
+		
+		<mgwt:RoundPanel>
+			<g:HTML ui:field="status"></g:HTML>
+		</mgwt:RoundPanel>
+		
+		
+		<mgwt:RoundPanel>
+			<mgwt:MTextArea ui:field="content"></mgwt:MTextArea>
+		</mgwt:RoundPanel>
+		
+		<mgwtb:ButtonBar>
+			<mgwtb:PlusButton ui:field="plusButton"></mgwtb:PlusButton>
+			<mgwtb:ButtonBarSpacer></mgwtb:ButtonBarSpacer>
+			<mgwtb:ActionButton ui:field="actionButton"></mgwtb:ActionButton>
+			
+		</mgwtb:ButtonBar>
+		
+
+	</mgwt:LayoutPanel>
+
+</ui:UiBinder> 

@@ -23,6 +23,7 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;
 
+import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.mgwt.mvp.client.AnimatableDisplay;
 import com.googlecode.mgwt.mvp.client.AnimatingActivityManager;
 import com.googlecode.mgwt.mvp.client.Animation;
@@ -189,6 +190,13 @@ public class CoreClientModule extends AbstractGinModule {
     bind(PlaceHistoryMapper.class).to(MyPlaceMapper.class).in(Singleton.class);
     bind(Binder.class).asEagerSingleton();
     bind(Render.class).asEagerSingleton();
+  }
+
+  @Provides
+  @Singleton
+  PhoneGap phoneGap() {
+    PhoneGap gap = GWT.create(PhoneGap.class);
+    return gap;
   }
 
   @Provides

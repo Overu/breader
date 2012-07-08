@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType
-public class Articial extends WebEntity {
+public class Article extends WebEntity {
 
   @XmlElement
   private String title;
