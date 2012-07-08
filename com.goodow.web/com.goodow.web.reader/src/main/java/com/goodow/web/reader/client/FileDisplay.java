@@ -27,9 +27,9 @@ import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.logging.Logger;
 
 public class FileDisplay extends Composite {
-
   public interface Presenter {
 
     public void createFile(String fileName);
@@ -46,6 +46,8 @@ public class FileDisplay extends Composite {
 
   interface FileDisplayGwtImplUiBinder extends UiBinder<Widget, FileDisplay> {
   }
+
+  private static final Logger logger = Logger.getLogger(FileDisplay.class.getName());
 
   private static FileDisplayGwtImplUiBinder uiBinder = GWT.create(FileDisplayGwtImplUiBinder.class);
 
@@ -69,6 +71,7 @@ public class FileDisplay extends Composite {
   MTextArea content;
 
   public FileDisplay() {
+    logger.info("init FileDisplay");
 
     BasicCell<FileDemo> cell = new BasicCell<FileDemo>() {
 
@@ -84,7 +87,7 @@ public class FileDisplay extends Composite {
     };
 
     cellList = new CellList<FileDemo>(cell);
-
+    logger.info("init FileDisplay");
     initWidget(uiBinder.createAndBindUi(this));
 
     if (MGWT.getOsDetection().isTablet()) {
@@ -93,7 +96,7 @@ public class FileDisplay extends Composite {
       backButton.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getUtilCss()
           .portraitonly());
     }
-
+    logger.info("complete FileDisplay");
   }
 
   public boolean confirm(final String string) {

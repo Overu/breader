@@ -9,6 +9,7 @@ import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.gwtphonegap.client.file.DirectoryEntry;
 import com.googlecode.gwtphonegap.client.file.DirectoryReader;
 import com.googlecode.gwtphonegap.client.file.EntryBase;
+import com.googlecode.gwtphonegap.client.file.File;
 import com.googlecode.gwtphonegap.client.file.FileCallback;
 import com.googlecode.gwtphonegap.client.file.FileEntry;
 import com.googlecode.gwtphonegap.client.file.FileError;
@@ -21,8 +22,11 @@ import com.googlecode.gwtphonegap.client.file.WriterCallback;
 import com.googlecode.gwtphonegap.collection.shared.LightArray;
 
 import java.util.LinkedList;
+import java.util.logging.Logger;
 
 public class BookShelfView extends BookListView implements Presenter {
+
+  private static final Logger logger = Logger.getLogger(BookShelfView.class.getName());
 
   private LightArray<EntryBase> currentEntries;
 
@@ -36,31 +40,31 @@ public class BookShelfView extends BookListView implements Presenter {
 
   @Inject
   public BookShelfView(final PhoneGap phoneGap, final FileDisplay display) {
+    logger.info("init BookShelfView");
 
     this.phoneGap = phoneGap;
     this.display = display;
+    display.setPresenter(this);
+
     rightButton.setText("书城");
 
-    scrollPanel.setSnap(true);
-    scrollPanel.setMomentum(false);
-    scrollPanel.setShowScrollBarX(false);
-    scrollPanel.setShowScrollBarY(false);
-    scrollPanel.setScrollingEnabledX(false);
-    scrollPanel.setScrollingEnabledY(true);
-    scrollPanel.setAutoHandleResize(true);
     scrollPanel.setWidget(display);
 
-    phoneGap.getFile().requestFileSystem(FileSystem.LocalFileSystem_APPLICATION, 0,
+    File file = phoneGap.getFile();
+    logger.info("init file");
+    file.requestFileSystem(FileSystem.LocalFileSystem_PERSISTENT, 0,
         new FileCallback<FileSystem, FileError>() {
 
           @Override
           public void onFailure(final FileError error) {
+            logger.info("onFailure: " + error.getErrorCode());
             display.getStatus().setHTML(
                 "Failed to request file system with error code: " + error.getErrorCode());
           }
 
           @Override
           public void onSuccess(final FileSystem entry) {
+            logger.info("onSuccess: " + entry.getName());
             gotFileSystem(entry);
           }
         });
