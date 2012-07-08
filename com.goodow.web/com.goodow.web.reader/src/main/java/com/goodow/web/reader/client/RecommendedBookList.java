@@ -2,16 +2,23 @@ package com.goodow.web.reader.client;
 
 import com.goodow.web.reader.shared.Book;
 
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.event.logical.shared.ResizeEvent;
+import com.google.gwt.event.logical.shared.ResizeHandler;
+import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+
+import com.googlecode.mgwt.ui.client.MGWT;
+import com.googlecode.mgwt.ui.client.widget.touch.TouchPanel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecommendedBookList extends BookListView {
 
-  FlowPanel container;
+  TouchPanel container;
 
   private final Provider<BookSummary> bookViewProvider;
 
@@ -19,11 +26,31 @@ public class RecommendedBookList extends BookListView {
   public RecommendedBookList(final Provider<BookSummary> bookViewProvider) {
     this.bookViewProvider = bookViewProvider;
     title.setText("精品推荐");
-    container = new FlowPanel();
+    container = new TouchPanel();
     for (Book book : createBooks()) {
       BookSummary view = bookViewProvider.get();
       view.setBook(book);
       container.add(view);
+    }
+
+    scrollPanel.setWidget(container);
+
+    if (MGWT.getOsDetection().isDesktop()) {
+      Window.addResizeHandler(new ResizeHandler() {
+
+        @Override
+        public void onResize(final ResizeEvent event) {
+          Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+            @Override
+            public void execute() {
+              adjustSize();
+
+            }
+          });
+
+        }
+      });
     }
   }
 
@@ -35,15 +62,26 @@ public class RecommendedBookList extends BookListView {
   @Override
   protected void onAttach() {
     super.onAttach();
-    int columnWidth = main.getOffsetWidth() / 2;
-    container.getElement().getStyle().setProperty("webkitColumnWidth", columnWidth + "px");
-    container.removeFromParent();
-    scrollPanel.setWidget(container);
+    Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+      @Override
+      public void execute() {
+        adjustSize();
+      }
+    });
+  }
+
+  private void adjustSize() {
+    container.getElement().getStyle().clearHeight();
+    int scrollHeight = container.getElement().getOffsetHeight();
+    container.setHeight(scrollHeight + "px");
+    scrollPanel.removeFromParent();
+    main.add(scrollPanel);
   }
 
   private List<Book> createBooks() {
     List<Book> result = new ArrayList<Book>();
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 50; i++) {
       Book book = new Book();
       book.setTitle("小城三月" + (i + 1));
       book.setDescription("小城三月的故事");

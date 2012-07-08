@@ -3,6 +3,10 @@ package com.goodow.web.reader.client;
 import com.goodow.web.reader.shared.Book;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.StyleInjector;
+import com.google.gwt.resources.client.ClientBundle;
+import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.CssResource.Shared;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -17,7 +21,26 @@ public class BookSummary extends Composite {
   interface Binder extends UiBinder<Widget, BookSummary> {
   }
 
+  @Shared
+  interface BookSummaryStyle extends CssResource {
+    String root();
+
+  }
+
+  interface Bundle extends ClientBundle {
+    @Source("bookSummary.portrait.css")
+    BookSummaryStyle protrait();
+  }
+
   private static Binder uiBinder = GWT.create(Binder.class);
+  private static Bundle INSTANCE;
+
+  static {
+    INSTANCE = GWT.create(Bundle.class);
+    String portraitCss =
+        "@media only screen and (orientation:portrait) {" + INSTANCE.protrait().getText() + "}";
+    StyleInjector.injectAtEnd(portraitCss);
+  }
 
   @UiField(provided = true)
   Image bookImage;
@@ -41,6 +64,7 @@ public class BookSummary extends Composite {
     bookImage = new Image();
     Widget widget = uiBinder.createAndBindUi(this);
     initWidget(widget);
+
   }
 
   public void refresh() {

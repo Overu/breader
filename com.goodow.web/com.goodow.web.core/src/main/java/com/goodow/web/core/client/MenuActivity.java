@@ -67,6 +67,7 @@ public class MenuActivity extends MGWTAbstractActivity {
     ArrayList<MyPlace> list = new ArrayList<MyPlace>();
     list.add(new MyPlace(Animation.SWAP, "书架", "/bookshelf"));
     list.add(new MyPlace(Animation.FADE, "书城", "/bookstore"));
+    list.add(new MyPlace(Animation.FLIP, "Scroll Panel", "/scroll"));
     return list;
   }
 

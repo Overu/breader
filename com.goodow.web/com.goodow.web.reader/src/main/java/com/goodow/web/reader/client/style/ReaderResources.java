@@ -22,12 +22,12 @@ import java.util.logging.Logger;
 public class ReaderResources {
 
   interface Bundle extends ClientBundle {
+
     @Source("style.css")
     Style css();
   }
 
   interface Style extends CssResource {
-
   }
 
   private static final Logger logger = Logger.getLogger(ReaderResources.class.getName());

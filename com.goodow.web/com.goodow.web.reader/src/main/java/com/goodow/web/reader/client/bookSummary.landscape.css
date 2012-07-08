@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+/*
+@media only screen and (orientation:portrait) {
+  .root {
+    width: 33.333333%;
+  }
+}
+*/
+
+.root {
+  float: left;
+  border: 1px dashed gray;
+  height: 100px;
+  width: 50%;
+  box-sizing: border-box;
+}
