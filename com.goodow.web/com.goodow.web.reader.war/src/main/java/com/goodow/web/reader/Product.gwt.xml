@@ -3,6 +3,12 @@
   <inherits name="com.goodow.web.reader.Reader" />
   <extend-configuration-property name="gin.module"
     value="com.goodow.web.reader.client.ReaderProductClientModule" />
+    
+  <extend-property name="locale" values="zh"/>
+  <set-property name="locale" value="zh"/>
+  <set-property name="user.agent" value="safari"/>
+  <set-property name="mgwt.os" value="ipad, ipad_retina"/>
+  <set-property name="mobile.user.agent" value="mobilesafari"/>
   <source includes="*.java" path="" />
   <source path="client" />
   <source path="shared" />
