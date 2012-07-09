@@ -1,0 +1,44 @@
+.mgwt-Carousel {
+  position: relative;
+  display: -webkit-box;
+  -webkit-box-flex: 1;
+}
+
+.mgwt-Carousel-Scroller {
+  -webkit-box-flex: 1;
+}
+
+}
+.mgwt-Carousel-Container {
+  display: -webkit-box;
+  -webkit-box-flex: 1;
+}
+
+.mgwt-Carousel-Indicator-Container {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: -webkit-box;
+  -webkit-box-pack: center;
+}
+
+.mgwt-Carousel-Indicator {
+  background-color: lightGrey;
+  border-radius: 4px;
+  margin: 4px;
+  text-align: center;
+  width: 11px;
+  height: 15px;
+}
+
+.mgwt-Carousel-Indicator-active {
+  background-color: #757575;
+  height: 15px;
+  width: 15px;
+}
+
+.mgwt-Carousel-Holder {
+  position: relative;
+  display: -webkit-box;
+}
