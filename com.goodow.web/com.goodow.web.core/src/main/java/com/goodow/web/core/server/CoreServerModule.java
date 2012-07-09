@@ -1,7 +1,6 @@
 package com.goodow.web.core.server;
 
 import com.goodow.web.core.shared.Message;
-import com.goodow.web.core.shared.RequestProcessor;
 import com.goodow.web.core.shared.WebPlatform;
 
 import com.google.inject.AbstractModule;
@@ -16,8 +15,7 @@ public class CoreServerModule extends AbstractModule {
   protected void configure() {
     logger.finest("Install JpaServiceModule begin");
     requestStaticInjection(WebPlatform.class);
-    bind(Message.class).toProvider(MessageProvider.class);
-    bind(RequestProcessor.class).to(ServerRequestProcessor.class);
+    bind(Message.class).to(ServerMessage.class);
     logger.finest("Install JpaServiceModule end");
   }
 

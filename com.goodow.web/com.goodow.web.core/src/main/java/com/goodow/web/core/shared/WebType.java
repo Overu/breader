@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public class WebType extends NamedElement {
 
-  protected transient Class<?> definitionClass;
+  protected transient Class<?> javaClass;
 
   private Package _package;
 
@@ -13,8 +13,8 @@ public class WebType extends NamedElement {
 
   private transient TextWriter<?> textWriter;
 
-  public Class<?> getDefinitionClass() {
-    return definitionClass;
+  public Class<?> getJavaClass() {
+    return javaClass;
   }
 
   public Package getPackage() {
@@ -33,8 +33,8 @@ public class WebType extends NamedElement {
     return (TextWriter<T>) textWriter;
   }
 
-  public void setDefinitionClass(final Class<?> definitionClass) {
-    this.definitionClass = definitionClass;
+  public void setJavaClass(final Class<?> javaClass) {
+    this.javaClass = javaClass;
   }
 
   public void setPackage(final Package _package) {

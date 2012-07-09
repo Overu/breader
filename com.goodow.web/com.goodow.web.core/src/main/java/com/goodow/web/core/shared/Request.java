@@ -1,7 +1,5 @@
 package com.goodow.web.core.shared;
 
-import com.google.inject.Inject;
-
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -9,8 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Request<T> implements Serializable {
 
-  @Inject
-  private transient RequestProcessor processor;
+  private transient Message message;
 
   private transient Operation operation;
 
@@ -22,8 +19,12 @@ public class Request<T> implements Serializable {
 
   private String contentType;
 
+  public Request(final Message message) {
+    this.message = message;
+  }
+
   public Response fire() {
-    return processor.send();
+    return message.fire().getResponse();
   }
 
   public Response fire(final Receiver<T> receiver) {

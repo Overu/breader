@@ -98,7 +98,7 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
   @XmlTransient
   public Class<? extends WebService> getServiceClass() {
     if (serviceClass == null) {
-      if (WebObject.class.equals(definitionClass)) {
+      if (WebObject.class.equals(javaClass)) {
         serviceClass = (Class<? extends WebService>) WebService.class;
       } else {
         serviceClass = getSuperType().getServiceClass();

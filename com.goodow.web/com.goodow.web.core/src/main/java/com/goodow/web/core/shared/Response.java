@@ -5,43 +5,49 @@ import java.util.List;
 
 public class Response<T> implements Serializable {
 
-	private FailureMessage generalFailure;
+  private FailureMessage generalFailure;
 
-	private boolean success;
+  private boolean success;
 
-	private T result;
+  private T result;
 
-	private List<Violation> violations;
+  private List<Violation> violations;
 
-	public FailureMessage getGeneralFailure() {
-		return generalFailure;
-	}
+  private Message message;
 
-	public T getResult() {
-		return result;
-	}
+  public Response(final Message message) {
+    this.message = message;
+  }
 
-	public List<Violation> getViolations() {
-		return violations;
-	}
+  public FailureMessage getGeneralFailure() {
+    return generalFailure;
+  }
 
-	public boolean isSuccess() {
-		return success;
-	}
+  public T getResult() {
+    return result;
+  }
 
-	public void setGeneralFailure(final FailureMessage failure) {
-		this.generalFailure = failure;
-	}
+  public List<Violation> getViolations() {
+    return violations;
+  }
 
-	public void setResult(final T result) {
-		this.result = result;
-	}
+  public boolean isSuccess() {
+    return success;
+  }
 
-	public void setSuccess(final boolean success) {
-		this.success = success;
-	}
+  public void setGeneralFailure(final FailureMessage failure) {
+    this.generalFailure = failure;
+  }
 
-	public void setViolations(final List<Violation> value) {
-		this.violations = value;
-	}
+  public void setResult(final T result) {
+    this.result = result;
+  }
+
+  public void setSuccess(final boolean success) {
+    this.success = success;
+  }
+
+  public void setViolations(final List<Violation> value) {
+    this.violations = value;
+  }
 }

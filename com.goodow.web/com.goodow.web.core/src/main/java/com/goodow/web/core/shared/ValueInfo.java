@@ -10,7 +10,7 @@ public abstract class ValueInfo<T> implements Wrapper<ValueType>, TextReader<T>,
     valueType = new ValueType();
     String name = ClassUtil.getSimpleName(clazz);
     valueType.setName(name);
-    valueType.setDefinitionClass(clazz);
+    valueType.setJavaClass(clazz);
     valueType.setTextReader(this);
     valueType.setTextWriter(this);
   }

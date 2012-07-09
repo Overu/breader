@@ -13,7 +13,7 @@ public class ObjectInfo<T extends WebObject> implements Wrapper<ObjectType>, Tex
     objectType = new ObjectType();
     String name = ClassUtil.getSimpleName(clazz);
     objectType.setName(name);
-    objectType.setDefinitionClass(clazz);
+    objectType.setJavaClass(clazz);
     objectType.setTextReader(this);
     objectType.setTextWriter(this);
     objectType.setServiceClass(serviceClass);
