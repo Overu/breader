@@ -15,38 +15,78 @@ package com.goodow.web.core.server;
 
 import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Operation;
+import com.goodow.web.core.shared.Parameter;
+import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.RequestProcessor;
 import com.goodow.web.core.shared.Response;
+import com.goodow.web.core.shared.WebPlatform;
 import com.goodow.web.core.shared.WebService;
+import com.goodow.web.core.shared.WebType;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 @Singleton
 public class ServerRequestProcessor extends RequestProcessor {
-
+  @Inject
+  WebPlatform platform;
   @Inject
   JsonProvider provider;
 
   @Inject
   Injector injector;
 
-  public String process(final String payload) {
-    com.goodow.web.core.shared.Request req;
-    // TODO read request from payload
-    Response response = responseProvider.get();
+  public Request parse(final String payload) {
+    Request request = requestProvider.get();
+    JSONObject json;
     try {
-      req = provider.parse(payload);
+      json = new JSONObject(payload);
+      String operationName = json.getString("operation");
+      Operation operation = platform.getOperation(operationName);
+      request.setOperation(operation);
+
+      JSONArray entities = json.getJSONArray("entities");
+
+      if (entities != null) {
+        for (int i = 0; i < entities.length(); i++) {
+          JSONObject jsonObj = entities.getJSONObject(i);
+          provider.parseEntity(jsonObj);
+        }
+      }
+      Object[] args = new Object[operation.getParameters().size()];
+      int i = 0;
+      for (Parameter param : operation.getParameters().values()) {
+        JSONArray values = json.getJSONArray("parameters");
+        WebType type = param.getType();
+        Object obj = values.get(i);
+        args[i] = provider.parse(type, obj);
+        i++;
+      }
+      request.setArgs(args);
+    } catch (JSONException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+
+    return request;
+  }
+
+  public String process(final String payload) {
+    try {
+      Response response = responseProvider.get();
+      Request req = parse(payload);
       Operation operation = req.getOperation();
       ObjectType entityType = operation.getDeclaringType();
       Class<? extends WebService> serviceClass = entityType.getServiceClass();
       WebService service = injector.getInstance(serviceClass);
       Object result = service.invoke(operation, req.getArgs());
       response.setResult(result);
-      String body = provider.serialize(req, response);
+      String body = serialize(req, response);
       return body;
     } catch (ReportableException e) {
       e.printStackTrace();
@@ -74,5 +114,13 @@ public class ServerRequestProcessor extends RequestProcessor {
   // msg.setFatal(failure.isFatal());
   // return msg;
   // }
-
+  public String serialize(final Request<?> request, final Response<?> response)
+      throws JSONException {
+    JSONObject jsonObject = new JSONObject();
+    Object obj = response.getResult();
+    WebType type = request.getOperation().getType();
+    provider.serialize(jsonObject, "result", obj, type);
+    jsonObject.put("success", true);
+    return jsonObject.toString();
+  }
 }

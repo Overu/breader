@@ -2,22 +2,16 @@ package com.goodow.web.core.client.json;
 
 import com.goodow.web.core.shared.EntityId;
 import com.goodow.web.core.shared.Message;
-import com.goodow.web.core.shared.ObjectType;
-import com.goodow.web.core.shared.Parameter;
 import com.goodow.web.core.shared.Property;
-import com.goodow.web.core.shared.Request;
-import com.goodow.web.core.shared.Response;
 import com.goodow.web.core.shared.ValueType;
 import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.WebType;
 
-import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONNull;
 import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 import com.google.inject.Inject;
@@ -29,61 +23,7 @@ public class GwtJsonProvider {
   @Inject
   Message message;
 
-  public void parse(final Request request, final Response response, final JSONObject obj) {
-    WebType type = request.getOperation().getType();
-    JSONBoolean success = obj.get("success").isBoolean();
-    response.setSuccess(success.booleanValue());
-    if (success != null && response.isSuccess()) {
-      JSONValue jsonResult = obj.get("result");
-      Object result = parse(type, jsonResult);
-      response.setResult(result);
-    } else {
-      JSONObject error = obj.get("error").isObject();
-    }
-  }
-
-  public void parse(final Request request, final Response response, final String jsonString) {
-    JSONObject obj = JSONParser.parse(jsonString).isObject();
-    parse(request, response, obj);
-  }
-
-  public JSONObject serialize(final Request<?> request, final Response<?> response) {
-    JSONObject obj = new JSONObject();
-    obj.put("operation", new JSONString(request.getOperation().getQualifiedName()));
-
-    if (!request.getOperation().getParameters().isEmpty()) {
-      JSONArray jsonArgs = new JSONArray();
-      int i = 0;
-      Object[] args = request.getArgs();
-      for (Parameter param : request.getOperation().getParameters().values()) {
-        Object arg = args[i];
-        JSONValue jsonValue = create(param.getType(), arg, false);
-        jsonArgs.set(i, jsonValue);
-        if (param.getType() instanceof ObjectType) {
-          // TODO many=true
-          if (arg instanceof WebEntity) {
-            WebEntity entity = (WebEntity) arg;
-            message.getEntityId(entity);
-          }
-        }
-        i++;
-      }
-      obj.put("parameters", jsonArgs);
-    }
-
-    if (!message.getEntities().isEmpty()) {
-      JSONArray entities = new JSONArray();
-      for (EntityId eid : message.getEntityIds()) {
-        WebObject entity = message.getEntity(eid);
-        JSONValue jsonValue = create(entity.getObjectType(), entity, true);
-        entities.set(entities.size(), jsonValue);
-      }
-      obj.put("entities", entities);
-    }
-    return obj;
-  }
-
-  private JSONValue create(final WebType type, final Object obj, final boolean convert) {
+  public JSONValue create(final WebType type, final Object obj, final boolean convert) {
     if (obj == null) {
       return JSONNull.getInstance();
     } else if (type instanceof ValueType) {
@@ -118,7 +58,7 @@ public class GwtJsonProvider {
     }
   }
 
-  private Object parse(final WebType type, final JSONValue json) {
+  public Object parse(final WebType type, final JSONValue json) {
     if (json == null || json.isNull() != null) {
       return null;
     } else if (type instanceof ValueType) {
@@ -133,7 +73,6 @@ public class GwtJsonProvider {
         return json.isString().stringValue();
       }
     } else {
-      ObjectType entityType = (ObjectType) type;
       WebObject obj;
       JSONString jsonString = json.isString();
       if (jsonString != null) {

@@ -10,9 +10,15 @@ import com.google.gwt.core.client.Scheduler.RepeatingCommand;
 import com.google.gwt.http.client.RequestBuilder;
 import com.google.gwt.http.client.RequestCallback;
 import com.google.gwt.http.client.RequestException;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.Window.Location;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 
@@ -23,6 +29,9 @@ public class GwtClientRequestProcessor extends RequestProcessor implements Reque
 
   @Inject
   private GwtJsonProvider provider;
+
+  @Inject
+  private Provider<Message> message;
 
   @Override
   public void onError(final com.google.gwt.http.client.Request request, final Throwable exception) {
@@ -38,7 +47,7 @@ public class GwtClientRequestProcessor extends RequestProcessor implements Reque
       final com.google.gwt.http.client.Response response) {
     try {
       String body = response.getText();
-      provider.parse(activeRequest, this.response, body);
+      parse(activeRequest, this.response, body);
       if (this.response.isSuccess()) {
         Receiver r = activeRequest.getReceiver();
         if (r != null) {
@@ -51,6 +60,24 @@ public class GwtClientRequestProcessor extends RequestProcessor implements Reque
     } finally {
       activeRequest = null;
     }
+  }
+
+  public void parse(final Request request, final Response response, final JSONObject obj) {
+    WebType type = request.getOperation().getType();
+    JSONBoolean success = obj.get("success").isBoolean();
+    response.setSuccess(success.booleanValue());
+    if (success != null && response.isSuccess()) {
+      JSONValue jsonResult = obj.get("result");
+      Object result = provider.parse(type, jsonResult);
+      response.setResult(result);
+    } else {
+      JSONObject error = obj.get("error").isObject();
+    }
+  }
+
+  public void parse(final Request request, final Response response, final String jsonString) {
+    JSONObject obj = JSONParser.parse(jsonString).isObject();
+    parse(request, response, obj);
   }
 
   @Override
@@ -75,6 +102,42 @@ public class GwtClientRequestProcessor extends RequestProcessor implements Reque
     return response;
   }
 
+  public JSONObject serialize(final Request<?> request) {
+    JSONObject obj = new JSONObject();
+    obj.put("operation", new JSONString(request.getOperation().getQualifiedName()));
+
+    if (!request.getOperation().getParameters().isEmpty()) {
+      JSONArray jsonArgs = new JSONArray();
+      int i = 0;
+      Object[] args = request.getArgs();
+      for (Parameter param : request.getOperation().getParameters().values()) {
+        Object arg = args[i];
+        JSONValue jsonValue = provider.create(param.getType(), arg, false);
+        jsonArgs.set(i, jsonValue);
+        if (param.getType() instanceof ObjectType) {
+          // TODO many=true
+          if (arg instanceof WebEntity) {
+            WebEntity entity = (WebEntity) arg;
+            message.get().getEntityId(entity);
+          }
+        }
+        i++;
+      }
+      obj.put("parameters", jsonArgs);
+    }
+
+    if (!message.get().getEntities().isEmpty()) {
+      JSONArray entities = new JSONArray();
+      for (EntityId eid : message.get().getEntityIds()) {
+        WebObject entity = message.get().getEntity(eid);
+        JSONValue jsonValue = provider.create(entity.getObjectType(), entity, true);
+        entities.set(entities.size(), jsonValue);
+      }
+      obj.put("entities", entities);
+    }
+    return obj;
+  }
+
   protected void configureRequestBuilder(final RequestBuilder builder) {
     builder.setHeader("Content-Type", RequestFactory.JSON_CONTENT_TYPE_UTF8);
     builder.setHeader("pageurl", Location.getHref());
@@ -85,7 +148,7 @@ public class GwtClientRequestProcessor extends RequestProcessor implements Reque
     activeRequest = requests.pop();
     response = responseProvider.get();
 
-    JSONObject obj = provider.serialize(activeRequest, response);
+    JSONObject obj = serialize(activeRequest);
     String payload = obj.toString();
 
     String requestUrl = GWT.getModuleBaseURL() + URL;
