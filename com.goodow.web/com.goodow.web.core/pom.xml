@@ -72,7 +72,7 @@
     <dependency>
       <groupId>com.googlecode.gwtphonegap</groupId>
       <artifactId>gwtphonegap</artifactId>
-      <version>1.8.1.1-SNAPSHOT</version>
+      <version>1.8.1.0</version>
     </dependency>
     <dependency>
       <groupId>com.google.gwt</groupId>

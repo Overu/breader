@@ -2,7 +2,6 @@ package com.goodow.web.core.server;
 
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.ObjectType;
-import com.goodow.web.core.shared.Response;
 import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.core.shared.WebService;
 
@@ -24,8 +23,4 @@ public class ServerMessage extends Message {
     return service.find(id);
   }
 
-  @Override
-  public Response send() {
-    return null;
-  }
 }

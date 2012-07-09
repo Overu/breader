@@ -1,6 +1,7 @@
 package com.goodow.web.core.server;
 
 import com.goodow.web.core.shared.EntityId;
+import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Operation;
 import com.goodow.web.core.shared.Parameter;
@@ -20,7 +21,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JsonBuilder {
+public class JsonProvider {
+
+  @Inject
+  Message message;
 
   @Inject
   private Provider<Request> requestProvider;
@@ -97,7 +101,7 @@ public class JsonBuilder {
     } else {
       String eId = (String) obj;
       EntityId id = EntityId.parseId(eId);
-      return request.getEntity(id);
+      return message.getEntity(id);
     }
   }
 
@@ -108,7 +112,7 @@ public class JsonBuilder {
     } else {
       String eId = jsonObject.getString("e_id");
       EntityId id = EntityId.parseId(eId);
-      WebEntity entity = request.getEntity(id);
+      WebEntity entity = message.getEntity(id);
       for (Property prop : entity.getObjectType().getAllProperties().values()) {
         if (jsonObject.has(prop.getName())) {
           Object jsonValue = jsonObject.get(prop.getName());
@@ -130,7 +134,7 @@ public class JsonBuilder {
       WebObject entity = (WebObject) value;
       JSONObject jsonObject = new JSONObject();
       if (entity instanceof WebEntity) {
-        EntityId eid = request.getEntityId((WebEntity) entity);
+        EntityId eid = message.getEntityId((WebEntity) entity);
         jsonObject.put("e_id", eid.toString());
       }
       for (Property prop : entity.getObjectType().getAllProperties().values()) {
@@ -143,7 +147,7 @@ public class JsonBuilder {
           } else if (prop.isContainment()) {
             serialize(request, jsonObject, prop.getName(), propValue, prop.getType());
           } else if (entityValue instanceof WebEntity) {
-            EntityId id = request.getEntityId((WebEntity) entityValue);
+            EntityId id = message.getEntityId((WebEntity) entityValue);
             jsonObject.put(prop.getName(), id.toString());
           }
         } else {
