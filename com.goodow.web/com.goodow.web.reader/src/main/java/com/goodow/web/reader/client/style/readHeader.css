@@ -8,5 +8,12 @@
 }
 
 .headPanel>div>p {
-  background-image: inherit!important;
+  background-image: inherit !important;
+  margin: 0 5px 0 2px;
+  padding: 5px 10px 11px 10px;;
+  border: 1px solid rgb(126, 106, 106);
+}
+
+.headPanel>div>p:ACTIVE {
+  border: 1px ridge;
 }

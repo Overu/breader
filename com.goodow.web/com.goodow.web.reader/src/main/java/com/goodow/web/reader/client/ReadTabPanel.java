@@ -18,7 +18,6 @@ import com.goodow.web.reader.client.style.ReadResources;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.place.shared.PlaceController;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
@@ -65,7 +64,6 @@ public class ReadTabPanel extends Composite {
 
       @Override
       public void onTap(final TapEvent event) {
-        Window.alert("书架");
       }
     });
 
