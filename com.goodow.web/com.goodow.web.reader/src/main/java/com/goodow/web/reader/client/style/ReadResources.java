@@ -19,24 +19,32 @@ import com.google.gwt.resources.client.CssResource;
 
 import java.util.logging.Logger;
 
-public class ReaderResources {
+public class ReadResources {
 
-  interface Bundle extends ClientBundle {
+  public interface Bundle extends ClientBundle {
 
     @Source("style.css")
     Style css();
+
+    @Source("readHeader.css")
+    ReadHeader readHeadCss();
   }
 
-  interface Style extends CssResource {
+  public interface ReadHeader extends CssResource {
+    String headPanel();
   }
 
-  private static final Logger logger = Logger.getLogger(ReaderResources.class.getName());
+  public interface Style extends CssResource {
+  }
+
+  private static final Logger logger = Logger.getLogger(ReadResources.class.getName());
   private static Bundle INSTANCE;
 
   static {
     logger.finest("static init start");
     INSTANCE = GWT.create(Bundle.class);
     INSTANCE.css().ensureInjected();
+    INSTANCE.readHeadCss().ensureInjected();
     logger.finest("static init end");
   }
 

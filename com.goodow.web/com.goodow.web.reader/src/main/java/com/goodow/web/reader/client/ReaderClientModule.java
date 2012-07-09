@@ -1,7 +1,7 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.core.client.UIRegistry;
-import com.goodow.web.reader.client.style.ReaderResources;
+import com.goodow.web.reader.client.style.ReadResources;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -16,7 +16,7 @@ public final class ReaderClientModule extends AbstractGinModule {
   public static class Bind {
 
     public Bind() {
-      ReaderResources.INSTANCE();
+      ReadResources.INSTANCE();
     }
 
   }
@@ -24,11 +24,9 @@ public final class ReaderClientModule extends AbstractGinModule {
   public static class ReaderUI {
     @Inject
     public ReaderUI(final UIRegistry registry, final AsyncProvider<BookStoreView> bookstore,
-        final AsyncProvider<BookShelfView> bookshelf,
-        final AsyncProvider<RecommendedBookList> booklist) {
+        final AsyncProvider<BookShelfView> bookshelf) {
       registry.addBinding("/bookstore").toAsyncProvider(bookstore);
       registry.addBinding("/bookshelf").toAsyncProvider(bookshelf);
-      registry.addBinding("/scroll").toAsyncProvider(booklist);
     }
   }
 

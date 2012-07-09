@@ -1,0 +1,12 @@
+.headPanel {
+  background: literal('-webkit-gradient(linear,left bottom,left top,color-stop(0, rgb(255,102,0)),color-stop(1, rgb(219,127,65)))!important'
+    );
+}
+
+.headPanel>div:FIRST-CHILD {
+  color: white;
+}
+
+.headPanel>div>p {
+  background-image: inherit!important;
+}

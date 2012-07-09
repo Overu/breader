@@ -5,6 +5,7 @@ import com.goodow.web.core.shared.MyPlace;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 
 import com.googlecode.mgwt.dom.client.event.touch.TouchCancelEvent;
@@ -28,6 +29,7 @@ public abstract class BookListView extends Composite {
   protected HTML title;
 
   protected ScrollPanel scrollPanel;
+  protected HTMLPanel content;
 
   @Inject
   protected PlaceController placeController;
@@ -36,6 +38,7 @@ public abstract class BookListView extends Composite {
     main = new LayoutPanel();
 
     scrollPanel = new ScrollPanel();
+    content = new HTMLPanel("");
 
     headerPanel = new HeaderPanel();
     title = new HTML();
@@ -79,7 +82,9 @@ public abstract class BookListView extends Composite {
     headerPanel.setRightWidget(rightButton);
 
     main.add(headerPanel);
-    main.add(scrollPanel);
+    // main.add(scrollPanel);
+    content.add(scrollPanel);
+    main.add(content);
     initWidget(main);
   }
 

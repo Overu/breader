@@ -1,21 +1,22 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
-  
-  <ui:style field='landscape' src='bookSummary.landscape.css' type='com.goodow.web.reader.client.BookSummary.BookSummaryStyle'>
-  </ui:style>
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:o="urn:import:org.apache.xpath.operations">
+
+  <ui:style field='landscape' src='bookSummary.landscape.css'
+    type='com.goodow.web.reader.client.BookSummary.BookSummaryStyle'>
+      
+    </ui:style>
 
   <ui:style>
     /*
-    .root {
-      float: left;
-      border: 1px dashed gray;
-      height: 100px;
-    }
-    */
-    
+                                            .root {
+                                              float: left;
+                                              border: 1px dashed gray;
+                                              height: 100px;
+                                            }
+                                            */
     .left {
       float: left;
-      background-color: #cccccc;
       padding: 5px;
     }
     
@@ -28,11 +29,18 @@
     }
     
     .right {
-      margin-left: 50px;
+      -webkit-box-pack: justify;
+      display: -webkit-box;
+      height: 100%;
+    }
+    
+    .information {
+      margin: 8px 0 0 0;
     }
     
     .title {
-      
+      font-weight: 600;
+      font-size: 1.1em;
     }
     
     .author {
@@ -42,6 +50,13 @@
     .description {
       color: gray;
     }
+    
+    .price {
+      -webkit-box-pack: center;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      margin: 0 15px;
+    }
   </ui:style>
 
   <g:HTMLPanel ui:field="root" addStyleNames="{landscape.root}">
@@ -49,9 +64,15 @@
       <g:Image ui:field="bookImage" styleName="{style.image}"></g:Image>
     </g:HTMLPanel>
     <g:HTMLPanel ui:field="rightPanel" styleName="{style.right}">
-      <g:Label ui:field="titleLabel" styleName="{style.title}"></g:Label>
-      <g:Label ui:field="authorLabel" styleName="{style.author}"></g:Label>
-      <g:Label ui:field="descLabel" styleName="{style.description}"></g:Label>
+      <g:HTMLPanel styleName="{style.information}">
+        <g:Label ui:field="titleLabel" styleName="{style.title}"></g:Label>
+        <g:Label ui:field="authorLabel" styleName="{style.author}"></g:Label>
+        <g:Label ui:field="descLabel" styleName="{style.description}"></g:Label>
+      </g:HTMLPanel>
+      <div class="{style.price}">
+        <div ui:field="originalPrice"></div>
+        <div ui:field="discountedPrice"></div>
+      </div>
     </g:HTMLPanel>
   </g:HTMLPanel>
 </ui:UiBinder>

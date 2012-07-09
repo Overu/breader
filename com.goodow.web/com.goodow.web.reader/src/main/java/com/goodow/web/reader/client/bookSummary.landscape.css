@@ -7,11 +7,23 @@
   }
 }
 */
-
 .root {
   float: left;
-  border: 1px dashed gray;
+  border: 1px outset;
   height: 100px;
   width: 33.333333%;
   box-sizing: border-box;
+}
+
+
+.root:nth-child\(6n\+2\) {
+  background-color: white;
+}
+
+.root:nth-child\(2n\+1\) {
+  background-color: white;
+}
+
+.root:nth-child\(6n\+5\) {
+  background-color: inherit;
 }

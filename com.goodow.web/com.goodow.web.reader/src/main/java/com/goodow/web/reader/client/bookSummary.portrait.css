@@ -3,3 +3,24 @@
 .root {
   width: 50%;
 }
+
+.root:nth-child\(4n\+2\) {
+  background: white!important;
+}
+
+.root:nth-child\(4n\+1\) {
+  background: white!important;
+}
+
+.root:nth-child\(6n\+5\) {
+  background: inherit;
+}
+
+.root:nth-child\(6n\+2\) {
+  background-color: inherit;
+}
+
+.root:nth-child\(2n\+1\) {
+  background-color: inherit;
+}
+
