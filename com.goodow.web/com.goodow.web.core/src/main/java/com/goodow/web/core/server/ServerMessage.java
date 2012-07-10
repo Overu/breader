@@ -23,6 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collection;
+
 @Singleton
 public class ServerMessage extends Message {
 
@@ -31,6 +33,12 @@ public class ServerMessage extends Message {
 
   @Inject
   protected Injector injector;
+
+  @Inject
+  JSONObjectProvider objectProvider;
+
+  @Inject
+  JSONCollectionProvider collectionProvider;
 
   @Override
   public WebEntity find(final ObjectType objectType, final String id) {
@@ -129,7 +137,7 @@ public class ServerMessage extends Message {
       WebService service = injector.getInstance(serviceClass);
       Object result = service.invoke(operation, req.getArgs());
       response.setResult(result);
-      String body = serialize(req, response);
+      String body = serialize();
       return body;
     } catch (ReportableException e) {
       e.printStackTrace();
@@ -141,57 +149,24 @@ public class ServerMessage extends Message {
     return null;
   }
 
-  public void serialize(final JSONObject parent, final String key, final Object value,
-      final WebType type) throws JSONException {
-    if (value == null) {
-      parent.put(key, JSONObject.NULL);
-    } else if (type instanceof ValueType) {
-      parent.put(key, value);
-    } else {
-      WebObject entity = (WebObject) value;
+  public String serialize() throws JSONException {
+    Object result = response.getResult();
+    if (result == null) {
+      return "null";
+    } else if (result instanceof WebObject) {
+      WebObject obj = (WebObject) result;
       JSONObject jsonObject = new JSONObject();
-      if (entity instanceof WebEntity) {
-        EntityId eid = getEntityId((WebEntity) entity);
-        jsonObject.put("e_id", eid.toString());
-      }
-      for (Property prop : entity.getObjectType().getAllProperties().values()) {
-        Object propValue = entity.get(prop);
-        WebType propType = prop.getType();
-        if (propType instanceof ObjectType) {
-          WebObject entityValue = (WebObject) propValue;
-          if (entityValue == null) {
-            jsonObject.put(prop.getName(), JSONObject.NULL);
-          } else if (prop.isContainment()) {
-            serialize(jsonObject, prop.getName(), propValue, prop.getType());
-          } else if (entityValue instanceof WebEntity) {
-            EntityId id = getEntityId((WebEntity) entityValue);
-            jsonObject.put(prop.getName(), id.toString());
-          }
-        } else {
-          jsonObject.put(prop.getName(), propValue);
-        }
-      }
-      parent.put(key, jsonObject);
+      objectProvider.writeTo(obj, jsonObject, this);
+      return jsonObject.toString();
+    } else if (result instanceof Collection) {
+      JSONArray jsonArray = new JSONArray();
+      collectionProvider.writeTo((Collection) result, jsonArray, true, this);
+      return jsonArray.toString();
+    } else if (result instanceof String) {
+      return "\"" + result + "\"";
+    } else {
+      return result.toString();
     }
   }
 
-  // private FailureMessage createFailureMessage(final ReportableException e) {
-  // ServerFailure failure =
-  // exceptionHandler.createServerFailure(e.getCause() == null ? e : e.getCause());
-  // FailureMessage msg = null;
-  // msg.setExceptionType(failure.getExceptionType());
-  // msg.setMessage(failure.getMessage());
-  // msg.setStackTrace(failure.getStackTraceString());
-  // msg.setFatal(failure.isFatal());
-  // return msg;
-  // }
-  public String serialize(final Request<?> request, final Response<?> response)
-      throws JSONException {
-    JSONObject jsonObject = new JSONObject();
-    Object obj = response.getResult();
-    WebType type = request.getOperation().getType();
-    serialize(jsonObject, "result", obj, type);
-    jsonObject.put("success", true);
-    return jsonObject.toString();
-  }
 }

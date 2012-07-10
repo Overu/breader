@@ -9,7 +9,6 @@ import com.goodow.web.core.shared.Parameter;
 import com.goodow.web.core.shared.Property;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Request;
-import com.goodow.web.core.shared.Response;
 import com.goodow.web.core.shared.ValueType;
 import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.core.shared.WebObject;
@@ -68,34 +67,15 @@ public class ClientMessage extends Message implements RequestCallback {
   public void onResponseReceived(final com.google.gwt.http.client.Request request,
       final com.google.gwt.http.client.Response response) {
     String body = response.getText();
-    parse(this.request, this.response, body);
-    if (this.response.isSuccess()) {
-      Receiver r = this.request.getReceiver();
-      if (r != null) {
-        r.onSuccess(this.response.getResult());
-      }
-    } else {
-
+    JSONValue obj = JSONParser.parse(body);
+    WebType type = this.request.getOperation().getType();
+    Object result = readFrom(type, obj);
+    this.response.setResult(result);
+    Receiver r = this.request.getReceiver();
+    if (r != null) {
+      r.onSuccess(this.response.getResult());
     }
     logger.finest("onResponseReceived");
-  }
-
-  public void parse(final Request request, final Response response, final JSONObject obj) {
-    WebType type = request.getOperation().getType();
-    JSONBoolean success = obj.get("success").isBoolean();
-    response.setSuccess(success.booleanValue());
-    if (success != null && response.isSuccess()) {
-      JSONValue jsonResult = obj.get("result");
-      Object result = readFrom(type, jsonResult);
-      response.setResult(result);
-    } else {
-      JSONObject error = obj.get("error").isObject();
-    }
-  }
-
-  public void parse(final Request request, final Response response, final String jsonString) {
-    JSONObject obj = JSONParser.parse(jsonString).isObject();
-    parse(request, response, obj);
   }
 
   public Object readFrom(final WebType type, final JSONValue json) {
