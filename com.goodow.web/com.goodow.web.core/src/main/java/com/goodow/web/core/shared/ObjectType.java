@@ -33,12 +33,18 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
 
   private transient Accessor accessor;
 
+  private Map<String, ObjectProvider> providers = new HashMap<String, ObjectProvider>();
+
   public void addOperation(final Operation operation) {
     operations.put(operation.getName(), operation);
   }
 
   public void addProperty(final Property property) {
     properties.put(property.getName(), property);
+  }
+
+  public <T> void addProvider(final Class<T> mediatorType, final ObjectProvider provider) {
+    providers.put(mediatorType.getName(), provider);
   }
 
   @Override
@@ -77,6 +83,15 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
 
   public Property getProperty(final String name) {
     Property result = properties.get(name);
+    return result;
+  }
+
+  public <W extends WebObject, T> ObjectProvider<W, T> getProvider(final Class<T> mediatorType) {
+    ObjectProvider<W, T> result = (ObjectProvider<W, T>) providers.get(mediatorType.getName());
+    if (result == null && !providers.containsKey(mediatorType.getName())) {
+      result = getSuperType().getProvider(mediatorType);
+      providers.put(mediatorType.getName(), result);
+    }
     return result;
   }
 
