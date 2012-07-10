@@ -43,7 +43,8 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
     properties.put(property.getName(), property);
   }
 
-  public <T> void addProvider(final Class<T> mediatorType, final ObjectProvider provider) {
+  public <T, W extends WebObject> void addProvider(final Class<T> mediatorType,
+      final ObjectProvider<W, T> provider) {
     providers.put(mediatorType.getName(), provider);
   }
 

@@ -17,10 +17,11 @@ import com.google.inject.Singleton;
 public class GwtJSONObjectProvider<T extends WebObject> implements ObjectProvider<T, JSONObject> {
 
   @Inject
-  JSONMessageProvider messageProvider;
+  ClientJSONMessageProvider messageProvider;
 
   @Override
-  public void readFrom(final T obj, final JSONObject jsonObj, final Message message) {
+  public void readFrom(final T obj, final JSONObject jsonObj, final Message message)
+      throws Exception {
     for (Property prop : obj.getObjectType().getAllProperties().values()) {
       JSONValue jsonValue = jsonObj.get(prop.getName());
       Object value = messageProvider.convertFrom(prop.getType(), jsonValue, message);
@@ -29,7 +30,7 @@ public class GwtJSONObjectProvider<T extends WebObject> implements ObjectProvide
   }
 
   @Override
-  public void writeTo(final T obj, final JSONObject json, final Message message) {
+  public void writeTo(final T obj, final JSONObject json, final Message message) throws Exception {
     if (obj instanceof WebEntity) {
       EntityId eid = message.getEntityId((WebEntity) obj);
       json.put("e_id", new JSONString(eid.toString()));
@@ -40,5 +41,4 @@ public class GwtJSONObjectProvider<T extends WebObject> implements ObjectProvide
       json.put(prop.getName(), jsonValue);
     }
   }
-
 }

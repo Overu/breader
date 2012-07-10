@@ -39,6 +39,10 @@ public class Request<T> implements Serializable {
     return contentType;
   }
 
+  public Message getMessage() {
+    return message;
+  }
+
   public Request<?> getNextRequest() {
     return nextRequest;
   }

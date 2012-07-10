@@ -24,7 +24,7 @@ import java.util.logging.Level;
 public class ClientMessage extends Message implements RequestCallback {
 
   @Inject
-  JSONMessageProvider messageProvider;
+  ClientJSONMessageProvider messageProvider;
 
   @Override
   public WebEntity find(final ObjectType objectType, final String id) {
@@ -33,20 +33,22 @@ public class ClientMessage extends Message implements RequestCallback {
 
   @Override
   public Message fire() {
-    JSONObject obj = messageProvider.serialize(this);
-    String payload = obj.toString();
-
-    String requestUrl = GWT.getModuleBaseURL() + URL;
-    RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, requestUrl);
-    configureRequestBuilder(builder);
-    builder.setRequestData(payload);
-    builder.setCallback(this);
-
     try {
+      JSONObject obj = messageProvider.serialize(this);
+      String payload = obj.toString();
+
+      String requestUrl = GWT.getModuleBaseURL() + URL;
+      RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, requestUrl);
+      configureRequestBuilder(builder);
+      builder.setRequestData(payload);
+      builder.setCallback(this);
+
       logger.finest("Sending fire request");
       builder.send();
     } catch (RequestException e) {
       logger.log(Level.SEVERE, SERVER_ERROR + " (" + e.getMessage() + ")", e);
+    } catch (Exception e) {
+      logger.log(Level.SEVERE, "Serialization Error (" + e.getMessage() + ")", e);
     }
     return this;
   }
@@ -59,16 +61,20 @@ public class ClientMessage extends Message implements RequestCallback {
   @Override
   public void onResponseReceived(final com.google.gwt.http.client.Request request,
       final com.google.gwt.http.client.Response response) {
-    String body = response.getText();
-    JSONValue obj = JSONParser.parse(body);
-    WebType type = this.request.getOperation().getType();
-    Object result = messageProvider.convertFrom(type, obj, this);
-    this.response.setResult(result);
-    Receiver r = this.request.getReceiver();
-    if (r != null) {
-      r.onSuccess(this.response.getResult());
-    }
     logger.finest("onResponseReceived");
+    try {
+      String body = response.getText();
+      JSONValue obj = JSONParser.parse(body);
+      WebType type = this.request.getOperation().getType();
+      Object result = messageProvider.convertFrom(type, obj, this);
+      this.response.setResult(result);
+      Receiver r = this.request.getReceiver();
+      if (r != null) {
+        r.onSuccess(this.response.getResult());
+      }
+    } catch (Exception e) {
+      logger.severe(e.getMessage());
+    }
   }
 
   protected void configureRequestBuilder(final RequestBuilder builder) {

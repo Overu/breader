@@ -80,7 +80,7 @@ public class WebServiceServlet extends HttpServlet {
         PrintWriter writer = response.getWriter();
         writer.print(payload);
         writer.flush();
-      } catch (RuntimeException e) {
+      } catch (Exception e) {
         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         log.log(Level.SEVERE, "Unexpected error", e);
       }

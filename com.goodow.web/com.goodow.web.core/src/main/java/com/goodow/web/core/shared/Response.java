@@ -23,6 +23,10 @@ public class Response<T> implements Serializable {
     return generalFailure;
   }
 
+  public Message getMessage() {
+    return message;
+  }
+
   public T getResult() {
     return result;
   }
