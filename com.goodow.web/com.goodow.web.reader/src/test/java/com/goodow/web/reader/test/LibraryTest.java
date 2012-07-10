@@ -1,6 +1,6 @@
 package com.goodow.web.reader.test;
 
-import com.goodow.web.core.server.ServerJSONMessageProvider;
+import com.goodow.web.core.server.JSONMarshaller;
 import com.goodow.web.core.shared.Accessor;
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.reader.shared.Library;
@@ -28,7 +28,7 @@ public class LibraryTest extends ExampleTest {
   LibraryService libraryService;
 
   @Inject
-  ServerJSONMessageProvider jsonProvider;
+  JSONMarshaller jsonMarshaller;
 
   @Inject
   Provider<Message> messageProvider;
@@ -43,20 +43,20 @@ public class LibraryTest extends ExampleTest {
       System.out.println(result);
       Accessor access = ReaderPackage.Library.as().getAccessor();
       System.out.println(access);
-      String json = jsonProvider.serialize(library);
+      String json = jsonMarshaller.serialize(library);
       System.out.println(json);
       list.add(library);
     }
 
-    String json = jsonProvider.serialize(list);
+    String json = jsonMarshaller.serialize(list);
     System.out.println(json);
 
-    json = jsonProvider.serialize(new Object[] {false, "File", 10});
+    json = jsonMarshaller.serialize(new Object[] {false, "File", 10});
     System.err.println(json);
 
     Message message = messageProvider.get();
     message.getResponse().setResult(list);
-    json = jsonProvider.serialize(message.getResponse());
+    json = jsonMarshaller.serialize(message.getResponse());
     System.out.println(json);
   }
 

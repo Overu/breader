@@ -2,8 +2,9 @@ package com.goodow.web.core.client;
 
 import com.goodow.web.core.shared.EntityId;
 import com.goodow.web.core.shared.Message;
-import com.goodow.web.core.shared.ObjectProvider;
+import com.goodow.web.core.shared.ObjectReader;
 import com.goodow.web.core.shared.ObjectType;
+import com.goodow.web.core.shared.ObjectWriter;
 import com.goodow.web.core.shared.Parameter;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.ValueType;
@@ -51,7 +52,7 @@ public class ClientJSONMessageProvider {
         JSONString eId = jsonObj.get("e_id").isString();
         EntityId id = EntityId.parseId(eId.stringValue());
         obj = message.getEntity(id);
-        ObjectProvider<WebObject, JSONObject> provider =
+        ObjectReader<WebObject, JSONObject> provider =
             obj.getObjectType().getProvider(JSONObject.class);
         provider.readFrom(obj, jsonObj, message);
 
@@ -90,8 +91,8 @@ public class ClientJSONMessageProvider {
       for (EntityId eid : message.getEntityIds()) {
         WebObject entity = message.getEntity(eid);
         JSONObject json = new JSONObject();
-        ObjectProvider<WebObject, JSONObject> provider =
-            entity.getObjectType().getProvider(JSONObject.class);
+        ObjectWriter<WebObject, JSONObject> provider =
+            entity.getObjectType().getWriter(JSONObject.class);
         provider.writeTo(entity, json, message);
         entities.set(entities.size(), json);
       }
@@ -111,8 +112,7 @@ public class ClientJSONMessageProvider {
     } else if (obj instanceof WebObject) {
       WebObject o = (WebObject) obj;
       JSONObject json = new JSONObject();
-      ObjectProvider<WebObject, JSONObject> provider =
-          o.getObjectType().getProvider(JSONObject.class);
+      ObjectWriter<WebObject, JSONObject> provider = o.getObjectType().getWriter(JSONObject.class);
       provider.writeTo(o, json, message);
       return json;
     } else {

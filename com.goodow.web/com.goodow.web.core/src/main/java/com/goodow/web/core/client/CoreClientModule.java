@@ -47,7 +47,8 @@ public class CoreClientModule extends AbstractGinModule {
     @Inject
     public Binder(final AsyncProvider<TextArea> editView, final UIRegistry widgetRegistry,
         final AsyncProvider<Shell> shell, final GwtJSONObjectProvider<WebObject> provider) {
-      CorePackage.WebObject.as().addProvider(JSONObject.class, provider);
+      CorePackage.WebObject.as().addReader(JSONObject.class, provider);
+      CorePackage.WebObject.as().addWriter(JSONObject.class, provider);
       widgetRegistry.addBinding("view1").toInstance(new Label("视图1"));
       widgetRegistry.addBinding("view2").toAsyncProvider(editView);
       widgetRegistry.addBinding("main").toAsyncProvider(shell);

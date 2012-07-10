@@ -2,8 +2,9 @@ package com.goodow.web.core.server;
 
 import com.goodow.web.core.shared.EntityId;
 import com.goodow.web.core.shared.Message;
-import com.goodow.web.core.shared.ObjectProvider;
+import com.goodow.web.core.shared.ObjectReader;
 import com.goodow.web.core.shared.ObjectType;
+import com.goodow.web.core.shared.ObjectWriter;
 import com.goodow.web.core.shared.Operation;
 import com.goodow.web.core.shared.Parameter;
 import com.goodow.web.core.shared.Request;
@@ -24,7 +25,7 @@ import org.json.JSONObject;
 
 import java.util.Collection;
 
-public class ServerJSONMessageProvider {
+public class JSONMarshaller {
 
   @Inject
   protected Provider<Message> messageProvider;
@@ -39,7 +40,7 @@ public class ServerJSONMessageProvider {
         if (eId != null) {
           EntityId id = EntityId.parseId(eId);
           object = message.getEntity(id);
-          ObjectProvider<WebObject, JSONObject> provider =
+          ObjectReader<WebObject, JSONObject> provider =
               id.getObjectType().getProvider(JSONObject.class);
           provider.readFrom(object, json, message);
         }
@@ -63,7 +64,7 @@ public class ServerJSONMessageProvider {
         } else {
           object = objectType.create();
         }
-        ObjectProvider<WebObject, JSONObject> provider = objectType.getProvider(JSONObject.class);
+        ObjectReader<WebObject, JSONObject> provider = objectType.getProvider(JSONObject.class);
         provider.readFrom(object, json, message);
         return object;
       } catch (JSONException e) {
@@ -157,8 +158,8 @@ public class ServerJSONMessageProvider {
     } else if (result instanceof WebObject) {
       WebObject obj = (WebObject) result;
       JSONObject jsonObject = new JSONObject();
-      ObjectProvider<WebObject, JSONObject> provider =
-          obj.getObjectType().getProvider(JSONObject.class);
+      ObjectWriter<WebObject, JSONObject> provider =
+          obj.getObjectType().getWriter(JSONObject.class);
       provider.writeTo(obj, jsonObject, message);
       return jsonObject.toString();
     } else if (result instanceof Collection) {
@@ -204,9 +205,9 @@ public class ServerJSONMessageProvider {
         return id.toString();
       } else {
         JSONObject json = new JSONObject();
-        ObjectProvider<WebObject, JSONObject> provider =
-            obj.getObjectType().getProvider(JSONObject.class);
-        provider.writeTo(obj, json, message);
+        ObjectWriter<WebObject, JSONObject> writer =
+            obj.getObjectType().getWriter(JSONObject.class);
+        writer.writeTo(obj, json, message);
         return json;
       }
     } else if (item instanceof Collection) {

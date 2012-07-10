@@ -2,7 +2,8 @@ package com.goodow.web.core.server;
 
 import com.goodow.web.core.shared.EntityId;
 import com.goodow.web.core.shared.Message;
-import com.goodow.web.core.shared.ObjectProvider;
+import com.goodow.web.core.shared.ObjectReader;
+import com.goodow.web.core.shared.ObjectWriter;
 import com.goodow.web.core.shared.Property;
 import com.goodow.web.core.shared.SerializationException;
 import com.goodow.web.core.shared.WebEntity;
@@ -18,10 +19,11 @@ import org.json.JSONObject;
 import java.util.Collection;
 
 @Singleton
-public class JSONObjectProvider<T extends WebObject> implements ObjectProvider<T, JSONObject> {
+public class JSONObjectProvider<T extends WebObject> implements ObjectReader<T, JSONObject>,
+    ObjectWriter<T, JSONObject> {
 
   @Inject
-  ServerJSONMessageProvider messageProvider;
+  JSONMarshaller messageProvider;
 
   @Override
   public void readFrom(final T obj, final JSONObject json, final Message message) {
@@ -56,8 +58,8 @@ public class JSONObjectProvider<T extends WebObject> implements ObjectProvider<T
             target.put(prop.getName(), id.toString());
           } else {
             JSONObject json = new JSONObject();
-            ObjectProvider<WebObject, JSONObject> provider =
-                obj.getObjectType().getProvider(JSONObject.class);
+            ObjectWriter<WebObject, JSONObject> provider =
+                obj.getObjectType().getWriter(JSONObject.class);
             provider.writeTo(obj, json, message);
             target.put(prop.getName(), json);
           }

@@ -2,7 +2,8 @@ package com.goodow.web.core.client;
 
 import com.goodow.web.core.shared.EntityId;
 import com.goodow.web.core.shared.Message;
-import com.goodow.web.core.shared.ObjectProvider;
+import com.goodow.web.core.shared.ObjectReader;
+import com.goodow.web.core.shared.ObjectWriter;
 import com.goodow.web.core.shared.Property;
 import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.core.shared.WebObject;
@@ -14,7 +15,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
-public class GwtJSONObjectProvider<T extends WebObject> implements ObjectProvider<T, JSONObject> {
+public class GwtJSONObjectProvider<T extends WebObject> implements ObjectReader<T, JSONObject>,
+    ObjectWriter<T, JSONObject> {
 
   @Inject
   ClientJSONMessageProvider messageProvider;

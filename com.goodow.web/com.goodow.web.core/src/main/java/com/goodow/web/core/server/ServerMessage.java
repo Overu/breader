@@ -18,7 +18,7 @@ public class ServerMessage extends Message {
   protected Injector injector;
 
   @Inject
-  ServerJSONMessageProvider provider;
+  JSONMarshaller provider;
 
   @Override
   public WebEntity find(final ObjectType objectType, final String id) {

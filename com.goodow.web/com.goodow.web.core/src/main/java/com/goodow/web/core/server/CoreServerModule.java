@@ -19,7 +19,8 @@ public class CoreServerModule extends AbstractModule {
   public static class Binder {
     @Inject
     public Binder(final JSONObjectProvider<WebObject> provider) {
-      CorePackage.WebObject.as().addProvider(JSONObject.class, provider);
+      CorePackage.WebObject.as().addReader(JSONObject.class, provider);
+      CorePackage.WebObject.as().addWriter(JSONObject.class, provider);
     }
   }
 

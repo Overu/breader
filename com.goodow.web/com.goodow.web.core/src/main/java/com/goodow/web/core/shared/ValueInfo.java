@@ -2,7 +2,7 @@ package com.goodow.web.core.shared;
 
 import com.goodow.web.core.shared.util.ClassUtil;
 
-public abstract class ValueInfo<T> implements Wrapper<ValueType>, TextReader<T>, TextWriter<T> {
+public abstract class ValueInfo<T> extends StringConverter<T> implements Wrapper<ValueType> {
 
   private final ValueType valueType;
 
@@ -12,7 +12,6 @@ public abstract class ValueInfo<T> implements Wrapper<ValueType>, TextReader<T>,
     valueType.setName(name);
     valueType.setJavaClass(clazz);
     valueType.setTextReader(this);
-    valueType.setTextWriter(this);
   }
 
   @Override
@@ -22,7 +21,7 @@ public abstract class ValueInfo<T> implements Wrapper<ValueType>, TextReader<T>,
 
   // @Override
   @Override
-  public String writeTo(final T target) {
+  public String convertTo(final T target) {
     return target == null ? null : target.toString();
   }
 
