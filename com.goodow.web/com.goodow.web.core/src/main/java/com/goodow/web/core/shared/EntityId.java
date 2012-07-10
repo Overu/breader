@@ -21,6 +21,8 @@ public class EntityId {
     return id;
   }
 
+  private transient ObjectType objectType;
+
   private String stableId;
 
   private String clientId;
@@ -51,12 +53,19 @@ public class EntityId {
     return clientId;
   }
 
-  public String getType() {
-    return type;
+  public ObjectType getObjectType() {
+    if (objectType == null) {
+      objectType = WebPlatform.getInstance().getObjectType(type);
+    }
+    return objectType;
   }
 
   public String getStableId() {
     return stableId;
+  }
+
+  public String getType() {
+    return type;
   }
 
   @Override
@@ -74,12 +83,12 @@ public class EntityId {
     this.clientId = clientId;
   }
 
-  public void setType(final String entityType) {
-    this.type = entityType;
-  }
-
   public void setStableId(final String stableId) {
     this.stableId = stableId;
+  }
+
+  public void setType(final String entityType) {
+    this.type = entityType;
   }
 
   @Override

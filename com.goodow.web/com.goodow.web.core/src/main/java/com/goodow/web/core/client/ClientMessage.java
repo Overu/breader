@@ -66,7 +66,7 @@ public class ClientMessage extends Message implements RequestCallback {
       String body = response.getText();
       JSONValue obj = JSONParser.parse(body);
       WebType type = this.request.getOperation().getType();
-      Object result = messageProvider.convertFrom(type, obj, this);
+      Object result = messageProvider.parse(type, obj, this);
       this.response.setResult(result);
       Receiver r = this.request.getReceiver();
       if (r != null) {

@@ -19,9 +19,9 @@ public abstract class Message implements Serializable {
 
   protected Stack<Request<?>> requests = new Stack<Request<?>>();
 
-  private Map<EntityId, WebEntity> entities = new HashMap<EntityId, WebEntity>();
+  private Map<EntityId, WebObject> entities = new HashMap<EntityId, WebObject>();
 
-  private Map<WebEntity, EntityId> entityIds = new HashMap<WebEntity, EntityId>();
+  private Map<WebObject, EntityId> entityIds = new HashMap<WebObject, EntityId>();
 
   @SuppressWarnings("rawtypes")
   protected Request request;
@@ -41,14 +41,19 @@ public abstract class Message implements Serializable {
     return this;
   }
 
-  public Collection<WebEntity> getEntities() {
+  public Collection<WebObject> getEntities() {
     return entities.values();
   }
 
-  public WebEntity getEntity(final EntityId id) {
-    WebEntity entity = entities.get(id);
+  public WebObject getEntity(final EntityId id) {
+    WebObject entity = entities.get(id);
     if (entity == null) {
-      entity = WebPlatform.getInstance().getOrCreateEntity(id);
+      if (id.getStableId() != null) {
+        entity = find(id.getObjectType(), id.getStableId());
+      }
+      if (entity == null) {
+        entity = id.getObjectType().create();
+      }
       entities.put(id, entity);
       entityIds.put(entity, id);
     }

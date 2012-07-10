@@ -24,7 +24,7 @@ public class GwtJSONObjectProvider<T extends WebObject> implements ObjectProvide
       throws Exception {
     for (Property prop : obj.getObjectType().getAllProperties().values()) {
       JSONValue jsonValue = jsonObj.get(prop.getName());
-      Object value = messageProvider.convertFrom(prop.getType(), jsonValue, message);
+      Object value = messageProvider.parse(prop.getType(), jsonValue, message);
       obj.set(prop, value);
     }
   }
@@ -37,7 +37,7 @@ public class GwtJSONObjectProvider<T extends WebObject> implements ObjectProvide
     }
     for (Property prop : obj.getObjectType().getAllProperties().values()) {
       Object value = obj.get(prop);
-      JSONValue jsonValue = messageProvider.convertTo(prop.getType(), value, message);
+      JSONValue jsonValue = messageProvider.serialize(prop.getType(), value, message);
       json.put(prop.getName(), jsonValue);
     }
   }

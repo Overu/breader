@@ -22,9 +22,14 @@ public class JSONObjectProvider<T extends WebObject> implements ObjectProvider<T
   ServerJSONMessageProvider messageProvider;
 
   @Override
-  public void readFrom(final T obj, final JSONObject source, final Message message)
-      throws Exception {
-    // TODO Auto-generated method stub
+  public void readFrom(final T obj, final JSONObject json, final Message message) throws Exception {
+    for (Property prop : obj.getObjectType().getAllProperties().values()) {
+      if (json.has(prop.getName())) {
+        Object jsonValue = json.get(prop.getName());
+        Object value = messageProvider.parse(prop.getType(), jsonValue, message);
+        obj.set(prop, value);
+      }
+    }
   }
 
   @Override
@@ -51,8 +56,8 @@ public class JSONObjectProvider<T extends WebObject> implements ObjectProvider<T
           target.put(prop.getName(), json);
         }
       } else if (value instanceof Collection) {
-        JSONArray array = new JSONArray();
-        messageProvider.writeTo((Collection) value, array, prop.isContainment(), message);
+        JSONArray array =
+            messageProvider.serialize((Collection) value, prop.isContainment(), message);
         target.put(prop.getName(), array);
       } else {
         target.put(prop.getName(), value);

@@ -21,7 +21,7 @@ import com.google.gwt.json.client.JSONValue;
 
 public class ClientJSONMessageProvider {
 
-  public Object convertFrom(final WebType type, final JSONValue json, final Message message)
+  public Object parse(final WebType type, final JSONValue json, final Message message)
       throws Exception {
     if (json == null || json.isNull() != null) {
       return null;
@@ -44,9 +44,10 @@ public class ClientJSONMessageProvider {
       if (jsonString != null) {
         String key = json.isString().stringValue();
         EntityId id = EntityId.parseId(key);
-        WebEntity entity = message.getEntity(id);
-        entity.setId(id.getStableId());
-        obj = entity;
+        obj = message.getEntity(id);
+        if (obj instanceof WebEntity) {
+          ((WebEntity) obj).setId(id.getStableId());
+        }
       } else {
         JSONString eId = jsonObj.get("e_id").isString();
         EntityId id = EntityId.parseId(eId.stringValue());
@@ -60,7 +61,47 @@ public class ClientJSONMessageProvider {
     }
   }
 
-  public JSONValue convertTo(final WebType type, final Object obj, final Message message)
+  public JSONObject serialize(final Message message) throws Exception {
+    JSONObject obj = new JSONObject();
+    Request request = message.getRequest();
+    obj.put("operation", new JSONString(request.getOperation().getQualifiedName()));
+
+    if (!request.getOperation().getParameters().isEmpty()) {
+      JSONArray jsonArgs = new JSONArray();
+      int i = 0;
+      Object[] args = request.getArgs();
+      for (Parameter param : request.getOperation().getParameters().values()) {
+        Object arg = args[i];
+        JSONValue jsonValue = serialize(param.getType(), arg, message);
+        jsonArgs.set(i, jsonValue);
+        if (param.getType() instanceof ObjectType) {
+          // TODO many=true
+          if (arg instanceof WebEntity) {
+            WebEntity entity = (WebEntity) arg;
+            message.getEntityId(entity);
+          }
+        }
+        i++;
+      }
+      obj.put("parameters", jsonArgs);
+    }
+
+    if (!message.getEntities().isEmpty()) {
+      JSONArray entities = new JSONArray();
+      for (EntityId eid : message.getEntityIds()) {
+        WebObject entity = message.getEntity(eid);
+        JSONObject json = new JSONObject();
+        ObjectProvider<WebObject, JSONObject> provider =
+            entity.getObjectType().getProvider(JSONObject.class);
+        provider.writeTo(entity, json, message);
+        entities.set(entities.size(), json);
+      }
+      obj.put("entities", entities);
+    }
+    return obj;
+  }
+
+  public JSONValue serialize(final WebType type, final Object obj, final Message message)
       throws Exception {
     if (obj == null) {
       return JSONNull.getInstance();
@@ -88,45 +129,5 @@ public class ClientJSONMessageProvider {
         return new JSONString((String) obj);
       }
     }
-  }
-
-  public JSONObject serialize(final Message message) throws Exception {
-    JSONObject obj = new JSONObject();
-    Request request = message.getRequest();
-    obj.put("operation", new JSONString(request.getOperation().getQualifiedName()));
-
-    if (!request.getOperation().getParameters().isEmpty()) {
-      JSONArray jsonArgs = new JSONArray();
-      int i = 0;
-      Object[] args = request.getArgs();
-      for (Parameter param : request.getOperation().getParameters().values()) {
-        Object arg = args[i];
-        JSONValue jsonValue = convertTo(param.getType(), arg, message);
-        jsonArgs.set(i, jsonValue);
-        if (param.getType() instanceof ObjectType) {
-          // TODO many=true
-          if (arg instanceof WebEntity) {
-            WebEntity entity = (WebEntity) arg;
-            message.getEntityId(entity);
-          }
-        }
-        i++;
-      }
-      obj.put("parameters", jsonArgs);
-    }
-
-    if (!message.getEntities().isEmpty()) {
-      JSONArray entities = new JSONArray();
-      for (EntityId eid : message.getEntityIds()) {
-        WebObject entity = message.getEntity(eid);
-        JSONObject json = new JSONObject();
-        ObjectProvider<WebObject, JSONObject> provider =
-            entity.getObjectType().getProvider(JSONObject.class);
-        provider.writeTo(entity, json, message);
-        entities.set(entities.size(), json);
-      }
-      obj.put("entities", entities);
-    }
-    return obj;
   }
 }

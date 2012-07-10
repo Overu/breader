@@ -16,9 +16,9 @@ package com.goodow.web.core.server;
 import com.goodow.web.core.shared.EntityId;
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.ObjectProvider;
+import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Operation;
 import com.goodow.web.core.shared.Parameter;
-import com.goodow.web.core.shared.Property;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.Response;
 import com.goodow.web.core.shared.ValueType;
@@ -28,6 +28,7 @@ import com.goodow.web.core.shared.WebPlatform;
 import com.goodow.web.core.shared.WebType;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,20 +41,56 @@ public class ServerJSONMessageProvider {
   @Inject
   protected WebPlatform platform;
 
-  public void parse(final Request request, final String payload) {
-    JSONObject json;
+  @Inject
+  protected Provider<Message> messageProvider;
+
+  public WebObject parse(final JSONObject json, final Message message) throws Exception {
+    if (json == null) {
+      return null;
+    } else {
+      WebObject object = null;
+      String eId = json.getString("e_id");
+      if (eId != null) {
+        EntityId id = EntityId.parseId(eId);
+        object = message.getEntity(id);
+        ObjectProvider<WebObject, JSONObject> provider =
+            id.getObjectType().getProvider(JSONObject.class);
+        provider.readFrom(object, json, message);
+      }
+      return object;
+    }
+  }
+
+  public WebObject parse(final ObjectType objectType, final JSONObject json, final Message message)
+      throws Exception {
+    if (json == null) {
+      return null;
+    } else {
+      WebObject object;
+      String eId = json.getString("e_id");
+      if (eId != null) {
+        EntityId id = EntityId.parseId(eId);
+        object = message.getEntity(id);
+      } else {
+        object = objectType.create();
+      }
+      ObjectProvider<WebObject, JSONObject> provider = objectType.getProvider(JSONObject.class);
+      provider.readFrom(object, json, message);
+      return object;
+    }
+  }
+
+  public void parse(final Request request, final String payload) throws Exception {
     try {
-      json = new JSONObject(payload);
+      JSONObject json = new JSONObject(payload);
       String operationName = json.getString("operation");
       Operation operation = platform.getOperation(operationName);
       request.setOperation(operation);
-
       JSONArray entities = json.getJSONArray("entities");
-
       if (entities != null) {
         for (int i = 0; i < entities.length(); i++) {
           JSONObject jsonObj = entities.getJSONObject(i);
-          parseEntity(jsonObj, request.getMessage());
+          parse(jsonObj, request.getMessage());
         }
       }
       Object[] args = new Object[operation.getParameters().size()];
@@ -67,20 +104,24 @@ public class ServerJSONMessageProvider {
       }
       request.setArgs(args);
     } catch (JSONException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
-
   }
 
-  public Object parse(final WebType type, final Object obj, final Message message)
-      throws JSONException {
+  public Object parse(final WebType type, final Object obj, final Message message) throws Exception {
     Class<?> dc = type.getJavaClass();
     if (obj == null || obj.equals(JSONObject.NULL)) {
       return null;
-    } else if (obj instanceof JSONObject) {
-      JSONObject jsonObject = (JSONObject) obj;
-      return parseEntity(jsonObject, message);
+    } else if (type instanceof ObjectType) {
+      if (obj instanceof String) {
+        String eid = (String) obj;
+        EntityId id = EntityId.parseId(eid);
+        return message.getEntity(id);
+      } else {
+        JSONObject json = (JSONObject) obj;
+        ObjectType objType = (ObjectType) type;
+        return parse(objType, json, message);
+      }
     } else if (type instanceof ValueType) {
       if (boolean.class.equals(dc) || Boolean.class.equals(dc)) {
         return (Boolean) obj;
@@ -98,27 +139,45 @@ public class ServerJSONMessageProvider {
     }
   }
 
-  public WebEntity parseEntity(final JSONObject jsonObject, final Message message)
-      throws JSONException {
-    if (jsonObject == null) {
-      return null;
-    } else {
-      String eId = jsonObject.getString("e_id");
-      EntityId id = EntityId.parseId(eId);
-      WebEntity entity = message.getEntity(id);
-      for (Property prop : entity.getObjectType().getAllProperties().values()) {
-        if (jsonObject.has(prop.getName())) {
-          Object jsonValue = jsonObject.get(prop.getName());
-          Object value = parse(prop.getType(), jsonValue, message);
-          entity.set(prop, value);
+  public JSONArray serialize(final Collection<?> collection, final boolean containment,
+      final Message message) throws Exception {
+    JSONArray array = new JSONArray();
+    for (Object item : collection) {
+      if (item == null) {
+        array.put(JSONObject.NULL);
+      } else if (item instanceof WebObject) {
+        WebObject obj = (WebObject) item;
+        if (obj instanceof WebEntity && !containment) {
+          EntityId id = message.getEntityId((WebEntity) obj);
+          array.put(id.toString());
+        } else {
+          JSONObject json = new JSONObject();
+          ObjectProvider<WebObject, JSONObject> provider =
+              obj.getObjectType().getProvider(JSONObject.class);
+          provider.writeTo(obj, json, message);
+          array.put(json);
         }
+      } else if (item instanceof Collection) {
+        JSONArray value = serialize((Collection<?>) item, containment, message);
+        array.put(value);
+      } else {
+        array.put(item);
       }
-      return entity;
+    }
+    return array;
+  }
+
+  public String serialize(final Object obj) throws Exception {
+    if (obj instanceof Response) {
+      return serialize((Response<?>) obj);
+    } else if (obj instanceof Request) {
+      return serialize((Request<?>) obj);
+    } else {
+      return serialize(obj, messageProvider.get());
     }
   }
 
-  public String serialize(final Response response) throws Exception {
-    Object result = response.getResult();
+  public String serialize(final Object result, final Message message) throws Exception {
     if (result == null) {
       return "null";
     } else if (result instanceof WebObject) {
@@ -126,12 +185,11 @@ public class ServerJSONMessageProvider {
       JSONObject jsonObject = new JSONObject();
       ObjectProvider<WebObject, JSONObject> provider =
           obj.getObjectType().getProvider(JSONObject.class);
-      provider.writeTo(obj, jsonObject, response.getMessage());
+      provider.writeTo(obj, jsonObject, message);
       return jsonObject.toString();
     } else if (result instanceof Collection) {
-      JSONArray jsonArray = new JSONArray();
-      writeTo((Collection) result, jsonArray, true, response.getMessage());
-      return jsonArray.toString();
+      JSONArray array = serialize((Collection<?>) result, true, message);
+      return array.toString();
     } else if (result instanceof String) {
       return "\"" + result + "\"";
     } else {
@@ -139,30 +197,12 @@ public class ServerJSONMessageProvider {
     }
   }
 
-  public void writeTo(final Collection collection, final JSONArray target,
-      final boolean containment, final Message message) throws Exception {
-    for (Object value : collection) {
-      if (value == null) {
-        target.put(JSONObject.NULL);
-      } else if (value instanceof WebObject) {
-        WebObject obj = (WebObject) value;
-        if (obj instanceof WebEntity && !containment) {
-          EntityId id = message.getEntityId((WebEntity) obj);
-          target.put(id.toString());
-        } else {
-          JSONObject json = new JSONObject();
-          ObjectProvider<WebObject, JSONObject> provider =
-              obj.getObjectType().getProvider(JSONObject.class);
-          provider.writeTo(obj, json, message);
-          target.put(json);
-        }
-      } else if (value instanceof Collection) {
-        JSONArray array = new JSONArray();
-        writeTo((Collection) value, array, containment, message);
-        target.put(array);
-      } else {
-        target.put(value);
-      }
-    }
+  public String serialize(final Request<?> request) throws Exception {
+    return request.toString();
+  }
+
+  public String serialize(final Response<?> response) throws Exception {
+    Object result = response.getResult();
+    return serialize(result, response.getMessage());
   }
 }
