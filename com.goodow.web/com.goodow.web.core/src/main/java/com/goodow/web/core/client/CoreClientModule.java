@@ -200,8 +200,9 @@ public class CoreClientModule extends AbstractGinModule {
   @Provides
   @Singleton
   PhoneGap phoneGap() {
-    PhoneGap gap = GWT.create(PhoneGap.class);
-    return gap;
+    PhoneGap phoneGap = GWT.create(PhoneGap.class);
+    phoneGap.initializePhoneGap();
+    return phoneGap;
   }
 
   @Provides

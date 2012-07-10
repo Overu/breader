@@ -11,14 +11,10 @@ import com.googlecode.mgwt.ui.client.widget.tabbar.MostViewedTabBarButton;
 
 public class BookStoreView extends Composite {
 
-  private ReadTabPanel readTabPanel;
-
   @Inject
   public BookStoreView(final RecommendedBookList recommendedBook,
       final DiscountBookList discountedBooks, final MostViewedBookList mostViewed,
-      final CategorizedBookList categorized) {
-
-    readTabPanel = new ReadTabPanel();
+      final CategorizedBookList categorized, final ReadTabPanel readTabPanel) {
 
     FavoritesTabBarButton favorites = new FavoritesTabBarButton();
     favorites.setText("推荐");

@@ -13,6 +13,7 @@
  */
 package com.goodow.web.reader.client;
 
+import com.goodow.web.core.shared.MyPlace;
 import com.goodow.web.reader.client.style.ReadResources;
 
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -25,6 +26,7 @@ import com.google.inject.Inject;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.googlecode.mgwt.mvp.client.Animation;
 import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
@@ -64,6 +66,8 @@ public class ReadTabPanel extends Composite {
 
       @Override
       public void onTap(final TapEvent event) {
+        MyPlace place = new MyPlace(Animation.SWAP, "书架", "/bookshelf");
+        placeController.goTo(place);
       }
     });
 
@@ -95,10 +99,6 @@ public class ReadTabPanel extends Composite {
   public void add(final TabBarButtonBase button, final Widget child, final String text) {
     texts.add(text);
     tabPanel.add(button, child);
-  }
-
-  protected String getRightLink() {
-    return "/tabPanel";
   }
 
   @Override
