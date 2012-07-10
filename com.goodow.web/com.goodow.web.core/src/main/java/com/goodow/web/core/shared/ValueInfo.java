@@ -11,7 +11,7 @@ public abstract class ValueInfo<T> extends StringConverter<T> implements Wrapper
     String name = ClassUtil.getSimpleName(clazz);
     valueType.setName(name);
     valueType.setJavaClass(clazz);
-    valueType.setTextReader(this);
+    valueType.setConverter(this);
   }
 
   @Override

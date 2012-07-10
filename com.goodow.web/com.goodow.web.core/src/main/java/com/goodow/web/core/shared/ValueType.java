@@ -5,19 +5,20 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public class ValueType extends WebType implements Wrapper<ValueType> {
 
-  private transient StringConverter<?> textReader;
+  private transient StringConverter<?> converter;
 
   @Override
   public ValueType as() {
     return this;
   }
 
-  public <T> StringConverter<T> getTextReader() {
-    return (StringConverter<T>) textReader;
+  @SuppressWarnings("unchecked")
+  public <T> StringConverter<T> getConverter() {
+    return (StringConverter<T>) converter;
   }
 
-  public void setTextReader(final StringConverter<?> textReader) {
-    this.textReader = textReader;
+  public void setConverter(final StringConverter<?> converter) {
+    this.converter = converter;
   }
 
 }
