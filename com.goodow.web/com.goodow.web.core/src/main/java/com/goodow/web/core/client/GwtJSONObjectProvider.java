@@ -20,8 +20,7 @@ public class GwtJSONObjectProvider<T extends WebObject> implements ObjectProvide
   ClientJSONMessageProvider messageProvider;
 
   @Override
-  public void readFrom(final T obj, final JSONObject jsonObj, final Message message)
-      throws Exception {
+  public void readFrom(final T obj, final JSONObject jsonObj, final Message message) {
     for (Property prop : obj.getObjectType().getAllProperties().values()) {
       JSONValue jsonValue = jsonObj.get(prop.getName());
       Object value = messageProvider.parse(prop.getType(), jsonValue, message);
@@ -30,7 +29,7 @@ public class GwtJSONObjectProvider<T extends WebObject> implements ObjectProvide
   }
 
   @Override
-  public void writeTo(final T obj, final JSONObject json, final Message message) throws Exception {
+  public void writeTo(final T obj, final JSONObject json, final Message message) {
     if (obj instanceof WebEntity) {
       EntityId eid = message.getEntityId((WebEntity) obj);
       json.put("e_id", new JSONString(eid.toString()));

@@ -21,8 +21,7 @@ import com.google.gwt.json.client.JSONValue;
 
 public class ClientJSONMessageProvider {
 
-  public Object parse(final WebType type, final JSONValue json, final Message message)
-      throws Exception {
+  public Object parse(final WebType type, final JSONValue json, final Message message) {
     if (json == null || json.isNull() != null) {
       return null;
     }
@@ -61,7 +60,7 @@ public class ClientJSONMessageProvider {
     }
   }
 
-  public JSONObject serialize(final Message message) throws Exception {
+  public JSONObject serialize(final Message message) {
     JSONObject obj = new JSONObject();
     Request request = message.getRequest();
     obj.put("operation", new JSONString(request.getOperation().getQualifiedName()));
@@ -101,8 +100,7 @@ public class ClientJSONMessageProvider {
     return obj;
   }
 
-  public JSONValue serialize(final WebType type, final Object obj, final Message message)
-      throws Exception {
+  public JSONValue serialize(final WebType type, final Object obj, final Message message) {
     if (obj == null) {
       return JSONNull.getInstance();
     }

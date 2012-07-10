@@ -3,14 +3,13 @@ package com.goodow.web.core.server;
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Operation;
+import com.goodow.web.core.shared.SerializationException;
 import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.core.shared.WebService;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
-
-import org.json.JSONException;
 
 @Singleton
 public class ServerMessage extends Message {
@@ -45,8 +44,7 @@ public class ServerMessage extends Message {
     } catch (ReportableException e) {
       e.printStackTrace();
       // response.setGeneralFailure(createFailureMessage(e));
-    } catch (JSONException e) {
-      // TODO Auto-generated catch block
+    } catch (SerializationException e) {
       e.printStackTrace();
     }
     return null;

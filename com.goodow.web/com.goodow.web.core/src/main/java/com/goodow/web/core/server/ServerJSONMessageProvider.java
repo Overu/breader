@@ -1,16 +1,3 @@
-/*
- * Copyright 2012 Goodow.com
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
- */
 package com.goodow.web.core.server;
 
 import com.goodow.web.core.shared.EntityId;
@@ -21,6 +8,7 @@ import com.goodow.web.core.shared.Operation;
 import com.goodow.web.core.shared.Parameter;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.Response;
+import com.goodow.web.core.shared.SerializationException;
 import com.goodow.web.core.shared.ValueType;
 import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.core.shared.WebObject;
@@ -39,52 +27,56 @@ import java.util.Collection;
 public class ServerJSONMessageProvider {
 
   @Inject
-  protected WebPlatform platform;
-
-  @Inject
   protected Provider<Message> messageProvider;
 
-  public WebObject parse(final JSONObject json, final Message message) throws Exception {
+  public WebObject parse(final JSONObject json, final Message message) {
     if (json == null) {
       return null;
     } else {
-      WebObject object = null;
-      String eId = json.getString("e_id");
-      if (eId != null) {
-        EntityId id = EntityId.parseId(eId);
-        object = message.getEntity(id);
-        ObjectProvider<WebObject, JSONObject> provider =
-            id.getObjectType().getProvider(JSONObject.class);
+      try {
+        WebObject object = null;
+        String eId = json.getString("e_id");
+        if (eId != null) {
+          EntityId id = EntityId.parseId(eId);
+          object = message.getEntity(id);
+          ObjectProvider<WebObject, JSONObject> provider =
+              id.getObjectType().getProvider(JSONObject.class);
+          provider.readFrom(object, json, message);
+        }
+        return object;
+      } catch (JSONException e) {
+        throw new SerializationException(e);
+      }
+    }
+  }
+
+  public WebObject parse(final ObjectType objectType, final JSONObject json, final Message message) {
+    if (json == null) {
+      return null;
+    } else {
+      try {
+        WebObject object;
+        String eId = json.getString("e_id");
+        if (eId != null) {
+          EntityId id = EntityId.parseId(eId);
+          object = message.getEntity(id);
+        } else {
+          object = objectType.create();
+        }
+        ObjectProvider<WebObject, JSONObject> provider = objectType.getProvider(JSONObject.class);
         provider.readFrom(object, json, message);
+        return object;
+      } catch (JSONException e) {
+        throw new SerializationException(e);
       }
-      return object;
     }
   }
 
-  public WebObject parse(final ObjectType objectType, final JSONObject json, final Message message)
-      throws Exception {
-    if (json == null) {
-      return null;
-    } else {
-      WebObject object;
-      String eId = json.getString("e_id");
-      if (eId != null) {
-        EntityId id = EntityId.parseId(eId);
-        object = message.getEntity(id);
-      } else {
-        object = objectType.create();
-      }
-      ObjectProvider<WebObject, JSONObject> provider = objectType.getProvider(JSONObject.class);
-      provider.readFrom(object, json, message);
-      return object;
-    }
-  }
-
-  public void parse(final Request request, final String payload) throws Exception {
+  public void parse(final Request request, final String payload) {
     try {
       JSONObject json = new JSONObject(payload);
       String operationName = json.getString("operation");
-      Operation operation = platform.getOperation(operationName);
+      Operation operation = WebPlatform.getInstance().getOperation(operationName);
       request.setOperation(operation);
       JSONArray entities = json.getJSONArray("entities");
       if (entities != null) {
@@ -108,7 +100,7 @@ public class ServerJSONMessageProvider {
     }
   }
 
-  public Object parse(final WebType type, final Object obj, final Message message) throws Exception {
+  public Object parse(final WebType type, final Object obj, final Message message) {
     Class<?> dc = type.getJavaClass();
     if (obj == null || obj.equals(JSONObject.NULL)) {
       return null;
@@ -140,34 +132,16 @@ public class ServerJSONMessageProvider {
   }
 
   public JSONArray serialize(final Collection<?> collection, final boolean containment,
-      final Message message) throws Exception {
+      final Message message) {
     JSONArray array = new JSONArray();
     for (Object item : collection) {
-      if (item == null) {
-        array.put(JSONObject.NULL);
-      } else if (item instanceof WebObject) {
-        WebObject obj = (WebObject) item;
-        if (obj instanceof WebEntity && !containment) {
-          EntityId id = message.getEntityId((WebEntity) obj);
-          array.put(id.toString());
-        } else {
-          JSONObject json = new JSONObject();
-          ObjectProvider<WebObject, JSONObject> provider =
-              obj.getObjectType().getProvider(JSONObject.class);
-          provider.writeTo(obj, json, message);
-          array.put(json);
-        }
-      } else if (item instanceof Collection) {
-        JSONArray value = serialize((Collection<?>) item, containment, message);
-        array.put(value);
-      } else {
-        array.put(item);
-      }
+      Object value = serialize(containment, message, array, item);
+      array.put(value);
     }
     return array;
   }
 
-  public String serialize(final Object obj) throws Exception {
+  public String serialize(final Object obj) {
     if (obj instanceof Response) {
       return serialize((Response<?>) obj);
     } else if (obj instanceof Request) {
@@ -177,7 +151,7 @@ public class ServerJSONMessageProvider {
     }
   }
 
-  public String serialize(final Object result, final Message message) throws Exception {
+  public String serialize(final Object result, final Message message) {
     if (result == null) {
       return "null";
     } else if (result instanceof WebObject) {
@@ -190,6 +164,9 @@ public class ServerJSONMessageProvider {
     } else if (result instanceof Collection) {
       JSONArray array = serialize((Collection<?>) result, true, message);
       return array.toString();
+    } else if (result.getClass().isArray()) {
+      JSONArray array = serialize((Object[]) result, true, message);
+      return array.toString();
     } else if (result instanceof String) {
       return "\"" + result + "\"";
     } else {
@@ -197,12 +174,45 @@ public class ServerJSONMessageProvider {
     }
   }
 
-  public String serialize(final Request<?> request) throws Exception {
+  public JSONArray serialize(final Object[] collection, final boolean containment,
+      final Message message) {
+    JSONArray array = new JSONArray();
+    for (Object item : collection) {
+      Object value = serialize(containment, message, array, item);
+      array.put(value);
+    }
+    return array;
+  }
+
+  public String serialize(final Request<?> request) {
     return request.toString();
   }
 
-  public String serialize(final Response<?> response) throws Exception {
+  public String serialize(final Response<?> response) {
     Object result = response.getResult();
     return serialize(result, response.getMessage());
+  }
+
+  private Object serialize(final boolean containment, final Message message, final JSONArray array,
+      final Object item) {
+    if (item == null) {
+      return JSONObject.NULL;
+    } else if (item instanceof WebObject) {
+      WebObject obj = (WebObject) item;
+      if (obj instanceof WebEntity && !containment) {
+        EntityId id = message.getEntityId((WebEntity) obj);
+        return id.toString();
+      } else {
+        JSONObject json = new JSONObject();
+        ObjectProvider<WebObject, JSONObject> provider =
+            obj.getObjectType().getProvider(JSONObject.class);
+        provider.writeTo(obj, json, message);
+        return json;
+      }
+    } else if (item instanceof Collection) {
+      return serialize((Collection<?>) item, containment, message);
+    } else {
+      return item;
+    }
   }
 }

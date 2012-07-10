@@ -15,8 +15,8 @@ package com.goodow.web.core.shared;
 
 public interface ObjectProvider<W extends WebObject, T> {
 
-  public void readFrom(W obj, T source, Message message) throws Exception;
+  public void readFrom(W obj, T source, Message message);
 
-  public void writeTo(W obj, T target, Message message) throws Exception;
+  public void writeTo(W obj, T target, Message message);
 
 }
