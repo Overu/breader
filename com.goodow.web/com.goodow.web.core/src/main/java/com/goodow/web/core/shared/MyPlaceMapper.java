@@ -4,15 +4,16 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.inject.Singleton;
 
-import com.googlecode.mgwt.mvp.client.Animation;
-
 @Singleton
 public class MyPlaceMapper implements PlaceHistoryMapper {
 
+  @HomePlace
+  MyPlace homePlace;
+
   @Override
   public Place getPlace(final String token) {
-    MyPlace place = new MyPlace(Animation.SLIDE, token, token);
-    place.setUri(token);
+    MyPlace place = homePlace.getChild(token);
+    // TODO null?
     return place;
   }
 

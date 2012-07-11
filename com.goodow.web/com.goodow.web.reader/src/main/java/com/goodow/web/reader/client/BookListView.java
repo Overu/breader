@@ -1,7 +1,5 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.shared.MyPlace;
-
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -10,7 +8,6 @@ import com.google.inject.Inject;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
-import com.googlecode.mgwt.mvp.client.Animation;
 import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
@@ -31,6 +28,9 @@ public abstract class BookListView extends Composite {
   @Inject
   protected PlaceController placeController;
 
+  @Inject
+  protected ReaderExtension readerExtension;
+
   public BookListView() {
     main = new LayoutPanel();
 
@@ -48,8 +48,7 @@ public abstract class BookListView extends Composite {
     rightButton.addTapHandler(new TapHandler() {
       @Override
       public void onTap(final TapEvent event) {
-        MyPlace place = new MyPlace(Animation.SWAP, "书架", "/bookstore");
-        placeController.goTo(place);
+        placeController.goTo(readerExtension.bookstorePlace);
       }
     });
 

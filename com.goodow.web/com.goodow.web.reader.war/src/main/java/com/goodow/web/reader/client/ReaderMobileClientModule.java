@@ -1,11 +1,9 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.client.UIRegistry;
 import com.goodow.web.core.shared.HomePlace;
 import com.goodow.web.core.shared.MyPlace;
 
 import com.google.gwt.inject.client.AbstractGinModule;
-import com.google.gwt.inject.client.AsyncProvider;
 import com.google.inject.Inject;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -16,12 +14,12 @@ import java.util.logging.Logger;
 
 public final class ReaderMobileClientModule extends AbstractGinModule {
 
-  public static class ReaderUI {
+  @Singleton
+  public static class Starter {
+
     @Inject
-    public ReaderUI(final UIRegistry registry, final AsyncProvider<BookStoreView> bookstore,
-        final AsyncProvider<BookShelfView> bookshelf) {
-      registry.bind("/bookstore").toAsyncProvider(bookstore);
-      registry.bind("/bookshelf").toAsyncProvider(bookshelf);
+    public Starter(final ReaderExtension ext) {
+      ext.registerExtensions();
     }
   }
 
@@ -30,7 +28,7 @@ public final class ReaderMobileClientModule extends AbstractGinModule {
   @Override
   protected void configure() {
     logger.info("configure ReaderClientModule");
-    bind(ReaderUI.class).asEagerSingleton();
+    bind(Starter.class).asEagerSingleton();
   }
 
   @Provides
@@ -39,7 +37,7 @@ public final class ReaderMobileClientModule extends AbstractGinModule {
   MyPlace defaultPlaceProvider(final MyPlace place) {
     place.setAnimation(Animation.FADE);
     place.setTitle("睿泰书城");
-    place.setUri("/bookstore");
+    place.setPath("");
     return place;
   }
 }

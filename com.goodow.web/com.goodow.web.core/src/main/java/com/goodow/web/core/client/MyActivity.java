@@ -13,19 +13,15 @@ import java.util.logging.Logger;
 
 public class MyActivity extends MGWTAbstractActivity {
 
-  private static final Logger logger = Logger.getLogger(CoreClientModule.class.getName());
+  private static final Logger logger = Logger.getLogger(MyActivity.class.getName());
 
   @Inject
   PlaceController placeController;
 
-  @Inject
-  private UIRegistry registry;
-
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     MyPlace place = (MyPlace) placeController.getWhere();
-    registry.showWidget(panel, place.getUri());
-
+    place.display(panel);
   }
 
 }
