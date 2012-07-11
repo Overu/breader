@@ -19,13 +19,13 @@ public class GwtJSONObjectProvider<T extends WebObject> implements ObjectReader<
     ObjectWriter<T, JSONObject> {
 
   @Inject
-  ClientJSONMessageProvider messageProvider;
+  ClientJSONMarshaller marshaller;
 
   @Override
   public void readFrom(final T obj, final JSONObject jsonObj, final Message message) {
     for (Property prop : obj.getObjectType().getAllProperties().values()) {
       JSONValue jsonValue = jsonObj.get(prop.getName());
-      Object value = messageProvider.parse(prop.getType(), jsonValue, message);
+      Object value = marshaller.parse(prop.getType(), jsonValue, message);
       obj.set(prop, value);
     }
   }
@@ -38,7 +38,7 @@ public class GwtJSONObjectProvider<T extends WebObject> implements ObjectReader<
     }
     for (Property prop : obj.getObjectType().getAllProperties().values()) {
       Object value = obj.get(prop);
-      JSONValue jsonValue = messageProvider.serialize(prop.getType(), value, message);
+      JSONValue jsonValue = marshaller.serialize(prop.getType(), value, message);
       json.put(prop.getName(), jsonValue);
     }
   }

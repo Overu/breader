@@ -73,13 +73,13 @@ public final class UiGinModule extends AbstractGinModule {
       RootPanel.get().getElement().appendChild(loadingIndicator.getElement());
 
       // 注册默认视图
-      isWidgetMapBinder.addBinding(Search.KEY).toAsyncProvider(defaultSearchUi);
-      isWidgetMapBinder.addBinding(Nav.KEY).toAsyncProvider(defaultNavUi);
-      isWidgetMapBinder.addBinding(Footer.KEY).toAsyncProvider(defaultFooterUi);
+      isWidgetMapBinder.bind(Search.KEY).toAsyncProvider(defaultSearchUi);
+      isWidgetMapBinder.bind(Nav.KEY).toAsyncProvider(defaultNavUi);
+      isWidgetMapBinder.bind(Footer.KEY).toAsyncProvider(defaultFooterUi);
       // isWidgetMapBinder.addBinding(ShellUi.class.getName()).toAsyncProvider(defaultShellProvider);
 
       // 注册DataProvider
-      dataProviderMapBinder.addBinding(TreeNodeDataProvider.class.getName()).toInstance(
+      dataProviderMapBinder.bind(TreeNodeDataProvider.class.getName()).toInstance(
           defaultTreeNodeDataProvider);
 
       logger.finest("EagerSingleton end");

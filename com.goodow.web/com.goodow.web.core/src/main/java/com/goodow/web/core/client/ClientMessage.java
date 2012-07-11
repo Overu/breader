@@ -24,7 +24,7 @@ import java.util.logging.Level;
 public class ClientMessage extends Message implements RequestCallback {
 
   @Inject
-  ClientJSONMessageProvider messageProvider;
+  ClientJSONMarshaller messageProvider;
 
   @Override
   public WebEntity find(final ObjectType objectType, final String id) {

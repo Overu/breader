@@ -92,23 +92,23 @@ public final class ReaderMobileGinModule extends AbstractGinModule {
       ReaderResources.INSTANCE();
       waveShell.getTopBar().add(topbar);
       logger.finest("EagerSingleton begin");
-      isWidgetMapBinder.addBinding("/").toAsyncProvider(bookListPanel);
-      isWidgetMapBinder.addBinding(BookListEditor.class.getName()).toAsyncProvider(bookListEditor);
-      isWidgetMapBinder.addBinding(SectionListEditor.class.getName()).toAsyncProvider(
+      isWidgetMapBinder.bind("/").toAsyncProvider(bookListPanel);
+      isWidgetMapBinder.bind(BookListEditor.class.getName()).toAsyncProvider(bookListEditor);
+      isWidgetMapBinder.bind(SectionListEditor.class.getName()).toAsyncProvider(
           sectionListEditor);
-      isWidgetMapBinder.addBinding(CategoryListEditor.class.getName()).toAsyncProvider(
+      isWidgetMapBinder.bind(CategoryListEditor.class.getName()).toAsyncProvider(
           catgoryListEditor);
-      isWidgetMapBinder.addBinding(SectionBrowserView.class.getName()).toAsyncProvider(
+      isWidgetMapBinder.bind(SectionBrowserView.class.getName()).toAsyncProvider(
           sectionBrowser);
-      isWidgetMapBinder.addBinding(ContentEditor.class.getName()).toAsyncProvider(pageEditor);
-      isWidgetMapBinder.addBinding(SettingsView.class.getName()).toAsyncProvider(settingsView);
-      isWidgetMapBinder.addBinding(TalkView.class.getName()).toAsyncProvider(talkView);
-      isWidgetMapBinder.addBinding(IssueEditor.class.getName()).toAsyncProvider(issueEditor);
-      isWidgetMapBinder.addBinding(IssueListImage.class.getName()).toAsyncProvider(issueListImage);
-      isWidgetMapBinder.addBinding(IssueNews.class.getName()).toAsyncProvider(issueNews);
-      isWidgetMapBinder.addBinding(MyDownLoadPanel.class.getName())
+      isWidgetMapBinder.bind(ContentEditor.class.getName()).toAsyncProvider(pageEditor);
+      isWidgetMapBinder.bind(SettingsView.class.getName()).toAsyncProvider(settingsView);
+      isWidgetMapBinder.bind(TalkView.class.getName()).toAsyncProvider(talkView);
+      isWidgetMapBinder.bind(IssueEditor.class.getName()).toAsyncProvider(issueEditor);
+      isWidgetMapBinder.bind(IssueListImage.class.getName()).toAsyncProvider(issueListImage);
+      isWidgetMapBinder.bind(IssueNews.class.getName()).toAsyncProvider(issueNews);
+      isWidgetMapBinder.bind(MyDownLoadPanel.class.getName())
           .toAsyncProvider(myDownLoadPanel);
-      isWidgetMapBinder.addBinding(LibraryView.class.getName()).toAsyncProvider(libraryView);
+      isWidgetMapBinder.bind(LibraryView.class.getName()).toAsyncProvider(libraryView);
       logger.finest("EagerSingleton end");
       return null;
     }

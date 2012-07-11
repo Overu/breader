@@ -25,8 +25,8 @@ public final class ReaderClientModule extends AbstractGinModule {
     @Inject
     public ReaderUI(final UIRegistry registry, final AsyncProvider<BookStoreView> bookstore,
         final AsyncProvider<BookShelfView> bookshelf) {
-      registry.addBinding("/bookstore").toAsyncProvider(bookstore);
-      registry.addBinding("/bookshelf").toAsyncProvider(bookshelf);
+      registry.bind("/bookstore").toAsyncProvider(bookstore);
+      registry.bind("/bookshelf").toAsyncProvider(bookshelf);
     }
   }
 

@@ -30,7 +30,7 @@ public class MapBinder<K, V> extends AbstractMap<K, V> implements LinkedBindingB
 
   private K key;
 
-  public LinkedBindingBuilder<V> addBinding(final K key) {
+  public LinkedBindingBuilder<V> bind(final K key) {
     if (this.key != null) {
       logger.warning("未绑定key=" + this.key);
     }

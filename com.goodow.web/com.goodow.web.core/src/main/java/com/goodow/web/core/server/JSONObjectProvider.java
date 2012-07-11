@@ -23,7 +23,7 @@ public class JSONObjectProvider<T extends WebObject> implements ObjectReader<T, 
     ObjectWriter<T, JSONObject> {
 
   @Inject
-  JSONMarshaller messageProvider;
+  JSONMarshaller marshaller;
 
   @Override
   public void readFrom(final T obj, final JSONObject json, final Message message) {
@@ -31,7 +31,7 @@ public class JSONObjectProvider<T extends WebObject> implements ObjectReader<T, 
       for (Property prop : obj.getObjectType().getAllProperties().values()) {
         if (json.has(prop.getName())) {
           Object jsonValue = json.get(prop.getName());
-          Object value = messageProvider.parse(prop.getType(), jsonValue, message);
+          Object value = marshaller.parse(prop.getType(), jsonValue, message);
           obj.set(prop, value);
         }
       }
@@ -65,7 +65,7 @@ public class JSONObjectProvider<T extends WebObject> implements ObjectReader<T, 
           }
         } else if (value instanceof Collection) {
           JSONArray array =
-              messageProvider.serialize((Collection) value, prop.isContainment(), message);
+              marshaller.serialize((Collection) value, prop.isContainment(), message);
           target.put(prop.getName(), array);
         } else {
           target.put(prop.getName(), value);

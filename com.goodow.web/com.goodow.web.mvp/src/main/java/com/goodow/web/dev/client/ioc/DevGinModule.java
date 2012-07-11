@@ -48,9 +48,9 @@ public final class DevGinModule extends AbstractGinModule {
     public Binder get() {
       logger.finest("EagerSingleton begin");
 
-      isWidgetMapBinder.addBinding(TreeNodeListView.class.getName()).toAsyncProvider(
+      isWidgetMapBinder.bind(TreeNodeListView.class.getName()).toAsyncProvider(
           treeNodeListView);
-      isWidgetMapBinder.addBinding(TreeNodeProxy.class.getName()).toAsyncProvider(treeNodeEditor);
+      isWidgetMapBinder.bind(TreeNodeProxy.class.getName()).toAsyncProvider(treeNodeEditor);
 
       logger.finest("EagerSingleton end");
       return null;

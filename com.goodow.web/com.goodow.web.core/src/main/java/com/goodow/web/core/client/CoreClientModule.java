@@ -49,9 +49,9 @@ public class CoreClientModule extends AbstractGinModule {
         final AsyncProvider<Shell> shell, final GwtJSONObjectProvider<WebObject> provider) {
       CorePackage.WebObject.as().addReader(JSONObject.class, provider);
       CorePackage.WebObject.as().addWriter(JSONObject.class, provider);
-      widgetRegistry.addBinding("view1").toInstance(new Label("视图1"));
-      widgetRegistry.addBinding("view2").toAsyncProvider(editView);
-      widgetRegistry.addBinding("main").toAsyncProvider(shell);
+      widgetRegistry.bind("view1").toInstance(new Label("视图1"));
+      widgetRegistry.bind("view2").toAsyncProvider(editView);
+      widgetRegistry.bind("main").toAsyncProvider(shell);
     }
   }
 
