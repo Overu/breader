@@ -1,6 +1,5 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.client.UIRegistry;
 import com.goodow.web.core.shared.HomePlace;
 import com.goodow.web.core.shared.MyPlace;
 
@@ -13,9 +12,6 @@ import com.googlecode.mgwt.mvp.client.Animation;
 
 @Singleton
 public class ReaderExtension {
-
-  @Inject
-  UIRegistry registry;
 
   @Inject
   AsyncProvider<BookShelfView> bookshelf;
