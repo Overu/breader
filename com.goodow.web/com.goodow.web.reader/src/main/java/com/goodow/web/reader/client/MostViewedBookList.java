@@ -2,11 +2,8 @@ package com.goodow.web.reader.client;
 
 import com.goodow.web.reader.shared.Book;
 
-import com.google.gwt.resources.client.ImageResource;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-
-import com.googlecode.mgwt.ui.client.MGWTStyle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +13,6 @@ public class MostViewedBookList extends AbstractBookList {
   @Inject
   public MostViewedBookList(final Provider<BookSummary> bookSummaryProvider) {
     super(bookSummaryProvider);
-    setTitle("热门图书");
   }
 
   @Override
@@ -32,13 +28,4 @@ public class MostViewedBookList extends AbstractBookList {
     return result;
   }
 
-  @Override
-  protected ImageResource getButtonImage() {
-    return MGWTStyle.getTheme().getMGWTClientBundle().tabBarMostViewedImage();
-  }
-
-  @Override
-  protected String getButtonText() {
-    return "热门";
-  }
 }

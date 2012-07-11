@@ -16,10 +16,8 @@ import com.google.inject.Provider;
 import com.googlecode.mgwt.mvp.client.Animation;
 import com.googlecode.mgwt.ui.client.MGWTStyle;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class MyPlace extends Place {
@@ -35,7 +33,7 @@ public class MyPlace extends Place {
 
   private MyPlace parent;
 
-  private Map<String, MyPlace> children;
+  private List<MyPlace> children;
 
   private boolean paramitized;
 
@@ -55,9 +53,9 @@ public class MyPlace extends Place {
 
   public void addChild(final MyPlace place) {
     if (children == null) {
-      children = new HashMap<String, MyPlace>();
+      children = new ArrayList<MyPlace>();
     }
-    children.put(place.getPath(), place);
+    children.add(place);
     place.parent = this;
   }
 
@@ -113,32 +111,21 @@ public class MyPlace extends Place {
     return buttonText;
   }
 
-  public MyPlace getChild(int index) {
-    if (children == null) {
-      return null;
-    }
+  public MyPlace getChild(final int index) {
+    return children.get(index);
+  }
 
-    for (MyPlace place : children.values()) {
-      if (index == 0) {
-        return place;
+  public MyPlace getChild(final String path) {
+    for (MyPlace p : children) {
+      if (path.equals(p.getPath())) {
+        return p;
       }
-      index--;
     }
     return null;
   }
 
-  public MyPlace getChild(final String path) {
-    if (children == null) {
-      return null;
-    }
-    return children.get(path);
-  }
-
-  public Collection<MyPlace> getChildren() {
-    if (children == null) {
-      return Collections.EMPTY_LIST;
-    }
-    return children.values();
+  public List<MyPlace> getChildren() {
+    return children;
   }
 
   public String getParameter() {
@@ -279,7 +266,7 @@ public class MyPlace extends Place {
         callback.onSuccess(panel);
       }
     } else if (children != null && !children.isEmpty()) {
-      final MyPlace firstChild = children.values().iterator().next();
+      final MyPlace firstChild = children.get(0);
       showInfo(panel, "Loading " + firstChild.getUri());
       Scheduler.get().scheduleDeferred(new ScheduledCommand() {
         @Override

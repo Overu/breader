@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
@@ -26,6 +27,7 @@ import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarButton;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
+@Singleton
 public class BookStoreView extends Composite implements AcceptsOneWidget, PlaceChangeEvent.Handler {
 
   @Inject
@@ -42,8 +44,11 @@ public class BookStoreView extends Composite implements AcceptsOneWidget, PlaceC
   protected SimplePanel tabContainer;
   protected TabPanel.TabBar tabBar;
 
+  private final ReaderPlugin plugin;
+
   @Inject
   public BookStoreView(final EventBus eventBus, final ReaderPlugin plugin) {
+    this.plugin = plugin;
     main = new LayoutPanel();
 
     headerPanel = new HeaderPanel();
@@ -112,11 +117,15 @@ public class BookStoreView extends Composite implements AcceptsOneWidget, PlaceC
 
   public void refresh() {
     MyPlace currentPlace = (MyPlace) placeController.getWhere();
+    int index = plugin.bookstorePlace.getChildren().indexOf(currentPlace);
+    tabBar.setSelectedButton(index, true);
     title.setText(currentPlace.getTitle());
   }
 
   @Override
   public void setWidget(final IsWidget w) {
     tabContainer.setWidget(w);
+    w.asWidget().addStyleName(
+        MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss().fillPanelExpandChild());
   }
 }

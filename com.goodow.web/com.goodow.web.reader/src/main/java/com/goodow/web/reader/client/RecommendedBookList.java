@@ -2,12 +2,10 @@ package com.goodow.web.reader.client;
 
 import com.goodow.web.reader.shared.Book;
 
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Image;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import com.googlecode.mgwt.ui.client.MGWTStyle;
 import com.googlecode.mgwt.ui.client.widget.Carousel;
 
 import java.util.ArrayList;
@@ -18,9 +16,7 @@ public class RecommendedBookList extends AbstractBookList {
   @Inject
   public RecommendedBookList(final Provider<BookSummary> bookSummaryProvider) {
     super(bookSummaryProvider);
-    setTitle("精品推荐");
     bookList.removeFromParent();
-
     Carousel carsousel = new Carousel();
     carsousel.add(new Image("http://img.soufun.com/news/2012_07/11/news/1341969513496_000.jpg"));
     carsousel.add(new Image(
@@ -42,13 +38,4 @@ public class RecommendedBookList extends AbstractBookList {
     return result;
   }
 
-  @Override
-  protected ImageResource getButtonImage() {
-    return MGWTStyle.getTheme().getMGWTClientBundle().tabBarFavoritesImage();
-  }
-
-  @Override
-  protected String getButtonText() {
-    return "推荐";
-  }
 }
