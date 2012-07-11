@@ -19,10 +19,8 @@ import com.goodow.web.reader.client.style.ReadResources;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.place.shared.PlaceController;
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
@@ -31,7 +29,6 @@ import com.googlecode.mgwt.mvp.client.Animation;
 import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
-import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarButton;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
@@ -98,14 +95,11 @@ public class ReadTabPanel extends Composite {
     initWidget(main);
   }
 
-  public void add(final Widget child, final String title, final String buttonText,
-      final ImageResource buttonImg) {
-    TabBarButton button = new TabBarButton(buttonImg);
-    button.setText(buttonText);
-    ScrollPanel scrollPanel = new ScrollPanel();
-    scrollPanel.setWidget(child);
-    texts.add(title);
-    tabPanel.add(button, scrollPanel);
+  public void add(final AbstractBookList child) {
+    TabBarButton button = new TabBarButton(child.getButtonImage());
+    button.setText(child.getButtonText());
+    texts.add(child.getTitle());
+    tabPanel.add(button, child);
   }
 
   @Override

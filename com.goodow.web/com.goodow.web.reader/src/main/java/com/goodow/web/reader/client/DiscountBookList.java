@@ -2,8 +2,11 @@ package com.goodow.web.reader.client;
 
 import com.goodow.web.reader.shared.Book;
 
+import com.google.gwt.resources.client.ImageResource;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+
+import com.googlecode.mgwt.ui.client.MGWTStyle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +16,7 @@ public class DiscountBookList extends AbstractBookList {
   @Inject
   public DiscountBookList(final Provider<BookSummary> bookSummaryProvider) {
     super(bookSummaryProvider);
+    setTitle("特价促销");
   }
 
   @Override
@@ -26,6 +30,16 @@ public class DiscountBookList extends AbstractBookList {
       result.add(book);
     }
     return result;
+  }
+
+  @Override
+  protected ImageResource getButtonImage() {
+    return MGWTStyle.getTheme().getMGWTClientBundle().tabBarHistoryImage();
+  }
+
+  @Override
+  protected String getButtonText() {
+    return "特价";
   }
 
 }
