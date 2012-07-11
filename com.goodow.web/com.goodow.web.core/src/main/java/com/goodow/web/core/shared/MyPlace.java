@@ -1,12 +1,11 @@
 package com.goodow.web.core.shared;
 
-import com.goodow.web.core.client.MyView;
-
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -15,7 +14,10 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import com.googlecode.mgwt.mvp.client.Animation;
+import com.googlecode.mgwt.ui.client.MGWTStyle;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -41,6 +43,10 @@ public class MyPlace extends Place {
 
   private IsWidget widget;
 
+  private ImageResource buttonImage;
+
+  private String buttonText;
+
   private Provider<? extends IsWidget> widgetProvider;
 
   private AsyncProvider<? extends IsWidget> asyncWidgetProvider;
@@ -53,28 +59,6 @@ public class MyPlace extends Place {
     }
     children.put(place.getPath(), place);
     place.parent = this;
-  }
-
-  public void display(final AcceptsOneWidget panel) {
-    if (widget != null) {
-      panel.setWidget(widget);
-    } else if (widgetProvider != null) {
-      panel.setWidget(widgetProvider.get());
-    } else if (asyncWidgetProvider != null) {
-      asyncWidgetProvider.get(new AsyncCallback<IsWidget>() {
-        @Override
-        public void onFailure(final Throwable caught) {
-          displayChild(panel);
-        }
-
-        @Override
-        public void onSuccess(final IsWidget result) {
-          panel.setWidget(result);
-        }
-      });
-    } else {
-      displayChild(panel);
-    }
   }
 
   @Override
@@ -93,6 +77,9 @@ public class MyPlace extends Place {
     String[] segments = uri.split("/");
     MyPlace result = this;
     for (String path : segments) {
+      if (path.length() == 0) {
+        continue;
+      }
       if (result.isParamitized()) {
         result.setParameter(path);
         continue;
@@ -109,11 +96,49 @@ public class MyPlace extends Place {
     return animation;
   }
 
+  /**
+   * @return the buttonImage
+   */
+  public ImageResource getButtonImage() {
+    if (buttonImage == null) {
+      buttonImage = MGWTStyle.getTheme().getMGWTClientBundle().tabBarFavoritesImage();
+    }
+    return buttonImage;
+  }
+
+  /**
+   * @return the buttonText
+   */
+  public String getButtonText() {
+    return buttonText;
+  }
+
+  public MyPlace getChild(int index) {
+    if (children == null) {
+      return null;
+    }
+
+    for (MyPlace place : children.values()) {
+      if (index == 0) {
+        return place;
+      }
+      index--;
+    }
+    return null;
+  }
+
   public MyPlace getChild(final String path) {
     if (children == null) {
       return null;
     }
     return children.get(path);
+  }
+
+  public Collection<MyPlace> getChildren() {
+    if (children == null) {
+      return Collections.EMPTY_LIST;
+    }
+    return children.values();
   }
 
   public String getParameter() {
@@ -144,8 +169,44 @@ public class MyPlace extends Place {
     return paramitized;
   }
 
+  public void render(final AcceptsOneWidget panel) {
+    render(panel, null);
+  }
+
+  public void render(final AcceptsOneWidget panel, final AsyncCallback<AcceptsOneWidget> callback) {
+    if (parent != null) {
+      parent.render(panel, new AsyncCallback<AcceptsOneWidget>() {
+        @Override
+        public void onFailure(final Throwable caught) {
+          caught.printStackTrace();
+        }
+
+        @Override
+        public void onSuccess(final AcceptsOneWidget result) {
+          append(result, callback);
+        }
+      });
+    } else {
+      append(panel, callback);
+    }
+  }
+
   public void setAnimation(final Animation animation) {
     this.animation = animation;
+  }
+
+  /**
+   * @param buttonImage the buttonImage to set
+   */
+  public void setButtonImage(final ImageResource buttonImage) {
+    this.buttonImage = buttonImage;
+  }
+
+  /**
+   * @param buttonText the buttonText to set
+   */
+  public void setButtonText(final String buttonText) {
+    this.buttonText = buttonText;
   }
 
   public void setParameter(final String parameter) {
@@ -176,11 +237,6 @@ public class MyPlace extends Place {
     this.widgetProvider = provider;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.lang.Object#toString()
-   */
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder();
@@ -188,26 +244,62 @@ public class MyPlace extends Place {
     return builder.toString();
   }
 
-  private void displayChild(final AcceptsOneWidget panel) {
-    if (children != null && !children.isEmpty()) {
-      final MyPlace firstChild = children.values().iterator().next();
-      Label label = new Label("Loading " + firstChild.getUri());
-      panel.setWidget(label);
-
-      Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+  private void append(final AcceptsOneWidget panel, final AsyncCallback<AcceptsOneWidget> callback) {
+    if (widget != null) {
+      panel.setWidget(widget);
+      if (callback != null) {
+        callback.onSuccess((AcceptsOneWidget) widget);
+      }
+    } else if (widgetProvider != null) {
+      IsWidget w = widgetProvider.get();
+      panel.setWidget(w);
+      if (callback != null) {
+        callback.onSuccess((AcceptsOneWidget) w);
+      }
+    } else if (asyncWidgetProvider != null) {
+      asyncWidgetProvider.get(new AsyncCallback<IsWidget>() {
+        @Override
+        public void onFailure(final Throwable caught) {
+          showError(panel, "Failed to load " + this);
+          if (callback != null) {
+            callback.onFailure(caught);
+          }
+        }
 
         @Override
+        public void onSuccess(final IsWidget result) {
+          panel.setWidget(result);
+          if (callback != null) {
+            callback.onSuccess((AcceptsOneWidget) result);
+          }
+        }
+      });
+    } else if (placeController.getWhere() != this) {
+      if (callback != null) {
+        callback.onSuccess(panel);
+      }
+    } else if (children != null && !children.isEmpty()) {
+      final MyPlace firstChild = children.values().iterator().next();
+      showInfo(panel, "Loading " + firstChild.getUri());
+      Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+        @Override
         public void execute() {
-          panel.setWidget(null);
           placeController.goTo(firstChild);
         }
       });
-
     } else {
-      String msg = "No widget found for " + this;
-      MyView view = new MyView();
-      view.setTitle(msg);
-      panel.setWidget(view);
+      showError(panel, "No widget is bound to " + this);
     }
   }
+
+  private void showError(final AcceptsOneWidget panel, final String message) {
+    Label label = new Label(message);
+    panel.setWidget(label);
+  }
+
+  private void showInfo(final AcceptsOneWidget panel, final String message) {
+    Label label = new Label(message);
+    panel.setWidget(label);
+  }
+
 }

@@ -49,7 +49,7 @@ public class ReadTabPanel extends Composite {
   protected PlaceController placeController;
 
   @Inject
-  protected ReaderExtension readerExtension;
+  protected ReaderPlugin readerExtension;
 
   public ReadTabPanel() {
     main = new LayoutPanel();

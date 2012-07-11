@@ -18,8 +18,8 @@ public final class ReaderMobileClientModule extends AbstractGinModule {
   public static class Starter {
 
     @Inject
-    public Starter(final ReaderExtension ext) {
-      ext.registerExtensions();
+    public Starter(final ReaderPlugin ext) {
+      ext.start();
     }
   }
 

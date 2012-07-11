@@ -29,7 +29,7 @@ public abstract class BookListView extends Composite {
   protected PlaceController placeController;
 
   @Inject
-  protected ReaderExtension readerExtension;
+  protected ReaderPlugin readerExtension;
 
   public BookListView() {
     main = new LayoutPanel();

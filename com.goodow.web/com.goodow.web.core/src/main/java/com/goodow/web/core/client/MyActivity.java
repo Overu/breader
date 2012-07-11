@@ -21,7 +21,7 @@ public class MyActivity extends MGWTAbstractActivity {
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     MyPlace place = (MyPlace) placeController.getWhere();
-    place.display(panel);
+    place.render(panel);
   }
 
 }

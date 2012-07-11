@@ -9,9 +9,11 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import com.googlecode.mgwt.mvp.client.Animation;
+import com.googlecode.mgwt.ui.client.MGWTStyle;
+import com.googlecode.mgwt.ui.client.theme.MGWTClientBundle;
 
 @Singleton
-public class ReaderExtension {
+public class ReaderPlugin {
 
   @Inject
   AsyncProvider<BookShelfView> bookshelf;
@@ -53,10 +55,37 @@ public class ReaderExtension {
   @Inject
   MyPlace categorizedPlace;
 
-  public void registerExtensions() {
-    homePlace.setAnimation(Animation.FADE);
-    homePlace.addChild(bookshelfPlace);
-    homePlace.addChild(bookstorePlace);
+  public void start() {
+
+    MGWTClientBundle bundle = MGWTStyle.getTheme().getMGWTClientBundle();
+
+    recommendedPlace.setPath("recommended");
+    recommendedPlace.setAnimation(Animation.SLIDE);
+    recommendedPlace.setWidget(recommended);
+    recommendedPlace.setTitle("精品推荐");
+    recommendedPlace.setButtonText("推荐");
+    recommendedPlace.setButtonImage(bundle.tabBarFavoritesImage());
+
+    discountedPlace.setPath("discounted");
+    discountedPlace.setAnimation(Animation.SLIDE);
+    discountedPlace.setWidget(discounted);
+    discountedPlace.setTitle("特价促销");
+    discountedPlace.setButtonText("特价");
+    discountedPlace.setButtonImage(bundle.tabBarHistoryImage());
+
+    mostViewedPlace.setPath("mostviewed");
+    mostViewedPlace.setAnimation(Animation.SLIDE);
+    mostViewedPlace.setWidget(mostViewed);
+    mostViewedPlace.setTitle("热门图书");
+    mostViewedPlace.setButtonText("热门");
+    mostViewedPlace.setButtonImage(bundle.tabBarMostViewedImage());
+
+    categorizedPlace.setPath("categorized");
+    categorizedPlace.setAnimation(Animation.SLIDE);
+    categorizedPlace.setWidget(categorized);
+    categorizedPlace.setTitle("分类浏览");
+    categorizedPlace.setButtonText("分类");
+    categorizedPlace.setButtonImage(bundle.tabBarBookMarkImage());
 
     bookshelfPlace.setPath("bookshelf");
     bookshelfPlace.setAnimation(Animation.FLIP);
@@ -70,20 +99,8 @@ public class ReaderExtension {
     bookstorePlace.addChild(mostViewedPlace);
     bookstorePlace.addChild(categorizedPlace);
 
-    recommendedPlace.setPath("recommended");
-    recommendedPlace.setAnimation(Animation.SLIDE);
-    recommendedPlace.setWidget(recommended);
-
-    discountedPlace.setPath("discounted");
-    discountedPlace.setAnimation(Animation.SLIDE);
-    discountedPlace.setWidget(discounted);
-
-    mostViewedPlace.setPath("mostviewed");
-    mostViewedPlace.setAnimation(Animation.SLIDE);
-    mostViewedPlace.setWidget(mostViewed);
-
-    categorizedPlace.setPath("categorized");
-    categorizedPlace.setAnimation(Animation.SLIDE);
-    categorizedPlace.setWidget(categorized);
+    homePlace.setAnimation(Animation.FADE);
+    homePlace.addChild(bookshelfPlace);
+    homePlace.addChild(bookstorePlace);
   }
 }
