@@ -7,6 +7,8 @@ import com.goodow.web.reader.shared.AsyncLibraryService;
 import com.goodow.web.reader.shared.Library;
 import com.goodow.web.reader.shared.ReaderPackage;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -27,6 +29,19 @@ public final class ReaderProductClientModule extends AbstractGinModule {
   public static class ReaderUI {
     @Inject
     public ReaderUI(final AsyncLibraryService libraryService) {
+      Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+
+        @Override
+        public void execute() {
+          create(libraryService);
+        }
+      });
+    }
+
+    /**
+     * @param libraryService
+     */
+    private void create(final AsyncLibraryService libraryService) {
       final Library lib = ReaderPackage.Library.get();
       lib.setTitle("ggg");
       Request<Library> request = libraryService.save(lib, false, 5);
