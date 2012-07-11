@@ -184,11 +184,6 @@ public class BookShelfView extends BookListView implements Presenter {
 
   }
 
-  @Override
-  protected String getRightLink() {
-    return "/bookstore";
-  }
-
   private void gotFileSystem(final FileSystem fileSystem) {
     listDirectory(fileSystem.getRoot());
   }

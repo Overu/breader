@@ -8,11 +8,8 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 
-import com.googlecode.mgwt.dom.client.event.touch.TouchCancelEvent;
-import com.googlecode.mgwt.dom.client.event.touch.TouchEndEvent;
-import com.googlecode.mgwt.dom.client.event.touch.TouchHandler;
-import com.googlecode.mgwt.dom.client.event.touch.TouchMoveEvent;
-import com.googlecode.mgwt.dom.client.event.touch.TouchStartEvent;
+import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.mvp.client.Animation;
 import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.HeaderPanel;
@@ -48,29 +45,11 @@ public abstract class BookListView extends Composite {
     rightButton = new HeaderButton();
     rightButton.setRoundButton(true);
     rightButton.setText("书架");
-    rightButton.addTouchHandler(new TouchHandler() {
-
+    rightButton.addTapHandler(new TapHandler() {
       @Override
-      public void onTouchCanceled(final TouchCancelEvent event) {
-        // TODO Auto-generated method stub
-      }
-
-      @Override
-      public void onTouchEnd(final TouchEndEvent event) {
-        MyPlace place = new MyPlace(Animation.SWAP, "书架", getRightLink());
+      public void onTap(final TapEvent event) {
+        MyPlace place = new MyPlace(Animation.SWAP, "书架", "/bookstore");
         placeController.goTo(place);
-      }
-
-      @Override
-      public void onTouchMove(final TouchMoveEvent event) {
-        // TODO Auto-generated method stub
-
-      }
-
-      @Override
-      public void onTouchStart(final TouchStartEvent event) {
-        // TODO Auto-generated method stub
-
       }
     });
 
@@ -86,10 +65,6 @@ public abstract class BookListView extends Composite {
     content.add(scrollPanel);
     main.add(content);
     initWidget(main);
-  }
-
-  protected String getRightLink() {
-    return "/bookshelf";
   }
 
 }
