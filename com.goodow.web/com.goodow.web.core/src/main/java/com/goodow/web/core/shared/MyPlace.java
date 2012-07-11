@@ -12,6 +12,9 @@ public class MyPlace extends Place {
 
   private String title;
 
+  public MyPlace() {
+  }
+
   public MyPlace(final Animation animation, final String title, final String uri) {
     this.animation = animation;
     this.title = title;

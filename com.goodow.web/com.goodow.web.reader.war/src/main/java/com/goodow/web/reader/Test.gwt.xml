@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module rename-to="test">
-  <inherits name="com.goodow.web.core.Core" />
-  <extend-configuration-property name="gin.module"
-    value="com.goodow.web.reader.client.ReaderProductClientModule" />
-  <source includes="*.java" path="" />
-  <source path="client" />
-  <source path="shared" />
-</module>

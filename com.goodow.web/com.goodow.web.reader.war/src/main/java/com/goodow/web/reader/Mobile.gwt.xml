@@ -2,7 +2,7 @@
 <module rename-to="reader">
   <inherits name="com.goodow.web.reader.Reader" />
   <extend-configuration-property name="gin.module"
-    value="com.goodow.web.reader.client.ReaderProductClientModule" />
+    value="com.goodow.web.reader.client.ReaderMobileClientModule" />
 
   <extend-property name="locale" values="zh" />
   <set-property name="locale" value="zh" />

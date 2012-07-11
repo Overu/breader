@@ -2,7 +2,7 @@ package com.goodow.web.reader.client;
 
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Request;
-import com.goodow.web.reader.client.style.ReadResources;
+import com.goodow.web.reader.client.ReaderClientModule.Bind;
 import com.goodow.web.reader.shared.AsyncLibraryService;
 import com.goodow.web.reader.shared.Library;
 import com.goodow.web.reader.shared.ReaderPackage;
@@ -11,26 +11,15 @@ import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 import java.util.logging.Logger;
 
-public final class ReaderProductClientModule extends AbstractGinModule {
-
-  @Singleton
-  public static class Bind {
-
-    public Bind() {
-      ReadResources.INSTANCE();
-    }
-
-  }
+public final class ReaderDesktopClientModule extends AbstractGinModule {
 
   public static class ReaderUI {
     @Inject
     public ReaderUI(final AsyncLibraryService libraryService) {
       Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-
         @Override
         public void execute() {
           create(libraryService);
@@ -38,9 +27,6 @@ public final class ReaderProductClientModule extends AbstractGinModule {
       });
     }
 
-    /**
-     * @param libraryService
-     */
     private void create(final AsyncLibraryService libraryService) {
       final Library lib = ReaderPackage.Library.get();
       lib.setTitle("ggg");
@@ -57,7 +43,7 @@ public final class ReaderProductClientModule extends AbstractGinModule {
     }
   }
 
-  private static final Logger logger = Logger.getLogger(ReaderProductClientModule.class.getName());
+  private static final Logger logger = Logger.getLogger(ReaderDesktopClientModule.class.getName());
 
   @Override
   protected void configure() {

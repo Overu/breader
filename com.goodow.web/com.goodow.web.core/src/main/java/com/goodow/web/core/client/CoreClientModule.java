@@ -2,6 +2,7 @@ package com.goodow.web.core.client;
 
 import com.goodow.web.core.client.css.AppBundle;
 import com.goodow.web.core.shared.CorePackage;
+import com.goodow.web.core.shared.HomePlace;
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.MyPlace;
 import com.goodow.web.core.shared.MyPlaceMapper;
@@ -11,15 +12,12 @@ import com.goodow.web.core.shared.WebPlatform;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.inject.client.AbstractGinModule;
-import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.TextArea;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Provides;
@@ -29,7 +27,6 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.mgwt.mvp.client.AnimatableDisplay;
 import com.googlecode.mgwt.mvp.client.AnimatingActivityManager;
-import com.googlecode.mgwt.mvp.client.Animation;
 import com.googlecode.mgwt.mvp.client.history.MGWTPlaceHistoryHandler;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.MGWTSettings;
@@ -45,13 +42,9 @@ public class CoreClientModule extends AbstractGinModule {
   @Singleton
   public static class Binder {
     @Inject
-    public Binder(final AsyncProvider<TextArea> editView, final UIRegistry widgetRegistry,
-        final AsyncProvider<Shell> shell, final GwtJSONObjectProvider<WebObject> provider) {
+    public Binder(final GwtJSONObjectProvider<WebObject> provider) {
       CorePackage.WebObject.as().addReader(JSONObject.class, provider);
       CorePackage.WebObject.as().addWriter(JSONObject.class, provider);
-      widgetRegistry.bind("view1").toInstance(new Label("视图1"));
-      widgetRegistry.bind("view2").toAsyncProvider(editView);
-      widgetRegistry.bind("main").toAsyncProvider(shell);
     }
   }
 
@@ -59,7 +52,6 @@ public class CoreClientModule extends AbstractGinModule {
   public static class Render {
 
     private final EventBus eventBus;
-    private final PlaceController placeController;
 
     private final MGWTPlaceHistoryHandler historyHandler;
     private final Provider<TabletNavActivityMapper> navActivityMapper;
@@ -81,7 +73,6 @@ public class CoreClientModule extends AbstractGinModule {
       //
       // historyHandler.handleCurrentHistory();
 
-      this.placeController = placeController;
       this.historyHandler = historyHandler;
       this.eventBus = eventBus;
       this.navActivityMapper = tabletNavActivityMapper;
@@ -94,30 +85,6 @@ public class CoreClientModule extends AbstractGinModule {
 
         }
       }.schedule(1);
-
-      alertSomeStuff();
-
-    }
-
-    private native void alertSomeStuff()/*-{
-
-                                        //    $doc.addEventListener("scroll", (function() {
-                                        //      alert('scroll');
-                                        //    }), true);
-                                        }-*/;
-
-    private void createPhoneDisplay() {
-      AnimatableDisplay display = GWT.create(AnimatableDisplay.class);
-
-      PhoneActivityMapper appActivityMapper = new PhoneActivityMapper();
-
-      AnimatingActivityManager activityManager =
-          new AnimatingActivityManager(appActivityMapper, animationMapper, eventBus);
-
-      activityManager.setDisplay(display);
-
-      RootPanel.get().add(display);
-
     }
 
     private void createTabletDisplay() {
@@ -168,18 +135,10 @@ public class CoreClientModule extends AbstractGinModule {
 
       MGWT.applySettings(settings);
 
-      if (MGWT.getOsDetection().isTablet()) {
+      // very nasty workaround because GWT does not correctly support @media
+      StyleInjector.inject(AppBundle.INSTANCE.css().getText());
 
-        // very nasty workaround because GWT does not corretly support
-        // @media
-        StyleInjector.inject(AppBundle.INSTANCE.css().getText());
-
-        createTabletDisplay();
-      } else {
-
-        createPhoneDisplay();
-
-      }
+      createTabletDisplay();
 
       historyHandler.handleCurrentHistory();
     }
@@ -216,11 +175,10 @@ public class CoreClientModule extends AbstractGinModule {
   @Singleton
   MGWTPlaceHistoryHandler placeHistoryHandlerProvider(final PlaceHistoryMapper historyMapper,
       final PlaceController placeController, final EventBus eventBus,
-      final AppHistoryObserver historyObserver) {
+      final AppHistoryObserver historyObserver, @HomePlace final MyPlace homePlace) {
     MGWTPlaceHistoryHandler placeHistoryHandler =
         new MGWTPlaceHistoryHandler(historyMapper, historyObserver);
-    placeHistoryHandler
-        .register(placeController, eventBus, new MyPlace(Animation.FADE, "", "home"));
+    placeHistoryHandler.register(placeController, eventBus, homePlace);
     return placeHistoryHandler;
   }
 

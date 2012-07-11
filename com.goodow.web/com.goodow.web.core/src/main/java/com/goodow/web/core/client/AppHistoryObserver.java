@@ -2,7 +2,6 @@ package com.goodow.web.core.client;
 
 import com.goodow.web.core.client.event.ActionEvent;
 import com.goodow.web.core.client.event.ActionNames;
-import com.goodow.web.core.shared.MyPlace;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceChangeEvent;
@@ -11,7 +10,6 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.HandlerRegistration;
 
 import com.googlecode.mgwt.dom.client.event.mouse.HandlerRegistrationCollection;
-import com.googlecode.mgwt.mvp.client.Animation;
 import com.googlecode.mgwt.mvp.client.history.HistoryHandler;
 import com.googlecode.mgwt.mvp.client.history.HistoryObserver;
 
@@ -64,7 +62,6 @@ public class AppHistoryObserver implements HistoryObserver {
 
   @Override
   public void onAppStarted(final Place place, final HistoryHandler historyHandler) {
-    historyHandler.replaceCurrentPlace(new MyPlace(Animation.FADE, "Home", "home"));
   }
 
   @Override
