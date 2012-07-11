@@ -2,9 +2,10 @@ package com.goodow.web.core.client;
 
 import com.goodow.web.core.shared.MyPlace;
 
+import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasText;
-import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import com.googlecode.mgwt.ui.client.MGWT;
@@ -14,21 +15,21 @@ import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
 import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.celllist.BasicCell;
 import com.googlecode.mgwt.ui.client.widget.celllist.CellListWithHeader;
-import com.googlecode.mgwt.ui.client.widget.celllist.HasCellSelectedHandler;
+import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedHandler;
 
 import java.util.List;
 
-public class AnimationView implements IsWidget {
+public class PlaceList extends Composite {
 
   private CellListWithHeader<MyPlace> list;
   private LayoutPanel main;
   private HeaderPanel headerPanel;
   private HeaderButton headerBackButton;
+  private List<MyPlace> places;
 
-  /**
-	 * 
-	 */
-  public AnimationView() {
+  @Inject
+  public PlaceList(final PlaceController placeController) {
     main = new LayoutPanel();
 
     headerPanel = new HeaderPanel();
@@ -61,29 +62,25 @@ public class AnimationView implements IsWidget {
     scrollPanel.setWidget(list);
     scrollPanel.setScrollingEnabledX(false);
 
+    list.getCellList().addCellSelectedHandler(new CellSelectedHandler() {
+
+      @Override
+      public void onCellSelected(final CellSelectedEvent event) {
+        int index = event.getIndex();
+        MyPlace place = places.get(index);
+        placeController.goTo(place);
+      }
+    });
     main.add(scrollPanel);
-
-  }
-
-  @Override
-  public Widget asWidget() {
-    return main;
+    initWidget(main);
   }
 
   public HasTapHandlers getBackButton() {
     return headerBackButton;
   }
 
-  public HasCellSelectedHandler getCellSelectedHandler() {
-    return list.getCellList();
-  }
-
   public HasText getFirstHeader() {
     return list.getHeader();
-  }
-
-  public void setPlaces(final List<MyPlace> places) {
-    list.getCellList().render(places);
   }
 
   public void setLeftButtonText(final String text) {
@@ -91,6 +88,12 @@ public class AnimationView implements IsWidget {
 
   }
 
+  public void setPlaces(final List<MyPlace> places) {
+    this.places = places;
+    list.getCellList().render(places);
+  }
+
+  @Override
   public void setTitle(final String text) {
     headerPanel.setCenter(text);
 
