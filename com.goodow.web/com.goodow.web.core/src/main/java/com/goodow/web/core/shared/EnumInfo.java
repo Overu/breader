@@ -10,12 +10,12 @@ public class EnumInfo<T extends Enum<T>> extends ValueInfo<T> {
   }
 
   @Override
-  public T readFrom(final String stringValue) {
+  public T convertFrom(final String stringValue) {
     return Enum.valueOf(enumClass, stringValue);
   }
 
   @Override
-  public String writeTo(final T instanceValue) {
+  public String convertTo(final T instanceValue) {
     return instanceValue.name();
   }
 }

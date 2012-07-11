@@ -1,17 +1,18 @@
 package com.goodow.web.core.client;
 
 import com.goodow.web.core.client.css.AppBundle;
-import com.goodow.web.core.shared.GwtClientRequestProcessor;
+import com.goodow.web.core.shared.CorePackage;
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.MyPlace;
 import com.goodow.web.core.shared.MyPlaceMapper;
-import com.goodow.web.core.shared.RequestProcessor;
+import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.WebPlatform;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.inject.client.AsyncProvider;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.user.client.Timer;
@@ -45,7 +46,9 @@ public class CoreClientModule extends AbstractGinModule {
   public static class Binder {
     @Inject
     public Binder(final AsyncProvider<TextArea> editView, final UIRegistry widgetRegistry,
-        final AsyncProvider<Shell> shell) {
+        final AsyncProvider<Shell> shell, final GwtJSONObjectProvider<WebObject> provider) {
+      CorePackage.WebObject.as().addReader(JSONObject.class, provider);
+      CorePackage.WebObject.as().addWriter(JSONObject.class, provider);
       widgetRegistry.addBinding("view1").toInstance(new Label("视图1"));
       widgetRegistry.addBinding("view2").toAsyncProvider(editView);
       widgetRegistry.addBinding("main").toAsyncProvider(shell);
@@ -189,7 +192,6 @@ public class CoreClientModule extends AbstractGinModule {
     logger.finest("configure");
     requestStaticInjection(WebPlatform.class);
     bind(Message.class).to(ClientMessage.class);
-    bind(RequestProcessor.class).to(GwtClientRequestProcessor.class);
     bind(PlaceHistoryMapper.class).to(MyPlaceMapper.class).in(Singleton.class);
     bind(Binder.class).asEagerSingleton();
     bind(Render.class).asEagerSingleton();
@@ -198,8 +200,9 @@ public class CoreClientModule extends AbstractGinModule {
   @Provides
   @Singleton
   PhoneGap phoneGap() {
-    PhoneGap gap = GWT.create(PhoneGap.class);
-    return gap;
+    PhoneGap phoneGap = GWT.create(PhoneGap.class);
+    phoneGap.initializePhoneGap();
+    return phoneGap;
   }
 
   @Provides

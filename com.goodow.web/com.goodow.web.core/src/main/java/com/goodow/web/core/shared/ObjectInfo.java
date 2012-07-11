@@ -4,8 +4,7 @@ import com.goodow.web.core.shared.util.ClassUtil;
 
 import com.google.inject.Provider;
 
-public class ObjectInfo<T extends WebObject> implements Wrapper<ObjectType>, TextReader<T>,
-    TextWriter<T>, Provider<T> {
+public class ObjectInfo<T extends WebObject> implements Wrapper<ObjectType>, Provider<T> {
 
   private final ObjectType objectType;
 
@@ -13,9 +12,7 @@ public class ObjectInfo<T extends WebObject> implements Wrapper<ObjectType>, Tex
     objectType = new ObjectType();
     String name = ClassUtil.getSimpleName(clazz);
     objectType.setName(name);
-    objectType.setDefinitionClass(clazz);
-    objectType.setTextReader(this);
-    objectType.setTextWriter(this);
+    objectType.setJavaClass(clazz);
     objectType.setServiceClass(serviceClass);
     objectType.setProvider(this);
   }
@@ -30,25 +27,4 @@ public class ObjectInfo<T extends WebObject> implements Wrapper<ObjectType>, Tex
     throw new UnsupportedOperationException();
   }
 
-  @Override
-  public T readFrom(final String stringValue) {
-    if (stringValue == null) {
-      return null;
-    }
-    T result = get();
-
-    return result;
-  }
-
-  @Override
-  public String writeTo(final T entity) {
-    if (entity == null) {
-      return null;
-    }
-
-    for (Property property : objectType.as().getProperties().values()) {
-
-    }
-    return entity.toString();
-  }
 }

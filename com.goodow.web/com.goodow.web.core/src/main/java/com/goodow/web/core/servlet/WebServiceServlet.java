@@ -1,10 +1,11 @@
 package com.goodow.web.core.servlet;
 
-import com.goodow.web.core.server.ServerRequestProcessor;
-import com.goodow.web.core.shared.RequestProcessor;
+import com.goodow.web.core.server.ServerMessage;
+import com.goodow.web.core.shared.Message;
 
 import com.google.gwt.user.server.rpc.RPCServletUtils;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class WebServiceServlet extends HttpServlet {
   }
 
   @Inject
-  private ServerRequestProcessor processor;
+  private Provider<ServerMessage> message;
 
   @Override
   protected void doPost(final HttpServletRequest request, final HttpServletResponse response)
@@ -68,18 +69,18 @@ public class WebServiceServlet extends HttpServlet {
       }
 
       try {
-        String payload = processor.process(jsonRequestString);
+        String payload = message.get().process(jsonRequestString);
         if (DUMP_PAYLOAD) {
           System.out.println("<<< " + payload);
         }
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType(RequestProcessor.JSON_CONTENT_TYPE_UTF8);
+        response.setContentType(Message.JSON_CONTENT_TYPE_UTF8);
         response.setContentLength(payload.getBytes(JSON_CHARSET).length);
         // The Writer must be obtained after setting the content type
         PrintWriter writer = response.getWriter();
         writer.print(payload);
         writer.flush();
-      } catch (RuntimeException e) {
+      } catch (Exception e) {
         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         log.log(Level.SEVERE, "Unexpected error", e);
       }

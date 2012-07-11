@@ -1,9 +1,8 @@
 package com.goodow.web.reader.test;
 
-import com.goodow.web.core.server.JsonProvider;
+import com.goodow.web.core.server.JSONMarshaller;
 import com.goodow.web.core.shared.Accessor;
-import com.goodow.web.core.shared.Request;
-import com.goodow.web.core.shared.Response;
+import com.goodow.web.core.shared.Message;
 import com.goodow.web.reader.shared.Library;
 import com.goodow.web.reader.shared.LibraryService;
 import com.goodow.web.reader.shared.ReaderPackage;
@@ -15,6 +14,8 @@ import org.json.JSONException;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.xml.bind.JAXBContext;
@@ -27,20 +28,36 @@ public class LibraryTest extends ExampleTest {
   LibraryService libraryService;
 
   @Inject
-  JsonProvider builder;
+  JSONMarshaller jsonMarshaller;
+
   @Inject
-  Provider<Request> request;
-  @Inject
-  Provider<Response> response;
+  Provider<Message> messageProvider;
 
   @Test
   public void testCreateLibrary() throws JSONException {
-    Library library = new Library();
-    library.setTitle(generateId(Library.class));
-    Library result = libraryService.save(library, true, 10);
-    System.out.println(result);
-    Accessor access = ReaderPackage.Library.as().getAccessor();
-    System.out.println(access);
+    List<Library> list = new ArrayList<Library>();
+    for (int i = 0; i < 3; i++) {
+      Library library = new Library();
+      library.setTitle(generateId(Library.class));
+      Library result = libraryService.save(library, true, 10);
+      System.out.println(result);
+      Accessor access = ReaderPackage.Library.as().getAccessor();
+      System.out.println(access);
+      String json = jsonMarshaller.serialize(library);
+      System.out.println(json);
+      list.add(library);
+    }
+
+    String json = jsonMarshaller.serialize(list);
+    System.out.println(json);
+
+    json = jsonMarshaller.serialize(new Object[] {false, "File", 10});
+    System.err.println(json);
+
+    Message message = messageProvider.get();
+    message.getResponse().setResult(list);
+    json = jsonMarshaller.serialize(message.getResponse());
+    System.out.println(json);
   }
 
   @Test

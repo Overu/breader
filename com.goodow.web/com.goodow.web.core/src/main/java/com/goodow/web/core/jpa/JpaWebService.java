@@ -13,11 +13,12 @@ import com.google.web.bindery.autobean.vm.impl.TypeUtils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 
 public class JpaWebService<E extends WebEntity> implements WebService<E> {
-
+  private static final Logger logger = Logger.getLogger(JpaWebService.class.getName());
   @Inject
   protected transient Provider<EntityManager> em;
 
@@ -55,20 +56,19 @@ public class JpaWebService<E extends WebEntity> implements WebService<E> {
     return method;
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public <T2> T2 invoke(final Wrapper<Operation> operation, final Object... args) {
     Method method = getJavaMethod(operation.as());
     try {
       return (T2) method.invoke(this, args);
-    } catch (IllegalArgumentException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
     } catch (InvocationTargetException e) {
-      // TODO Auto-generated catch block
+      Throwable t = e.getCause();
+      t.printStackTrace();
+      logger.severe(t.getMessage());
+    } catch (Exception e) {
       e.printStackTrace();
+      logger.severe(e.getMessage());
     }
     return null;
   }

@@ -33,12 +33,26 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
 
   private transient Accessor accessor;
 
+  private Map<String, ObjectReader> readers = new HashMap<String, ObjectReader>();
+
+  private Map<String, ObjectWriter> writers = new HashMap<String, ObjectWriter>();
+
   public void addOperation(final Operation operation) {
     operations.put(operation.getName(), operation);
   }
 
   public void addProperty(final Property property) {
     properties.put(property.getName(), property);
+  }
+
+  public <T, W extends WebObject> void addReader(final Class<T> mediatorType,
+      final ObjectReader<W, T> provider) {
+    readers.put(mediatorType.getName(), provider);
+  }
+
+  public <T, W extends WebObject> void addWriter(final Class<T> mediatorType,
+      final ObjectWriter<W, T> provider) {
+    writers.put(mediatorType.getName(), provider);
   }
 
   @Override
@@ -80,6 +94,15 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
     return result;
   }
 
+  public <W extends WebObject, T> ObjectReader<W, T> getProvider(final Class<T> mediatorType) {
+    ObjectReader<W, T> result = (ObjectReader<W, T>) readers.get(mediatorType.getName());
+    if (result == null && !readers.containsKey(mediatorType.getName())) {
+      result = getSuperType().getProvider(mediatorType);
+      readers.put(mediatorType.getName(), result);
+    }
+    return result;
+  }
+
   @Override
   public String getQualifiedName() {
     return getPackage().getName() + "." + getName();
@@ -98,7 +121,7 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
   @XmlTransient
   public Class<? extends WebService> getServiceClass() {
     if (serviceClass == null) {
-      if (WebObject.class.equals(definitionClass)) {
+      if (WebObject.class.equals(javaClass)) {
         serviceClass = (Class<? extends WebService>) WebService.class;
       } else {
         serviceClass = getSuperType().getServiceClass();
@@ -109,6 +132,15 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
 
   public ObjectType getSuperType() {
     return superType;
+  }
+
+  public <W extends WebObject, T> ObjectWriter<W, T> getWriter(final Class<T> mediatorType) {
+    ObjectWriter<W, T> result = (ObjectWriter<W, T>) writers.get(mediatorType.getName());
+    if (result == null && !writers.containsKey(mediatorType.getName())) {
+      result = getSuperType().getWriter(mediatorType);
+      writers.put(mediatorType.getName(), result);
+    }
+    return result;
   }
 
   public boolean isAbstract() {

@@ -4,23 +4,56 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
+import java.util.logging.Logger;
 
 public abstract class Message implements Serializable {
 
-  private Map<EntityId, WebEntity> entities = new HashMap<EntityId, WebEntity>();
+  public static final String SERVER_ERROR = "Server Error";
 
-  private Map<WebEntity, EntityId> entityIds = new HashMap<WebEntity, EntityId>();
+  public static final String URL = "rpc";
+
+  public static final String JSON_CONTENT_TYPE_UTF8 = "application/json; charset=utf-8";
+
+  protected final Logger logger = Logger.getLogger(getClass().getName());
+
+  protected Stack<Request<?>> requests = new Stack<Request<?>>();
+
+  private Map<EntityId, WebObject> entities = new HashMap<EntityId, WebObject>();
+
+  private Map<WebObject, EntityId> entityIds = new HashMap<WebObject, EntityId>();
+
+  @SuppressWarnings("rawtypes")
+  protected Request request;
+
+  @SuppressWarnings("rawtypes")
+  protected Response response;
+
+  @SuppressWarnings("rawtypes")
+  public Message() {
+    request = new Request(this);
+    response = new Response(this);
+  }
 
   public abstract WebEntity find(ObjectType objectType, String id);
 
-  public Collection<WebEntity> getEntities() {
+  public Message fire() {
+    return this;
+  }
+
+  public Collection<WebObject> getEntities() {
     return entities.values();
   }
 
-  public WebEntity getEntity(final EntityId id) {
-    WebEntity entity = entities.get(id);
+  public WebObject getEntity(final EntityId id) {
+    WebObject entity = entities.get(id);
     if (entity == null) {
-      entity = WebPlatform.getInstance().getOrCreateEntity(id);
+      if (id.getStableId() != null) {
+        entity = find(id.getObjectType(), id.getStableId());
+      }
+      if (entity == null) {
+        entity = id.getObjectType().create();
+      }
       entities.put(id, entity);
       entityIds.put(entity, id);
     }
@@ -44,6 +77,16 @@ public abstract class Message implements Serializable {
 
   public Collection<EntityId> getEntityIds() {
     return entities.keySet();
+  }
+
+  @SuppressWarnings("unchecked")
+  public <T> Request<T> getRequest() {
+    return request;
+  }
+
+  @SuppressWarnings("unchecked")
+  public <T> Response<T> getResponse() {
+    return response;
   }
 
 }
