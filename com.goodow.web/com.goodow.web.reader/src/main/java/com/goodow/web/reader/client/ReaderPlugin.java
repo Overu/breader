@@ -59,6 +59,22 @@ public class ReaderPlugin {
 
     MGWTClientBundle bundle = MGWTStyle.getTheme().getMGWTClientBundle();
 
+    homePlace.setAnimation(Animation.FADE);
+    homePlace.addChild(bookshelfPlace);
+    homePlace.addChild(bookstorePlace);
+
+    bookshelfPlace.setPath("bookshelf");
+    bookshelfPlace.setAnimation(Animation.FLIP);
+    bookshelfPlace.setWidget(bookshelf);
+
+    bookstorePlace.setPath("bookstore");
+    bookstorePlace.setAnimation(Animation.FLIP);
+    bookstorePlace.setWidget(bookstore);
+    bookstorePlace.setWelcomePlace(recommendedPlace);
+    bookstorePlace.addChild(discountedPlace);
+    bookstorePlace.addChild(mostViewedPlace);
+    bookstorePlace.addChild(categorizedPlace);
+
     recommendedPlace.setPath("recommended");
     recommendedPlace.setAnimation(Animation.SLIDE);
     recommendedPlace.setWidget(recommended);
@@ -86,21 +102,5 @@ public class ReaderPlugin {
     categorizedPlace.setTitle("分类浏览");
     categorizedPlace.setButtonText("分类");
     categorizedPlace.setButtonImage(bundle.tabBarBookMarkImage());
-
-    bookshelfPlace.setPath("bookshelf");
-    bookshelfPlace.setAnimation(Animation.FLIP);
-    bookshelfPlace.setWidget(bookshelf);
-
-    bookstorePlace.setPath("bookstore");
-    bookstorePlace.setAnimation(Animation.FLIP);
-    bookstorePlace.setWidget(bookstore);
-    bookstorePlace.addChild(recommendedPlace);
-    bookstorePlace.addChild(discountedPlace);
-    bookstorePlace.addChild(mostViewedPlace);
-    bookstorePlace.addChild(categorizedPlace);
-
-    homePlace.setAnimation(Animation.FADE);
-    homePlace.addChild(bookshelfPlace);
-    homePlace.addChild(bookstorePlace);
   }
 }
