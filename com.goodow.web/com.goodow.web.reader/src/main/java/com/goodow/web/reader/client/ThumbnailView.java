@@ -13,7 +13,7 @@ import com.googlecode.mgwt.ui.client.widget.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
 import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 
-public abstract class BookListView extends Composite {
+public abstract class ThumbnailView extends Composite {
 
   protected LayoutPanel main;
 
@@ -31,7 +31,7 @@ public abstract class BookListView extends Composite {
   @Inject
   protected ReaderPlugin readerExtension;
 
-  public BookListView() {
+  public ThumbnailView() {
     main = new LayoutPanel();
 
     scrollPanel = new ScrollPanel();

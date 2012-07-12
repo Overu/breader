@@ -1,7 +1,7 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.core.shared.HomePlace;
-import com.goodow.web.core.shared.MyPlace;
+import com.goodow.web.core.shared.WebPlace;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Inject;
@@ -34,7 +34,7 @@ public final class ReaderMobileClientModule extends AbstractGinModule {
   @Provides
   @HomePlace
   @Singleton
-  MyPlace defaultPlaceProvider(final MyPlace place) {
+  WebPlace defaultPlaceProvider(final WebPlace place) {
     place.setAnimation(Animation.FADE);
     place.setTitle("睿泰书城");
     place.setPath("");

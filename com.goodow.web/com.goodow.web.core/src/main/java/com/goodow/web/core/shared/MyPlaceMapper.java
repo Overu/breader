@@ -10,17 +10,17 @@ public class MyPlaceMapper implements PlaceHistoryMapper {
 
   @HomePlace
   @Inject
-  MyPlace homePlace;
+  WebPlace homePlace;
 
   @Override
   public Place getPlace(final String token) {
-    MyPlace place = homePlace.findChild(token);
+    WebPlace place = homePlace.findChild(token);
     return place;
   }
 
   @Override
   public String getToken(final Place place) {
-    MyPlace p = (MyPlace) place;
+    WebPlace p = (WebPlace) place;
     return p.getUri();
   }
 

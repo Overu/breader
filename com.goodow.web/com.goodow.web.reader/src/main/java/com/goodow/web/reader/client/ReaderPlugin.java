@@ -1,7 +1,7 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.core.shared.HomePlace;
-import com.goodow.web.core.shared.MyPlace;
+import com.goodow.web.core.shared.WebPlace;
 
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.inject.Inject;
@@ -16,10 +16,10 @@ import com.googlecode.mgwt.ui.client.theme.MGWTClientBundle;
 public class ReaderPlugin {
 
   @Inject
-  AsyncProvider<BookShelfView> bookshelf;
+  AsyncProvider<BookShelf> bookshelf;
 
   @Inject
-  AsyncProvider<BookStoreView> bookstore;
+  AsyncProvider<BookStore> bookstore;
 
   @Inject
   Provider<RecommendedBookList> recommended;
@@ -35,25 +35,25 @@ public class ReaderPlugin {
 
   @HomePlace
   @Inject
-  MyPlace homePlace;
+  WebPlace homePlace;
 
   @Inject
-  MyPlace bookshelfPlace;
+  WebPlace bookshelfPlace;
 
   @Inject
-  MyPlace bookstorePlace;
+  WebPlace bookstorePlace;
 
   @Inject
-  MyPlace recommendedPlace;
+  WebPlace recommendedPlace;
 
   @Inject
-  MyPlace discountedPlace;
+  WebPlace discountedPlace;
 
   @Inject
-  MyPlace mostViewedPlace;
+  WebPlace mostViewedPlace;
 
   @Inject
-  MyPlace categorizedPlace;
+  WebPlace categorizedPlace;
 
   public void start() {
 

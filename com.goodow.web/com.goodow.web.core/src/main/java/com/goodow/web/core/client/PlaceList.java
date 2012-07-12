@@ -1,6 +1,6 @@
 package com.goodow.web.core.client;
 
-import com.goodow.web.core.shared.MyPlace;
+import com.goodow.web.core.shared.WebPlace;
 
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.Composite;
@@ -22,11 +22,11 @@ import java.util.List;
 
 public class PlaceList extends Composite {
 
-  private CellListWithHeader<MyPlace> list;
+  private CellListWithHeader<WebPlace> list;
   private LayoutPanel main;
   private HeaderPanel headerPanel;
   private HeaderButton headerBackButton;
-  private List<MyPlace> places;
+  private List<WebPlace> places;
 
   @Inject
   public PlaceList(final PlaceController placeController) {
@@ -44,15 +44,15 @@ public class PlaceList extends Composite {
 
     ScrollPanel scrollPanel = new ScrollPanel();
 
-    list = new CellListWithHeader<MyPlace>(new BasicCell<MyPlace>() {
+    list = new CellListWithHeader<WebPlace>(new BasicCell<WebPlace>() {
 
       @Override
-      public boolean canBeSelected(final MyPlace model) {
+      public boolean canBeSelected(final WebPlace model) {
         return true;
       }
 
       @Override
-      public String getDisplayString(final MyPlace model) {
+      public String getDisplayString(final WebPlace model) {
         return model.getTitle();
       }
     });
@@ -67,7 +67,7 @@ public class PlaceList extends Composite {
       @Override
       public void onCellSelected(final CellSelectedEvent event) {
         int index = event.getIndex();
-        MyPlace place = places.get(index);
+        WebPlace place = places.get(index);
         placeController.goTo(place);
       }
     });
@@ -88,7 +88,7 @@ public class PlaceList extends Composite {
 
   }
 
-  public void setPlaces(final List<MyPlace> places) {
+  public void setPlaces(final List<WebPlace> places) {
     this.places = places;
     list.getCellList().render(places);
   }

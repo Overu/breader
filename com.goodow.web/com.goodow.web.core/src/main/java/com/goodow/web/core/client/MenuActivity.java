@@ -1,6 +1,6 @@
 package com.goodow.web.core.client;
 
-import com.goodow.web.core.shared.MyPlace;
+import com.goodow.web.core.shared.WebPlace;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
@@ -24,13 +24,13 @@ public class MenuActivity extends MGWTAbstractActivity {
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
     placelist.setLeftButtonText("Home");
     placelist.setTitle("菜单");
-    final List<MyPlace> places = createAnimations();
+    final List<WebPlace> places = createAnimations();
     placelist.setPlaces(places);
     panel.setWidget(placelist);
   }
 
-  private List<MyPlace> createAnimations() {
-    ArrayList<MyPlace> list = new ArrayList<MyPlace>();
+  private List<WebPlace> createAnimations() {
+    ArrayList<WebPlace> list = new ArrayList<WebPlace>();
     return list;
   }
 

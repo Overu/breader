@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class MyPlace extends Place {
+public class WebPlace extends Place {
 
   @Inject
   private PlaceController placeController;
@@ -31,9 +31,9 @@ public class MyPlace extends Place {
 
   private String title;
 
-  private MyPlace parent;
+  private WebPlace parent;
 
-  private List<MyPlace> children;
+  private List<WebPlace> children;
 
   private boolean paramitized;
 
@@ -49,11 +49,11 @@ public class MyPlace extends Place {
 
   private AsyncProvider<? extends IsWidget> asyncWidgetProvider;
 
-  private static final Logger logger = Logger.getLogger(MyPlace.class.getName());
+  private static final Logger logger = Logger.getLogger(WebPlace.class.getName());
 
-  public void addChild(final MyPlace place) {
+  public void addChild(final WebPlace place) {
     if (children == null) {
-      children = new ArrayList<MyPlace>();
+      children = new ArrayList<WebPlace>();
     }
     children.add(place);
     place.parent = this;
@@ -64,16 +64,16 @@ public class MyPlace extends Place {
     if (other == this) {
       return true;
     }
-    if (other instanceof MyPlace) {
-      MyPlace that = (MyPlace) other;
+    if (other instanceof WebPlace) {
+      WebPlace that = (WebPlace) other;
       return this.path.equals(that.path);
     }
     return false;
   }
 
-  public MyPlace findChild(final String uri) {
+  public WebPlace findChild(final String uri) {
     String[] segments = uri.split("/");
-    MyPlace result = this;
+    WebPlace result = this;
     for (String path : segments) {
       if (path.length() == 0) {
         continue;
@@ -111,12 +111,12 @@ public class MyPlace extends Place {
     return buttonText;
   }
 
-  public MyPlace getChild(final int index) {
+  public WebPlace getChild(final int index) {
     return children.get(index);
   }
 
-  public MyPlace getChild(final String path) {
-    for (MyPlace p : children) {
+  public WebPlace getChild(final String path) {
+    for (WebPlace p : children) {
       if (path.equals(p.getPath())) {
         return p;
       }
@@ -124,7 +124,7 @@ public class MyPlace extends Place {
     return null;
   }
 
-  public List<MyPlace> getChildren() {
+  public List<WebPlace> getChildren() {
     return children;
   }
 
@@ -132,7 +132,7 @@ public class MyPlace extends Place {
     return parameter;
   }
 
-  public MyPlace getParent() {
+  public WebPlace getParent() {
     return parent;
   }
 
@@ -266,7 +266,7 @@ public class MyPlace extends Place {
         callback.onSuccess(panel);
       }
     } else if (children != null && !children.isEmpty()) {
-      final MyPlace firstChild = children.get(0);
+      final WebPlace firstChild = children.get(0);
       showInfo(panel, "Loading " + firstChild.getUri());
       Scheduler.get().scheduleDeferred(new ScheduledCommand() {
         @Override

@@ -1,6 +1,6 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.shared.MyPlace;
+import com.goodow.web.core.shared.WebPlace;
 import com.goodow.web.reader.client.style.ReadResources;
 
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -28,7 +28,7 @@ import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarButton;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
 @Singleton
-public class BookStoreView extends Composite implements AcceptsOneWidget, PlaceChangeEvent.Handler {
+public class BookStore extends Composite implements AcceptsOneWidget, PlaceChangeEvent.Handler {
 
   @Inject
   protected PlaceController placeController;
@@ -47,7 +47,7 @@ public class BookStoreView extends Composite implements AcceptsOneWidget, PlaceC
   private final ReaderPlugin plugin;
 
   @Inject
-  public BookStoreView(final EventBus eventBus, final ReaderPlugin plugin) {
+  public BookStore(final EventBus eventBus, final ReaderPlugin plugin) {
     this.plugin = plugin;
     main = new LayoutPanel();
 
@@ -88,12 +88,12 @@ public class BookStoreView extends Composite implements AcceptsOneWidget, PlaceC
       @Override
       public void onSelection(final SelectionEvent<Integer> event) {
         int index = event.getSelectedItem();
-        MyPlace newPlace = plugin.bookstorePlace.getChild(index);
+        WebPlace newPlace = plugin.bookstorePlace.getChild(index);
         placeController.goTo(newPlace);
       }
     });
 
-    for (MyPlace place : plugin.bookstorePlace.getChildren()) {
+    for (WebPlace place : plugin.bookstorePlace.getChildren()) {
       TabBarButton button = new TabBarButton(place.getButtonImage());
       button.setText(place.getButtonText());
       tabBar.add(button);
@@ -116,7 +116,7 @@ public class BookStoreView extends Composite implements AcceptsOneWidget, PlaceC
   }
 
   public void refresh() {
-    MyPlace currentPlace = (MyPlace) placeController.getWhere();
+    WebPlace currentPlace = (WebPlace) placeController.getWhere();
     int index = plugin.bookstorePlace.getChildren().indexOf(currentPlace);
     tabBar.setSelectedButton(index, true);
     title.setText(currentPlace.getTitle());
