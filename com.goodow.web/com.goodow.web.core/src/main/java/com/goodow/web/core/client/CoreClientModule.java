@@ -46,16 +46,21 @@ public class CoreClientModule extends AbstractGinModule {
 
   @Singleton
   public static class Render {
-
-    private final EventBus eventBus;
-
-    private final MGWTPlaceHistoryHandler historyHandler;
-    private final WebAnimationMapper animationMapper;
-    private final WebActivityMapper activityMapper;
+    @Inject
+    @HomePlace
+    WebPlace homePlace;
 
     @Inject
-    public Render(final MGWTPlaceHistoryHandler historyHandler, final EventBus eventBus,
-        final WebAnimationMapper animationMapper, final WebActivityMapper activityMapper) {
+    EventBus eventBus;
+    @Inject
+    MGWTPlaceHistoryHandler historyHandler;
+    @Inject
+    WebAnimationMapper animationMapper;
+    @Inject
+    WebActivityMapper activityMapper;
+
+    @Inject
+    public Render() {
       // SimplePanel panel = new SimplePanel();
       // RootPanel.get().add(panel);
       //
@@ -64,11 +69,6 @@ public class CoreClientModule extends AbstractGinModule {
       // activityManager.setDisplay(panel);
       //
       // historyHandler.handleCurrentHistory();
-
-      this.historyHandler = historyHandler;
-      this.eventBus = eventBus;
-      this.animationMapper = animationMapper;
-      this.activityMapper = activityMapper;
       new Timer() {
         @Override
         public void run() {
