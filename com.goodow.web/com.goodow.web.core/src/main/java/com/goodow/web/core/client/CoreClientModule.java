@@ -10,9 +10,12 @@ import com.goodow.web.core.shared.WebPlace;
 import com.goodow.web.core.shared.WebPlatform;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.place.shared.PlaceChangeEvent;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.user.client.Timer;
@@ -45,7 +48,7 @@ public class CoreClientModule extends AbstractGinModule {
   }
 
   @Singleton
-  public static class Render {
+  public static class Render implements PlaceChangeEvent.Handler {
     @Inject
     @HomePlace
     WebPlace homePlace;
@@ -60,21 +63,28 @@ public class CoreClientModule extends AbstractGinModule {
     WebActivityMapper activityMapper;
 
     @Inject
+    PlaceController placeController;
+
+    SimplePanel main;
+
+    @Inject
     public Render() {
-      // SimplePanel panel = new SimplePanel();
-      // RootPanel.get().add(panel);
-      //
-      // ActivityMapper activityMapper = new PageActivityMapper();
-      // ActivityManager activityManager = new ActivityManager(activityMapper, eventBus);
-      // activityManager.setDisplay(panel);
-      //
-      // historyHandler.handleCurrentHistory();
       new Timer() {
         @Override
         public void run() {
           start();
         }
       }.schedule(1);
+    }
+
+    @Override
+    public void onPlaceChange(final PlaceChangeEvent event) {
+      WebPlace place = (WebPlace) event.getNewPlace();
+      if (place.getWelcomePlace() != null) {
+        gotoPlace(place.getWelcomePlace());
+      } else {
+        place.render(main);
+      }
     }
 
     private void createDisplay() {
@@ -86,6 +96,16 @@ public class CoreClientModule extends AbstractGinModule {
       mainActivityManager.setDisplay(display);
       main.setWidget(display);
       RootPanel.get().add(main);
+    }
+
+    private void gotoPlace(final WebPlace place) {
+      logger.info("Loading " + place.getUri());
+      Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+        @Override
+        public void execute() {
+          placeController.goTo(place);
+        }
+      });
     }
 
     private void start() {
@@ -106,7 +126,11 @@ public class CoreClientModule extends AbstractGinModule {
       // very nasty workaround because GWT does not correctly support @media
       StyleInjector.inject(AppBundle.INSTANCE.css().getText());
 
-      createDisplay();
+      main = new SimplePanel();
+      main.getElement().setId("main");
+      RootPanel.get().add(main);
+
+      eventBus.addHandler(PlaceChangeEvent.TYPE, this);
 
       historyHandler.handleCurrentHistory();
     }

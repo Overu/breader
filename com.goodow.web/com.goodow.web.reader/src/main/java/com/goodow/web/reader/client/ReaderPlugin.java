@@ -60,7 +60,7 @@ public class ReaderPlugin {
     MGWTClientBundle bundle = MGWTStyle.getTheme().getMGWTClientBundle();
 
     homePlace.setAnimation(Animation.FADE);
-    homePlace.addChild(bookshelfPlace);
+    homePlace.setWelcomePlace(bookshelfPlace);
     homePlace.addChild(bookstorePlace);
 
     bookshelfPlace.setPath("bookshelf");

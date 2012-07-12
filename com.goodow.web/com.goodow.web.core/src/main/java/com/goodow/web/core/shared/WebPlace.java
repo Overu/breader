@@ -1,7 +1,5 @@
 package com.goodow.web.core.shared;
 
-import com.google.gwt.core.client.Scheduler;
-import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceController;
@@ -61,18 +59,6 @@ public class WebPlace extends Place {
     place.parent = this;
   }
 
-  @Override
-  public boolean equals(final Object other) {
-    if (other == this) {
-      return true;
-    }
-    if (other instanceof WebPlace) {
-      WebPlace that = (WebPlace) other;
-      return this.path.equals(that.path);
-    }
-    return false;
-  }
-
   public WebPlace findChild(final String uri) {
     String[] segments = uri.split("/");
     WebPlace result = this;
@@ -96,9 +82,6 @@ public class WebPlace extends Place {
     return animation;
   }
 
-  /**
-   * @return the buttonImage
-   */
   public ImageResource getButtonImage() {
     if (buttonImage == null) {
       buttonImage = MGWTStyle.getTheme().getMGWTClientBundle().tabBarFavoritesImage();
@@ -106,9 +89,6 @@ public class WebPlace extends Place {
     return buttonImage;
   }
 
-  /**
-   * @return the buttonText
-   */
   public String getButtonText() {
     return buttonText;
   }
@@ -163,11 +143,7 @@ public class WebPlace extends Place {
   }
 
   public void render(final AcceptsOneWidget panel) {
-    if (welcomePlace != null) {
-      gotoPlace(welcomePlace, panel);
-    } else {
-      render(panel, null);
-    }
+    render(panel, null);
   }
 
   public void setAnimation(final Animation animation) {
@@ -230,16 +206,10 @@ public class WebPlace extends Place {
 
   private void append(final AcceptsOneWidget panel, final AsyncCallback<AcceptsOneWidget> callback) {
     if (widget != null) {
-      panel.setWidget(widget);
-      if (callback != null) {
-        callback.onSuccess((AcceptsOneWidget) widget);
-      }
+      showWidget(panel, callback);
     } else if (widgetProvider != null) {
-      IsWidget w = widgetProvider.get();
-      panel.setWidget(w);
-      if (callback != null) {
-        callback.onSuccess((AcceptsOneWidget) w);
-      }
+      widget = widgetProvider.get();
+      showWidget(panel, callback);
     } else if (asyncWidgetProvider != null) {
       asyncWidgetProvider.get(new AsyncCallback<IsWidget>() {
         @Override
@@ -256,32 +226,16 @@ public class WebPlace extends Place {
 
         @Override
         public void onSuccess(final IsWidget result) {
-          panel.setWidget(result);
-          if (callback != null) {
-            callback.onSuccess((AcceptsOneWidget) result);
-          }
+          widget = result;
+          showWidget(panel, callback);
         }
+
       });
-    } else if (placeController.getWhere() != this) {
-      if (callback != null) {
-        callback.onSuccess(panel);
-      }
-    } else if (!children.isEmpty()) {
-      gotoPlace(getChild(0), panel);
+    } else if (callback != null) {
+      callback.onSuccess(panel);
     } else {
       showError(panel, "No widget is bound to " + this);
     }
-  }
-
-  private void gotoPlace(final WebPlace place, final AcceptsOneWidget panel) {
-    final WebPlace firstChild = children.get(0);
-    showInfo(panel, "Loading " + firstChild.getUri());
-    Scheduler.get().scheduleDeferred(new ScheduledCommand() {
-      @Override
-      public void execute() {
-        placeController.goTo(place);
-      }
-    });
   }
 
   private void render(final AcceptsOneWidget panel, final AsyncCallback<AcceptsOneWidget> callback) {
@@ -311,6 +265,14 @@ public class WebPlace extends Place {
   private void showInfo(final AcceptsOneWidget panel, final String message) {
     Label label = new Label(message);
     panel.setWidget(label);
+  }
+
+  private void showWidget(final AcceptsOneWidget panel,
+      final AsyncCallback<AcceptsOneWidget> callback) {
+    panel.setWidget(widget);
+    if (callback != null) {
+      callback.onSuccess((AcceptsOneWidget) widget);
+    }
   }
 
 }
