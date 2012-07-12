@@ -1,0 +1,42 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+  <ui:style field="fbCss" type="com.goodow.web.reader.client.ReadFixedHeadPanel.FixedHeadCss">
+    .root {
+      -webkit-box-pack: center;
+      -webkit-box-align: center;
+      height: 41px;
+      display: -webkit-box;
+      background-color: rgb(222, 223, 224);
+    }
+    
+    .root>div {
+      padding: 5px 20px 5px 20px;
+      border-color: gray;
+      border-style: solid;
+      border-width: 1px 1px 1px 0;
+    }
+    
+    .root>*:first-child {
+      -webkit-border-top-left-radius: 5px;
+      -webkit-border-bottom-left-radius: 5px;
+      border: 1px solid gray !important;
+    }
+    
+    .root>*:last-child {
+      -webkit-border-top-right-radius: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      border-color: gray;
+      border-style: solid;
+      border-width: 1px 1px 1px 0;
+    }
+    
+    .selected {
+      color: white;
+      background-color: rgb(65, 133, 196);
+    }
+  </ui:style>
+
+  <g:HTMLPanel ui:field="root" addStyleNames="{fbCss.root}">
+  </g:HTMLPanel>
+</ui:UiBinder>
