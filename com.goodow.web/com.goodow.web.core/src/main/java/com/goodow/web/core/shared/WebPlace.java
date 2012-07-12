@@ -37,6 +37,8 @@ public class WebPlace extends Place {
 
   private boolean paramitized;
 
+  private WebPlace welcomePlace;
+
   public String parameter;
 
   private IsWidget widget;
@@ -152,29 +154,19 @@ public class WebPlace extends Place {
     }
   }
 
+  public WebPlace getWelcomePlace() {
+    return welcomePlace;
+  }
+
   public boolean isParamitized() {
     return paramitized;
   }
 
   public void render(final AcceptsOneWidget panel) {
-    render(panel, null);
-  }
-
-  public void render(final AcceptsOneWidget panel, final AsyncCallback<AcceptsOneWidget> callback) {
-    if (parent != null) {
-      parent.render(panel, new AsyncCallback<AcceptsOneWidget>() {
-        @Override
-        public void onFailure(final Throwable caught) {
-          caught.printStackTrace();
-        }
-
-        @Override
-        public void onSuccess(final AcceptsOneWidget result) {
-          append(result, callback);
-        }
-      });
+    if (welcomePlace != null) {
+      gotoPlace(welcomePlace, panel);
     } else {
-      append(panel, callback);
+      render(panel, null);
     }
   }
 
@@ -210,6 +202,11 @@ public class WebPlace extends Place {
 
   public void setTitle(final String title) {
     this.title = title;
+  }
+
+  public void setWelcomePlace(final WebPlace place) {
+    this.welcomePlace = place;
+    addChild(place);
   }
 
   public void setWidget(final AsyncProvider<? extends IsWidget> asyncWidgetProvider) {
@@ -265,17 +262,39 @@ public class WebPlace extends Place {
       if (callback != null) {
         callback.onSuccess(panel);
       }
-    } else if (children != null && !children.isEmpty()) {
-      final WebPlace firstChild = children.get(0);
-      showInfo(panel, "Loading " + firstChild.getUri());
-      Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+    } else if (!children.isEmpty()) {
+      gotoPlace(getChild(0), panel);
+    } else {
+      showError(panel, "No widget is bound to " + this);
+    }
+  }
+
+  private void gotoPlace(final WebPlace place, final AcceptsOneWidget panel) {
+    final WebPlace firstChild = children.get(0);
+    showInfo(panel, "Loading " + firstChild.getUri());
+    Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+      @Override
+      public void execute() {
+        placeController.goTo(place);
+      }
+    });
+  }
+
+  private void render(final AcceptsOneWidget panel, final AsyncCallback<AcceptsOneWidget> callback) {
+    if (parent != null) {
+      parent.render(panel, new AsyncCallback<AcceptsOneWidget>() {
         @Override
-        public void execute() {
-          placeController.goTo(firstChild);
+        public void onFailure(final Throwable caught) {
+          caught.printStackTrace();
+        }
+
+        @Override
+        public void onSuccess(final AcceptsOneWidget result) {
+          append(result, callback);
         }
       });
     } else {
-      showError(panel, "No widget is bound to " + this);
+      append(panel, callback);
     }
   }
 
