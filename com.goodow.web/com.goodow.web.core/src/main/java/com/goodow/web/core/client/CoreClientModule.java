@@ -77,14 +77,14 @@ public class CoreClientModule extends AbstractGinModule {
       }.schedule(1);
     }
 
-    private void createTabletDisplay() {
+    private void createDisplay() {
       SimplePanel main = new SimplePanel();
       main.getElement().setId("main");
-      AnimatableDisplay mainDisplay = GWT.create(AnimatableDisplay.class);
+      AnimatableDisplay display = GWT.create(AnimatableDisplay.class);
       AnimatingActivityManager mainActivityManager =
           new AnimatingActivityManager(activityMapper, animationMapper, eventBus);
-      mainActivityManager.setDisplay(mainDisplay);
-      main.setWidget(mainDisplay);
+      mainActivityManager.setDisplay(display);
+      main.setWidget(display);
       RootPanel.get().add(main);
     }
 
@@ -106,7 +106,7 @@ public class CoreClientModule extends AbstractGinModule {
       // very nasty workaround because GWT does not correctly support @media
       StyleInjector.inject(AppBundle.INSTANCE.css().getText());
 
-      createTabletDisplay();
+      createDisplay();
 
       historyHandler.handleCurrentHistory();
     }

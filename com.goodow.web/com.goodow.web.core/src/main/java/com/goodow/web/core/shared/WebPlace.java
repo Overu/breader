@@ -244,7 +244,11 @@ public class WebPlace extends Place {
       asyncWidgetProvider.get(new AsyncCallback<IsWidget>() {
         @Override
         public void onFailure(final Throwable caught) {
-          showError(panel, "Failed to load " + this);
+          String msg =
+              "Network connection cloud be lost. Failed to load widget for " + this
+                  + " asynchronously.\r\n" + caught.getMessage();
+          logger.severe(msg);
+          showError(panel, msg);
           if (callback != null) {
             callback.onFailure(caught);
           }
@@ -285,7 +289,8 @@ public class WebPlace extends Place {
       parent.render(panel, new AsyncCallback<AcceptsOneWidget>() {
         @Override
         public void onFailure(final Throwable caught) {
-          caught.printStackTrace();
+          logger.info("Failured to load parent widget. Show " + this + " directly.");
+          append(panel, callback);
         }
 
         @Override
