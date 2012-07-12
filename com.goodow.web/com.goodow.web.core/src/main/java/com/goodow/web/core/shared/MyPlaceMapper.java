@@ -2,24 +2,25 @@ package com.goodow.web.core.shared;
 
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceHistoryMapper;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
 public class MyPlaceMapper implements PlaceHistoryMapper {
 
   @HomePlace
-  MyPlace homePlace;
+  @Inject
+  WebPlace homePlace;
 
   @Override
   public Place getPlace(final String token) {
-    MyPlace place = homePlace.getChild(token);
-    // TODO null?
+    WebPlace place = homePlace.findChild(token);
     return place;
   }
 
   @Override
   public String getToken(final Place place) {
-    MyPlace p = (MyPlace) place;
+    WebPlace p = (WebPlace) place;
     return p.getUri();
   }
 
