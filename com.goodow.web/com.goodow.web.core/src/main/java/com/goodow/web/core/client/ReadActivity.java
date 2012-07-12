@@ -1,6 +1,6 @@
 package com.goodow.web.core.client;
 
-import com.goodow.web.core.shared.MyPlace;
+import com.goodow.web.core.shared.WebPlace;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.PlaceController;
@@ -21,7 +21,7 @@ public class ReadActivity extends MGWTAbstractActivity {
 
   @Override
   public void start(final AcceptsOneWidget panel, final EventBus eventBus) {
-    MyPlace place = (MyPlace) placeController.getWhere();
+    WebPlace place = (WebPlace) placeController.getWhere();
     readView.getHeader().setText(place.getTitle());
     panel.setWidget(readView);
   }

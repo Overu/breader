@@ -24,9 +24,9 @@ import com.googlecode.gwtphonegap.collection.shared.LightArray;
 import java.util.LinkedList;
 import java.util.logging.Logger;
 
-public class BookShelfView extends BookListView implements Presenter {
+public class BookShelf extends ThumbnailView implements Presenter {
 
-  private static final Logger logger = Logger.getLogger(BookShelfView.class.getName());
+  private static final Logger logger = Logger.getLogger(BookShelf.class.getName());
 
   private LightArray<EntryBase> currentEntries;
 
@@ -39,7 +39,7 @@ public class BookShelfView extends BookListView implements Presenter {
   private final PhoneGap phoneGap;
 
   @Inject
-  public BookShelfView(final PhoneGap phoneGap, final FileDisplay display) {
+  public BookShelf(final PhoneGap phoneGap, final FileDisplay display) {
     logger.info("init BookShelfView");
 
     this.phoneGap = phoneGap;

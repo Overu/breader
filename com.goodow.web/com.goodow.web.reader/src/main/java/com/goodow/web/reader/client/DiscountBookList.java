@@ -7,12 +7,10 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import com.googlecode.mgwt.ui.client.MGWTStyle;
 import com.googlecode.mgwt.ui.client.util.CssUtil;
 import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollAnimationMoveEvent;
 import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollMoveEvent;
@@ -85,16 +83,6 @@ public class DiscountBookList extends AbstractBookList {
       result.add(book);
     }
     return result;
-  }
-
-  @Override
-  protected ImageResource getButtonImage() {
-    return MGWTStyle.getTheme().getMGWTClientBundle().tabBarHistoryImage();
-  }
-
-  @Override
-  protected String getButtonText() {
-    return "特价";
   }
 
   @Override

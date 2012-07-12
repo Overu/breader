@@ -1,6 +1,6 @@
 package com.goodow.web.core.client;
 
-import com.goodow.web.core.shared.MyPlace;
+import com.goodow.web.core.shared.WebPlace;
 
 import com.google.gwt.place.shared.Place;
 
@@ -11,7 +11,7 @@ public class MyAnimationMapper implements AnimationMapper {
 
   @Override
   public Animation getAnimation(final Place oldPlace, final Place newPlace) {
-    MyPlace place = (MyPlace) newPlace;
+    WebPlace place = (WebPlace) newPlace;
     return place.getAnimation();
   }
 

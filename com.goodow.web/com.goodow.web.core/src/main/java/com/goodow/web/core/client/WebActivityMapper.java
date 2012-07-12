@@ -6,13 +6,10 @@ import com.google.gwt.place.shared.Place;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-public class TabletMainActivityMapper implements ActivityMapper {
+public class WebActivityMapper implements ActivityMapper {
 
   @Inject
-  private Provider<MyActivity> activity;
-
-  @Inject
-  private UIRegistry registry;
+  private Provider<WebActivity> activity;
 
   @Override
   public Activity getActivity(final Place place) {

@@ -2,11 +2,8 @@ package com.goodow.web.reader.client;
 
 import com.goodow.web.reader.shared.Book;
 
-import com.google.gwt.resources.client.ImageResource;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
-
-import com.googlecode.mgwt.ui.client.MGWTStyle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +13,6 @@ public class CategorizedBookList extends AbstractBookList {
   @Inject
   public CategorizedBookList(final Provider<BookSummary> bookSummaryProvider) {
     super(bookSummaryProvider);
-    setTitle("分类浏览");
   }
 
   @Override
@@ -30,16 +26,6 @@ public class CategorizedBookList extends AbstractBookList {
       result.add(book);
     }
     return result;
-  }
-
-  @Override
-  protected ImageResource getButtonImage() {
-    return MGWTStyle.getTheme().getMGWTClientBundle().tabBarBookMarkImage();
-  }
-
-  @Override
-  protected String getButtonText() {
-    return "分类";
   }
 
 }

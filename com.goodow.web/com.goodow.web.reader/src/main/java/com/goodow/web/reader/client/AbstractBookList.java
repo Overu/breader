@@ -2,7 +2,6 @@ package com.goodow.web.reader.client;
 
 import com.goodow.web.reader.shared.Book;
 
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -15,6 +14,7 @@ import java.util.List;
 public abstract class AbstractBookList extends ScrollPanel {
 
   TouchPanel container;
+
   HTMLPanel bookList;
 
   @Inject
@@ -35,7 +35,4 @@ public abstract class AbstractBookList extends ScrollPanel {
 
   protected abstract List<Book> createBooks();
 
-  protected abstract ImageResource getButtonImage();
-
-  protected abstract String getButtonText();
 }

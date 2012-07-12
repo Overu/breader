@@ -4,7 +4,7 @@ import com.goodow.web.core.client.css.AppBundle;
 import com.goodow.web.core.shared.CorePackage;
 import com.goodow.web.core.shared.HomePlace;
 import com.goodow.web.core.shared.Message;
-import com.goodow.web.core.shared.MyPlace;
+import com.goodow.web.core.shared.WebPlace;
 import com.goodow.web.core.shared.MyPlaceMapper;
 import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.WebPlatform;
@@ -51,12 +51,12 @@ public class CoreClientModule extends AbstractGinModule {
 
     private final MGWTPlaceHistoryHandler historyHandler;
     private final MyAnimationMapper animationMapper;
-    private final TabletMainActivityMapper activityMapper;
+    private final WebActivityMapper activityMapper;
 
     @Inject
     public Render(final MGWTPlaceHistoryHandler historyHandler, final EventBus eventBus,
         final MyAnimationMapper navAnimationMapper,
-        final TabletMainActivityMapper tabletMainActivityMapper) {
+        final WebActivityMapper tabletMainActivityMapper) {
       // SimplePanel panel = new SimplePanel();
       // RootPanel.get().add(panel);
       //
@@ -145,7 +145,7 @@ public class CoreClientModule extends AbstractGinModule {
   @Singleton
   MGWTPlaceHistoryHandler placeHistoryHandlerProvider(final PlaceHistoryMapper historyMapper,
       final PlaceController placeController, final EventBus eventBus,
-      final AppHistoryObserver historyObserver, @HomePlace final MyPlace homePlace) {
+      final AppHistoryObserver historyObserver, @HomePlace final WebPlace homePlace) {
     MGWTPlaceHistoryHandler placeHistoryHandler =
         new MGWTPlaceHistoryHandler(historyMapper, historyObserver);
     placeHistoryHandler.register(placeController, eventBus, homePlace);

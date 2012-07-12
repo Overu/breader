@@ -1,7 +1,7 @@
 package com.goodow.web.core.client;
 
 import com.goodow.wave.bootstrap.shared.MapBinder;
-import com.goodow.web.core.shared.MyPlace;
+import com.goodow.web.core.shared.WebPlace;
 
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.place.shared.PlaceController;
@@ -35,7 +35,7 @@ public class UIRegistry extends MapBinder<String, IsWidget> {
 
             MyView view = new MyView();
 
-            MyPlace place = (MyPlace) placeController.getWhere();
+            WebPlace place = (WebPlace) placeController.getWhere();
 
             view.setTitle(place.getTitle());
             panel.setWidget(view);
