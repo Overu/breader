@@ -63,7 +63,7 @@ public class WebPlace extends Place {
 
   private WebPlace parent;
 
-  private List<WebPlace> children;
+  private List<WebPlace> children = new ArrayList<WebPlace>();
 
   private boolean paramitized;
 
@@ -92,9 +92,6 @@ public class WebPlace extends Place {
   private WebPlace startedChild;
 
   public void addChild(final WebPlace place) {
-    if (children == null) {
-      children = new ArrayList<WebPlace>();
-    }
     children.add(place);
     place.parent = this;
   }
@@ -323,22 +320,22 @@ public class WebPlace extends Place {
   private void showWidget(final AcceptsOneWidget panel,
       final AsyncCallback<AcceptsOneWidget> callback) {
     panel.setWidget(widget);
-    if (parent != null) {
-      parent.setStartedChild(this);
-    }
 
     if (widget instanceof AcceptsOneWidget) {
       if (protectedDisplay == null) {
-        AcceptsOneWidget container = (AcceptsOneWidget) widget;
         display = GWT.create(AnimatableDisplay.class);
         protectedDisplay = new ProtectedDisplay();
-        container.setWidget(display);
         widget.asWidget().getElement().setId("widget-" + getUri());
         display.asWidget().getElement().setId("display-" + getUri());
       }
-      if (callback != null) {
-        callback.onSuccess(protectedDisplay);
-      }
+      AcceptsOneWidget container = (AcceptsOneWidget) widget;
+      container.setWidget(display);
+    }
+    if (parent != null) {
+      parent.setStartedChild(this);
+    }
+    if (callback != null && protectedDisplay != null) {
+      callback.onSuccess(protectedDisplay);
     }
   }
 }

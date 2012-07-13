@@ -132,4 +132,5 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
     w.asWidget().addStyleName(
         MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss().fillPanelExpandChild());
   }
+
 }

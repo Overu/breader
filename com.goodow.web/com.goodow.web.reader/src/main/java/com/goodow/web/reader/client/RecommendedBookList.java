@@ -18,9 +18,10 @@ public class RecommendedBookList extends AbstractBookList {
     super(bookSummaryProvider);
     bookList.removeFromParent();
     Carousel carsousel = new Carousel();
-    carsousel.add(new Image("http://img.soufun.com/news/2012_07/11/news/1341969513496_000.jpg"));
-    carsousel.add(new Image(
-        "http://img03.taobaocdn.com/bao/uploaded/i3/T1405_XkRoXXcKWqU._081321.jpg_250x250.jpg"));
+    carsousel.add(new Image("http://www.retechcorp.com/images/temp/wancai.jpg"));
+    carsousel.add(new Image("http://www.retechcorp.com/images/temp/zx.jpg"));
+    carsousel.add(new Image("http://www.retechcorp.com/images/temp/szcb.jpg"));
+    carsousel.add(new Image("http://www.retechcorp.com/images/temp/el.jpg"));
     container.add(carsousel);
     container.add(bookList);
   }

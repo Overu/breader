@@ -25,6 +25,9 @@ public class ReaderPlugin {
   Provider<RecommendedBookList> recommended;
 
   @Inject
+  Provider<FavoriteBooks> favorites;
+
+  @Inject
   Provider<DiscountBookList> discounted;
 
   @Inject
@@ -45,6 +48,9 @@ public class ReaderPlugin {
 
   @Inject
   WebPlace recommendedPlace;
+
+  @Inject
+  WebPlace favoritesPlace;
 
   @Inject
   WebPlace discountedPlace;
@@ -71,6 +77,7 @@ public class ReaderPlugin {
     bookstorePlace.setAnimation(Animation.SLIDE);
     bookstorePlace.setWidget(bookstore);
     bookstorePlace.setWelcomePlace(recommendedPlace);
+    bookstorePlace.addChild(favoritesPlace);
     bookstorePlace.addChild(discountedPlace);
     bookstorePlace.addChild(mostViewedPlace);
     bookstorePlace.addChild(categorizedPlace);
@@ -80,7 +87,14 @@ public class ReaderPlugin {
     recommendedPlace.setWidget(recommended);
     recommendedPlace.setTitle("精品推荐");
     recommendedPlace.setButtonText("推荐");
-    recommendedPlace.setButtonImage(bundle.tabBarFavoritesImage());
+    recommendedPlace.setButtonImage(bundle.tabBarFeaturedImage());
+
+    favoritesPlace.setPath("favorites");
+    favoritesPlace.setAnimation(Animation.SLIDE);
+    favoritesPlace.setWidget(favorites);
+    favoritesPlace.setTitle("我的收藏");
+    favoritesPlace.setButtonText("收藏");
+    favoritesPlace.setButtonImage(bundle.tabBarFavoritesImage());
 
     discountedPlace.setPath("discounted");
     discountedPlace.setAnimation(Animation.SLIDE);
