@@ -17,17 +17,26 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 
+import com.googlecode.mgwt.ui.client.theme.base.ListCss;
+
 import java.util.logging.Logger;
 
 public class ReadResources {
 
   public interface Bundle extends ClientBundle {
 
+    @Source("list.css")
+    CategoryListCss categroyListCss();
+
     @Source("style.css")
     Style css();
 
     @Source("readHeader.css")
     ReadHeader readHeadCss();
+  }
+
+  public interface CategoryListCss extends ListCss {
+    String categorContainer();
   }
 
   public interface ReadHeader extends CssResource {

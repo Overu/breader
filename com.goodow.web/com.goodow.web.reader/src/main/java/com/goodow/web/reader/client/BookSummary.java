@@ -20,29 +20,39 @@ import com.google.inject.Inject;
 
 public class BookSummary extends Composite {
 
-  interface Binder extends UiBinder<Widget, BookSummary> {
-  }
-
   @Shared
-  interface BookSummaryStyle extends CssResource {
+  public interface BookSummaryStyle extends CssResource {
     String root();
 
+    String root1();
+
   }
 
-  interface Bundle extends ClientBundle {
+  public interface Bundle extends ClientBundle {
+
+    @Source("bookSummary.landscape.css")
+    BookSummaryStyle landscape();
+
     @Source("bookSummary.portrait.css")
     BookSummaryStyle protrait();
   }
 
+  interface Binder extends UiBinder<Widget, BookSummary> {
+  }
+
   private static Binder uiBinder = GWT.create(Binder.class);
-  private static Bundle INSTANCE;
+  public static Bundle INSTANCE;
 
   static {
     INSTANCE = GWT.create(Bundle.class);
+    INSTANCE.landscape().ensureInjected();
     String portraitCss =
         "@media only screen and (orientation:portrait) {" + INSTANCE.protrait().getText() + "}";
     StyleInjector.injectAtEnd(portraitCss);
   }
+
+  @UiField
+  HTMLPanel root;
 
   @UiField(provided = true)
   Image bookImage;
@@ -94,6 +104,10 @@ public class BookSummary extends Composite {
     discountedPrice.getStyle().setDisplay(Display.NONE);
     originalPrice.setInnerHTML("免费");
     originalPrice.getStyle().setColor("#FF8500");
+  }
+
+  public void setLandscape(final String cssString) {
+    root.addStyleName(cssString);
   }
 
   public void setOriginalPrice(final String price) {

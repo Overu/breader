@@ -25,12 +25,17 @@ public abstract class AbstractBookList extends ScrollPanel {
     bookList = new HTMLPanel("");
     for (Book book : createBooks()) {
       BookSummary view = bookSummaryProvider.get();
+      view.setLandscape(setBookSummaryLandscapeCss());
       view.setBook(book);
       bookList.add(view);
     }
 
     container.add(bookList);
     setWidget(container);
+  }
+
+  public String setBookSummaryLandscapeCss() {
+    return BookSummary.INSTANCE.landscape().root();
   }
 
   protected abstract List<Book> createBooks();

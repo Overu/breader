@@ -27,8 +27,6 @@ import com.google.inject.Singleton;
 import com.google.web.bindery.event.shared.EventBus;
 
 import com.googlecode.gwtphonegap.client.PhoneGap;
-import com.googlecode.mgwt.mvp.client.AnimatableDisplay;
-import com.googlecode.mgwt.mvp.client.AnimatingActivityManager;
 import com.googlecode.mgwt.mvp.client.history.MGWTPlaceHistoryHandler;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.MGWTSettings;
@@ -55,15 +53,12 @@ public class CoreClientModule extends AbstractGinModule {
 
     @Inject
     EventBus eventBus;
-    @Inject
-    MGWTPlaceHistoryHandler historyHandler;
-    @Inject
-    WebAnimationMapper animationMapper;
-    @Inject
-    WebActivityMapper activityMapper;
 
     @Inject
     PlaceController placeController;
+
+    @Inject
+    MGWTPlaceHistoryHandler historyHandler;
 
     SimplePanel main;
 
@@ -85,17 +80,6 @@ public class CoreClientModule extends AbstractGinModule {
       } else {
         place.render(main);
       }
-    }
-
-    private void createDisplay() {
-      main = new SimplePanel();
-      main.getElement().setId("main");
-      AnimatableDisplay display = GWT.create(AnimatableDisplay.class);
-      AnimatingActivityManager mainActivityManager =
-          new AnimatingActivityManager(activityMapper, animationMapper, eventBus);
-      mainActivityManager.setDisplay(display);
-      main.setWidget(display);
-      RootPanel.get().add(main);
     }
 
     private void gotoPlace(final WebPlace place) {
