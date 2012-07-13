@@ -120,8 +120,10 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
   public void refresh() {
     WebPlace currentPlace = (WebPlace) placeController.getWhere();
     int index = plugin.bookstorePlace.getChildren().indexOf(currentPlace);
-    tabBar.setSelectedButton(index, true);
-    title.setText(currentPlace.getTitle());
+    if (index >= 0) {
+      tabBar.setSelectedButton(index, true);
+      title.setText(currentPlace.getTitle());
+    }
   }
 
   @Override
