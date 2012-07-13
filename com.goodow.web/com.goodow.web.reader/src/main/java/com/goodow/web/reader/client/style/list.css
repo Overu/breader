@@ -1,6 +1,7 @@
 .categorContainer {
-  -webkit-box-flex: 1;
   display: -webkit-box;
+  width: 100%;
+  height: 100%;
 }
 
 .categorContainer>div:first-child {
@@ -60,11 +61,11 @@
 }
 
 .mgwt-List-selected {
-  border-top-color: transparent; 
-  border-right-color: rgb( 0, 132, 255); 
-  border-bottom-color:transparent; 
+  border-top-color: transparent;
+  border-right-color: rgb(0, 132, 255);
+  border-bottom-color: transparent;
   border-width: 1px 5px 1px 0 !important;
-  border-style: outset solid outset none!important;
+  border-style: outset solid outset none !important;
   color: rgb(255, 102, 0);
 }
 
