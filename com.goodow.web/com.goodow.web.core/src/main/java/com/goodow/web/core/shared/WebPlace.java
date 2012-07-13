@@ -1,18 +1,21 @@
 package com.goodow.web.core.shared;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.place.shared.Place;
-import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
-import com.google.inject.Inject;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Provider;
 
+import com.googlecode.mgwt.mvp.client.AnimatableDisplay;
 import com.googlecode.mgwt.mvp.client.Animation;
 import com.googlecode.mgwt.ui.client.MGWTStyle;
+import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +23,37 @@ import java.util.logging.Logger;
 
 public class WebPlace extends Place {
 
-  @Inject
-  private PlaceController placeController;
+  private class ProtectedDisplay implements AcceptsOneWidget {
+
+    public ProtectedDisplay() {
+    }
+
+    @Override
+    public void setWidget(IsWidget widget) {
+      if (getStartedChild() != null && getStartedChild().getWidget() == widget) {
+        return;
+      }
+
+      Widget w = widget.asWidget();
+      if (w instanceof ScrollPanel) {
+        w.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
+            .fillPanelExpandChild());
+        SimplePanel fillPanel = new SimplePanel();
+        fillPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
+            .fillPanel());
+        fillPanel.setWidget(w);
+        widget = fillPanel;
+      }
+
+      currentIsFirst = !currentIsFirst;
+      if (currentIsFirst) {
+        display.setFirstWidget(widget);
+      } else {
+        display.setSecondWidget(widget);
+      }
+      display.animate(animation, currentIsFirst, null);
+    }
+  }
 
   private String path;
 
@@ -50,6 +82,14 @@ public class WebPlace extends Place {
   private AsyncProvider<? extends IsWidget> asyncWidgetProvider;
 
   private static final Logger logger = Logger.getLogger(WebPlace.class.getName());
+
+  private AnimatableDisplay display;
+
+  private ProtectedDisplay protectedDisplay;
+
+  private boolean currentIsFirst = false;
+
+  private WebPlace startedChild;
 
   public void addChild(final WebPlace place) {
     if (children == null) {
@@ -122,6 +162,13 @@ public class WebPlace extends Place {
     return path;
   }
 
+  /**
+   * @return the startedChild
+   */
+  public WebPlace getStartedChild() {
+    return startedChild;
+  }
+
   public String getTitle() {
     return title;
   }
@@ -136,6 +183,10 @@ public class WebPlace extends Place {
 
   public WebPlace getWelcomePlace() {
     return welcomePlace;
+  }
+
+  public IsWidget getWidget() {
+    return widget;
   }
 
   public boolean isParamitized() {
@@ -176,6 +227,13 @@ public class WebPlace extends Place {
     this.path = path;
   }
 
+  /**
+   * @param startedChild the startedChild to set
+   */
+  public void setStartedChild(final WebPlace startedChild) {
+    this.startedChild = startedChild;
+  }
+
   public void setTitle(final String title) {
     this.title = title;
   }
@@ -205,6 +263,11 @@ public class WebPlace extends Place {
   }
 
   private void append(final AcceptsOneWidget panel, final AsyncCallback<AcceptsOneWidget> callback) {
+    if (widget == null && widgetProvider == null && asyncWidgetProvider == null) {
+      widget = new SimplePanel();
+      widget.asWidget().addStyleName(
+          MGWTStyle.getTheme().getMGWTClientBundle().getTabBarCss().tabPanelContainer());
+    }
     if (widget != null) {
       showWidget(panel, callback);
     } else if (widgetProvider != null) {
@@ -229,12 +292,7 @@ public class WebPlace extends Place {
           widget = result;
           showWidget(panel, callback);
         }
-
       });
-    } else if (callback != null) {
-      callback.onSuccess(panel);
-    } else {
-      showError(panel, "No widget is bound to " + this);
     }
   }
 
@@ -262,17 +320,25 @@ public class WebPlace extends Place {
     panel.setWidget(label);
   }
 
-  private void showInfo(final AcceptsOneWidget panel, final String message) {
-    Label label = new Label(message);
-    panel.setWidget(label);
-  }
-
   private void showWidget(final AcceptsOneWidget panel,
       final AsyncCallback<AcceptsOneWidget> callback) {
     panel.setWidget(widget);
-    if (callback != null) {
-      callback.onSuccess((AcceptsOneWidget) widget);
+    if (parent != null) {
+      parent.setStartedChild(this);
+    }
+
+    if (widget instanceof AcceptsOneWidget) {
+      if (protectedDisplay == null) {
+        AcceptsOneWidget container = (AcceptsOneWidget) widget;
+        display = GWT.create(AnimatableDisplay.class);
+        protectedDisplay = new ProtectedDisplay();
+        container.setWidget(display);
+        widget.asWidget().getElement().setId("widget-" + getUri());
+        display.asWidget().getElement().setId("display-" + getUri());
+      }
+      if (callback != null) {
+        callback.onSuccess(protectedDisplay);
+      }
     }
   }
-
 }

@@ -6,7 +6,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
-public class MyPlaceMapper implements PlaceHistoryMapper {
+public class WebPlaceMapper implements PlaceHistoryMapper {
 
   @HomePlace
   @Inject

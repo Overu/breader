@@ -3,6 +3,7 @@ package com.goodow.web.reader.client;
 import com.goodow.web.core.shared.WebPlace;
 import com.goodow.web.reader.client.style.ReadResources;
 
+import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.place.shared.PlaceChangeEvent;
@@ -82,6 +83,7 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
 
     tabContainer = new SimplePanel();
     tabContainer.addStyleName(css.tabPanelContainer());
+    tabContainer.getElement().getStyle().setPosition(Position.RELATIVE);
 
     tabBar = new TabPanel.TabBar(css);
     tabBar.addSelectionHandler(new SelectionHandler<Integer>() {

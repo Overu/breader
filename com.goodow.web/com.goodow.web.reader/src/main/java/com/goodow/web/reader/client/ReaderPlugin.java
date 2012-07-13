@@ -59,16 +59,16 @@ public class ReaderPlugin {
 
     MGWTClientBundle bundle = MGWTStyle.getTheme().getMGWTClientBundle();
 
-    homePlace.setAnimation(Animation.FADE);
+    homePlace.setAnimation(Animation.FLIP);
     homePlace.setWelcomePlace(bookshelfPlace);
     homePlace.addChild(bookstorePlace);
 
     bookshelfPlace.setPath("bookshelf");
-    bookshelfPlace.setAnimation(Animation.FLIP);
+    bookshelfPlace.setAnimation(Animation.SLIDE);
     bookshelfPlace.setWidget(bookshelf);
 
     bookstorePlace.setPath("bookstore");
-    bookstorePlace.setAnimation(Animation.FLIP);
+    bookstorePlace.setAnimation(Animation.SLIDE);
     bookstorePlace.setWidget(bookstore);
     bookstorePlace.setWelcomePlace(recommendedPlace);
     bookstorePlace.addChild(discountedPlace);

@@ -4,9 +4,9 @@ import com.goodow.web.core.client.css.AppBundle;
 import com.goodow.web.core.shared.CorePackage;
 import com.goodow.web.core.shared.HomePlace;
 import com.goodow.web.core.shared.Message;
-import com.goodow.web.core.shared.MyPlaceMapper;
 import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.WebPlace;
+import com.goodow.web.core.shared.WebPlaceMapper;
 import com.goodow.web.core.shared.WebPlatform;
 
 import com.google.gwt.core.client.GWT;
@@ -88,7 +88,7 @@ public class CoreClientModule extends AbstractGinModule {
     }
 
     private void createDisplay() {
-      SimplePanel main = new SimplePanel();
+      main = new SimplePanel();
       main.getElement().setId("main");
       AnimatableDisplay display = GWT.create(AnimatableDisplay.class);
       AnimatingActivityManager mainActivityManager =
@@ -143,7 +143,7 @@ public class CoreClientModule extends AbstractGinModule {
     logger.finest("configure");
     requestStaticInjection(WebPlatform.class);
     bind(Message.class).to(ClientMessage.class);
-    bind(PlaceHistoryMapper.class).to(MyPlaceMapper.class).in(Singleton.class);
+    bind(PlaceHistoryMapper.class).to(WebPlaceMapper.class).in(Singleton.class);
     bind(Binder.class).asEagerSingleton();
     bind(Render.class).asEagerSingleton();
   }
