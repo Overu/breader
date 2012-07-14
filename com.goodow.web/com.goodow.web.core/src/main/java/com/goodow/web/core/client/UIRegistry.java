@@ -1,7 +1,6 @@
 package com.goodow.web.core.client;
 
 import com.goodow.wave.bootstrap.shared.MapBinder;
-import com.goodow.web.core.shared.WebPlace;
 
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.place.shared.PlaceController;
@@ -32,14 +31,6 @@ public class UIRegistry extends MapBinder<String, IsWidget> {
           public void onFailure(final Throwable caught) {
             String msg = "Failed to load view by id=" + widgetId;
             logger.info(msg);
-
-            MyView view = new MyView();
-
-            WebPlace place = (WebPlace) placeController.getWhere();
-
-            view.setTitle(place.getTitle());
-            panel.setWidget(view);
-
           }
 
           @Override

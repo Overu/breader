@@ -3,7 +3,6 @@ package com.goodow.web.reader.client;
 import com.goodow.web.core.shared.HomePlace;
 import com.goodow.web.core.shared.WebPlace;
 
-import com.google.gwt.inject.client.AsyncProvider;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -16,10 +15,10 @@ import com.googlecode.mgwt.ui.client.theme.MGWTClientBundle;
 public class ReaderPlugin {
 
   @Inject
-  AsyncProvider<BookShelf> bookshelf;
+  Provider<BookShelf> bookshelf;
 
   @Inject
-  AsyncProvider<BookStore> bookstore;
+  Provider<BookStore> bookstore;
 
   @Inject
   Provider<RecommendedBookList> recommended;
@@ -35,6 +34,9 @@ public class ReaderPlugin {
 
   @Inject
   Provider<CategorizedBookList> categorized;
+
+  @Inject
+  Provider<AppLayout> appLayout;
 
   @HomePlace
   @Inject
@@ -61,6 +63,18 @@ public class ReaderPlugin {
   @Inject
   WebPlace categorizedPlace;
 
+  @Inject
+  WebPlace appPlace;
+
+  @Inject
+  WebPlace booksPlace;
+
+  @Inject
+  WebPlace magazinesPlace;
+
+  @Inject
+  WebPlace newspapersPlace;
+
   public void start() {
 
     MGWTClientBundle bundle = MGWTStyle.getTheme().getMGWTClientBundle();
@@ -68,6 +82,7 @@ public class ReaderPlugin {
     homePlace.setAnimation(Animation.FLIP);
     homePlace.setWelcomePlace(bookshelfPlace);
     homePlace.addChild(bookstorePlace);
+    homePlace.addChild(appPlace);
 
     bookshelfPlace.setPath("bookshelf");
     bookshelfPlace.setAnimation(Animation.SLIDE);
@@ -116,5 +131,25 @@ public class ReaderPlugin {
     categorizedPlace.setTitle("分类浏览");
     categorizedPlace.setButtonText("分类");
     categorizedPlace.setButtonImage(bundle.tabBarBookMarkImage());
+
+    appPlace.setPath("app");
+    appPlace.setAnimation(Animation.SLIDE);
+    appPlace.setTitle("应用控制台");
+    appPlace.setWidget(appLayout);
+    appPlace.addChild(booksPlace);
+    appPlace.addChild(magazinesPlace);
+    appPlace.addChild(newspapersPlace);
+
+    booksPlace.setPath("books");
+    booksPlace.setAnimation(Animation.SLIDE);
+    booksPlace.setTitle("图书");
+
+    magazinesPlace.setPath("magazines");
+    magazinesPlace.setAnimation(Animation.SLIDE);
+    magazinesPlace.setTitle("杂志");
+
+    newspapersPlace.setPath("newspapers");
+    newspapersPlace.setAnimation(Animation.SLIDE);
+    newspapersPlace.setTitle("报刊");
   }
 }

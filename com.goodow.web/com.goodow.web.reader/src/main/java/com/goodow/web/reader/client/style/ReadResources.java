@@ -53,6 +53,7 @@ public class ReadResources {
     logger.finest("static init start");
     INSTANCE = GWT.create(Bundle.class);
     INSTANCE.css().ensureInjected();
+    INSTANCE.categroyListCss().ensureInjected();
     INSTANCE.readHeadCss().ensureInjected();
     logger.finest("static init end");
   }
