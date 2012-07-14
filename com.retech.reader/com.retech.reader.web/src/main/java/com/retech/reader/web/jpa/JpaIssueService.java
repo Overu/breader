@@ -130,9 +130,18 @@ public class JpaIssueService extends JpaBaseService<Issue> implements IssueServi
     return l;
   }
 
+  @Transactional
+  @Override
+  public void remove(final Issue domain) {
+    for (Section section : domain.getSections()) {
+      em.get().remove(section);
+    }
+    super.remove(domain);
+  }
+
   @Override
   @Transactional
-  public void save(final Issue domain) {
+  public Issue save(final Issue domain) {
     domain.setUpdateTime(new Date());
     if (domain.getId() == null) {
 
@@ -141,15 +150,7 @@ public class JpaIssueService extends JpaBaseService<Issue> implements IssueServi
 
       super.save(domain);
     }
-  }
-
-  @Transactional
-  @Override
-  public void remove(final Issue domain) {
-    for (Section section : domain.getSections()) {
-      em.get().remove(section);
-    }
-    super.remove(domain);
+    return domain;
   }
 
 }

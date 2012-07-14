@@ -23,7 +23,7 @@ public class TreeService extends JpaBaseService<TreeNode> {
   }
 
   @Override
-  public void save(final TreeNode domain) {
-    super.save(domain);
+  public TreeNode save(final TreeNode domain) {
+    return super.save(domain);
   }
 }

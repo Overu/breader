@@ -36,7 +36,4 @@ public interface IssueService extends BaseService<Issue> {
 
   List<String> getAllResourceDataString(final long id);
 
-  void save(final Issue domain);
-
-  void remove(final Issue domain);
 }

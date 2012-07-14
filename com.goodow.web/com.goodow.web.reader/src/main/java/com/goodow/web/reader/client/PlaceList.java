@@ -11,12 +11,11 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.googlecode.mgwt.ui.client.widget.CellList;
 import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.HeaderPanel;
-import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
-import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
+import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedHandler;
 
 public class PlaceList extends WebView implements PlaceChangeEvent.Handler {
 
-  private LayoutPanel main;
   private HeaderPanel headerPanel;
   private HeaderButton headerBackButton;
   private CellList<WebPlace> cellListWithHeader;
@@ -25,12 +24,19 @@ public class PlaceList extends WebView implements PlaceChangeEvent.Handler {
   EventBus eventBus;
 
   @Inject
+  ReaderPlugin reader;
+
+  @Inject
   PlaceController placeController;
 
-  public PlaceList() {
-    main = new LayoutPanel();
+  @Override
+  public void onPlaceChange(final PlaceChangeEvent event) {
+    // WebPlace place = (WebPlace) event.getNewPlace();
+    setInput(reader.booksPlace);
+  }
 
-    main.getElement().setId("testdiv");
+  @Override
+  protected void start() {
 
     headerPanel = new HeaderPanel();
     main.add(headerPanel);
@@ -39,8 +45,6 @@ public class PlaceList extends WebView implements PlaceChangeEvent.Handler {
     headerBackButton.setBackButton(true);
     headerBackButton.setText("返回");
     headerPanel.setLeftWidget(headerBackButton);
-
-    ScrollPanel scrollPanel = new ScrollPanel();
 
     cellListWithHeader = new CellList<WebPlace>(new BasicCell<WebPlace>() {
       @Override
@@ -53,30 +57,25 @@ public class PlaceList extends WebView implements PlaceChangeEvent.Handler {
         return place.getTitle();
       }
     });
+    cellListWithHeader.addCellSelectedHandler(new CellSelectedHandler() {
+      @Override
+      public void onCellSelected(final CellSelectedEvent event) {
+        WebPlace place = reader.booksPlace.getChild(event.getIndex());
+        placeController.goTo(place);
+      }
+    });
     cellListWithHeader.setRound(true);
-    scrollPanel.setWidget(cellListWithHeader);
-    scrollPanel.setScrollingEnabledX(false);
 
-    main.add(scrollPanel);
-    initWidget(main);
-  }
-
-  @Override
-  public void onPlaceChange(final PlaceChangeEvent event) {
-    WebPlace place = (WebPlace) event.getNewPlace();
-    setInput(place);
-  }
-
-  @Override
-  protected void start() {
+    main.add(cellListWithHeader);
     eventBus.addHandler(PlaceChangeEvent.TYPE, this);
-    WebPlace place = (WebPlace) placeController.getWhere();
-    setInput(place);
+
+    setInput(reader.booksPlace);
   }
 
   private void setInput(final WebPlace place) {
+
     cellListWithHeader.render(place.getChildren());
-    if (place.getParent() == null) {
+    if (place.getParent() == reader.booksPlace) {
       headerBackButton.setVisible(false);
     } else {
       headerBackButton.setVisible(true);

@@ -13,6 +13,7 @@ import com.google.web.bindery.autobean.vm.impl.TypeUtils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
@@ -81,12 +82,14 @@ public class JpaWebService<E extends WebEntity> implements WebService<E> {
 
   @Override
   @Transactional
-  public void save(final E domain) {
-    if (domain.getId() == null) {
-      em.get().persist(domain);
+  public E save(final E entity) {
+    if (entity.getId() == null) {
+      entity.setId(UUID.randomUUID().toString());
+      em.get().persist(entity);
     } else {
-      em.get().merge(domain);
+      em.get().merge(entity);
     }
+    return entity;
   }
 
   protected EntityManager em() {

@@ -36,7 +36,10 @@ public class ReaderPlugin {
   Provider<CategorizedBookList> categorized;
 
   @Inject
-  Provider<AppLayout> appLayout;
+  Provider<BooksApp> booksApp;
+
+  @Inject
+  Provider<BookForm> bookForm;
 
   @HomePlace
   @Inject
@@ -64,16 +67,22 @@ public class ReaderPlugin {
   WebPlace categorizedPlace;
 
   @Inject
-  WebPlace appPlace;
-
-  @Inject
   WebPlace booksPlace;
 
   @Inject
-  WebPlace magazinesPlace;
+  WebPlace createBookPlace;
 
   @Inject
-  WebPlace newspapersPlace;
+  WebPlace myBooksPlace;
+
+  @Inject
+  WebPlace othersBookPlace;
+
+  @Inject
+  WebPlace selectedBooksPlace;
+
+  @Inject
+  WebPlace bookcategoryPlace;
 
   public void start() {
 
@@ -82,7 +91,7 @@ public class ReaderPlugin {
     homePlace.setAnimation(Animation.FLIP);
     homePlace.setWelcomePlace(bookshelfPlace);
     homePlace.addChild(bookstorePlace);
-    homePlace.addChild(appPlace);
+    homePlace.addChild(booksPlace);
 
     bookshelfPlace.setPath("bookshelf");
     bookshelfPlace.setAnimation(Animation.SLIDE);
@@ -132,24 +141,35 @@ public class ReaderPlugin {
     categorizedPlace.setButtonText("分类");
     categorizedPlace.setButtonImage(bundle.tabBarBookMarkImage());
 
-    appPlace.setPath("app");
-    appPlace.setAnimation(Animation.SLIDE);
-    appPlace.setTitle("应用控制台");
-    appPlace.setWidget(appLayout);
-    appPlace.addChild(booksPlace);
-    appPlace.addChild(magazinesPlace);
-    appPlace.addChild(newspapersPlace);
-
     booksPlace.setPath("books");
     booksPlace.setAnimation(Animation.SLIDE);
-    booksPlace.setTitle("图书");
+    booksPlace.setTitle("应用控制台");
+    booksPlace.setWidget(booksApp);
+    booksPlace.addChild(createBookPlace);
+    booksPlace.addChild(myBooksPlace);
+    booksPlace.addChild(othersBookPlace);
+    booksPlace.addChild(selectedBooksPlace);
+    booksPlace.addChild(bookcategoryPlace);
 
-    magazinesPlace.setPath("magazines");
-    magazinesPlace.setAnimation(Animation.SLIDE);
-    magazinesPlace.setTitle("杂志");
+    createBookPlace.setPath("create");
+    createBookPlace.setAnimation(Animation.SLIDE);
+    createBookPlace.setTitle("制作新书");
+    createBookPlace.setWidget(bookForm);
 
-    newspapersPlace.setPath("newspapers");
-    newspapersPlace.setAnimation(Animation.SLIDE);
-    newspapersPlace.setTitle("报刊");
+    myBooksPlace.setPath("my");
+    myBooksPlace.setAnimation(Animation.SLIDE);
+    myBooksPlace.setTitle("我的图书");
+
+    othersBookPlace.setPath("others");
+    othersBookPlace.setAnimation(Animation.SLIDE);
+    othersBookPlace.setTitle("其他图书");
+
+    selectedBooksPlace.setPath("selected");
+    selectedBooksPlace.setAnimation(Animation.SLIDE);
+    selectedBooksPlace.setTitle("精品图书");
+
+    bookcategoryPlace.setPath("category");
+    bookcategoryPlace.setAnimation(Animation.SLIDE);
+    bookcategoryPlace.setTitle("图书分类");
   }
 }

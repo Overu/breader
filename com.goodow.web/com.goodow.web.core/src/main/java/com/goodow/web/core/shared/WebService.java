@@ -8,7 +8,7 @@ public interface WebService<E extends WebEntity> {
 
   <T> T invoke(final Wrapper<Operation> operation, final Object... args);
 
-  void save(final E entity);
-
   void remove(final E entity);
+
+  E save(final E entity);
 }
