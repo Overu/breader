@@ -5,11 +5,11 @@
 }
 
 .root:nth-child\(4n\+2\) {
-  background: white!important;
+  background: rgb(254, 254, 254)!important;
 }
 
 .root:nth-child\(4n\+1\) {
-  background: white!important;
+  background: rgb(254, 254, 254)!important;
 }
 
 .root:nth-child\(6n\+1\) {
@@ -30,7 +30,7 @@
 }
 
 .root1:nth-child\(2n\+1\) {
-  background: white;
+  background: rgb(254, 254, 254);
 }
 
 .root1:nth-child\(2n\+2\) {

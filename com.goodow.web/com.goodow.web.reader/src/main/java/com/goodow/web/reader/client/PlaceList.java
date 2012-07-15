@@ -5,6 +5,8 @@ import com.goodow.web.core.shared.WebPlace;
 
 import com.google.gwt.place.shared.PlaceChangeEvent;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 
@@ -23,6 +25,9 @@ public class PlaceList extends WebView implements PlaceChangeEvent.Handler {
   private CellList<WebPlace> cellListWithHeader;
 
   @Inject
+  FlowPanel container;
+
+  @Inject
   EventBus eventBus;
 
   @Inject
@@ -30,6 +35,10 @@ public class PlaceList extends WebView implements PlaceChangeEvent.Handler {
 
   @Inject
   PlaceController placeController;
+
+  public void addRightWidget(final Widget widget) {
+    container.add(widget);
+  }
 
   @Override
   public void onPlaceChange(final PlaceChangeEvent event) {
@@ -75,7 +84,10 @@ public class PlaceList extends WebView implements PlaceChangeEvent.Handler {
     });
     cellListWithHeader.setRound(true);
 
-    main.add(cellListWithHeader);
+    // container = new HTMLPanel("");
+    container.insert(cellListWithHeader, 0);
+
+    main.add(container);
     eventBus.addHandler(PlaceChangeEvent.TYPE, this);
 
     setInput(reader.booksPlace);
