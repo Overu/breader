@@ -71,6 +71,13 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
     leftButton = new HeaderButton();
     leftButton.setRoundButton(true);
     leftButton.setText("设置");
+    leftButton.addTapHandler(new TapHandler() {
+
+      @Override
+      public void onTap(final TapEvent event) {
+        placeController.goTo(plugin.booksPlace);
+      }
+    });
 
     headerPanel.setLeftWidget(leftButton);
     headerPanel.setRightWidget(rightButton);

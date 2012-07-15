@@ -262,8 +262,6 @@ public class WebPlace extends Place {
   private void append(final AcceptsOneWidget panel, final AsyncCallback<AcceptsOneWidget> callback) {
     if (widget == null && widgetProvider == null && asyncWidgetProvider == null) {
       widget = new SimplePanel();
-      widget.asWidget().addStyleName(
-          MGWTStyle.getTheme().getMGWTClientBundle().getTabBarCss().tabPanelContainer());
     }
     if (widget != null) {
       showWidget(panel, callback);

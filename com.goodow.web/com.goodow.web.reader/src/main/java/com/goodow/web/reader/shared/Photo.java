@@ -13,11 +13,22 @@
  */
 package com.goodow.web.reader.shared;
 
+import com.goodow.web.core.shared.Media;
 import com.goodow.web.core.shared.WebEntity;
 
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType
-public class Media extends WebEntity {
+public class Photo extends WebEntity {
+
+  private Media media;
+
+  public Media getMedia() {
+    return media;
+  }
+
+  public void setMedia(final Media media) {
+    this.media = media;
+  }
 
 }

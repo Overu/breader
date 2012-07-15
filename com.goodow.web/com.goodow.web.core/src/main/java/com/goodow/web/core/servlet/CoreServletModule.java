@@ -37,6 +37,8 @@ public class CoreServletModule extends ServletModule {
 
     serveRegex("/\\w+/" + WebServiceServlet.END_POINT).with(WebServiceServlet.class);
 
+    serveRegex("/\\w+/" + MediaUploadServlet.END_POINT).with(MediaUploadServlet.class);
+
     requestStaticInjection(DatabaseConnectionProvider.class);
     filter("/*").through(DatabaseConnectionFilter.class);
 

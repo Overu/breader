@@ -1,7 +1,5 @@
 package com.goodow.web.core.client;
 
-import java.util.logging.Logger;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -9,6 +7,8 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RichTextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+
+import java.util.logging.Logger;
 
 public class RichTextEditor extends Composite {
 
@@ -22,12 +22,13 @@ public class RichTextEditor extends Composite {
   @UiField
   RichTextArea textArea;
 
-  private final UIRegistry registry;
-
   @Inject
-  public RichTextEditor(UIRegistry registry) {
-    this.registry = registry;
+  public RichTextEditor() {
     Widget widget = uiBinder.createAndBindUi(this);
     initWidget(widget);
+  }
+
+  public String getHTML() {
+    return textArea.getHTML();
   }
 }

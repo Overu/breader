@@ -84,6 +84,9 @@ public class ReaderPlugin {
   @Inject
   WebPlace bookcategoryPlace;
 
+  @Inject
+  WebPlace newBookPlace;
+
   public void start() {
 
     MGWTClientBundle bundle = MGWTStyle.getTheme().getMGWTClientBundle();
@@ -92,6 +95,7 @@ public class ReaderPlugin {
     homePlace.setWelcomePlace(bookshelfPlace);
     homePlace.addChild(bookstorePlace);
     homePlace.addChild(booksPlace);
+    homePlace.addChild(newBookPlace);
 
     bookshelfPlace.setPath("bookshelf");
     bookshelfPlace.setAnimation(Animation.SLIDE);
@@ -171,5 +175,10 @@ public class ReaderPlugin {
     bookcategoryPlace.setPath("category");
     bookcategoryPlace.setAnimation(Animation.SLIDE);
     bookcategoryPlace.setTitle("图书分类");
+
+    newBookPlace.setPath("new");
+    newBookPlace.setAnimation(Animation.SLIDE);
+    newBookPlace.setTitle("制作新书");
+    newBookPlace.setWidget(bookForm);
   }
 }

@@ -8,6 +8,8 @@ import com.google.gwt.place.shared.PlaceController;
 import com.google.inject.Inject;
 import com.google.web.bindery.event.shared.EventBus;
 
+import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.ui.client.widget.CellList;
 import com.googlecode.mgwt.ui.client.widget.HeaderButton;
 import com.googlecode.mgwt.ui.client.widget.HeaderPanel;
@@ -45,6 +47,13 @@ public class PlaceList extends WebView implements PlaceChangeEvent.Handler {
     headerBackButton.setBackButton(true);
     headerBackButton.setText("返回");
     headerPanel.setLeftWidget(headerBackButton);
+    headerBackButton.addTapHandler(new TapHandler() {
+
+      @Override
+      public void onTap(final TapEvent event) {
+        placeController.goTo(reader.bookstorePlace);
+      }
+    });
 
     cellListWithHeader = new CellList<WebPlace>(new BasicCell<WebPlace>() {
       @Override

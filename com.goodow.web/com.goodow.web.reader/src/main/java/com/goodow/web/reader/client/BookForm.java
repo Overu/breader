@@ -1,45 +1,31 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.client.RichTextEditor;
-import com.goodow.web.core.client.WebView;
+import com.goodow.web.core.client.MediaField;
+import com.goodow.web.core.client.RichTextField;
+import com.goodow.web.core.client.TextField;
 
-import com.google.gwt.user.client.ui.FileUpload;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
 import com.google.inject.Inject;
 
-public class BookForm extends WebView {
+public class BookForm extends FormView {
 
   @Inject
-  Label fileLabel;
+  MediaField mediaField;
 
   @Inject
-  FileUpload fileUpload;
+  TextField titleField;
 
   @Inject
-  Label titleLabel;
-
-  @Inject
-  TextBox titleBox;
-
-  @Inject
-  Label summaryLabel;
-
-  @Inject
-  RichTextEditor summaryEditor;
+  RichTextField summaryField;
 
   @Override
   protected void start() {
-    fileLabel.setText("图书内容 （支持EPUB, PDF, TXT, HTML）");
-    titleLabel.setText("书名");
-    summaryLabel.setText("简介");
+    mediaField.setLabel("图书内容 （支持EPUB, PDF, TXT, HTML）");
+    titleField.setLabel("书名");
+    summaryField.setLabel("简介");
 
-    main.add(fileLabel);
-    main.add(fileUpload);
-    main.add(titleLabel);
-    main.add(titleBox);
-    main.add(summaryLabel);
-    main.add(summaryEditor);
+    main.add(mediaField);
+    main.add(titleField);
+    main.add(summaryField);
   }
 
 }

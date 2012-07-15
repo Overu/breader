@@ -1,7 +1,6 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.core.client.WebView;
-import com.goodow.web.reader.client.style.ReadResources;
 
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -12,7 +11,6 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 
 import com.googlecode.mgwt.ui.client.MGWTStyle;
-import com.googlecode.mgwt.ui.client.theme.base.TabBarCss;
 import com.googlecode.mgwt.ui.client.widget.HeaderPanel;
 
 public class BooksApp extends WebView implements AcceptsOneWidget {
@@ -43,12 +41,12 @@ public class BooksApp extends WebView implements AcceptsOneWidget {
   @Override
   protected void start() {
     bannerPanel.add(new Label("睿泰数字发行平台"));
-    String styleName = ReadResources.INSTANCE().categroyListCss().categorContainer();
-    middlePanel.addStyleName(styleName);
+    // String styleName = ReadResources.INSTANCE().categroyListCss().categorContainer();
+    // middlePanel.addStyleName(styleName);
 
     middlePanel.add(placeList);
-    TabBarCss css = MGWTStyle.getTheme().getMGWTClientBundle().getTabBarCss();
-    container.addStyleName(css.tabPanelContainer());
+    container.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
+        .fillPanelExpandChild());
     container.getElement().getStyle().setPosition(Position.RELATIVE);
 
     middlePanel.add(centerPanel);

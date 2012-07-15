@@ -33,9 +33,9 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
 
   private transient Accessor accessor;
 
-  private Map<String, ObjectReader> readers = new HashMap<String, ObjectReader>();
+  private transient Map<String, ObjectReader> readers = new HashMap<String, ObjectReader>();
 
-  private Map<String, ObjectWriter> writers = new HashMap<String, ObjectWriter>();
+  private transient Map<String, ObjectWriter> writers = new HashMap<String, ObjectWriter>();
 
   public void addOperation(final Operation operation) {
     operations.put(operation.getName(), operation);

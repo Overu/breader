@@ -108,6 +108,12 @@
       <groupId>com.google.gwt.inject</groupId>
       <artifactId>gin</artifactId>
     </dependency>
+    <!-- File Upload -->
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.2.2</version>
+    </dependency>
 
     <!-- Test -->
     <dependency>
