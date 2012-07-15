@@ -55,7 +55,7 @@ public class MediaField extends FormField<Media> {
     formPanel.addSubmitCompleteHandler(new SubmitCompleteHandler() {
       @Override
       public void onSubmitComplete(final SubmitCompleteEvent event) {
-        String responseText = event.getResults();
+        String responseText = event.getResults().replaceAll("<[^>]+>", "");
         logger.info(responseText);
         JSONValue json = JSONParser.parse(responseText);
         media = (Media) marshaller.parse(CorePackage.Media.as(), json, new ClientMessage());
