@@ -1,5 +1,6 @@
 package com.goodow.web.reader.client;
 
+import com.goodow.web.reader.client.style.ReadResources;
 import com.goodow.web.reader.shared.Book;
 
 import com.google.gwt.core.client.GWT;
@@ -78,10 +79,9 @@ public class BookSummary extends Composite {
 
   @Inject
   public BookSummary() {
-    bookImage = new Image();
+    bookImage = new Image(ReadResources.INSTANCE().cover());
     Widget widget = uiBinder.createAndBindUi(this);
     initWidget(widget);
-
   }
 
   public void refresh() {
