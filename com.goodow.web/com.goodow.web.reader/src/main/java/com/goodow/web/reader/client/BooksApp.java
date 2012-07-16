@@ -3,7 +3,6 @@ package com.goodow.web.reader.client;
 import com.goodow.web.core.client.WebView;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -39,9 +38,6 @@ public class BooksApp extends WebView implements AcceptsOneWidget {
   private FlowPanel bannerPanel;
 
   @Inject
-  private FlowPanel middlePanel;
-
-  @Inject
   private PlaceList leftPanel;
 
   // @Inject
@@ -61,15 +57,9 @@ public class BooksApp extends WebView implements AcceptsOneWidget {
   @Override
   protected void start() {
     bannerPanel.add(new Label("睿泰数字发行平台"));
-    // String styleName = ReadResources.INSTANCE().categroyListCss().categorContainer();
-    // middlePanel.addStyleName(styleName);
 
-    // middlePanel.add(leftPanel);
     centerPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
         .fillPanelExpandChild());
-    centerPanel.getElement().getStyle().setPosition(Position.RELATIVE);
-
-    // middlePanel.add(centerPanel);
 
     leftPanel.addRightWidget(centerPanel);
 
