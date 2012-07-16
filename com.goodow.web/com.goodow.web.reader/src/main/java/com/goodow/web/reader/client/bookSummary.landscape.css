@@ -2,8 +2,8 @@
 
 .root {
   float: left;
-  border-right: 2px outset rgb(239, 239, 239);
-  border-left: 2px outset white;
+  border-right: 1px outset rgb(239, 239, 239);
+  border-left: 1px outset white;
   height: 100px;
   width: 33.333333%;
   box-sizing: border-box;
