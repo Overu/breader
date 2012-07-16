@@ -17,6 +17,8 @@ public abstract class FormField<T> extends WebView {
     label.setText(text);
   }
 
+  public abstract void setValue(T value);
+
   @Override
   protected void start() {
     main.add(label);

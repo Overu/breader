@@ -101,7 +101,7 @@ public class BookListPanel extends Composite implements ProvideActivities {
     // searchButton.setText("搜索");
     // searchButton.setVisualElement(createIcon(res.search()));
     String portraitCss =
-        "@media only screen and (max-width: 900px) {" + bundle.portrait().getText() + "}";
+        "@resource only screen and (max-width: 900px) {" + bundle.portrait().getText() + "}";
     StyleInjector.injectAtEnd(portraitCss);
 
     // settingButton.addClickHandler(new ClickHandler() {

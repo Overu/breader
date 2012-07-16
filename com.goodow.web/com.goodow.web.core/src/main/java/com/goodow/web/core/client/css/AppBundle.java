@@ -7,7 +7,7 @@ import com.google.gwt.resources.client.TextResource;
 public interface AppBundle extends ClientBundle {
   public static final AppBundle INSTANCE = GWT.create(AppBundle.class);
 
-  // This is a very nasty workaround because GWT CssResource does not support @media correctly!
+  // This is a very nasty workaround because GWT CssResource does not support @resource correctly!
   @Source("app.css")
   TextResource css();
 

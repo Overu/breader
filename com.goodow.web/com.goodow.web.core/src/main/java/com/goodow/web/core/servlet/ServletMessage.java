@@ -14,7 +14,7 @@
 
 package com.goodow.web.core.servlet;
 
-import com.goodow.web.core.shared.Media;
+import com.goodow.web.core.shared.Resource;
 
 import com.google.appengine.api.log.InvalidRequestException;
 
@@ -27,7 +27,9 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Timestamp;
@@ -53,13 +55,58 @@ public class ServletMessage {
 
   private static final String FALSE = "false";
 
+  public static Resource createResource(final InputStream is, final String fileName,
+      final String contentType) throws IOException {
+    Resource media = new Resource();
+    UUID uuid = UUID.randomUUID();
+    media.setId(uuid.toString());
+    media.setFileName(fileName);
+    media.setContentType(contentType);
+    String filePath = "D:/DevData/resource/" + media.getId();
+    media.setPath(filePath);
+    InputStream in = null;
+    OutputStream out = null;
+    try {
+      File file = new File(filePath);
+      // // file.mkdirs();
+      file.getParentFile().mkdirs();
+      file.createNewFile();
+      in = new BufferedInputStream(is);
+      out = new FileOutputStream(filePath);
+      byte[] buffer = new byte[1024];
+      for (int bytesRead = in.read(buffer); bytesRead > 0; bytesRead = in.read(buffer)) {
+        out.write(buffer, 0, bytesRead);
+      }
+    } finally {
+      IOUtils.closeQuietly(in);
+      IOUtils.closeQuietly(out);
+    }
+    return media;
+  }
+
+  public static void writeResource(final Resource resource, final OutputStream out) throws IOException {
+    String filePath = "D:/DevData/resource/" + resource.getId();
+    InputStream in = null;
+    try {
+      File file = new File(filePath);
+      in = new BufferedInputStream(new FileInputStream(file));
+      byte[] buffer = new byte[1024];
+      for (int bytesRead = in.read(buffer); bytesRead > 0; bytesRead = in.read(buffer)) {
+        out.write(buffer, 0, bytesRead);
+      }
+    } finally {
+      IOUtils.closeQuietly(in);
+      IOUtils.closeQuietly(out);
+    }
+  }
+
   private HttpServletRequest servletRequest;
 
   private HttpServletResponse servletResponse;
 
   private Map<String, Object> stringParamValues;
 
-  private Map<String, Media> transactionalFiles;
+  private Map<String, Resource> transactionalFiles;
 
   private boolean multipartParamsParsed = false;
 
@@ -89,7 +136,7 @@ public class ServletMessage {
     this.servletRequest = request;
     this.servletResponse = response;
     stringParamValues = new HashMap<String, Object>(6);
-    transactionalFiles = new HashMap<String, Media>(2);
+    transactionalFiles = new HashMap<String, Resource>(2);
   }
 
   /**
@@ -141,9 +188,9 @@ public class ServletMessage {
   }
 
   /**
-   * Get parameter value as Media. Return null if not specified.
+   * Get parameter value as Resource. Return null if not specified.
    */
-  public Media getFile(final String paramName) {
+  public Resource getFile(final String paramName) {
     return transactionalFiles.get(paramName);
   }
 
@@ -303,34 +350,11 @@ public class ServletMessage {
     return date;
   }
 
-  public Media parseFile(final String paramName, final InputStream is,
-      final String fileName, final String contentType) throws Exception {
-    Media transactionalFile = new Media();
-    UUID uuid = UUID.randomUUID();
-    transactionalFile.setId(uuid.toString());
-    transactionalFile.setFileName(fileName);
-    transactionalFile.setContentType(contentType);
-    String filePath = "D:/DevData/media/" + transactionalFile.getId();
-    transactionalFile.setPath(filePath);
-    InputStream in = null;
-    OutputStream out = null;
-    try {
-      File file = new File(filePath);
-      // // file.mkdirs();
-      file.getParentFile().mkdirs();
-      file.createNewFile();
-      in = new BufferedInputStream(is);
-      out = new FileOutputStream(filePath);
-      byte[] buffer = new byte[1024];
-      for (int bytesRead = in.read(buffer); bytesRead > 0; bytesRead = in.read(buffer)) {
-        out.write(buffer, 0, bytesRead);
-      }
-    } finally {
-      IOUtils.closeQuietly(in);
-      IOUtils.closeQuietly(out);
-    }
-    setParameter(paramName, transactionalFile);
-    return transactionalFile;
+  public Resource parseFile(final String paramName, final InputStream is, final String fileName,
+      final String contentType) throws Exception {
+    Resource resource = createResource(is, fileName, contentType);
+    setParameter(paramName, resource);
+    return resource;
   }
 
   /**
@@ -409,19 +433,19 @@ public class ServletMessage {
   }
 
   /**
+   * Set parameter of given name to transactional file.
+   */
+  public void setParameter(final String name, final Resource file) {
+    transactionalFiles.put(name, file);
+  }
+
+  /**
    * Set parameter of given name to string value, if not null.
    */
   public void setParameter(final String name, final String value) {
     if (value != null) {
       stringParamValues.put(name, value);
     }
-  }
-
-  /**
-   * Set parameter of given name to transactional file.
-   */
-  public void setParameter(final String name, final Media file) {
-    transactionalFiles.put(name, file);
   }
 
 }

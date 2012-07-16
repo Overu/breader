@@ -14,6 +14,11 @@ public class TextField extends FormField<String> {
   }
 
   @Override
+  public void setValue(final String value) {
+    this.textBox.setText(value);
+  }
+
+  @Override
   protected void start() {
     super.start();
     main.add(textBox);

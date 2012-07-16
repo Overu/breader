@@ -16,6 +16,7 @@ package com.goodow.web.reader.client.style;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.ImageResource;
 
 import com.googlecode.mgwt.ui.client.theme.base.ListCss;
 
@@ -27,6 +28,8 @@ public class ReadResources {
 
     @Source("list.css")
     CategoryListCss categroyListCss();
+
+    ImageResource cover();
 
     @Source("style.css")
     Style css();

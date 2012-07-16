@@ -107,7 +107,7 @@ public class CoreClientModule extends AbstractGinModule {
 
       MGWT.applySettings(settings);
 
-      // very nasty workaround because GWT does not correctly support @media
+      // very nasty workaround because GWT does not correctly support @resource
       StyleInjector.inject(AppBundle.INSTANCE.css().getText());
 
       main = new SimplePanel();

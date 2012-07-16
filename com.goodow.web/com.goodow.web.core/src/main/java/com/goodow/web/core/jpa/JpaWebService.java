@@ -85,10 +85,8 @@ public class JpaWebService<E extends WebEntity> implements WebService<E> {
   public E save(final E entity) {
     if (entity.getId() == null) {
       entity.setId(UUID.randomUUID().toString());
-      em.get().persist(entity);
-    } else {
-      em.get().merge(entity);
     }
+    em.get().persist(entity);
     return entity;
   }
 

@@ -22,10 +22,11 @@
     
     .image {
       float: left;
-      width: 50px;
-      height: 80px;
+      width: 50px!important;
+      height: 80px!important;
       background-color: #cccccc;
       padding: 5px;
+      background-size: cover;
     }
     
     .right {

@@ -3,6 +3,7 @@ package com.goodow.web.core.jpa;
 import static com.google.inject.matcher.Matchers.annotatedWith;
 import static com.google.inject.matcher.Matchers.any;
 
+import com.goodow.web.core.shared.ResourceService;
 import com.goodow.web.core.shared.UserService;
 import com.goodow.web.core.shared.WebService;
 
@@ -23,7 +24,7 @@ public class CoreJpaModule extends JpaModule {
   protected void configure() {
 
     logger.finest("Install JpaServiceModule begin");
-
+    bind(ResourceService.class).to(JpaResourceService.class);
     bind(UserService.class).to(JpaUserService.class);
     bind(WebService.class).to(JpaWebService.class);
 

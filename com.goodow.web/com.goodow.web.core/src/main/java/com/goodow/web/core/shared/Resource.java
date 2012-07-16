@@ -6,8 +6,8 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlType
 @Entity
-@Table(name = "t_media")
-public class Media extends WebEntity {
+@Table(name = "t_resource")
+public class Resource extends WebEntity {
 
   private String path;
 
