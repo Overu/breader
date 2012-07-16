@@ -1,11 +1,14 @@
 package com.goodow.web.core.client;
 
 import com.goodow.web.core.shared.CorePackage;
-import com.goodow.web.core.shared.Media;
+import com.goodow.web.core.shared.Resource;
+import com.goodow.web.core.shared.ResourceUploadedEvent;
+import com.goodow.web.core.shared.ResourceUploadedHandler;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.ui.FileUpload;
@@ -16,9 +19,9 @@ import com.google.inject.Inject;
 
 import java.util.logging.Logger;
 
-public class MediaField extends FormField<Media> {
+public class ResourceField extends FormField<Resource> {
 
-  Logger logger = Logger.getLogger(MediaField.class.getName());
+  Logger logger = Logger.getLogger(ResourceField.class.getName());
 
   @Inject
   FileUpload fileUpload;
@@ -29,11 +32,21 @@ public class MediaField extends FormField<Media> {
   @Inject
   ClientJSONMarshaller marshaller;
 
-  Media media;
+  Resource resource;
+
+  /** {@inheritDoc} */
+  public HandlerRegistration addResourceUploadedHandler(final ResourceUploadedHandler handler) {
+    return addHandler(handler, ResourceUploadedEvent.TYPE);
+  }
 
   @Override
-  public Media getValue() {
-    return media;
+  public Resource getValue() {
+    return resource;
+  }
+
+  @Override
+  public void setValue(final Resource value) {
+    this.resource = value;
   }
 
   @Override
@@ -44,7 +57,7 @@ public class MediaField extends FormField<Media> {
     main.add(formPanel);
     formPanel.setMethod("POST");
     formPanel.setEncoding("multipart/form-data");
-    formPanel.setAction(GWT.getModuleBaseURL() + "upload");
+    formPanel.setAction(GWT.getModuleBaseURL() + "resources");
     fileUpload.addChangeHandler(new ChangeHandler() {
       @Override
       public void onChange(final ChangeEvent event) {
@@ -52,14 +65,23 @@ public class MediaField extends FormField<Media> {
         message.setText("Uploading...");
       }
     });
+
     formPanel.addSubmitCompleteHandler(new SubmitCompleteHandler() {
       @Override
       public void onSubmitComplete(final SubmitCompleteEvent event) {
-        String responseText = event.getResults().replaceAll("<[^>]+>", "");
+        String responseText = event.getResults();
+        int begin = responseText.indexOf(">");
+        int end = responseText.lastIndexOf("<");
+        responseText = responseText.substring(begin + 1, end);
         logger.info(responseText);
         JSONValue json = JSONParser.parse(responseText);
-        media = (Media) marshaller.parse(CorePackage.Media.as(), json, new ClientMessage());
+        Resource resource =
+            (Resource) marshaller.parse(CorePackage.Resource.as(), json, new ClientMessage());
+        setValue(resource);
+        message.setText("Uploaded");
+        fireEvent(new ResourceUploadedEvent(resource));
       }
     });
+
   }
 }

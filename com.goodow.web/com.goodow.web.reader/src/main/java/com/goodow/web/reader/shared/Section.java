@@ -13,6 +13,7 @@
  */
 package com.goodow.web.reader.shared;
 
+import com.goodow.web.core.shared.Resource;
 import com.goodow.web.core.shared.WebEntity;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -27,11 +28,29 @@ public class Section extends WebEntity {
   @XmlElement
   private String body;
 
+  private Resource resource;
+
+  private Section parent;
+
   /**
    * @return the body
    */
   public String getBody() {
     return body;
+  }
+
+  /**
+   * @return the resource
+   */
+  public Resource getResource() {
+    return resource;
+  }
+
+  /**
+   * @return the parent
+   */
+  public Section getParent() {
+    return parent;
   }
 
   /**
@@ -46,6 +65,20 @@ public class Section extends WebEntity {
    */
   public void setBody(final String body) {
     this.body = body;
+  }
+
+  /**
+   * @param resource the resource to set
+   */
+  public void setResource(final Resource media) {
+    this.resource = media;
+  }
+
+  /**
+   * @param parent the parent to set
+   */
+  public void setParent(final Section parent) {
+    this.parent = parent;
   }
 
   /**

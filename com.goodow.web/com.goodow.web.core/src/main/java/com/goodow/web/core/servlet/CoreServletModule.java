@@ -36,8 +36,9 @@ public class CoreServletModule extends ServletModule {
     // serve("/gwtRequest").with(ServiceDispatcherImpl.class, params);
 
     serveRegex("/\\w+/" + WebServiceServlet.END_POINT).with(WebServiceServlet.class);
-
-    serveRegex("/\\w+/" + MediaUploadServlet.END_POINT).with(MediaUploadServlet.class);
+    // /resources/5606832b-9fd6-435b-aabc-2651bc1ae25b
+    serveRegex("/\\w+/" + ResourceServlet.END_POINT + "(/\\w+[\\w\\-]*)?").with(
+        ResourceServlet.class);
 
     requestStaticInjection(DatabaseConnectionProvider.class);
     filter("/*").through(DatabaseConnectionFilter.class);

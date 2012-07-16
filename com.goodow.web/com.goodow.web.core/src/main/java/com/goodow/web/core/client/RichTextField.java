@@ -14,6 +14,11 @@ public class RichTextField extends FormField<String> {
   }
 
   @Override
+  public void setValue(final String value) {
+    this.textArea.setText(value);
+  }
+
+  @Override
   protected void start() {
     super.start();
     main.add(textArea);
