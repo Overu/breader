@@ -1,0 +1,26 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+  <ui:style>
+    .root {
+      display: -webkit-box;
+    }
+    
+    .root>div:nth-child\(2n\+1\) {
+      -webkit-box-flex: 1;
+      font-size: 30px;
+      padding: 50px;
+      text-align: center;
+      border: 1px solid;
+      -webkit-border-radius: 15px;
+    }
+  </ui:style>
+
+  <g:HTMLPanel addStyleNames="{style.root}">
+    <div>上传内容</div>
+    <div></div>
+    <div>制作加工</div>
+    <div></div>
+    <div>终端发布</div>
+  </g:HTMLPanel>
+</ui:UiBinder>

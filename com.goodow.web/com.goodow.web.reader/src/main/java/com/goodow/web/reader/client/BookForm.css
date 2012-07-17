@@ -1,0 +1,34 @@
+@CHARSET "UTF-8";
+
+.utilityCss {
+  margin: 3px;
+}
+
+.utilityCss>div {
+  margin: 16px 5px 16px 16px;
+  display: inline-block;
+}
+
+.resourceFieldCss {
+  margin: 3px;
+}
+
+.resourceFieldCss>div {
+  margin: 0 0px 8px 16px;
+}
+
+.resourceFieldCss>form {
+  margin: 0 16px;
+}
+
+.richTextField {
+  margin: 3px;
+}
+
+.richTextField>div {
+  margin: 16px;
+}
+
+.richTextField>*:last-child {
+  margin: 0 16px;
+}

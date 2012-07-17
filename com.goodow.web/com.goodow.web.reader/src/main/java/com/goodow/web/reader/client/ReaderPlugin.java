@@ -41,6 +41,9 @@ public class ReaderPlugin {
   @Inject
   Provider<BookForm> bookForm;
 
+  @Inject
+  Provider<BooksView> booksView;
+
   @HomePlace
   @Inject
   WebPlace homePlace;
@@ -86,6 +89,9 @@ public class ReaderPlugin {
 
   @Inject
   WebPlace newBookPlace;
+
+  @Inject
+  WebPlace booksViewPlace;
 
   public void start() {
 
@@ -149,6 +155,7 @@ public class ReaderPlugin {
     booksPlace.setAnimation(Animation.SLIDE);
     booksPlace.setTitle("应用控制台");
     booksPlace.setWidget(booksApp);
+    booksPlace.setWelcomePlace(booksViewPlace);
     booksPlace.addChild(createBookPlace);
     booksPlace.addChild(myBooksPlace);
     booksPlace.addChild(othersBookPlace);
@@ -175,6 +182,11 @@ public class ReaderPlugin {
     bookcategoryPlace.setPath("category");
     bookcategoryPlace.setAnimation(Animation.SLIDE);
     bookcategoryPlace.setTitle("图书分类");
+
+    booksViewPlace.setPath("booksview");
+    booksViewPlace.setAnimation(Animation.SLIDE);
+    booksViewPlace.setWidget(booksView);
+    booksViewPlace.setTitle("welcome");
 
     newBookPlace.setPath("new");
     newBookPlace.setAnimation(Animation.SLIDE);
