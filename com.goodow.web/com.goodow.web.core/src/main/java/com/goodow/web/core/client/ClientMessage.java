@@ -7,6 +7,7 @@ import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.core.shared.WebType;
+import com.goodow.web.feature.client.FeatureDetection;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.RequestBuilder;
@@ -37,7 +38,10 @@ public class ClientMessage extends Message implements RequestCallback {
       JSONObject obj = messageProvider.serialize(this);
       String payload = obj.toString();
 
-      String requestUrl = GWT.getModuleBaseURL() + URL;
+      String requestUrl =
+          (FeatureDetection.mobileNative() ? "http://retechlive.xicp.net/" + GWT.getModuleName()
+              + "/" : GWT.getModuleBaseURL())
+              + URL;
       RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, requestUrl);
       configureRequestBuilder(builder);
       builder.setRequestData(payload);
