@@ -4,6 +4,8 @@
   <ui:style>
     .root {
       display: -webkit-box;
+      -webkit-box-align: center;
+      margin: 20px 10px 0 10px;
     }
     
     .root>div:nth-child\(2n\+1\) {
@@ -11,16 +13,63 @@
       font-size: 30px;
       padding: 50px;
       text-align: center;
-      border: 1px solid;
+      border: 13px solid black;
       -webkit-border-radius: 15px;
+    }
+    /*
+            .root>div:nth-child\(2n\) { float: left;
+              border-style: solid;
+              border-width: 10px;
+              border-color: #000 #ccc #ccc #ccc;
+              height: 0;
+              width: 0;
+              font-size: 0
+            }*/
+    .pre-wrap {
+      position: relative;
+    }
+    
+    .pre {
+      left: -36px;
+      top: -59px;
+      width: 80px;
+      height: 80px;
+      position: absolute;
+    }
+    
+    .pre>div {
+      border-style: dashed dashed dashed solid;
+    }
+    
+    .pre>div:first-child {
+      border-width: 60px;
+      border-color: transparent transparent transparent #F30;
+    }
+    
+    .pre>div:last-child {
+      border-width: 40px;
+      border-color: transparent transparent transparent white;
+      position: relative;
+      top: -102px;
+      left: -4px;
     }
   </ui:style>
 
   <g:HTMLPanel addStyleNames="{style.root}">
     <div>上传内容</div>
-    <div></div>
+    <div class="{style.pre-wrap}">
+      <div class="{style.pre}">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
     <div>制作加工</div>
-    <div></div>
+    <div class="{style.pre-wrap}">
+      <div class="{style.pre}">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
     <div>终端发布</div>
   </g:HTMLPanel>
 </ui:UiBinder>
