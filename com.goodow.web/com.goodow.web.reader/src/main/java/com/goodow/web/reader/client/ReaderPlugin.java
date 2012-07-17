@@ -45,7 +45,10 @@ public class ReaderPlugin {
   Provider<BooksView> booksView;
 
   @Inject
-  Provider<BookList> bookList;
+  Provider<MyBookList> myBookList;
+
+  @Inject
+  Provider<SelectedBookList> selectedBookList;
 
   @HomePlace
   @Inject
@@ -173,7 +176,7 @@ public class ReaderPlugin {
     myBooksPlace.setPath("my");
     myBooksPlace.setAnimation(Animation.SLIDE);
     myBooksPlace.setTitle("我的图书");
-    myBooksPlace.setWidget(bookList);
+    myBooksPlace.setWidget(myBookList);
 
     othersBookPlace.setPath("others");
     othersBookPlace.setAnimation(Animation.SLIDE);
@@ -182,6 +185,7 @@ public class ReaderPlugin {
     selectedBooksPlace.setPath("selected");
     selectedBooksPlace.setAnimation(Animation.SLIDE);
     selectedBooksPlace.setTitle("精品图书");
+    selectedBooksPlace.setWidget(selectedBookList);
 
     bookcategoryPlace.setPath("category");
     bookcategoryPlace.setAnimation(Animation.SLIDE);

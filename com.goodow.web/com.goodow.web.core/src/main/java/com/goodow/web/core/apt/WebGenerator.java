@@ -713,7 +713,7 @@ public class WebGenerator extends AbstractProcessor {
           } else {
             paramPkgName = paramTypeFullName.substring(0, paramTypeFullName.lastIndexOf("."));
             paramTypeSimpleName = paramTypeFullName.substring(paramPkgName.length() + 1);
-            if (paramPkgName.equals("java.lang")) {
+            if (paramPkgName.equals("java.lang") || paramPkgName.equals("java.util")) {
               paramPkgName = WebObject.class.getPackage().getName();
             }
           }
@@ -778,7 +778,7 @@ public class WebGenerator extends AbstractProcessor {
                 returnTypePkgName =
                     returnTypeFullName.substring(0, returnTypeFullName.lastIndexOf("."));
                 returnTypeSimpleName = returnTypeFullName.substring(returnTypePkgName.length() + 1);
-                if (returnTypePkgName.equals("java.lang")) {
+                if (returnTypePkgName.equals("java.lang") || returnTypePkgName.equals("java.util")) {
                   returnTypePkgName = WebObject.class.getPackage().getName();
                 }
               }
@@ -823,7 +823,7 @@ public class WebGenerator extends AbstractProcessor {
                     paramPkgName =
                         paramTypeFullName.substring(0, paramTypeFullName.lastIndexOf("."));
                     paramTypeSimpleName = paramTypeFullName.substring(paramPkgName.length() + 1);
-                    if (paramPkgName.equals("java.lang")) {
+                    if (paramPkgName.equals("java.lang") || paramPkgName.equals("java.util")) {
                       paramPkgName = WebObject.class.getPackage().getName();
                     }
                   }

@@ -1,5 +1,8 @@
 package com.goodow.web.core.shared;
 
+import com.goodow.web.core.client.ScrollView;
+import com.goodow.web.core.client.WebView;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.place.shared.Place;
@@ -35,7 +38,7 @@ public class WebPlace extends Place {
       }
 
       Widget w = widget.asWidget();
-      if (w instanceof ScrollPanel) {
+      if (w instanceof ScrollPanel || w instanceof ScrollView) {
         w.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
             .fillPanelExpandChild());
         SimplePanel fillPanel = new SimplePanel();
@@ -318,7 +321,9 @@ public class WebPlace extends Place {
   private void showWidget(final AcceptsOneWidget panel,
       final AsyncCallback<AcceptsOneWidget> callback) {
     panel.setWidget(widget);
-
+    if (widget instanceof WebView) {
+      ((WebView) widget).refresh();
+    }
     if (widget instanceof AcceptsOneWidget) {
       if (protectedDisplay == null) {
         display = GWT.create(AnimatableDisplay.class);

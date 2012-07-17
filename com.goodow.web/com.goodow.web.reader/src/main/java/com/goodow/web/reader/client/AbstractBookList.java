@@ -1,43 +1,65 @@
 package com.goodow.web.reader.client;
 
+import com.goodow.web.core.client.ScrollView;
+import com.goodow.web.core.shared.Receiver;
+import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.touch.TouchPanel;
 
 import java.util.List;
 
-public abstract class AbstractBookList extends ScrollPanel {
+public abstract class AbstractBookList extends ScrollView implements Receiver<List<Book>> {
 
   TouchPanel container;
 
   HTMLPanel bookList;
 
   @Inject
-  public AbstractBookList(final Provider<BookSummary> bookSummaryProvider) {
+  AsyncBookService bookService;
+  @Inject
+  Provider<BookSummary> bookSummaryProvider;
 
-    // title.setText("精品推荐");
-    container = new TouchPanel();
-    bookList = new HTMLPanel("");
-    for (Book book : createBooks()) {
+  @Override
+  public void onSuccess(final List<Book> result) {
+    for (Book book : result) {
       BookSummary view = bookSummaryProvider.get();
       view.setLandscape(setBookSummaryLandscapeCss());
       view.setBook(book);
       bookList.add(view);
     }
 
-    container.add(bookList);
-    setWidget(container);
+  }
+
+  @Override
+  public void refresh() {
+
+    bookService.getMyBooks().fire(this);
   }
 
   public String setBookSummaryLandscapeCss() {
     return BookSummary.INSTANCE.landscape().root();
   }
 
-  protected abstract List<Book> createBooks();
+  @Override
+  protected void start() {
+    container = new TouchPanel();
+    bookList = new HTMLPanel("");
+
+    container.add(bookList);
+    main.add(container);
+
+    new Timer() {
+      @Override
+      public void run() {
+        refresh();
+      }
+    }.schedule(1);
+  }
 
 }

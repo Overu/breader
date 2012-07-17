@@ -22,6 +22,7 @@ import com.google.gwt.json.client.JSONValue;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public class ClientJSONMarshaller {
@@ -50,6 +51,8 @@ public class ClientJSONMarshaller {
         return (int) json.isNumber().doubleValue();
       } else if (long.class.equals(cls) || Long.class.equals(cls)) {
         return (long) json.isNumber().doubleValue();
+      } else if (Date.class.equals(cls)) {
+        return new Date((long) json.isNumber().doubleValue());
       } else {
         return json.isString().stringValue();
       }
@@ -139,6 +142,8 @@ public class ClientJSONMarshaller {
         return new JSONNumber((Integer) obj);
       } else if (long.class.equals(dc) || Long.class.equals(dc)) {
         return new JSONNumber((Long) obj);
+      } else if (Date.class.equals(dc)) {
+        return new JSONNumber(((Date) obj).getTime());
       } else {
         return new JSONString((String) obj);
       }

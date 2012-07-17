@@ -1,6 +1,6 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.client.WebView;
+import com.goodow.web.core.client.FlowView;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
@@ -14,7 +14,7 @@ import com.google.inject.Inject;
 
 import com.googlecode.mgwt.ui.client.MGWTStyle;
 
-public class BooksApp extends WebView implements AcceptsOneWidget {
+public class BooksApp extends FlowView implements AcceptsOneWidget {
 
   interface Bundle extends ClientBundle {
     @Source("BooksApp.css")

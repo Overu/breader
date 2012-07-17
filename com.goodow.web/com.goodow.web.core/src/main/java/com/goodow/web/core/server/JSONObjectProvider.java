@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Collection;
+import java.util.Date;
 
 @Singleton
 public class JSONObjectProvider<T extends WebObject> implements ObjectReader<T, JSONObject>,
@@ -64,9 +65,10 @@ public class JSONObjectProvider<T extends WebObject> implements ObjectReader<T, 
             target.put(prop.getName(), json);
           }
         } else if (value instanceof Collection) {
-          JSONArray array =
-              marshaller.serialize((Collection) value, prop.isContainment(), message);
+          JSONArray array = marshaller.serialize((Collection) value, prop.isContainment(), message);
           target.put(prop.getName(), array);
+        } else if (value instanceof Date) {
+          target.put(prop.getName(), ((Date) value).getTime());
         } else {
           target.put(prop.getName(), value);
         }

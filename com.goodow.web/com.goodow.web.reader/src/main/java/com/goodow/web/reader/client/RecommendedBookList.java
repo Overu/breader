@@ -1,21 +1,21 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.reader.shared.Book;
-
 import com.google.gwt.user.client.ui.Image;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
+import com.google.inject.Singleton;
 
 import com.googlecode.mgwt.ui.client.widget.Carousel;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Singleton
 public class RecommendedBookList extends AbstractBookList {
 
-  @Inject
-  public RecommendedBookList(final Provider<BookSummary> bookSummaryProvider) {
-    super(bookSummaryProvider);
+  @Override
+  public void refresh() {
+    bookService.getSelectedBooks().fire(this);
+  }
+
+  @Override
+  protected void start() {
+    super.start();
     bookList.removeFromParent();
     Carousel carsousel = new Carousel();
     carsousel.add(new Image("http://www.retechcorp.com/images/temp/wancai.jpg"));
@@ -24,19 +24,6 @@ public class RecommendedBookList extends AbstractBookList {
     carsousel.add(new Image("http://www.retechcorp.com/images/temp/el.jpg"));
     container.add(carsousel);
     container.add(bookList);
-  }
-
-  @Override
-  protected List<Book> createBooks() {
-    List<Book> result = new ArrayList<Book>();
-    for (int i = 0; i < 40; i++) {
-      Book book = new Book();
-      book.setTitle("小城三月" + (i + 1));
-      book.setDescription("小城三月的故事");
-      book.setAuthor("作者" + (i + 1));
-      result.add(book);
-    }
-    return result;
   }
 
 }

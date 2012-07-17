@@ -20,7 +20,7 @@ public class ImageField extends ResourceField {
   @Override
   protected void start() {
     super.start();
-    fileUpload.removeFromParent();
+    // fileUpload.removeFromParent();
     main.add(image);
   }
 }

@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Collection;
+import java.util.Date;
 
 public class JSONMarshaller {
 
@@ -127,6 +128,8 @@ public class JSONMarshaller {
         return ((Number) obj).intValue();
       } else if (long.class.equals(dc) || Long.class.equals(dc)) {
         return ((Number) obj).longValue();
+      } else if (Date.class.equals(dc)) {
+        return new Date((Long) obj);
       } else {
         return (String) obj;
       }
@@ -175,6 +178,8 @@ public class JSONMarshaller {
       return array.toString();
     } else if (result instanceof String) {
       return "\"" + result + "\"";
+    } else if (result instanceof Date) {
+      return Long.toString(((Date) result).getTime());
     } else {
       return result.toString();
     }

@@ -3,6 +3,8 @@ package com.goodow.web.reader.shared;
 import com.goodow.web.core.shared.Resource;
 import com.goodow.web.core.shared.WebEntity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -20,6 +22,12 @@ public class Book extends WebEntity {
   private String author;
 
   private String imageUrl;
+
+  private Date dateCreated;
+
+  private Date dateModified;
+
+  private boolean selected;
 
   @OneToOne
   private Resource source;
@@ -39,6 +47,20 @@ public class Book extends WebEntity {
    */
   public Resource getCover() {
     return cover;
+  }
+
+  /**
+   * @return the dateCreated
+   */
+  public Date getDateCreated() {
+    return dateCreated;
+  }
+
+  /**
+   * @return the dateModified
+   */
+  public Date getDateModified() {
+    return dateModified;
   }
 
   /**
@@ -70,6 +92,13 @@ public class Book extends WebEntity {
   }
 
   /**
+   * @return the selected
+   */
+  public boolean isSelected() {
+    return selected;
+  }
+
+  /**
    * @param author the author to set
    */
   public void setAuthor(final String author) {
@@ -84,6 +113,20 @@ public class Book extends WebEntity {
   }
 
   /**
+   * @param dateCreated the dateCreated to set
+   */
+  public void setDateCreated(final Date dateCreated) {
+    this.dateCreated = dateCreated;
+  }
+
+  /**
+   * @param dateModified the dateModified to set
+   */
+  public void setDateModified(final Date dateModified) {
+    this.dateModified = dateModified;
+  }
+
+  /**
    * @param description the description to set
    */
   public void setDescription(final String description) {
@@ -95,6 +138,13 @@ public class Book extends WebEntity {
    */
   public void setImageUrl(final String imageUrl) {
     this.imageUrl = imageUrl;
+  }
+
+  /**
+   * @param selected the selected to set
+   */
+  public void setSelected(final boolean selected) {
+    this.selected = selected;
   }
 
   /**

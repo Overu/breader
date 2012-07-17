@@ -1,5 +1,7 @@
 package com.goodow.web.core.shared;
 
+import java.util.Date;
+
 public class BaseCorePackage extends Package {
 
   public static final ValueInfo<Boolean> BOOLEAN = new ValueInfo<Boolean>(Boolean.class) {
@@ -42,6 +44,13 @@ public class BaseCorePackage extends Package {
     @Override
     public java.lang.String convertFrom(final java.lang.String stringValue) {
       return stringValue;
+    }
+  };
+
+  public static final ValueInfo<Date> Date = new ValueInfo<Date>(Date.class) {
+    @Override
+    public Date convertFrom(final java.lang.String stringValue) {
+      return new Date(java.lang.Long.parseLong(stringValue));
     }
   };
   public static final ValueInfo<Role> Role = new ValueInfo<Role>(Role.class) {

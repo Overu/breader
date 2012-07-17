@@ -1,5 +1,6 @@
 package com.goodow.web.reader.client;
 
+import com.goodow.web.core.client.CheckField;
 import com.goodow.web.core.client.ImageField;
 import com.goodow.web.core.client.ResourceField;
 import com.goodow.web.core.client.RichTextField;
@@ -61,6 +62,9 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
   RichTextField descField;
 
   @Inject
+  CheckField selectedField;
+
+  @Inject
   ButtonBar buttonBar;
 
   @Inject
@@ -77,9 +81,6 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
 
   @Inject
   ReaderPlugin reader;
-
-  @Inject
-  BookList bookList;
 
   static {
     bundle = GWT.create(Bundle.class);
@@ -105,6 +106,7 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
     authorField.setValue(book.getAuthor());
     coverField.setValue(book.getCover());
     descField.setValue(book.getDescription());
+    selectedField.setValue(book.isSelected());
   }
 
   public void submit() {
@@ -112,12 +114,12 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
     book.setDescription(descField.getValue());
     book.setCover(coverField.getValue());
     book.setAuthor(authorField.getValue());
+    book.setSelected(selectedField.getValue());
     bookService.save(book).fire(new Receiver<Book>() {
       @Override
       public void onSuccess(final Book result) {
         logger.info("book created: " + result.getId());
         placeController.goTo(reader.myBooksPlace);
-        bookList.refresh();
       }
     });
   }
@@ -133,6 +135,7 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
     coverField.addStyleName(bundle.bookFormCss().utilityCss());
     descField.setLabel("简介");
     descField.addStyleName(bundle.bookFormCss().richTextField());
+    selectedField.setLabel("标记为精品");
 
     buttonBar.add(submitButton);
     buttonBar.add(cancelButton);
@@ -141,6 +144,7 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
     main.add(titleField);
     main.add(coverField);
     main.add(descField);
+    main.add(selectedField);
     main.add(buttonBar);
 
     sourceField.addResourceUploadedHandler(this);
@@ -155,7 +159,6 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
       @Override
       public void onTap(final TapEvent event) {
         placeController.goTo(reader.myBooksPlace);
-        bookList.refresh();
       }
     });
   }

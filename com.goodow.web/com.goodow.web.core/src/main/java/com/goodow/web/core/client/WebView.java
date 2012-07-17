@@ -2,14 +2,14 @@ package com.goodow.web.core.client;
 
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Widget;
 
-public abstract class WebView extends Composite {
+public abstract class WebView<T extends Widget> extends Composite {
 
-  protected FlowPanel main;
+  protected T main;
 
   public WebView() {
-    main = new FlowPanel();
+    main = createRoot();
     initWidget(main);
     // Execute after injection
     new Timer() {
@@ -20,9 +20,15 @@ public abstract class WebView extends Composite {
     }.schedule(1);
   }
 
-  /**
-   * Injection dependent initialization.
-   */
+  public boolean isScrollable() {
+    return false;
+  }
+
+  public void refresh() {
+  }
+
+  protected abstract T createRoot();
+
   protected abstract void start();
 
 }

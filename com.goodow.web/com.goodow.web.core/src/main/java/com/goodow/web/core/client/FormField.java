@@ -3,7 +3,7 @@ package com.goodow.web.core.client;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 
-public abstract class FormField<T> extends WebView {
+public abstract class FormField<T> extends FlowView {
 
   @Inject
   protected Label label;

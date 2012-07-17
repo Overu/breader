@@ -1,6 +1,6 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.client.WebView;
+import com.goodow.web.core.client.FlowView;
 import com.goodow.web.core.shared.WebPlace;
 
 import com.google.gwt.place.shared.PlaceChangeEvent;
@@ -18,7 +18,7 @@ import com.googlecode.mgwt.ui.client.widget.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedHandler;
 
-public class PlaceList extends WebView implements PlaceChangeEvent.Handler {
+public class PlaceList extends FlowView implements PlaceChangeEvent.Handler {
 
   private HeaderPanel headerPanel;
   private HeaderButton headerBackButton;
@@ -64,7 +64,7 @@ public class PlaceList extends WebView implements PlaceChangeEvent.Handler {
       }
     });
 
-    cellListWithHeader = new CellList<WebPlace>(new BasicCell<WebPlace>() {
+    cellListWithHeader = new CellList<WebPlace>(new BookCell<WebPlace>() {
       @Override
       public boolean canBeSelected(final WebPlace place) {
         return true;

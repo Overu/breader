@@ -11,9 +11,11 @@ import com.goodow.web.reader.shared.Book;
 import com.goodow.web.reader.shared.BookService;
 
 import com.google.inject.Inject;
+import com.google.inject.persist.Transactional;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -30,6 +32,7 @@ public class JpaBookService extends JpaWebService<Book> implements BookService {
   JpaResourceService resService;
 
   @Override
+  @Transactional
   public Book extract(final Resource resource) {
     Book book = new Book();
     book.setTitle(resource.getFileName());
@@ -61,7 +64,30 @@ public class JpaBookService extends JpaWebService<Book> implements BookService {
 
   @Override
   public List<Book> getMyBooks() {
-    List<Book> result = em().createQuery("select b from Book b", Book.class).getResultList();
+    List<Book> result =
+        em().createQuery("select b from Book b order by b.dateCreated desc", Book.class)
+            .getResultList();
     return result;
+  }
+
+  @Override
+  public List<Book> getSelectedBooks() {
+    List<Book> result =
+        em().createQuery("select b from Book b where b.selected=true order by b.dateCreated desc",
+            Book.class).getResultList();
+    return result;
+  }
+
+  @Override
+  @Transactional
+  public Book save(final Book entity) {
+    Date currentTime = new Date(System.currentTimeMillis());
+    if (entity.getDateCreated() == null) {
+      entity.setDateCreated(currentTime);
+    }
+    if (entity.getDateModified() == null) {
+      entity.setDateModified(currentTime);
+    }
+    return super.save(entity);
   }
 }

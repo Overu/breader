@@ -88,6 +88,8 @@ public class BookSummary extends Composite {
     if (book == null) {
       return;
     } else {
+      bookImage.getElement().getStyle().setBackgroundImage(
+          "url(\"" + GWT.getModuleBaseURL() + "resources/" + book.getCover().getId() + "\")");
       titleLabel.setText(book.getTitle());
       authorLabel.setText(book.getAuthor());
       descLabel.setText(book.getDescription());

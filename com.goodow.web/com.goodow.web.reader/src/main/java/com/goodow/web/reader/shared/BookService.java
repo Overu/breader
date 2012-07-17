@@ -11,6 +11,8 @@ public interface BookService extends WebService<Book> {
 
   List<Book> getMyBooks();
 
+  List<Book> getSelectedBooks();
+
   @Override
   void remove(Book book);
 

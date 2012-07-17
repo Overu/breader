@@ -8,7 +8,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 
 import com.googlecode.mgwt.ui.client.widget.celllist.Cell;
 
-public abstract class BasicCell<T> implements Cell<T> {
+public abstract class BookCell<T> implements Cell<T> {
 
   public interface Template extends SafeHtmlTemplates {
     @SafeHtmlTemplates.Template("<div class=\"{0}\">{1}</div>")
@@ -20,7 +20,7 @@ public abstract class BasicCell<T> implements Cell<T> {
 
   @Override
   public boolean canBeSelected(final T model) {
-    return false;
+    return true;
   }
 
   public abstract String getDisplayString(T model);

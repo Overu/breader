@@ -1,12 +1,11 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.client.WebView;
+import com.goodow.web.core.client.FlowView;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
@@ -18,8 +17,7 @@ import com.googlecode.mgwt.ui.client.widget.buttonbar.TrashButton;
 
 import java.util.List;
 
-@Singleton
-public class BookList extends WebView {
+public class BookList extends FlowView implements Receiver<List<Book>> {
 
   @Inject
   private ScrollPanel scrollPanel;
@@ -49,19 +47,15 @@ public class BookList extends WebView {
     });
   }
 
-  public void refresh() {
-    bookService.getMyBooks().fire(new Receiver<List<Book>>() {
-      @Override
-      public void onSuccess(final List<Book> result) {
-        cellListWithHeader.render(result);
-      }
-    });
+  @Override
+  public void onSuccess(final List<Book> result) {
+    cellListWithHeader.render(result);
   }
 
   @Override
   protected void start() {
 
-    cellListWithHeader = new CellList<Book>(new BasicCell<Book>() {
+    cellListWithHeader = new CellList<Book>(new BookCell<Book>() {
 
       @Override
       public boolean canBeSelected(final Book model) {
