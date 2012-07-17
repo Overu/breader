@@ -9,9 +9,7 @@ import com.goodow.web.core.shared.WebService;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.inject.Singleton;
 
-@Singleton
 public class ServerMessage extends Message {
 
   @Inject

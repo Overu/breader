@@ -1,37 +1,65 @@
 package com.goodow.web.reader.client;
 
+import com.goodow.web.core.client.WebView;
+import com.goodow.web.core.shared.Receiver;
+import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
-import com.google.gwt.user.client.ui.Composite;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
-import com.googlecode.mgwt.ui.client.MGWT;
+import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.ui.client.widget.CellList;
-import com.googlecode.mgwt.ui.client.widget.HeaderButton;
-import com.googlecode.mgwt.ui.client.widget.HeaderPanel;
-import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
 import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
+import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
+import com.googlecode.mgwt.ui.client.widget.buttonbar.RefreshButton;
+import com.googlecode.mgwt.ui.client.widget.buttonbar.TrashButton;
 
-public class BookList extends Composite {
+import java.util.List;
 
-  private LayoutPanel main;
-  private HeaderPanel headerPanel;
-  private HeaderButton headerBackButton;
+@Singleton
+public class BookList extends WebView {
+
+  @Inject
+  private ScrollPanel scrollPanel;
+
   private CellList<Book> cellListWithHeader;
 
-  public BookList() {
-    main = new LayoutPanel();
+  @Inject
+  ButtonBar buttonBar;
 
-    main.getElement().setId("testdiv");
+  @Inject
+  RefreshButton refreshButton;
 
-    headerPanel = new HeaderPanel();
-    main.add(headerPanel);
+  @Inject
+  TrashButton deleteButton;
 
-    headerBackButton = new HeaderButton();
-    headerBackButton.setBackButton(true);
-    headerPanel.setLeftWidget(headerBackButton);
-    headerBackButton.setVisible(!MGWT.getOsDetection().isAndroid());
+  @Inject
+  AsyncBookService bookService;
 
-    ScrollPanel scrollPanel = new ScrollPanel();
+  public void delete() {
+    // TODO find selected books
+    Book book = null;
+    bookService.remove(book).fire(new Receiver<Void>() {
+      @Override
+      public void onSuccess(final Void result) {
+        refresh();
+      }
+    });
+  }
+
+  public void refresh() {
+    bookService.getMyBooks().fire(new Receiver<List<Book>>() {
+      @Override
+      public void onSuccess(final List<Book> result) {
+        cellListWithHeader.render(result);
+      }
+    });
+  }
+
+  @Override
+  protected void start() {
 
     cellListWithHeader = new CellList<Book>(new BasicCell<Book>() {
 
@@ -42,15 +70,37 @@ public class BookList extends Composite {
 
       @Override
       public String getDisplayString(final Book model) {
-        return model.getTitle();
+        return model.getTitle() + "  - " + model.getDescription();
       }
     });
+
     cellListWithHeader.setRound(true);
     scrollPanel.setWidget(cellListWithHeader);
     scrollPanel.setScrollingEnabledX(false);
 
-    main.add(scrollPanel);
-    initWidget(main);
-  }
+    buttonBar.add(refreshButton);
+    buttonBar.add(deleteButton);
 
+    main.add(scrollPanel);
+
+    main.add(buttonBar);
+
+    refreshButton.addTapHandler(new TapHandler() {
+
+      @Override
+      public void onTap(final TapEvent event) {
+        refresh();
+      }
+    });
+
+    deleteButton.addTapHandler(new TapHandler() {
+
+      @Override
+      public void onTap(final TapEvent event) {
+        delete();
+      }
+    });
+
+    refresh();
+  }
 }

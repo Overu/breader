@@ -20,11 +20,27 @@ import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONString;
 import com.google.gwt.json.client.JSONValue;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public class ClientJSONMarshaller {
+
+  public Collection parse(final WebType type, final JSONArray json, final Message message) {
+    List result = new ArrayList();
+    for (int i = 0; i < json.size(); i++) {
+      Object o = parse(type, json.get(i), message);
+      result.add(o);
+    }
+    return result;
+  }
 
   public Object parse(final WebType type, final JSONValue json, final Message message) {
     if (json == null || json.isNull() != null) {
       return null;
+    }
+    if (json.isArray() != null) {
+      return parse(type, json.isArray(), message);
     }
     if (type instanceof ValueType) {
       Class<?> cls = type.getJavaClass();

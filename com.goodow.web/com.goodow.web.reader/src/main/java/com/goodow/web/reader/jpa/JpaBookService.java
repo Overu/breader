@@ -58,4 +58,10 @@ public class JpaBookService extends JpaWebService<Book> implements BookService {
     }
     return book;
   }
+
+  @Override
+  public List<Book> getMyBooks() {
+    List<Book> result = em().createQuery("select b from Book b", Book.class).getResultList();
+    return result;
+  }
 }

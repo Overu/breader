@@ -44,6 +44,9 @@ public class ReaderPlugin {
   @Inject
   Provider<BooksView> booksView;
 
+  @Inject
+  Provider<BookList> bookList;
+
   @HomePlace
   @Inject
   WebPlace homePlace;
@@ -170,6 +173,7 @@ public class ReaderPlugin {
     myBooksPlace.setPath("my");
     myBooksPlace.setAnimation(Animation.SLIDE);
     myBooksPlace.setTitle("我的图书");
+    myBooksPlace.setWidget(bookList);
 
     othersBookPlace.setPath("others");
     othersBookPlace.setAnimation(Animation.SLIDE);

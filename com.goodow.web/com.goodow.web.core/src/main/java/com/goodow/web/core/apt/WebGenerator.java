@@ -751,8 +751,48 @@ public class WebGenerator extends AbstractProcessor {
           for (ExecutableElement method : ElementFilter
               .methodsIn(serviceType.getEnclosedElements())) {
 
-            if (method.getParameters().size() > 0) {
+            TypeMirror returnType = method.getReturnType();
+            boolean many = false;
 
+            if (returnType instanceof DeclaredType) {
+              DeclaredType dt = (DeclaredType) returnType;
+              TypeElement e = (TypeElement) dt.asElement();
+              if (List.class.getName().equals(e.getQualifiedName().toString())) {
+                returnType = dt.getTypeArguments().get(0);
+                many = true;
+              }
+            }
+
+            TypeKind returnTypeKind = returnType.getKind();
+
+            if (returnTypeKind != TypeKind.VOID) {
+              String returnTypeFullName;
+              String returnTypePkgName;
+              String returnTypeSimpleName;
+
+              returnTypeFullName = returnType.toString();
+              if (returnTypeKind.isPrimitive()) {
+                returnTypePkgName = WebObject.class.getPackage().getName();
+                returnTypeSimpleName = returnTypeFullName.toUpperCase();
+              } else {
+                returnTypePkgName =
+                    returnTypeFullName.substring(0, returnTypeFullName.lastIndexOf("."));
+                returnTypeSimpleName = returnTypeFullName.substring(returnTypePkgName.length() + 1);
+                if (returnTypePkgName.equals("java.lang")) {
+                  returnTypePkgName = WebObject.class.getPackage().getName();
+                }
+              }
+              String returnTypePkgPrefix = getPrefix(returnTypePkgName);
+              String returnTypePkgSimpleName = returnTypePkgPrefix + "Package";
+
+              w.print(getOperationName(method)).print(".as().setMany(").print(
+                  many ? "true" : "false").println(");");
+              w.print(getOperationName(method)).print(".as().setType(").type(
+                  returnTypePkgName + "." + returnTypePkgSimpleName).print(".").print(
+                  returnTypeSimpleName).print(".as()").println(");");
+            }
+
+            if (method.getParameters().size() > 0) {
               for (VariableElement pEl : method.getParameters()) {
                 w.print("addParameter(").print(getOperationName(method)).print(".as()");
                 w.print(", \"").print(pEl.getSimpleName()).print("\"");

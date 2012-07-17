@@ -79,21 +79,26 @@ public class JSONMarshaller {
       String operationName = json.getString("operation");
       Operation operation = WebPlatform.getInstance().getOperation(operationName);
       request.setOperation(operation);
-      JSONArray entities = json.getJSONArray("entities");
-      if (entities != null) {
-        for (int i = 0; i < entities.length(); i++) {
-          JSONObject jsonObj = entities.getJSONObject(i);
-          parse(jsonObj, request.getMessage());
+      if (json.has("entities")) {
+        JSONArray entities = json.getJSONArray("entities");
+        if (entities != null) {
+          for (int i = 0; i < entities.length(); i++) {
+            JSONObject jsonObj = entities.getJSONObject(i);
+            parse(jsonObj, request.getMessage());
+          }
         }
       }
       Object[] args = new Object[operation.getParameters().size()];
-      int i = 0;
-      for (Parameter param : operation.getParameters().values()) {
+      if (json.has("parameters")) {
         JSONArray values = json.getJSONArray("parameters");
-        WebType type = param.getType();
-        Object obj = values.get(i);
-        args[i] = parse(type, obj, request.getMessage());
-        i++;
+        int i = 0;
+        for (Parameter param : operation.getParameters().values()) {
+
+          WebType type = param.getType();
+          Object obj = values.get(i);
+          args[i] = parse(type, obj, request.getMessage());
+          i++;
+        }
       }
       request.setArgs(args);
     } catch (JSONException e) {
