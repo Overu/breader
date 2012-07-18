@@ -14,6 +14,8 @@ import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.RefreshButton;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.TrashButton;
+import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
+import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedHandler;
 
 import java.util.List;
 
@@ -23,6 +25,10 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
   private ScrollPanel scrollPanel;
 
   private CellList<Book> cellListWithHeader;
+
+  private int oldIndex;
+
+  List<Book> books;
 
   @Inject
   ButtonBar buttonBar;
@@ -37,9 +43,12 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
   AsyncBookService bookService;
 
   public void delete() {
-    // TODO find selected books
-    Book book = null;
-    bookService.remove(book).fire(new Receiver<Void>() {
+
+    if (books.get(oldIndex) == null) {
+      return;
+    }
+
+    bookService.remove(books.get(oldIndex)).fire(new Receiver<Void>() {
       @Override
       public void onSuccess(final Void result) {
         refresh();
@@ -49,6 +58,7 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
 
   @Override
   public void onSuccess(final List<Book> result) {
+    books = result;
     cellListWithHeader.render(result);
   }
 
@@ -65,6 +75,17 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
       @Override
       public String getDisplayString(final Book model) {
         return model.getTitle() + "  - " + model.getDescription();
+      }
+    });
+    cellListWithHeader.addCellSelectedHandler(new CellSelectedHandler() {
+
+      @Override
+      public void onCellSelected(final CellSelectedEvent event) {
+        int index = event.getIndex();
+
+        cellListWithHeader.setSelectedIndex(oldIndex, false);
+        cellListWithHeader.setSelectedIndex(index, true);
+        oldIndex = index;
       }
     });
 
