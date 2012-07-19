@@ -1,67 +1,77 @@
 package com.goodow.web.reader.client;
 
+import com.goodow.web.core.client.WebView;
+import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.reader.client.style.ReadResources;
+import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
-import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CategorizedBookList extends Composite {
+public class CategorizedBookList extends WebView<HTMLPanel> implements Receiver<List<Book>> {
 
   HTMLPanel bookList;
 
-  HTMLPanel container;
+  @Inject
+  AsyncBookService bookService;
+  @Inject
+  Provider<BookSummary> bookSummaryProvider;
 
   CategoryListView categoryListView;
 
-  @Inject
-  public CategorizedBookList(final Provider<BookSummary> bookSummaryProvider) {
-
-    container = new HTMLPanel("");
-    bookList = new HTMLPanel("");
-    categoryListView = new CategoryListView();
-
-    container.addStyleName(ReadResources.INSTANCE().categroyListCss().categorContainer());
-
-    for (Book book : createBooks()) {
+  @Override
+  public void onSuccess(final List<Book> result) {
+    for (Book book : result) {
       BookSummary view = bookSummaryProvider.get();
       view.setLandscape(setBookSummaryLandscapeCss());
       view.setBook(book);
       bookList.add(view);
     }
+  }
 
-    ScrollPanel scrollPanel = new ScrollPanel();
-    scrollPanel.setWidget(bookList);
-    scrollPanel.setScrollingEnabledX(false);
-    scrollPanel.setScrollingEnabledY(true);
-
-    container.add(categoryListView);
-    container.add(scrollPanel);
-
-    initWidget(container);
+  @Override
+  public void refresh() {
+    bookService.getMyBooks().fire(this);
   }
 
   public String setBookSummaryLandscapeCss() {
     return BookSummary.INSTANCE.landscape().root1();
   }
 
-  protected List<Book> createBooks() {
-    List<Book> result = new ArrayList<Book>();
-    for (int i = 0; i < 40; i++) {
-      Book book = new Book();
-      book.setTitle("小城三月" + (i + 1));
-      book.setDescription("小城三月的故事");
-      book.setAuthor("作者" + (i + 1));
-      result.add(book);
-    }
-    return result;
+  @Override
+  public void start() {
+    bookList = new HTMLPanel("");
+
+    categoryListView = new CategoryListView();
+
+    main.addStyleName(ReadResources.INSTANCE().categroyListCss().categorContainer());
+
+    ScrollPanel scrollPanel = new ScrollPanel();
+    scrollPanel.setWidget(bookList);
+    scrollPanel.setScrollingEnabledX(false);
+    scrollPanel.setScrollingEnabledY(true);
+
+    main.add(categoryListView);
+    main.add(scrollPanel);
+
+    new Timer() {
+      @Override
+      public void run() {
+        refresh();
+      }
+    }.schedule(1);
+  }
+
+  @Override
+  protected HTMLPanel createRoot() {
+    return new HTMLPanel("");
   }
 
 }

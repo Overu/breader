@@ -48,7 +48,7 @@ public class BookSummary extends Composite {
     INSTANCE = GWT.create(Bundle.class);
     INSTANCE.landscape().ensureInjected();
     String portraitCss =
-        "@resource only screen and (orientation:portrait) {" + INSTANCE.protrait().getText() + "}";
+        "@media only screen and (orientation:portrait) {" + INSTANCE.protrait().getText() + "}";
     StyleInjector.injectAtEnd(portraitCss);
   }
 

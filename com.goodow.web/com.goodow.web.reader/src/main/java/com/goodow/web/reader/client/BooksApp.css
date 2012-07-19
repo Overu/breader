@@ -29,4 +29,5 @@
 
 .placeList>div:last-child>*:last-child>div {
   -webkit-box-flex: 1;
+  background-color: white;
 }

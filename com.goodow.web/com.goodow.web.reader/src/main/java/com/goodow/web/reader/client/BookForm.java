@@ -132,7 +132,7 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
     titleField.addStyleName(bundle.bookFormCss().utilityCss());
     authorField.setLabel("作者");
     authorField.addStyleName(bundle.bookFormCss().utilityCss());
-    coverField.addStyleName(bundle.bookFormCss().utilityCss());
+    coverField.addStyleName(bundle.bookFormCss().resourceFieldCss());
     descField.setLabel("简介");
     descField.addStyleName(bundle.bookFormCss().richTextField());
     selectedField.setLabel("标记为精品");
