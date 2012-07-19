@@ -41,8 +41,6 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
 
   private ListDataProvider<Book> dataProvider;
 
-  private int oldIndex;
-
   Set<Book> books;
 
   @Inject
@@ -181,19 +179,6 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
     cellListWithHeader.setSelectionModel(selectionModel, selectionEventMananger);
     dataProvider = new ListDataProvider<Book>();
 
-    // cellListWithHeader.addCellSelectedHandler(new CellSelectedHandler() {
-    //
-    // @Override
-    // public void onCellSelected(final CellSelectedEvent event) {
-    // int index = event.getIndex();
-    //
-    // cellListWithHeader.setSelectedIndex(oldIndex, false);
-    // cellListWithHeader.setSelectedIndex(index, true);
-    // oldIndex = index;
-    // }
-    // });
-
-    // cellListWithHeader.setRound(true);
     scrollPanel.setWidget(cellListWithHeader);
     scrollPanel.setScrollingEnabledX(false);
 
