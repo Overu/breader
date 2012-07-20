@@ -27,6 +27,7 @@ public abstract class AbstractBookList extends ScrollView implements Receiver<Li
 
   @Override
   public void onSuccess(final List<Book> result) {
+    bookList.clear();
     for (Book book : result) {
       BookSummary view = bookSummaryProvider.get();
       view.setLandscape(setBookSummaryLandscapeCss());
@@ -38,7 +39,6 @@ public abstract class AbstractBookList extends ScrollView implements Receiver<Li
 
   @Override
   public void refresh() {
-
     bookService.getMyBooks().fire(this);
   }
 

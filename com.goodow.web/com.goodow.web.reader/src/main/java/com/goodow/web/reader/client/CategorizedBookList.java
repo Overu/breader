@@ -28,6 +28,7 @@ public class CategorizedBookList extends WebView<HTMLPanel> implements Receiver<
 
   @Override
   public void onSuccess(final List<Book> result) {
+    bookList.clear();
     for (Book book : result) {
       BookSummary view = bookSummaryProvider.get();
       view.setLandscape(setBookSummaryLandscapeCss());
