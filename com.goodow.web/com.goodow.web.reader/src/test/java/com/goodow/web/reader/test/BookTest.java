@@ -6,6 +6,8 @@ import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.Resource;
 import com.goodow.web.reader.shared.Book;
 import com.goodow.web.reader.shared.BookService;
+import com.goodow.web.reader.shared.Category;
+import com.goodow.web.reader.shared.CategoryService;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -22,10 +24,28 @@ public class BookTest extends ExampleTest {
   BookService bookService;
 
   @Inject
+  CategoryService categoryService;
+
+  @Inject
   JSONMarshaller jsonMarshaller;
 
   @Inject
   Provider<Message> messageProvider;
+
+  @Test
+  public void testCategory() {
+    // for (int i = 0; i < 5; i++) {
+    // Category category = new Category();
+    // category.setId(UUID.randomUUID().toString());
+    // category.setTitle("分类" + i);
+    // categoryService.save(category);
+    // }
+
+    List<Category> categorys = categoryService.getCategory();
+    for (Category category : categorys) {
+      System.out.print(category.getTitle());
+    }
+  }
 
   @Test
   public void testEPubBook() {

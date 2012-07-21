@@ -1,7 +1,10 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.core.client.FlowView;
+import com.goodow.web.core.client.css.AppBundle;
 import com.goodow.web.core.shared.Receiver;
+import com.goodow.web.reader.client.style.ReadResources;
+import com.goodow.web.reader.client.style.ReadResources.CellListResources;
 import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
@@ -11,8 +14,10 @@ import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.CompositeCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.HasCell;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.client.SafeHtmlTemplates;
+import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
@@ -23,6 +28,7 @@ import com.google.inject.Inject;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.googlecode.mgwt.ui.client.MGWTStyle;
 import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.RefreshButton;
@@ -33,6 +39,11 @@ import java.util.List;
 import java.util.Set;
 
 public class BookList extends FlowView implements Receiver<List<Book>> {
+
+  public interface Template extends SafeHtmlTemplates {
+    @SafeHtmlTemplates.Template("<div class=\"{0}\"><table><tr><td><img width='50px' height='80px' src='{1}'/></td><td valign=\"top\"><div>{2}</div><div>{3}</div><div>{4}</div></td></tr></table></div>")
+    SafeHtml content(String classCss, String url, String title, String author, String description);
+  }
 
   @Inject
   private ScrollPanel scrollPanel;
@@ -54,6 +65,11 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
 
   @Inject
   AsyncBookService bookService;
+
+  @Inject
+  CellListResources cellListResources;
+
+  private static Template TEMPLATE = GWT.create(Template.class);
 
   public void delete() {
 
@@ -130,8 +146,20 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
 
         @Override
         public void render(final Context context, final Book value, final SafeHtmlBuilder sb) {
-          sb.append(SafeHtmlUtils.fromTrustedString("<div style='display: inline-block;'>"
-              + value.getTitle() + "  - " + value.getDescription() + "</div>"));
+
+          String author = "";
+          if (value.getAuthor() != null) {
+            author = value.getAuthor();
+          }
+
+          String description = "";
+          if (value.getDescription() != null) {
+            description = value.getDescription();
+          }
+
+          sb.append(TEMPLATE.content(ReadResources.CELLLISTINSTANCE().cellListStyle()
+              .cellListBasicImformation(), GWT.getModuleBaseURL() + "resources/"
+              + value.getCover().getId(), value.getTitle(), author, description));
         }
       };
 
@@ -172,7 +200,7 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
       }
     };
 
-    cellListWithHeader = new CellList<Book>(compositeCell);
+    cellListWithHeader = new CellList<Book>(compositeCell, cellListResources);
     cellListWithHeader.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
     DefaultSelectionEventManager<Book> selectionEventMananger =
         DefaultSelectionEventManager.createCheckboxManager();
@@ -181,9 +209,14 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
 
     scrollPanel.setWidget(cellListWithHeader);
     scrollPanel.setScrollingEnabledX(false);
+    scrollPanel.addStyleName(AppBundle.INSTANCE.css().webKitFlex());
+    scrollPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
+        .fillPanelExpandChild());
 
     buttonBar.add(refreshButton);
     buttonBar.add(deleteButton);
+
+    main.addStyleName(AppBundle.INSTANCE.css().fullScreenStyle());
 
     main.add(scrollPanel);
 

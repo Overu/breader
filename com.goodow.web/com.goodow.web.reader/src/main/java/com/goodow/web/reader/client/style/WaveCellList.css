@@ -1,0 +1,36 @@
+.cellListEvenItem,.cellListOddItem {
+  border-bottom: 1px solid #bbb;
+  -webkit-box-align: center;
+  display: -webkit-box;
+  margin: 6px;
+  box-sizing: border-box;
+}
+
+.cellListWidget {
+  
+}
+
+.cellListWidget>div>div:HOVER {
+  background-color: #EDEDED;
+}
+
+.cellListBasicImformation {
+  -webkit-box-flex: 1;
+  margin: 0 0 0 5px;
+}
+
+/*
+.cellListWidget>div>div:FOCUS {
+  background-color: hsl(82, 43%, 45%)!important;
+  color: white;
+}
+*/
+.cellListKeyboardSelectedItem {
+  background-color: inherit;
+}
+
+.cellListSelectedItem {
+  background-color: hsl(82, 43%, 45%) !important;
+  color: white !important;
+  background: inherit;
+}
