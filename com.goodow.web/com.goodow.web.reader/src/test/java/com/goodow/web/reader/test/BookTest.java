@@ -2,7 +2,6 @@ package com.goodow.web.reader.test;
 
 import com.goodow.web.core.server.JSONMarshaller;
 import com.goodow.web.core.servlet.ServletMessage;
-import com.goodow.web.core.shared.Category;
 import com.goodow.web.core.shared.CategoryService;
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.Resource;
@@ -17,7 +16,6 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.UUID;
 
 public class BookTest extends ExampleTest {
 
@@ -35,17 +33,19 @@ public class BookTest extends ExampleTest {
 
   @Test
   public void testCategory() {
-    for (int i = 0; i < 5; i++) {
-      Category category = new Category();
-      category.setId(UUID.randomUUID().toString());
-      category.setTitle("分类" + i);
-      categoryService.save(category);
-    }
+    // for (int i = 0; i < 5; i++) {
+    // Category category = new Category();
+    // category.setId(UUID.randomUUID().toString());
+    // category.setTitle("分类" + i);
+    // categoryService.save(category);
+    // }
 
     // List<Category> categorys = categoryService.getCategory();
     // for (Category category : categorys) {
     // System.out.print(category.getTitle());
     // }
+    List<Book> books = bookService.getMyBooks();
+    String s = "";
   }
 
   @Test
