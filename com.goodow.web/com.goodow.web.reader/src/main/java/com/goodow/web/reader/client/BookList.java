@@ -51,6 +51,19 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
     }
   }
 
+  private static class BookTextAreaChange extends PendingChange<String> {
+
+    public BookTextAreaChange(final Book book, final String value,
+        final AsyncBookService bookService) {
+      super(book, value, bookService);
+    }
+
+    @Override
+    protected void doCommit(final Book book, final String value) {
+      book.setDescription(value);
+    }
+  }
+
   private static class BookTitleChange extends PendingChange<String> {
 
     public BookTitleChange(final Book book, final String value, final AsyncBookService bookService) {
@@ -193,7 +206,7 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
     });
     // cellTable.setMinimumTableWidth(140, Unit.EM);
 
-    addColumn(new CheckboxCell(), "选择", new GetValue<Boolean>() {
+    Column<Book, Boolean> bookCheck = addColumn(new CheckboxCell(), "选择", new GetValue<Boolean>() {
 
       @Override
       public Boolean getValue(final Book book) {
@@ -209,6 +222,7 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
         boolean b = value ? books.add(object) : books.remove(object);
       }
     });
+    cellTable.setColumnWidth(bookCheck, 3, Unit.EM);
 
     Column<Book, String> bookTitle = addColumn(new EditTextCell(), "书名", new GetValue<String>() {
 
@@ -223,19 +237,35 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
         pendingChanges.add(new BookTitleChange(object, value, bookService));
       }
     });
-    cellTable.setColumnWidth(bookTitle, 16, Unit.EM);
+    cellTable.setColumnWidth(bookTitle, 13, Unit.EM);
 
-    addColumn(new CheckboxCell(), "是否推荐", new GetValue<Boolean>() {
+    Column<Book, Boolean> bookSelection =
+        addColumn(new CheckboxCell(), "是否推荐", new GetValue<Boolean>() {
+
+          @Override
+          public Boolean getValue(final Book book) {
+            return book.isSelected();
+          }
+        }, new FieldUpdater<Book, Boolean>() {
+
+          @Override
+          public void update(final int index, final Book object, final Boolean value) {
+            pendingChanges.add(new BookSelectionChange(object, value, bookService));
+          }
+        });
+    cellTable.setColumnWidth(bookSelection, 6, Unit.EM);
+
+    addColumn(new TextAreaCell(), "简介", new GetValue<String>() {
 
       @Override
-      public Boolean getValue(final Book book) {
-        return book.isSelected();
+      public String getValue(final Book book) {
+        return book.getDescription();
       }
-    }, new FieldUpdater<Book, Boolean>() {
+    }, new FieldUpdater<Book, String>() {
 
       @Override
-      public void update(final int index, final Book object, final Boolean value) {
-        pendingChanges.add(new BookSelectionChange(object, value, bookService));
+      public void update(final int index, final Book object, final String value) {
+        pendingChanges.add(new BookTextAreaChange(object, value, bookService));
       }
     });
 
