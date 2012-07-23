@@ -2,9 +2,12 @@ package com.goodow.web.reader.client;
 
 import com.goodow.web.core.client.CheckField;
 import com.goodow.web.core.client.ImageField;
+import com.goodow.web.core.client.ListBoxField;
 import com.goodow.web.core.client.ResourceField;
 import com.goodow.web.core.client.RichTextField;
 import com.goodow.web.core.client.TextField;
+import com.goodow.web.core.shared.AsyncCategoryService;
+import com.goodow.web.core.shared.Category;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Resource;
 import com.goodow.web.core.shared.ResourceUploadedEvent;
@@ -24,6 +27,7 @@ import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.OrganizeButton;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ReplyButton;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 public class BookForm extends FormView implements ResourceUploadedHandler {
@@ -77,10 +81,16 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
   AsyncBookService bookService;
 
   @Inject
+  AsyncCategoryService categoryService;
+
+  @Inject
   PlaceController placeController;
 
   @Inject
   ReaderPlugin reader;
+
+  @Inject
+  ListBoxField listBoxField;
 
   static {
     bundle = GWT.create(Bundle.class);
@@ -100,6 +110,21 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
     });
   }
 
+  @Override
+  public void refresh() {
+    categoryService.getCategory().fire(
+        new Receiver<java.util.List<com.goodow.web.core.shared.Category>>() {
+
+          @Override
+          public void onSuccess(final List<Category> result) {
+            listBoxField.clear();
+            for (Category category : result) {
+              listBoxField.setValue(category);
+            }
+          }
+        });
+  }
+
   public void setInput(final Book book) {
     this.book = book;
     titleField.setValue(book.getTitle());
@@ -107,6 +132,7 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
     coverField.setValue(book.getCover());
     descField.setValue(book.getDescription());
     selectedField.setValue(book.isSelected());
+    listBoxField.setValue(book.getCategory());
   }
 
   public void submit() {
@@ -115,6 +141,7 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
     book.setCover(coverField.getValue());
     book.setAuthor(authorField.getValue());
     book.setSelected(selectedField.getValue());
+    book.setCategory(listBoxField.getValue());
     bookService.save(book).fire(new Receiver<Book>() {
       @Override
       public void onSuccess(final Book result) {
@@ -135,7 +162,10 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
     coverField.addStyleName(bundle.bookFormCss().resourceFieldCss());
     descField.setLabel("简介");
     descField.addStyleName(bundle.bookFormCss().richTextField());
+    selectedField.addStyleName(bundle.bookFormCss().utilityCss());
     selectedField.setLabel("标记为精品");
+    listBoxField.addStyleName(bundle.bookFormCss().utilityCss());
+    listBoxField.setLabel("分类");
 
     buttonBar.add(submitButton);
     buttonBar.add(cancelButton);
@@ -145,6 +175,7 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
     main.add(coverField);
     main.add(descField);
     main.add(selectedField);
+    main.add(listBoxField);
     main.add(buttonBar);
 
     sourceField.addResourceUploadedHandler(this);

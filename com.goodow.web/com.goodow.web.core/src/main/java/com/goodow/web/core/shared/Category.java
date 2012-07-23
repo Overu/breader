@@ -1,6 +1,5 @@
-package com.goodow.web.reader.shared;
+package com.goodow.web.core.shared;
 
-import com.goodow.web.core.shared.WebEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

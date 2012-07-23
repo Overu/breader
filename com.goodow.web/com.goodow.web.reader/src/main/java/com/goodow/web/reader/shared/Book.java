@@ -1,5 +1,6 @@
 package com.goodow.web.reader.shared;
 
+import com.goodow.web.core.shared.Category;
 import com.goodow.web.core.shared.Resource;
 import com.goodow.web.core.shared.WebEntity;
 

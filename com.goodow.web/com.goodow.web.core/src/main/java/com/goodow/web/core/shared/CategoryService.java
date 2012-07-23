@@ -11,24 +11,13 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.goodow.web.reader.jpa;
+package com.goodow.web.core.shared;
 
-import com.goodow.web.core.jpa.JpaWebService;
-import com.goodow.web.reader.shared.Category;
-import com.goodow.web.reader.shared.CategoryService;
 
 import java.util.List;
 
-import javax.annotation.Generated;
+public interface CategoryService extends WebService<Category> {
 
-@Generated("cloudlet")
-public class JpaCategoryService extends JpaWebService<Category> implements CategoryService {
-
-  @Override
-  public List<Category> getCategory() {
-    List<Category> result =
-        em().createQuery("select c from Category c", Category.class).getResultList();
-    return result;
-  }
+  List<Category> getCategory();
 
 }

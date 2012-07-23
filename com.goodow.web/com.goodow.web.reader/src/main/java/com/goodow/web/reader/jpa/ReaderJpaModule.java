@@ -2,7 +2,6 @@ package com.goodow.web.reader.jpa;
 
 import com.goodow.web.core.jpa.JpaModule;
 import com.goodow.web.reader.shared.BookService;
-import com.goodow.web.reader.shared.CategoryService;
 import com.goodow.web.reader.shared.LibraryService;
 
 import com.google.inject.Singleton;
@@ -19,7 +18,6 @@ public class ReaderJpaModule extends JpaModule {
     logger.finest("Install JpaServiceModule begin");
     bind(LibraryService.class).to(JpaLibraryService.class);
     bind(BookService.class).to(JpaBookService.class);
-    bind(CategoryService.class).to(JpaCategoryService.class);
     logger.finest("Install JpaServiceModule end");
   }
 }
