@@ -17,6 +17,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.user.cellview.client.CellList;
 
 import com.googlecode.mgwt.ui.client.theme.base.ListCss;
 
@@ -42,6 +43,16 @@ public class ReadResources {
     String categorContainer();
   }
 
+  public static interface CellListResources extends CellList.Resources {
+    @Override
+    @Source({CellList.Style.DEFAULT_CSS, "WaveCellList.css"})
+    CellListStyle cellListStyle();
+  }
+
+  public interface CellListStyle extends CellList.Style {
+    String cellListBasicImformation();
+  }
+
   public interface ReadHeader extends CssResource {
     String headPanel();
   }
@@ -51,14 +62,20 @@ public class ReadResources {
 
   private static final Logger logger = Logger.getLogger(ReadResources.class.getName());
   private static Bundle INSTANCE;
+  private static CellListResources CELLLISTSTYLE;
 
   static {
     logger.finest("static init start");
     INSTANCE = GWT.create(Bundle.class);
+    CELLLISTSTYLE = GWT.create(CellListResources.class);
     INSTANCE.css().ensureInjected();
     INSTANCE.categroyListCss().ensureInjected();
     INSTANCE.readHeadCss().ensureInjected();
     logger.finest("static init end");
+  }
+
+  public static CellListResources CELLLISTINSTANCE() {
+    return CELLLISTSTYLE;
   }
 
   public static Bundle INSTANCE() {

@@ -1,11 +1,13 @@
 package com.goodow.web.reader.shared;
 
+import com.goodow.web.core.shared.Category;
 import com.goodow.web.core.shared.Resource;
 import com.goodow.web.core.shared.WebEntity;
 
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlType;
@@ -34,6 +36,9 @@ public class Book extends WebEntity {
 
   @OneToOne
   private Resource cover;
+
+  @ManyToOne
+  private Category category;
 
   /**
    * @return the author
@@ -159,6 +164,20 @@ public class Book extends WebEntity {
    */
   public void setTitle(final String title) {
     this.title = title;
+  }
+
+  /**
+   * @return the category
+   */
+  public Category getCategory() {
+    return category;
+  }
+
+  /**
+   * @param category the category to set
+   */
+  public void setCategory(Category category) {
+    this.category = category;
   }
 
 }

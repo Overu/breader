@@ -17,6 +17,7 @@ import com.google.inject.Provider;
 
 import com.googlecode.mgwt.mvp.client.AnimatableDisplay;
 import com.googlecode.mgwt.mvp.client.Animation;
+import com.googlecode.mgwt.mvp.client.AnimationEndCallback;
 import com.googlecode.mgwt.ui.client.MGWTStyle;
 import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 
@@ -32,11 +33,13 @@ public class WebPlace extends Place {
     }
 
     @Override
-    public void setWidget(IsWidget widget) {
+    public void setWidget(final IsWidget widget) {
+
       if (getStartedChild() != null && getStartedChild().getWidget() == widget) {
         return;
       }
 
+      IsWidget target;
       Widget w = widget.asWidget();
       if (w instanceof ScrollPanel || w instanceof ScrollView) {
         w.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
@@ -45,16 +48,25 @@ public class WebPlace extends Place {
         fillPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
             .fillPanel());
         fillPanel.setWidget(w);
-        widget = fillPanel;
+        target = fillPanel;
+      } else {
+        target = widget;
       }
 
       currentIsFirst = !currentIsFirst;
       if (currentIsFirst) {
-        display.setFirstWidget(widget);
+        display.setFirstWidget(target);
       } else {
-        display.setSecondWidget(widget);
+        display.setSecondWidget(target);
       }
-      display.animate(animation, currentIsFirst, null);
+      display.animate(animation, currentIsFirst, new AnimationEndCallback() {
+        @Override
+        public void onAnimationEnd() {
+          if (widget instanceof WebView) {
+            ((WebView) widget).refresh();
+          }
+        }
+      });
     }
   }
 
@@ -321,9 +333,6 @@ public class WebPlace extends Place {
   private void showWidget(final AcceptsOneWidget panel,
       final AsyncCallback<AcceptsOneWidget> callback) {
     panel.setWidget(widget);
-    if (widget instanceof WebView) {
-      ((WebView) widget).refresh();
-    }
     if (widget instanceof AcceptsOneWidget) {
       if (protectedDisplay == null) {
         display = GWT.create(AnimatableDisplay.class);
