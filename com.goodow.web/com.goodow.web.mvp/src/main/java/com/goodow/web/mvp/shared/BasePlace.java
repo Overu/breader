@@ -22,7 +22,7 @@ public class BasePlace extends Place {
   private Map<Class<?>, EntityProxyId<?>> proxyClassToIds;
 
   public static final String TOKEN_PREFIX = "";
-  private static final String ID = "id";
+  public static final String ID = "id";
 
   private String path;
 
