@@ -23,5 +23,4 @@ public class TextField extends FormField<String> {
     super.start();
     main.add(textBox);
   }
-
 }

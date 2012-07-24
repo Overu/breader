@@ -37,7 +37,10 @@ public class ListBoxField extends FormField<Category> {
 
   @Override
   public Category getValue() {
-    return categorys.get(listBox.getTabIndex());
+    if (categorys != null) {
+      return categorys.get(listBox.getTabIndex());
+    }
+    return null;
   }
 
   @Override

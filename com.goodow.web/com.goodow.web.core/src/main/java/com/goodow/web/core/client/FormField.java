@@ -1,9 +1,15 @@
 package com.goodow.web.core.client;
 
+import com.google.gwt.editor.client.IsEditor;
+import com.google.gwt.editor.client.adapters.TakesValueEditor;
+import com.google.gwt.user.client.TakesValue;
 import com.google.gwt.user.client.ui.Label;
 import com.google.inject.Inject;
 
-public abstract class FormField<T> extends FlowView {
+public abstract class FormField<T> extends FlowView implements TakesValue<T>,
+    IsEditor<TakesValueEditor<T>> {
+
+  protected TakesValueEditor<T> editor;
 
   @Inject
   protected Label label;
@@ -11,13 +17,17 @@ public abstract class FormField<T> extends FlowView {
   @Inject
   protected Label message;
 
-  public abstract T getValue();
+  @Override
+  public TakesValueEditor<T> asEditor() {
+    if (editor == null) {
+      editor = TakesValueEditor.of(this);
+    }
+    return editor;
+  }
 
   public void setLabel(final String text) {
     label.setText(text);
   }
-
-  public abstract void setValue(T value);
 
   @Override
   protected void start() {

@@ -16,6 +16,8 @@ import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.editor.client.Editor;
+import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
@@ -30,14 +32,15 @@ import com.googlecode.mgwt.ui.client.widget.buttonbar.ReplyButton;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class BookForm extends FormView implements ResourceUploadedHandler {
-
+public class BookForm extends FormView implements ResourceUploadedHandler, Editor<Book> {
   interface Bundle extends ClientBundle {
 
     @Source("BookForm.css")
     Style bookFormCss();
   }
 
+  interface Driver extends SimpleBeanEditorDriver<Book, BookForm> {
+  }
   interface Style extends CssResource {
     String resourceFieldCss();
 
@@ -46,27 +49,30 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
     String utilityCss();
   }
 
+  Driver driver = GWT.create(Driver.class);
+
   Logger logger = Logger.getLogger(BookForm.class.getName());
 
   private static Bundle bundle;
 
   @Inject
-  ResourceField sourceField;
+  @Ignore
+  ResourceField source;
 
   @Inject
-  TextField titleField;
+  TextField title;
 
   @Inject
-  TextField authorField;
+  TextField author;
 
   @Inject
-  ImageField coverField;
+  ImageField cover;
 
   @Inject
-  RichTextField descField;
+  RichTextField description;
 
   @Inject
-  CheckField selectedField;
+  CheckField selected;
 
   @Inject
   ButtonBar buttonBar;
@@ -90,7 +96,7 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
   ReaderPlugin reader;
 
   @Inject
-  ListBoxField listBoxField;
+  ListBoxField category;
 
   static {
     bundle = GWT.create(Bundle.class);
@@ -114,12 +120,11 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
   public void refresh() {
     categoryService.getCategory().fire(
         new Receiver<java.util.List<com.goodow.web.core.shared.Category>>() {
-
           @Override
           public void onSuccess(final List<Category> result) {
-            listBoxField.clear();
-            for (Category category : result) {
-              listBoxField.setValue(category);
+            category.clear();
+            for (Category cate : result) {
+              category.setValue(cate);
             }
           }
         });
@@ -127,21 +132,17 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
 
   public void setInput(final Book book) {
     this.book = book;
-    titleField.setValue(book.getTitle());
-    authorField.setValue(book.getAuthor());
-    coverField.setValue(book.getCover());
-    descField.setValue(book.getDescription());
-    selectedField.setValue(book.isSelected());
-    listBoxField.setValue(book.getCategory());
+    driver.edit(book);
   }
 
   public void submit() {
-    book.setTitle(titleField.getValue());
-    book.setDescription(descField.getValue());
-    book.setCover(coverField.getValue());
-    book.setAuthor(authorField.getValue());
-    book.setSelected(selectedField.getValue());
-    book.setCategory(listBoxField.getValue());
+
+    driver.flush();
+
+    if (driver.hasErrors()) {
+      // A sub-editor reported errors
+    }
+
     bookService.save(book).fire(new Receiver<Book>() {
       @Override
       public void onSuccess(final Book result) {
@@ -153,32 +154,32 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
 
   @Override
   protected void start() {
-    sourceField.setLabel("上传图书内容 （支持EPUB, PDF, TXT, HTML）");
-    sourceField.addStyleName(bundle.bookFormCss().resourceFieldCss());
-    titleField.setLabel("书名");
-    titleField.addStyleName(bundle.bookFormCss().utilityCss());
-    authorField.setLabel("作者");
-    authorField.addStyleName(bundle.bookFormCss().utilityCss());
-    coverField.addStyleName(bundle.bookFormCss().resourceFieldCss());
-    descField.setLabel("简介");
-    descField.addStyleName(bundle.bookFormCss().richTextField());
-    selectedField.addStyleName(bundle.bookFormCss().utilityCss());
-    selectedField.setLabel("标记为精品");
-    listBoxField.addStyleName(bundle.bookFormCss().utilityCss());
-    listBoxField.setLabel("分类");
+    source.setLabel("上传图书内容 （支持EPUB, PDF, TXT, HTML）");
+    source.addStyleName(bundle.bookFormCss().resourceFieldCss());
+    title.setLabel("书名");
+    title.addStyleName(bundle.bookFormCss().utilityCss());
+    author.setLabel("作者");
+    author.addStyleName(bundle.bookFormCss().utilityCss());
+    cover.addStyleName(bundle.bookFormCss().resourceFieldCss());
+    description.setLabel("简介");
+    description.addStyleName(bundle.bookFormCss().richTextField());
+    selected.addStyleName(bundle.bookFormCss().utilityCss());
+    selected.setLabel("标记为精品");
+    category.addStyleName(bundle.bookFormCss().utilityCss());
+    category.setLabel("分类");
 
     buttonBar.add(submitButton);
     buttonBar.add(cancelButton);
 
-    main.add(sourceField);
-    main.add(titleField);
-    main.add(coverField);
-    main.add(descField);
-    main.add(selectedField);
-    main.add(listBoxField);
+    main.add(source);
+    main.add(title);
+    main.add(cover);
+    main.add(description);
+    main.add(selected);
+    main.add(category);
     main.add(buttonBar);
 
-    sourceField.addResourceUploadedHandler(this);
+    source.addResourceUploadedHandler(this);
     submitButton.addTapHandler(new TapHandler() {
       @Override
       public void onTap(final TapEvent event) {
@@ -192,6 +193,8 @@ public class BookForm extends FormView implements ResourceUploadedHandler {
         placeController.goTo(reader.myBooksPlace);
       }
     });
+
+    driver.initialize(this);
   }
 
 }
