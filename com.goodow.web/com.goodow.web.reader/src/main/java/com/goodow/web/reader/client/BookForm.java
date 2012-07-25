@@ -21,6 +21,7 @@ import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
@@ -41,10 +42,13 @@ public class BookForm extends FormView implements ResourceUploadedHandler, Edito
 
   interface Driver extends SimpleBeanEditorDriver<Book, BookForm> {
   }
+
   interface Style extends CssResource {
     String resourceFieldCss();
 
     String richTextField();
+
+    String main();
 
     String utilityCss();
   }
@@ -171,12 +175,17 @@ public class BookForm extends FormView implements ResourceUploadedHandler, Edito
     buttonBar.add(submitButton);
     buttonBar.add(cancelButton);
 
-    main.add(source);
-    main.add(title);
-    main.add(cover);
-    main.add(description);
-    main.add(selected);
-    main.add(category);
+    main.addStyleName(bundle.bookFormCss().main());
+
+    HTMLPanel htmlPanel = new HTMLPanel("");
+    htmlPanel.add(source);
+    htmlPanel.add(title);
+    htmlPanel.add(cover);
+    htmlPanel.add(description);
+    htmlPanel.add(selected);
+    htmlPanel.add(category);
+
+    main.add(htmlPanel);
     main.add(buttonBar);
 
     source.addResourceUploadedHandler(this);

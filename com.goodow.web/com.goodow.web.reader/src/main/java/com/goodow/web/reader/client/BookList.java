@@ -13,6 +13,7 @@ import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.ImageCell;
+import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -20,11 +21,16 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.cellview.client.Header;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.ListDataProvider;
+import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.ProvidesKey;
+import com.google.gwt.view.client.SelectionModel;
 import com.google.inject.Inject;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
@@ -213,32 +219,56 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
     pp.setAutoHideOnHistoryEventsEnabled(true);
     pp.setAnimationEnabled(true);
 
-    cellTable = new DataGrid<Book>(6, new ProvidesKey<Book>() {
+    ProvidesKey<Book> keyProvider = new ProvidesKey<Book>() {
 
       @Override
       public Object getKey(final Book item) {
         return item == null ? null : item.getId();
       }
-    });
+    };
+    cellTable = new DataGrid<Book>(6, keyProvider);
     cellTable.setWidth("100%");
 
-    Column<Book, Boolean> bookCheck = addColumn(new CheckboxCell(), "选择", new GetValue<Boolean>() {
+    final SelectionModel<Book> selectionModel = new MultiSelectionModel<Book>(keyProvider);
+    cellTable.setSelectionModel(selectionModel, DefaultSelectionEventManager
+        .<Book> createCheckboxManager());
+
+    final Column<Book, Boolean> bookCheck =
+        addColumn(new CheckboxCell(), "选择", new GetValue<Boolean>() {
+
+          @Override
+          public Boolean getValue(final Book book) {
+            return selectionModel.isSelected(book);
+          }
+        }, new FieldUpdater<Book, Boolean>() {
+
+          @Override
+          public void update(final int index, final Book object, final Boolean value) {
+            if (books == null) {
+              books = new ArrayList<Book>();
+            }
+            boolean b = value ? books.add(object) : books.remove(object);
+            selectionModel.setSelected(object, value);
+          }
+        });
+    Header<Boolean> header = new Header<Boolean>(new CheckboxCell()) {
 
       @Override
-      public Boolean getValue(final Book book) {
+      public Boolean getValue() {
         return false;
       }
-    }, new FieldUpdater<Book, Boolean>() {
+    };
+    header.setUpdater(new ValueUpdater<Boolean>() {
 
       @Override
-      public void update(final int index, final Book object, final Boolean value) {
-        if (books == null) {
-          books = new ArrayList<Book>();
+      public void update(final Boolean value) {
+        List<Book> visibleItems = cellTable.getVisibleItems();
+        for (int i = 0; i < visibleItems.size(); i++) {
+          bookCheck.getFieldUpdater().update(i, visibleItems.get(i), value);
         }
-        boolean b = value ? books.add(object) : books.remove(object);
       }
     });
-    cellTable.addColumn(bookCheck, "选择");
+    cellTable.addColumn(bookCheck, header);
     cellTable.setColumnWidth(bookCheck, 2, Unit.PX);
 
     Column<Book, String> bookTitle = addColumn(new EditTextCell(), "书名", new GetValue<String>() {
@@ -383,9 +413,11 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
 
       @Override
       public void onTap(final TapEvent event) {
+        Widget widget = (Widget) event.getSource();
+        int absoluteLeft = widget.getAbsoluteLeft() - 10;
+        int absoluteTop = widget.getAbsoluteTop() - 20;
+        pp.setPopupPosition(absoluteLeft, absoluteTop);
         pp.show();
-        pp.setPopupPosition(dialogButton.getAbsoluteLeft() - pp.getOffsetWidth(), dialogButton
-            .getAbsoluteTop() + 15);
       }
     });
 
