@@ -22,6 +22,8 @@ public class BooksApp extends FlowView implements AcceptsOneWidget {
   }
 
   interface Style extends CssResource {
+    String bannerPanel();
+
     String main();
 
     String placeList();
@@ -40,6 +42,9 @@ public class BooksApp extends FlowView implements AcceptsOneWidget {
   @Inject
   private PlaceList leftPanel;
 
+  @Inject
+  private UserInfoPanel userInfoPanel;
+
   // @Inject
   // private FlowPanel centerPanel;
   //
@@ -57,6 +62,7 @@ public class BooksApp extends FlowView implements AcceptsOneWidget {
   @Override
   protected void start() {
     bannerPanel.add(new Label("睿泰数字发行平台"));
+    bannerPanel.add(userInfoPanel);
 
     centerPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
         .fillPanelExpandChild());
@@ -64,6 +70,7 @@ public class BooksApp extends FlowView implements AcceptsOneWidget {
     leftPanel.addRightWidget(centerPanel);
 
     main.addStyleName(bundle.booksAppCss().main());
+    bannerPanel.addStyleName(bundle.booksAppCss().bannerPanel());
     leftPanel.addStyleName(bundle.booksAppCss().placeList());
 
     main.add(bannerPanel);

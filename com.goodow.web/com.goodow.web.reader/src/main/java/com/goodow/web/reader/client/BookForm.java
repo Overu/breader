@@ -50,6 +50,8 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
 
     String richTextField();
 
+    String main();
+
     String utilityCss();
   }
 

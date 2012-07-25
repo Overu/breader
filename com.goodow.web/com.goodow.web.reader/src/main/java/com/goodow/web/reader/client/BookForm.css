@@ -1,5 +1,16 @@
 @CHARSET "UTF-8";
 
+.main {
+  height: 100%;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.main>div:first-child {
+  overflow: auto;
+  -webkit-box-flex: 1;
+}
+
 .utilityCss {
   margin: 3px;
 }
