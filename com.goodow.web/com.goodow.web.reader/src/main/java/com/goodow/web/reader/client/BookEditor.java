@@ -1,5 +1,7 @@
 package com.goodow.web.reader.client;
 
+import com.goodow.web.core.shared.AsyncSectionService;
+import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Section;
 import com.goodow.web.reader.shared.Book;
 
@@ -17,14 +19,18 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.TreeViewModel;
+import com.google.gwt.view.client.TreeViewModel.DefaultNodeInfo;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class BookContentEditor extends FormView<Book> {
+@Singleton
+public class BookEditor extends FormView<Book> {
 
-  interface Binder extends UiBinder<Widget, BookContentEditor> {
+  interface Binder extends UiBinder<Widget, BookEditor> {
   }
 
   private class DefaultCell extends AbstractCell<Section> {
@@ -37,24 +43,29 @@ public class BookContentEditor extends FormView<Book> {
     }
   }
 
-  private class SectionDataProvider extends AsyncDataProvider<List<Section>> {
+  private class SectionDataProvider extends AsyncDataProvider<Section> {
 
     @Override
-    protected void onRangeChanged(final HasData<List<Section>> display) {
-
+    protected void onRangeChanged(final HasData<Section> display) {
+      sectionService.find(book).fire(new Receiver<List<Section>>() {
+        @Override
+        public void onSuccess(final List<Section> result) {
+          display.setRowCount(result.size());
+          display.setRowData(0, result);
+        }
+      });
     }
-
   }
 
   private class SectionTreeViewModel implements TreeViewModel {
     @Override
     public <T> NodeInfo<?> getNodeInfo(final T value) {
-      if (value == null && book != null) {
-        return createNodeInfo(book.getSections());
+      if (value == null) {
+        return rootNode;
       } else {
-        Section item = (Section) value;
-        if (item.getChildren() != null) {
-          return createNodeInfo(item.getChildren());
+        Section section = (Section) value;
+        if (section.getChildren() != null) {
+          return createNodeInfo(section.getChildren());
         }
       }
       return null;
@@ -71,18 +82,23 @@ public class BookContentEditor extends FormView<Book> {
     }
   }
 
-  private SectionDataProvider dataProvider;
+  DefaultNodeInfo<Section> rootNode;
 
+  @Inject
+  AsyncSectionService sectionService;
+
+  private SectionDataProvider dataProvider;
   Book book;
-  private final Logger logger = Logger.getLogger(BookContentEditor.class.getName());
+
+  private final Logger logger = Logger.getLogger(BookEditor.class.getName());
 
   private static Binder uiBinder = GWT.create(Binder.class);
 
   @UiField(provided = true)
-  CellTree sectionEditor;
+  CellTree sectionsTree;
 
   @UiField
-  SimplePanel resourceEditor;
+  SimplePanel editorPanel;
 
   MultiSelectionModel<Section> selectionModel;
 
@@ -105,6 +121,8 @@ public class BookContentEditor extends FormView<Book> {
   @Override
   protected void start() {
     dataProvider = new SectionDataProvider();
+    rootNode = new DefaultNodeInfo<Section>(dataProvider, getCell(), selectionModel, null);
+
     selectionModel = new MultiSelectionModel<Section>();
     selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
       @Override
@@ -114,8 +132,8 @@ public class BookContentEditor extends FormView<Book> {
     });
 
     CellTree.Resources res = GWT.create(CellTree.BasicResources.class);
-    sectionEditor = new CellTree(new SectionTreeViewModel(), null, res);
-    sectionEditor.setAnimationEnabled(true);
+    sectionsTree = new CellTree(new SectionTreeViewModel(), null, res);
+    sectionsTree.setAnimationEnabled(true);
 
     // Create the UiBinder.
     Widget widget = uiBinder.createAndBindUi(this);

@@ -99,6 +99,12 @@ public class ReaderPlugin {
   @Inject
   WebPlace booksViewPlace;
 
+  @Inject
+  WebPlace editBookPlace;
+
+  @Inject
+  Provider<BookEditor> contentEditor;
+
   public void start() {
 
     MGWTClientBundle bundle = MGWTStyle.getTheme().getMGWTClientBundle();
@@ -167,6 +173,7 @@ public class ReaderPlugin {
     booksPlace.addChild(othersBookPlace);
     booksPlace.addChild(selectedBooksPlace);
     booksPlace.addChild(bookcategoryPlace);
+    booksPlace.addChild(editBookPlace);
 
     createBookPlace.setPath("create");
     createBookPlace.setAnimation(Animation.SLIDE);
@@ -200,5 +207,10 @@ public class ReaderPlugin {
     newBookPlace.setAnimation(Animation.SLIDE);
     newBookPlace.setTitle("制作新书");
     newBookPlace.setWidget(bookForm);
+
+    editBookPlace.setPath("edit");
+    editBookPlace.setAnimation(Animation.SLIDE);
+    editBookPlace.setTitle("编辑内容");
+    editBookPlace.setWidget(contentEditor);
   }
 }

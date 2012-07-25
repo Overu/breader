@@ -64,6 +64,7 @@ public class JpaBookService extends JpaWebService<Book> implements BookService {
         section.setResource(sectionRes);
         section.setDisplayOrder(++i);
         section.setTitle(toc.getTitle());
+        section.setContainer(book);
         sectionService.save(section);
       }
 
