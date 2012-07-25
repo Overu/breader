@@ -44,13 +44,12 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
   }
 
   interface Style extends CssResource {
+
     String main();
 
     String resourceFieldCss();
 
     String richTextField();
-
-    String main();
 
     String utilityCss();
   }
