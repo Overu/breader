@@ -1,5 +1,6 @@
 package com.goodow.web.reader.client;
 
+import com.goodow.web.core.client.ResourceField;
 import com.goodow.web.core.shared.AsyncSectionService;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Section;
@@ -88,6 +89,7 @@ public class BookEditor extends FormView<Book> {
   AsyncSectionService sectionService;
 
   private SectionDataProvider dataProvider;
+
   Book book;
 
   private final Logger logger = Logger.getLogger(BookEditor.class.getName());
@@ -99,6 +101,9 @@ public class BookEditor extends FormView<Book> {
 
   @UiField
   SimplePanel editorPanel;
+
+  @Inject
+  ResourceField resourceField;
 
   MultiSelectionModel<Section> selectionModel;
 
@@ -114,8 +119,7 @@ public class BookEditor extends FormView<Book> {
   @Override
   public void setValue(final Book value) {
     this.book = value;
-    if (book.getSections() != null) {
-    }
+    this.resourceField.setValue(value.getCover());
   }
 
   @Override
@@ -134,9 +138,10 @@ public class BookEditor extends FormView<Book> {
     CellTree.Resources res = GWT.create(CellTree.BasicResources.class);
     sectionsTree = new CellTree(new SectionTreeViewModel(), null, res);
     sectionsTree.setAnimationEnabled(true);
-
     // Create the UiBinder.
     Widget widget = uiBinder.createAndBindUi(this);
+
+    editorPanel.setWidget(resourceField);
     main.add(widget);
   }
 

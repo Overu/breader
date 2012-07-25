@@ -31,7 +31,7 @@ public class ResourceField extends FormField<Resource> {
   FormPanel formPanel;
 
   @Inject
-  SimplePanel editor;
+  SimplePanel editorPanel;
 
   @Inject
   ClientJSONMarshaller marshaller;
@@ -54,7 +54,7 @@ public class ResourceField extends FormField<Resource> {
   @Override
   public void setValue(final Resource value) {
     this.resource = value;
-    registry.showWidget(editor, resource);
+    registry.showWidget(editorPanel, resource);
   }
 
   @Override
