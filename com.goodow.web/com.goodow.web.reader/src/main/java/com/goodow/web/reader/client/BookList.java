@@ -12,11 +12,17 @@ import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.ImageCell;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
-import com.google.gwt.safehtml.client.SafeHtmlTemplates;
-import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
+import com.google.gwt.user.client.ui.CheckBox;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.inject.Inject;
@@ -29,14 +35,12 @@ import com.googlecode.mgwt.ui.client.widget.buttonbar.RefreshButton;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.TrashButton;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BookList extends FlowView implements Receiver<List<Book>> {
-
-  public interface Template extends SafeHtmlTemplates {
-    @SafeHtmlTemplates.Template("<div class=\"{0}\"><table><tr><td><img width='50px' height='80px' src='{1}'/></td><td valign=\"top\"><div>{2}</div><div>{3}</div><div>{4}</div></td></tr></table></div>")
-    SafeHtml content(String classCss, String url, String title, String author, String description);
-  }
 
   private static class BookSelectionChange extends PendingChange<Boolean> {
 
@@ -107,6 +111,8 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
   // @Inject
   // private ScrollPanel scrollPanel;
 
+  private static Map<String, ColumnEntity<Book>> columns;
+
   private DataGrid<Book> cellTable;
 
   private ListDataProvider<Book> dataProvider;
@@ -116,6 +122,8 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
   private List<PendingChange<?>> pendingChanges = new ArrayList<BookList.PendingChange<?>>();
 
   ArrayList<Book> books;
+
+  ListHandler<Book> listHandler;
 
   @Inject
   ButtonBar buttonBar;
@@ -127,6 +135,9 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
   ActionButton actionButton;
 
   @Inject
+  ActionButton dialogButton;
+
+  @Inject
   TrashButton deleteButton;
 
   @Inject
@@ -134,8 +145,6 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
 
   @Inject
   CellListResources cellListResources;
-
-  // private static Template TEMPLATE = GWT.create(Template.class);
 
   public <C> Column<Book, C> addColumn(final Cell<C> cell, final String headerString,
       final GetValue<C> getValue, final FieldUpdater<Book, C> fieldUpdater) {
@@ -153,7 +162,7 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
       editableCells.add((AbstractEditableCell<?, ?>) cell);
     }
 
-    cellTable.addColumn(column, headerString);
+    // cellTable.addColumn(column, headerString);
     return column;
   }
 
@@ -178,6 +187,8 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
   public void onSuccess(final List<Book> result) {
     if (cellTable != null) {
       dataProvider.setList(result);
+      listHandler.setList(dataProvider.getList());
+      cellTable.addColumnSortHandler(listHandler);
       if (!dataProvider.getDataDisplays().contains(cellTable)) {
         dataProvider.addDataDisplay(cellTable);
       }
@@ -196,6 +207,11 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
   protected void start() {
     editableCells = new ArrayList<AbstractEditableCell<?, ?>>();
     dataProvider = new ListDataProvider<Book>();
+    listHandler = new ListHandler<Book>(dataProvider.getList());
+    columns = new HashMap<String, ColumnEntity<Book>>();
+    final PopupPanel pp = new PopupPanel(true);
+    pp.setAutoHideOnHistoryEventsEnabled(true);
+    pp.setAnimationEnabled(true);
 
     cellTable = new DataGrid<Book>(6, new ProvidesKey<Book>() {
 
@@ -204,7 +220,7 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
         return item == null ? null : item.getId();
       }
     });
-    // cellTable.setMinimumTableWidth(140, Unit.EM);
+    cellTable.setWidth("100%");
 
     Column<Book, Boolean> bookCheck = addColumn(new CheckboxCell(), "选择", new GetValue<Boolean>() {
 
@@ -222,7 +238,8 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
         boolean b = value ? books.add(object) : books.remove(object);
       }
     });
-    cellTable.setColumnWidth(bookCheck, 3, Unit.EM);
+    cellTable.addColumn(bookCheck, "选择");
+    cellTable.setColumnWidth(bookCheck, 2, Unit.PX);
 
     Column<Book, String> bookTitle = addColumn(new EditTextCell(), "书名", new GetValue<String>() {
 
@@ -237,7 +254,16 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
         pendingChanges.add(new BookTitleChange(object, value, bookService));
       }
     });
-    cellTable.setColumnWidth(bookTitle, 13, Unit.EM);
+    bookTitle.setSortable(true);
+    listHandler.setComparator(bookTitle, new Comparator<Book>() {
+
+      @Override
+      public int compare(final Book o1, final Book o2) {
+        return o1.getTitle().compareTo(o2.getTitle());
+      }
+    });
+    ColumnEntity<Book> bookTitleColumn = new ColumnEntity<Book>(bookTitle, 1, 4);
+    columns.put("书名", bookTitleColumn);
 
     Column<Book, Boolean> bookSelection =
         addColumn(new CheckboxCell(), "是否推荐", new GetValue<Boolean>() {
@@ -253,30 +279,69 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
             pendingChanges.add(new BookSelectionChange(object, value, bookService));
           }
         });
-    cellTable.setColumnWidth(bookSelection, 6, Unit.EM);
+    ColumnEntity<Book> bookSelectionColumn = new ColumnEntity<Book>(bookSelection, 2, 4);
+    columns.put("是否推荐", bookSelectionColumn);
 
-    addColumn(new TextAreaCell(), "简介", new GetValue<String>() {
+    final Column<Book, String> bookDescription =
+        addColumn(new TextAreaCell(), "简介", new GetValue<String>() {
+
+          @Override
+          public String getValue(final Book book) {
+            return book.getDescription();
+          }
+        }, new FieldUpdater<Book, String>() {
+
+          @Override
+          public void update(final int index, final Book object, final String value) {
+            pendingChanges.add(new BookTextAreaChange(object, value, bookService));
+          }
+        });
+    ColumnEntity<Book> bookDescriptionColumn = new ColumnEntity<Book>(bookDescription, 3, 4);
+    columns.put("简介", bookDescriptionColumn);
+
+    Column<Book, String> bookImage = addColumn(new ImageCell(), "图片", new GetValue<String>() {
 
       @Override
       public String getValue(final Book book) {
-        return book.getDescription();
+        return GWT.getModuleBaseURL() + "resources/" + book.getCover().getId();
       }
-    }, new FieldUpdater<Book, String>() {
+    }, null);
+    ColumnEntity<Book> bookImageColumn = new ColumnEntity<Book>(bookImage, 4, 4);
+    columns.put("图片", bookImageColumn);
 
-      @Override
-      public void update(final int index, final Book object, final String value) {
-        pendingChanges.add(new BookTextAreaChange(object, value, bookService));
-      }
-    });
+    FlowPanel flowPanel = new FlowPanel();
+    for (final Map.Entry<String, ColumnEntity<Book>> entry : columns.entrySet()) {
+      final Column<Book, ?> column = entry.getValue().getColumn();
+      String title = entry.getKey();
+      final CheckBox checkBox = new CheckBox(title);
+      flowPanel.add(checkBox);
+      cellTable.addColumn(column, title);
+      cellTable.setColumnWidth(column, entry.getValue().getWidth(), Unit.PX);
+      checkBox.setValue(true);
+      checkBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+
+        @Override
+        public void onValueChange(final ValueChangeEvent<Boolean> event) {
+          if (event.getValue()) {
+            cellTable.setColumnWidth(column, entry.getValue().getWidth(), Unit.PX);
+          } else {
+            cellTable.setColumnWidth(column, 0, Unit.PX);
+          }
+        }
+      });
+    }
+    pp.add(flowPanel);
 
     // scrollPanel.setWidget(new SimplePanel(cellTable));
     // scrollPanel.setScrollingEnabledX(false);
     // scrollPanel.addStyleName(AppBundle.INSTANCE.css().webKitFlex());
+
     cellTable.addStyleName(AppBundle.INSTANCE.css().webKitFlex());
 
     buttonBar.add(refreshButton);
     buttonBar.add(deleteButton);
     buttonBar.add(actionButton);
+    buttonBar.add(dialogButton);
 
     main.addStyleName(AppBundle.INSTANCE.css().fullScreenStyle());
 
@@ -289,6 +354,7 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
       @Override
       public void onTap(final TapEvent event) {
         refresh();
+
       }
     });
 
@@ -310,6 +376,16 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
         pendingChanges.clear();
 
         dataProvider.refresh();
+      }
+    });
+
+    dialogButton.addTapHandler(new TapHandler() {
+
+      @Override
+      public void onTap(final TapEvent event) {
+        pp.show();
+        pp.setPopupPosition(dialogButton.getAbsoluteLeft() - pp.getOffsetWidth(), dialogButton
+            .getAbsoluteTop() + 15);
       }
     });
 
