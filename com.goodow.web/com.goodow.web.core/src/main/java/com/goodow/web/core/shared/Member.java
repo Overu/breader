@@ -1,6 +1,7 @@
 package com.goodow.web.core.shared;
 
 import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
@@ -16,11 +17,11 @@ import javax.persistence.Table;
 @Table(name = "t_member")
 public class Member extends WebEntity {
 
-  @org.hibernate.annotations.Type(type = "principal")
+  @Type(type = "principal")
   @Columns(columns = {@Column(name = "principalType"), @Column(name = "principalName")})
-  private Principal principal;
+  private WebEntity principal;
 
-  @org.hibernate.annotations.Type(type = "role")
+  @Type(type = "role")
   @Columns(columns = {@Column(name = "roleType"), @Column(name = "roleName")})
   private Role role;
 
@@ -31,7 +32,7 @@ public class Member extends WebEntity {
     return comment;
   }
 
-  public Principal getPrincipal() {
+  public WebEntity getPrincipal() {
     return principal;
   }
 
@@ -43,7 +44,7 @@ public class Member extends WebEntity {
     this.comment = comment;
   }
 
-  public void setPrincipal(final Principal principal) {
+  public void setPrincipal(final WebEntity principal) {
     this.principal = principal;
   }
 

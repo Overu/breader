@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 @Entity
 @Table(name = "t_organization")
-public class Organization extends Group implements Principal {
+public class Organization extends Group {
 
   protected String url;
 

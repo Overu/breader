@@ -5,6 +5,8 @@ import com.goodow.web.core.servlet.ServletMessage;
 import com.goodow.web.core.shared.CategoryService;
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.Resource;
+import com.goodow.web.core.shared.ResourceService;
+import com.goodow.web.core.shared.SectionService;
 import com.goodow.web.reader.shared.Book;
 import com.goodow.web.reader.shared.BookService;
 
@@ -13,6 +15,7 @@ import com.google.inject.Provider;
 
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -23,7 +26,13 @@ public class BookTest extends ExampleTest {
   BookService bookService;
 
   @Inject
+  ResourceService resService;
+
+  @Inject
   CategoryService categoryService;
+
+  @Inject
+  SectionService sectionService;
 
   @Inject
   JSONMarshaller jsonMarshaller;
@@ -49,6 +58,22 @@ public class BookTest extends ExampleTest {
   }
 
   @Test
+  public void testCreateBook() throws IOException {
+    Book book = new Book();
+    book.setTitle("Good");
+    bookService.save(book);
+
+    Resource resource = addResource(book);
+    addResource(book);
+
+    List<Resource> resources = resService.find(book);
+    assertEquals(2, resources.size());
+
+    Resource result = resService.find(resource.getId());
+    assertEquals(resource.getMimeType(), result.getMimeType());
+  }
+
+  @Test
   public void testEPubBook() {
     try {
       InputStream in = BookTest.class.getResourceAsStream("/test-data/book1.epub");
@@ -66,6 +91,15 @@ public class BookTest extends ExampleTest {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  @Test
+  public void testGetResource() {
+    Resource result = resService.find("fe924b75-44d2-4467-995d-961424f152be");
+    System.out.println(result.getMimeType());
+
+    Book b = bookService.find(result.getContainer().getId());
+    assertEquals(b, result.getContainer());
   }
 
   @Test
@@ -87,5 +121,18 @@ public class BookTest extends ExampleTest {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * @param book
+   * @return
+   * @throws IOException
+   */
+  private Resource addResource(final Book book) throws IOException {
+    ByteArrayInputStream in = new ByteArrayInputStream("content".getBytes());
+    Resource resource = ServletMessage.createResource(in, "book2.epub", "application/epub+zip");
+    resource.setContainer(book);
+    resService.save(resource);
+    return resource;
   }
 }

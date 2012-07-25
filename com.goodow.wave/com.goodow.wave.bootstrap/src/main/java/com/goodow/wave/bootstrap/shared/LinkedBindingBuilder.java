@@ -14,6 +14,7 @@
 package com.goodow.wave.bootstrap.shared;
 
 import com.google.gwt.inject.client.AsyncProvider;
+import com.google.inject.Provider;
 
 public interface LinkedBindingBuilder<T> {
   // void to(Class<? extends T> implementation);
@@ -21,4 +22,6 @@ public interface LinkedBindingBuilder<T> {
   void toAsyncProvider(AsyncProvider<? extends T> provider);
 
   void toInstance(T instance);
+
+  void toProvider(Provider<? extends T> provider);
 }

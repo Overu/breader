@@ -7,6 +7,7 @@ import com.goodow.web.core.jpa.JpaResourceService;
 import com.goodow.web.core.jpa.JpaWebService;
 import com.goodow.web.core.servlet.ServletMessage;
 import com.goodow.web.core.shared.Resource;
+import com.goodow.web.core.shared.Section;
 import com.goodow.web.reader.shared.Book;
 import com.goodow.web.reader.shared.BookService;
 
@@ -20,6 +21,7 @@ import java.util.List;
 
 import javax.annotation.Generated;
 
+import nl.siegmann.epublib.domain.TOCReference;
 import nl.siegmann.epublib.epub.EpubReader;
 
 /**
@@ -30,6 +32,9 @@ public class JpaBookService extends JpaWebService<Book> implements BookService {
 
   @Inject
   JpaResourceService resService;
+
+  @Inject
+  JpaSectionService sectionService;
 
   @Override
   @Transactional
@@ -46,6 +51,21 @@ public class JpaBookService extends JpaWebService<Book> implements BookService {
       Resource coverRes =
           ServletMessage.createResource(cover.getInputStream(), cover.getTitle(), cover
               .getMediaType().toString());
+
+      int i = 0;
+      for (TOCReference toc : b.getTableOfContents().getTocReferences()) {
+        nl.siegmann.epublib.domain.Resource tocRes = toc.getResource();
+        Resource sectionRes =
+            ServletMessage.createResource(tocRes.getInputStream(), tocRes.getTitle(), tocRes
+                .getMediaType().toString());
+        resService.save(sectionRes);
+
+        Section section = new Section();
+        section.setResource(sectionRes);
+        section.setDisplayOrder(++i);
+        section.setTitle(toc.getTitle());
+        sectionService.save(section);
+      }
 
       resService.save(coverRes);
 

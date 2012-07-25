@@ -31,7 +31,7 @@ public class ResourceServlet extends HttpServlet {
     String uri = req.getRequestURI();
     String id = uri.substring(uri.lastIndexOf("/") + 1);
     Resource resource = resourceService.find(id);
-    String contentType = resource.getContentType();
+    String contentType = resource.getMimeType();
     if (contentType != null) {
       resp.setContentType(contentType);
     }

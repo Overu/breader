@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.FileUpload;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
 import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteHandler;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 
 import java.util.logging.Logger;
@@ -30,7 +31,13 @@ public class ResourceField extends FormField<Resource> {
   FormPanel formPanel;
 
   @Inject
+  SimplePanel editor;
+
+  @Inject
   ClientJSONMarshaller marshaller;
+
+  @Inject
+  UIRegistry registry;
 
   Resource resource;
 
@@ -47,6 +54,7 @@ public class ResourceField extends FormField<Resource> {
   @Override
   public void setValue(final Resource value) {
     this.resource = value;
+    registry.showWidget(editor, resource);
   }
 
   @Override

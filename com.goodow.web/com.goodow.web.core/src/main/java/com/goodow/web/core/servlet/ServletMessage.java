@@ -61,7 +61,7 @@ public class ServletMessage {
     UUID uuid = UUID.randomUUID();
     media.setId(uuid.toString());
     media.setFileName(fileName);
-    media.setContentType(contentType);
+    media.setMimeType(contentType);
     String filePath = "D:/DevData/resource/" + media.getId();
     media.setPath(filePath);
     InputStream in = null;

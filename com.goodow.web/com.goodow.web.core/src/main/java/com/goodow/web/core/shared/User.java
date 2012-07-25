@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 @Entity
 @Table(name = "t_user")
-public class User extends WebEntity implements Principal {
+public class User extends WebEntity {
 
   @NotNull(message = "你必须指定用户名")
   private String loginId;

@@ -13,10 +13,12 @@ import com.google.web.bindery.autobean.vm.impl.TypeUtils;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 public class JpaWebService<E extends WebEntity> implements WebService<E> {
   private static final Logger logger = Logger.getLogger(JpaWebService.class.getName());
@@ -36,6 +38,14 @@ public class JpaWebService<E extends WebEntity> implements WebService<E> {
   @Override
   public E find(final String id) {
     return em.get().find(getEntityClass(), id);
+  }
+
+  @Override
+  public List<E> find(final WebEntity container) {
+    String hsql = "select e from " + getEntityClass().getName() + " e where e.container=:container";
+    TypedQuery<E> query = em.get().createQuery(hsql, getEntityClass());
+    query.setParameter("container", container);
+    return query.getResultList();
   }
 
   @Override

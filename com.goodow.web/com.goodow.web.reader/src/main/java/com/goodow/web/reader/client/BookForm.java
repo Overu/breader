@@ -21,6 +21,7 @@ import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
@@ -32,7 +33,7 @@ import com.googlecode.mgwt.ui.client.widget.buttonbar.ReplyButton;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class BookForm extends FormView implements ResourceUploadedHandler, Editor<Book> {
+public class BookForm extends FormView<Book> implements ResourceUploadedHandler, Editor<Book> {
   interface Bundle extends ClientBundle {
 
     @Source("BookForm.css")
@@ -41,7 +42,10 @@ public class BookForm extends FormView implements ResourceUploadedHandler, Edito
 
   interface Driver extends SimpleBeanEditorDriver<Book, BookForm> {
   }
+
   interface Style extends CssResource {
+    String main();
+
     String resourceFieldCss();
 
     String richTextField();
@@ -106,12 +110,17 @@ public class BookForm extends FormView implements ResourceUploadedHandler, Edito
   protected Book book;
 
   @Override
+  public Book getValue() {
+    return book;
+  }
+
+  @Override
   public void onResourceUpload(final ResourceUploadedEvent event) {
     Resource resource = event.getNewResource();
     bookService.extract(resource).fire(new Receiver<Book>() {
       @Override
       public void onSuccess(final Book result) {
-        setInput(result);
+        setValue(result);
       }
     });
   }
@@ -130,8 +139,9 @@ public class BookForm extends FormView implements ResourceUploadedHandler, Edito
         });
   }
 
-  public void setInput(final Book book) {
-    this.book = book;
+  @Override
+  public void setValue(final Book value) {
+    this.book = value;
     driver.edit(book);
   }
 
@@ -171,12 +181,17 @@ public class BookForm extends FormView implements ResourceUploadedHandler, Edito
     buttonBar.add(submitButton);
     buttonBar.add(cancelButton);
 
-    main.add(source);
-    main.add(title);
-    main.add(cover);
-    main.add(description);
-    main.add(selected);
-    main.add(category);
+    main.addStyleName(bundle.bookFormCss().main());
+
+    HTMLPanel htmlPanel = new HTMLPanel("");
+    htmlPanel.add(source);
+    htmlPanel.add(title);
+    htmlPanel.add(cover);
+    htmlPanel.add(description);
+    htmlPanel.add(selected);
+    htmlPanel.add(category);
+
+    main.add(htmlPanel);
     main.add(buttonBar);
 
     source.addResourceUploadedHandler(this);

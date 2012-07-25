@@ -1,6 +1,7 @@
 package com.goodow.web.core.shared;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.type.StringType;
 import org.hibernate.usertype.UserType;
@@ -35,9 +36,9 @@ public class PrincipalType implements UserType {
     if (o1 == null || o2 == null) {
       return false;
     }
-    final Role role1 = (Role) o1;
-    final Role role2 = (Role) o2;
-    return role1.getClass() == role2.getClass() && role1.name().equals(role2.name());
+    final WebEntity p1 = (WebEntity) o1;
+    final WebEntity p2 = (WebEntity) o2;
+    return p1.getClass() == p2.getClass() && p1.getId().equals(p2.getId());
   }
 
   @Override
@@ -53,20 +54,11 @@ public class PrincipalType implements UserType {
   @Override
   public Object nullSafeGet(final ResultSet resultSet, final String[] names,
       final SessionImplementor session, final Object owner) throws HibernateException, SQLException {
-    try {
-      String type = StringType.INSTANCE.nullSafeGet(resultSet, names[0], session);
-      String name = StringType.INSTANCE.nullSafeGet(resultSet, names[1], session);
-      if (type != null && name != null) {
-        Class<?> clazz = Class.forName(type);
-        if (Enum.class.isAssignableFrom(clazz)) {
-          Class<? extends Enum> enumClass = (Class<? extends Enum>) clazz;
-          return Enum.valueOf(enumClass, name);
-        } else {
-          // TODO load entity from db
-        }
-      }
-    } catch (Throwable t) {
-      t.printStackTrace();
+    String type = StringType.INSTANCE.nullSafeGet(resultSet, names[0], session);
+    String id = StringType.INSTANCE.nullSafeGet(resultSet, names[1], session);
+    if (type != null && id != null) {
+      Object result = ((Session) session).get(type, id);
+      return result;
     }
     return null;
   }
@@ -78,9 +70,9 @@ public class PrincipalType implements UserType {
       StringType.INSTANCE.nullSafeSet(st, null, index, session);
       StringType.INSTANCE.nullSafeSet(st, null, index + 1, session);
     } else {
-      Role role = (Role) value;
-      StringType.INSTANCE.nullSafeSet(st, role.getClass().getName(), index, session);
-      StringType.INSTANCE.nullSafeSet(st, role.name(), index + 1, session);
+      WebEntity entity = (WebEntity) value;
+      StringType.INSTANCE.nullSafeSet(st, entity.getClass().getName(), index, session);
+      StringType.INSTANCE.nullSafeSet(st, entity.getId(), index + 1, session);
     }
   }
 
@@ -92,7 +84,7 @@ public class PrincipalType implements UserType {
 
   @Override
   public Class<?> returnedClass() {
-    return Role.class;
+    return WebEntity.class;
   }
 
   @Override
