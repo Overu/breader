@@ -17,4 +17,8 @@ public abstract class NamedElement extends WebEntity {
     this.name = value;
   }
 
+  @Override
+  public String toString() {
+    return name;
+  }
 }

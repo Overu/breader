@@ -56,14 +56,14 @@ public class ServletMessage {
   private static final String FALSE = "false";
 
   public static Resource createResource(final InputStream is, final String fileName,
-      final String contentType) throws IOException {
-    Resource media = new Resource();
+      final String mimeType) throws IOException {
+    Resource resource = new Resource();
     UUID uuid = UUID.randomUUID();
-    media.setId(uuid.toString());
-    media.setFileName(fileName);
-    media.setMimeType(contentType);
-    String filePath = "D:/DevData/resource/" + media.getId();
-    media.setPath(filePath);
+    resource.setId(uuid.toString());
+    resource.setFileName(fileName);
+    resource.setMimeType(mimeType);
+    String filePath = "D:/DevData/resource/" + resource.getId();
+    resource.setPath(filePath);
     InputStream in = null;
     OutputStream out = null;
     try {
@@ -81,7 +81,7 @@ public class ServletMessage {
       IOUtils.closeQuietly(in);
       IOUtils.closeQuietly(out);
     }
-    return media;
+    return resource;
   }
 
   public static void writeResource(final Resource resource, final OutputStream out) throws IOException {

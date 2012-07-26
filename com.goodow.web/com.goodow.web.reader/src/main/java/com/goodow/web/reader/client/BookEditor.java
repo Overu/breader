@@ -1,9 +1,9 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.client.ResourceField;
 import com.goodow.web.core.shared.AsyncSectionService;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Section;
+import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.reader.shared.Book;
 
 import com.google.gwt.cell.client.AbstractCell;
@@ -16,7 +16,6 @@ import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
-import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.TreeViewModel;
@@ -24,8 +23,8 @@ import com.google.gwt.view.client.TreeViewModel.DefaultNodeInfo;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 @Singleton
@@ -46,9 +45,15 @@ public class BookEditor extends FormView<Book> {
 
   private class SectionDataProvider extends AsyncDataProvider<Section> {
 
+    private WebEntity continer;
+
+    private SectionDataProvider(final WebEntity container) {
+      this.continer = container;
+    }
+
     @Override
     protected void onRangeChanged(final HasData<Section> display) {
-      sectionService.find(book).fire(new Receiver<List<Section>>() {
+      sectionService.find(continer).fire(new Receiver<List<Section>>() {
         @Override
         public void onSuccess(final List<Section> result) {
           display.setRowCount(result.size());
@@ -62,24 +67,19 @@ public class BookEditor extends FormView<Book> {
     @Override
     public <T> NodeInfo<?> getNodeInfo(final T value) {
       if (value == null) {
+        SectionDataProvider dataProvider = new SectionDataProvider(book);
+        rootNode = new DefaultNodeInfo<Section>(dataProvider, getCell(), selectionModel, null);
         return rootNode;
       } else {
         Section section = (Section) value;
-        if (section.getChildren() != null) {
-          return createNodeInfo(section.getChildren());
-        }
+        SectionDataProvider dataProvider = new SectionDataProvider(section);
+        return new DefaultNodeInfo<Section>(dataProvider, getCell(), selectionModel, null);
       }
-      return null;
     }
 
     @Override
     public boolean isLeaf(final Object value) {
-      return value != null && ((Section) value).getChildren() == null;
-    }
-
-    private DefaultNodeInfo<Section> createNodeInfo(final List<Section> sections) {
-      ListDataProvider<Section> dataProvider = new ListDataProvider<Section>(sections);
-      return new DefaultNodeInfo<Section>(dataProvider, getCell(), selectionModel, null);
+      return false;
     }
   }
 
@@ -87,8 +87,6 @@ public class BookEditor extends FormView<Book> {
 
   @Inject
   AsyncSectionService sectionService;
-
-  private SectionDataProvider dataProvider;
 
   Book book;
 
@@ -103,7 +101,7 @@ public class BookEditor extends FormView<Book> {
   SimplePanel editorPanel;
 
   @Inject
-  ResourceField resourceField;
+  SectionEditor selectionEditor;
 
   MultiSelectionModel<Section> selectionModel;
 
@@ -119,19 +117,20 @@ public class BookEditor extends FormView<Book> {
   @Override
   public void setValue(final Book value) {
     this.book = value;
-    this.resourceField.setValue(value.getCover());
   }
 
   @Override
   protected void start() {
-    dataProvider = new SectionDataProvider();
-    rootNode = new DefaultNodeInfo<Section>(dataProvider, getCell(), selectionModel, null);
 
     selectionModel = new MultiSelectionModel<Section>();
     selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
       @Override
       public void onSelectionChange(final SelectionChangeEvent event) {
-        List<Section> selected = new ArrayList<Section>(selectionModel.getSelectedSet());
+        Set<Section> selectedSet = selectionModel.getSelectedSet();
+        if (selectedSet.size() == 1) {
+          Section section = selectedSet.iterator().next();
+          selectionEditor.setValue(section);
+        }
       }
     });
 
@@ -141,7 +140,7 @@ public class BookEditor extends FormView<Book> {
     // Create the UiBinder.
     Widget widget = uiBinder.createAndBindUi(this);
 
-    editorPanel.setWidget(resourceField);
+    editorPanel.setWidget(selectionEditor);
     main.add(widget);
   }
 

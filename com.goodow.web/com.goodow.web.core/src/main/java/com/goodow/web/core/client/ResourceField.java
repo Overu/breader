@@ -63,6 +63,7 @@ public class ResourceField extends FormField<Resource> {
     fileUpload.setName("attachment");
     formPanel.add(fileUpload);
     main.add(formPanel);
+    main.add(editorPanel);
     formPanel.setMethod("POST");
     formPanel.setEncoding("multipart/form-data");
     formPanel.setAction(GWT.getModuleBaseURL() + "resources");

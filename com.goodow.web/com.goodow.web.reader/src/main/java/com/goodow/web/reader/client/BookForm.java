@@ -55,9 +55,9 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
     String utilityCss();
   }
 
-  Driver driver = GWT.create(Driver.class);
+  private static Driver driver = GWT.create(Driver.class);
 
-  Logger logger = Logger.getLogger(BookForm.class.getName());
+  private static Logger logger = Logger.getLogger(BookForm.class.getName());
 
   private static Bundle bundle;
 

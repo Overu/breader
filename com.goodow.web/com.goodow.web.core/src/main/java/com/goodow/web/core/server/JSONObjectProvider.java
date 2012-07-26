@@ -12,12 +12,8 @@ import com.goodow.web.core.shared.WebObject;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Collection;
-import java.util.Date;
 
 @Singleton
 public class JSONObjectProvider<T extends WebObject> implements ObjectReader<T, JSONObject>,
@@ -49,28 +45,15 @@ public class JSONObjectProvider<T extends WebObject> implements ObjectReader<T, 
         target.put("e_id", eid.toString());
       }
       for (Property prop : source.getObjectType().getAllProperties().values()) {
+
         Object value = source.get(prop);
-        if (value == null) {
-          target.put(prop.getName(), JSONObject.NULL);
-        } else if (value instanceof WebObject) {
-          WebObject obj = (WebObject) value;
-          if (obj instanceof WebEntity && !prop.isContainment()) {
-            EntityId id = message.getEntityId((WebEntity) obj);
-            target.put(prop.getName(), id.toString());
-          } else {
-            JSONObject json = new JSONObject();
-            ObjectWriter<WebObject, JSONObject> provider =
-                obj.getObjectType().getWriter(JSONObject.class);
-            provider.writeTo(obj, json, message);
-            target.put(prop.getName(), json);
-          }
-        } else if (value instanceof Collection) {
-          JSONArray array = marshaller.serialize((Collection) value, prop.isContainment(), message);
-          target.put(prop.getName(), array);
-        } else if (value instanceof Date) {
-          target.put(prop.getName(), ((Date) value).getTime());
+        if (prop.getName().equals("container") && value != null) {
+          WebEntity entity = (WebEntity) value;
+          EntityId id = message.getEntityId(entity);
+          target.put(prop.getName(), id.toString());
         } else {
-          target.put(prop.getName(), value);
+          Object json = marshaller.convertToJSON(message, value);
+          target.put(prop.getName(), json);
         }
       }
     } catch (JSONException e) {

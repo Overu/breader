@@ -15,6 +15,7 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.user.client.TakesValue;
 import com.google.gwt.user.client.Window.Location;
 import com.google.gwt.user.client.ui.RichTextArea;
+import com.google.inject.Inject;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 
 import java.util.logging.Level;
@@ -27,6 +28,7 @@ public class TextResourceEditor extends FlowView implements TakesValue<Resource>
 
   private final Logger logger = Logger.getLogger(getClass().getName());
 
+  @Inject
   private RichTextArea textArea;
 
   private Resource resource;

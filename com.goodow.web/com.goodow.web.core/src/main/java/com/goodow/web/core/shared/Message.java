@@ -3,7 +3,9 @@ package com.goodow.web.core.shared;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 import java.util.logging.Logger;
 
@@ -28,6 +30,8 @@ public abstract class Message implements Serializable {
 
   @SuppressWarnings("rawtypes")
   protected Response response;
+
+  private Set<WebEntity> serialized = new HashSet<WebEntity>();
 
   @SuppressWarnings("rawtypes")
   public Message() {
@@ -87,6 +91,14 @@ public abstract class Message implements Serializable {
   @SuppressWarnings("unchecked")
   public <T> Response<T> getResponse() {
     return response;
+  }
+
+  public boolean isSerialized(final WebEntity entity) {
+    return serialized.contains(entity);
+  }
+
+  public void setSerialized(final WebEntity entity) {
+    serialized.add(entity);
   }
 
 }

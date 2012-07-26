@@ -31,6 +31,45 @@ public class JSONMarshaller {
   @Inject
   protected Provider<Message> messageProvider;
 
+  public Object convertToJSON(final Message message, final Object value) {
+    if (value == null) {
+      return JSONObject.NULL;
+    } else if (value instanceof WebObject) {
+      WebObject obj = (WebObject) value;
+      if (obj instanceof WebEntity) {
+        WebEntity entity = (WebEntity) obj;
+        EntityId id = message.getEntityId(entity);
+        if (message.isSerialized(entity)) {
+          return id.toString();
+        } else {
+          message.setSerialized(entity);
+        }
+      }
+      JSONObject json = new JSONObject();
+      ObjectWriter<WebObject, JSONObject> writer = obj.getObjectType().getWriter(JSONObject.class);
+      writer.writeTo(obj, json, message);
+      return json;
+    } else if (value instanceof Collection) {
+      JSONArray array = new JSONArray();
+      for (Object item : (Collection<?>) value) {
+        Object itemValue = convertToJSON(message, item);
+        array.put(itemValue);
+      }
+      return array;
+    } else if (value.getClass().isArray()) {
+      JSONArray array = new JSONArray();
+      for (Object item : (Object[]) value) {
+        Object itemValue = convertToJSON(message, item);
+        array.put(itemValue);
+      }
+      return array;
+    } else if (value instanceof Date) {
+      return ((Date) value).getTime();
+    } else {
+      return value;
+    }
+  }
+
   public WebObject parse(final JSONObject json, final Message message) {
     if (json == null) {
       return null;
@@ -140,90 +179,18 @@ public class JSONMarshaller {
     }
   }
 
-  public JSONArray serialize(final Collection<?> collection, final boolean containment,
-      final Message message) {
-    JSONArray array = new JSONArray();
-    for (Object item : collection) {
-      Object value = serialize(containment, message, array, item);
-      array.put(value);
-    }
-    return array;
-  }
-
   public String serialize(final Object obj) {
     if (obj instanceof Response) {
       return serialize((Response<?>) obj);
     } else if (obj instanceof Request) {
       return serialize((Request<?>) obj);
     } else {
-      return serialize(obj, messageProvider.get());
+      return convertToJSON(messageProvider.get(), obj).toString();
     }
-  }
-
-  public String serialize(final Object result, final Message message) {
-    if (result == null) {
-      return "null";
-    } else if (result instanceof WebObject) {
-      WebObject obj = (WebObject) result;
-      JSONObject jsonObject = new JSONObject();
-      ObjectWriter<WebObject, JSONObject> provider =
-          obj.getObjectType().getWriter(JSONObject.class);
-      provider.writeTo(obj, jsonObject, message);
-      return jsonObject.toString();
-    } else if (result instanceof Collection) {
-      JSONArray array = serialize((Collection<?>) result, true, message);
-      return array.toString();
-    } else if (result.getClass().isArray()) {
-      JSONArray array = serialize((Object[]) result, true, message);
-      return array.toString();
-    } else if (result instanceof String) {
-      return "\"" + result + "\"";
-    } else if (result instanceof Date) {
-      return Long.toString(((Date) result).getTime());
-    } else {
-      return result.toString();
-    }
-  }
-
-  public JSONArray serialize(final Object[] collection, final boolean containment,
-      final Message message) {
-    JSONArray array = new JSONArray();
-    for (Object item : collection) {
-      Object value = serialize(containment, message, array, item);
-      array.put(value);
-    }
-    return array;
-  }
-
-  public String serialize(final Request<?> request) {
-    return request.toString();
   }
 
   public String serialize(final Response<?> response) {
     Object result = response.getResult();
-    return serialize(result, response.getMessage());
-  }
-
-  private Object serialize(final boolean containment, final Message message, final JSONArray array,
-      final Object item) {
-    if (item == null) {
-      return JSONObject.NULL;
-    } else if (item instanceof WebObject) {
-      WebObject obj = (WebObject) item;
-      if (obj instanceof WebEntity && !containment) {
-        EntityId id = message.getEntityId((WebEntity) obj);
-        return id.toString();
-      } else {
-        JSONObject json = new JSONObject();
-        ObjectWriter<WebObject, JSONObject> writer =
-            obj.getObjectType().getWriter(JSONObject.class);
-        writer.writeTo(obj, json, message);
-        return json;
-      }
-    } else if (item instanceof Collection) {
-      return serialize((Collection<?>) item, containment, message);
-    } else {
-      return item;
-    }
+    return convertToJSON(response.getMessage(), result).toString();
   }
 }
