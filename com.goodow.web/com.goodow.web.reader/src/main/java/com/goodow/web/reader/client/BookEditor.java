@@ -3,7 +3,6 @@ package com.goodow.web.reader.client;
 import com.goodow.web.core.shared.AsyncSectionService;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Section;
-import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.reader.shared.Book;
 
 import com.google.gwt.cell.client.AbstractCell;
@@ -43,17 +42,30 @@ public class BookEditor extends FormView<Book> {
     }
   }
 
+  private class RootDataProvider extends AsyncDataProvider<Section> {
+    @Override
+    protected void onRangeChanged(final HasData<Section> display) {
+      sectionService.find(book).fire(new Receiver<List<Section>>() {
+        @Override
+        public void onSuccess(final List<Section> result) {
+          display.setRowCount(result.size());
+          display.setRowData(0, result);
+        }
+      });
+    }
+  }
+
   private class SectionDataProvider extends AsyncDataProvider<Section> {
 
-    private WebEntity continer;
+    private Section parent;
 
-    private SectionDataProvider(final WebEntity container) {
-      this.continer = container;
+    private SectionDataProvider(final Section container) {
+      this.parent = container;
     }
 
     @Override
     protected void onRangeChanged(final HasData<Section> display) {
-      sectionService.find(continer).fire(new Receiver<List<Section>>() {
+      sectionService.find(parent).fire(new Receiver<List<Section>>() {
         @Override
         public void onSuccess(final List<Section> result) {
           display.setRowCount(result.size());
@@ -67,8 +79,6 @@ public class BookEditor extends FormView<Book> {
     @Override
     public <T> NodeInfo<?> getNodeInfo(final T value) {
       if (value == null) {
-        SectionDataProvider dataProvider = new SectionDataProvider(book);
-        rootNode = new DefaultNodeInfo<Section>(dataProvider, getCell(), selectionModel, null);
         return rootNode;
       } else {
         Section section = (Section) value;
@@ -105,6 +115,8 @@ public class BookEditor extends FormView<Book> {
 
   MultiSelectionModel<Section> selectionModel;
 
+  RootDataProvider rootProvider;
+
   public AbstractCell<Section> getCell() {
     return new DefaultCell();
   }
@@ -117,11 +129,17 @@ public class BookEditor extends FormView<Book> {
   @Override
   public void setValue(final Book value) {
     this.book = value;
+    if (rootProvider != null) {
+      for (HasData<Section> display : rootProvider.getDataDisplays()) {
+        rootProvider.onRangeChanged(display);
+      }
+    }
   }
 
   @Override
   protected void start() {
-
+    rootProvider = new RootDataProvider();
+    rootNode = new DefaultNodeInfo<Section>(rootProvider, getCell(), selectionModel, null);
     selectionModel = new MultiSelectionModel<Section>();
     selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
       @Override
