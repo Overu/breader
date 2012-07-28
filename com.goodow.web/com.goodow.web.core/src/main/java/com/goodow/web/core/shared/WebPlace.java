@@ -7,6 +7,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.resources.client.ImageResource;
+import com.google.gwt.user.client.TakesValue;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -63,7 +64,8 @@ public class WebPlace extends Place {
         @Override
         public void onAnimationEnd() {
           if (widget instanceof WebView) {
-            ((WebView) widget).refresh();
+            WebView view = (WebView) widget;
+            view.refresh();
           }
         }
       });
@@ -80,11 +82,11 @@ public class WebPlace extends Place {
 
   private List<WebPlace> children = new ArrayList<WebPlace>();
 
-  private boolean paramitized;
-
   private WebPlace welcomePlace;
 
   public String parameter;
+
+  public WebEntity entity;
 
   private IsWidget widget;
 
@@ -116,10 +118,6 @@ public class WebPlace extends Place {
     WebPlace result = this;
     for (String path : segments) {
       if (path.length() == 0) {
-        continue;
-      }
-      if (result.isParamitized()) {
-        result.setParameter(path);
         continue;
       }
       result = result.getChild(path);
@@ -155,11 +153,21 @@ public class WebPlace extends Place {
         return p;
       }
     }
+    for (WebPlace p : children) {
+      if (p.isParamitized()) {
+        p.setParameter(path);
+        return p;
+      }
+    }
     return null;
   }
 
   public List<WebPlace> getChildren() {
     return children;
+  }
+
+  public WebEntity getEntity() {
+    return entity;
   }
 
   public String getParameter() {
@@ -186,10 +194,20 @@ public class WebPlace extends Place {
   }
 
   public String getUri() {
+    return getUriBuilder().toString();
+  }
+
+  public StringBuilder getUriBuilder() {
     if (parent == null) {
-      return "";
+      return new StringBuilder();
     } else {
-      return parent.getUri() + "/" + path;
+      StringBuilder builder = parent.getUriBuilder().append("/");
+      if (isParamitized()) {
+        builder.append(getParameter());
+      } else {
+        builder.append(path);
+      }
+      return builder;
     }
   }
 
@@ -202,7 +220,7 @@ public class WebPlace extends Place {
   }
 
   public boolean isParamitized() {
-    return paramitized;
+    return path.startsWith("{");
   }
 
   public void render(final AcceptsOneWidget panel) {
@@ -227,12 +245,18 @@ public class WebPlace extends Place {
     this.buttonText = buttonText;
   }
 
-  public void setParameter(final String parameter) {
-    this.parameter = parameter;
+  public <T> void setEntity(final TakesValue<T> takesValue) {
+    if (entity != null) {
+      takesValue.setValue((T) entity);
+    }
   }
 
-  public void setParamitized(final boolean paramitized) {
-    this.paramitized = paramitized;
+  public void setEntity(final WebEntity entity) {
+    this.entity = entity;
+  }
+
+  public void setParameter(final String parameter) {
+    this.parameter = parameter;
   }
 
   public void setPath(final String path) {
@@ -323,7 +347,7 @@ public class WebPlace extends Place {
     } else {
       append(panel, callback);
     }
-  }
+  };
 
   private void showError(final AcceptsOneWidget panel, final String message) {
     Label label = new Label(message);
@@ -333,6 +357,10 @@ public class WebPlace extends Place {
   private void showWidget(final AcceptsOneWidget panel,
       final AsyncCallback<AcceptsOneWidget> callback) {
     panel.setWidget(widget);
+    if (widget instanceof WebView) {
+      WebView view = (WebView) widget;
+      view.setPlace(this);
+    }
     if (widget instanceof AcceptsOneWidget) {
       if (protectedDisplay == null) {
         display = GWT.create(AnimatableDisplay.class);

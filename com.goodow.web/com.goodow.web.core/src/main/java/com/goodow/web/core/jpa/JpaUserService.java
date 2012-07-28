@@ -13,7 +13,7 @@ import org.apache.shiro.util.ByteSource;
 import javax.persistence.NoResultException;
 
 @Transactional
-public class JpaUserService extends JpaWebService<User> implements UserService {
+public class JpaUserService extends JpaEntityService<User> implements UserService {
 
   @Override
   public User findUserByUsername(final String userName) {

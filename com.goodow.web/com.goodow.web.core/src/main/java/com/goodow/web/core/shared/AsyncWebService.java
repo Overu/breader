@@ -11,6 +11,10 @@ public class AsyncWebService<E extends WebObject> {
   @Inject
   WebPlatform platform;
 
+  public ObjectType getObjectType() {
+    return CorePackage.ObjectType.as();
+  }
+
   public <T> Request<T> invoke(final Operation operation, final Object... args) {
     Message message = messageProvider.get();
     Request<T> request = message.getRequest();

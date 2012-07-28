@@ -23,7 +23,6 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
@@ -111,9 +110,6 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
 
   protected Book book;
 
-  @Inject
-  Provider<BookEditor> contentEditor;
-
   @Override
   public Book getValue() {
     return book;
@@ -162,10 +158,8 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
       @Override
       public void onSuccess(final Book result) {
         logger.info("book created: " + result.getId());
-
-        BookEditor editor = contentEditor.get();
-        editor.setValue(result);
-        // placeController.goTo(reader.myBooksPlace);
+        reader.editBookPlace.setEntity(result);
+        reader.editBookPlace.setParameter(result.getId());
         placeController.goTo(reader.editBookPlace);
       }
     });

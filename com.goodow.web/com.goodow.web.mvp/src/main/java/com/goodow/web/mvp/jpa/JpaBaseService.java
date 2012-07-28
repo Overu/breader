@@ -1,6 +1,6 @@
 package com.goodow.web.mvp.jpa;
 
-import com.goodow.web.core.jpa.JpaWebService;
+import com.goodow.web.core.jpa.JpaEntityService;
 import com.goodow.web.core.shared.WebEntity;
 import com.goodow.web.mvp.shared.BaseService;
 
@@ -10,13 +10,13 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-public class JpaBaseService<E extends WebEntity> extends JpaWebService<E> implements BaseService<E> {
+public class JpaBaseService<E extends WebEntity> extends JpaEntityService<E> implements BaseService<E> {
 
   @Override
   @Transactional
   public long count() {
     return ((Number) em.get().createQuery(
-        "select count(d) from " + getEntityClass().getName() + " d").getSingleResult()).longValue();
+        "select count(d) from " + getObjectType().getName() + " d").getSingleResult()).longValue();
   }
 
   @Override
@@ -25,7 +25,7 @@ public class JpaBaseService<E extends WebEntity> extends JpaWebService<E> implem
   public List<E> find(final int start, final int length) {
     StringBuilder sb = new StringBuilder();
     sb.append("select d from ");
-    sb.append(getEntityClass().getName());
+    sb.append(getObjectType().getName());
     sb.append(" d ");
 
     Query query = em.get().createQuery(sb.toString());
@@ -43,7 +43,7 @@ public class JpaBaseService<E extends WebEntity> extends JpaWebService<E> implem
   @Deprecated
   @SuppressWarnings("unchecked")
   public void put(final Object domain) {
-    if (getEntityClass().isAssignableFrom(domain.getClass())) {
+    if (getObjectType().isAssignableFrom(domain.getClass())) {
       save((E) domain);
     } else {
       throw new IllegalArgumentException();
@@ -59,7 +59,7 @@ public class JpaBaseService<E extends WebEntity> extends JpaWebService<E> implem
   @Deprecated
   @SuppressWarnings("unchecked")
   public void remove(final Object domain) {
-    if (getEntityClass().isAssignableFrom(domain.getClass())) {
+    if (getObjectType().isAssignableFrom(domain.getClass())) {
       remove((E) domain);
     } else {
       throw new IllegalArgumentException();

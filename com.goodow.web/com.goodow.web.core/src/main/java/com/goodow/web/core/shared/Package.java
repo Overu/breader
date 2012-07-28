@@ -34,18 +34,18 @@ public class Package extends NamedElement {
     }
   }
 
-  protected <T> void addOperations(final ObjectType type, final OperationInfo<?>... operations) {
-    for (OperationInfo<?> baseOperation : operations) {
-      Operation operation = baseOperation.as();
+  protected <T> void addOperations(final ObjectType type, final OperationInfo... operations) {
+    for (OperationInfo operationInfo : operations) {
+      Operation operation = operationInfo.as();
       operation.setDeclaringType(type);
       type.addOperation(operation);
     }
   }
 
-  protected void addParameter(final Operation operation, final String name, final WebType c) {
+  protected void addParameter(final Operation operation, final String name, final WebType type) {
     Parameter param = new Parameter();
     param.setName(name);
-    param.setType(c);
+    param.setType(type);
     operation.getParameters().put(name, param);
   }
 

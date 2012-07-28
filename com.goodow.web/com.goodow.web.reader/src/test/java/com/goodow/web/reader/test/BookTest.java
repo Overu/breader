@@ -69,7 +69,7 @@ public class BookTest extends ExampleTest {
     List<Resource> resources = resService.find(book);
     assertEquals(2, resources.size());
 
-    Resource result = resService.find(resource.getId());
+    Resource result = resService.getById(resource.getId());
     assertEquals(resource.getMimeType(), result.getMimeType());
   }
 
@@ -87,7 +87,7 @@ public class BookTest extends ExampleTest {
       Book b = books.get(0);
       assertEquals("大汉雄师", b.getTitle());
       bookService.remove(b);
-      assertNull(bookService.find(b.getId()));
+      assertNull(bookService.getById(b.getId()));
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -95,10 +95,10 @@ public class BookTest extends ExampleTest {
 
   @Test
   public void testGetResource() {
-    Resource result = resService.find("fe924b75-44d2-4467-995d-961424f152be");
+    Resource result = resService.getById("fe924b75-44d2-4467-995d-961424f152be");
     System.out.println(result.getMimeType());
 
-    Book b = bookService.find(result.getContainer().getId());
+    Book b = bookService.getById(result.getContainer().getId());
     assertEquals(b, result.getContainer());
   }
 

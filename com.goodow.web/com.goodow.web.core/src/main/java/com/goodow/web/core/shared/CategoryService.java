@@ -13,10 +13,9 @@
  */
 package com.goodow.web.core.shared;
 
-
 import java.util.List;
 
-public interface CategoryService extends WebService<Category> {
+public interface CategoryService extends WebEntityService<Category> {
 
   List<Category> getCategory();
 

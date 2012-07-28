@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public class ObjectType extends WebType implements Wrapper<ObjectType> {
 
+  public static ObjectType VARIABLE = new ObjectType();
+
   public static final String OPERATIONS = "operations";
 
   public static final String PROPERTIES = "properties";

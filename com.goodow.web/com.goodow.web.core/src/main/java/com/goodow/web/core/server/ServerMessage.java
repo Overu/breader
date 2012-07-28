@@ -1,5 +1,6 @@
 package com.goodow.web.core.server;
 
+import com.goodow.web.core.shared.WebEntityService;
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Operation;
@@ -25,7 +26,7 @@ public class ServerMessage extends Message {
       service = injector.getInstance(objectType.getServiceClass());
       objectType.setService(service);
     }
-    return service.find(id);
+    return ((WebEntityService<?>) service).getById(id);
   }
 
   public String process(final String payload) throws Exception {

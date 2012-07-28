@@ -1,5 +1,5 @@
 package com.goodow.web.core.shared;
 
-public interface ResourceService extends WebService<Resource> {
+public interface ResourceService extends WebEntityService<Resource> {
 
 }

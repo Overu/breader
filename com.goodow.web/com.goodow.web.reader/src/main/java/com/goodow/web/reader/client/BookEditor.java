@@ -20,13 +20,11 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.TreeViewModel;
 import com.google.gwt.view.client.TreeViewModel.DefaultNodeInfo;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
-@Singleton
 public class BookEditor extends FormView<Book> {
 
   interface Binder extends UiBinder<Widget, BookEditor> {
@@ -124,6 +122,15 @@ public class BookEditor extends FormView<Book> {
   @Override
   public Book getValue() {
     return book;
+  }
+
+  @Override
+  public void refresh() {
+    super.refresh();
+    if (place != null) {
+      Book book = (Book) place.getEntity();
+      setValue(book);
+    }
   }
 
   @Override

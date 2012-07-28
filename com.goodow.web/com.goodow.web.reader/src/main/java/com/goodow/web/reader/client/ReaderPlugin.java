@@ -208,7 +208,7 @@ public class ReaderPlugin {
     newBookPlace.setTitle("制作新书");
     newBookPlace.setWidget(bookForm);
 
-    editBookPlace.setPath("edit");
+    editBookPlace.setPath("{id}");
     editBookPlace.setAnimation(Animation.SLIDE);
     editBookPlace.setTitle("编辑内容");
     editBookPlace.setWidget(contentEditor);

@@ -3,7 +3,7 @@ package com.goodow.web.core.shared;
 import com.google.inject.Singleton;
 
 @Singleton
-public class OperationInfo<T> implements Wrapper<Operation> {
+public class OperationInfo implements Wrapper<Operation> {
 
   private final Operation operation;
 

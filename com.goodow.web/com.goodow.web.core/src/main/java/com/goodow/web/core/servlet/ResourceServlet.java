@@ -30,7 +30,7 @@ public class ResourceServlet extends HttpServlet {
       throws ServletException, IOException {
     String uri = req.getRequestURI();
     String id = uri.substring(uri.lastIndexOf("/") + 1);
-    Resource resource = resourceService.find(id);
+    Resource resource = resourceService.getById(id);
     String contentType = resource.getMimeType();
     if (contentType != null) {
       resp.setContentType(contentType);
