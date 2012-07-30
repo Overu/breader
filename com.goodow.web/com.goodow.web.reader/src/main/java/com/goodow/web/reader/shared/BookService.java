@@ -1,7 +1,7 @@
 package com.goodow.web.reader.shared;
 
-import com.goodow.web.core.shared.WebEntityService;
 import com.goodow.web.core.shared.Resource;
+import com.goodow.web.core.shared.WebEntityService;
 
 import java.util.List;
 
@@ -12,11 +12,5 @@ public interface BookService extends WebEntityService<Book> {
   List<Book> getMyBooks();
 
   List<Book> getSelectedBooks();
-
-  @Override
-  void remove(Book book);
-
-  @Override
-  Book save(Book book);
 
 }

@@ -1,7 +1,7 @@
 package com.goodow.web.reader.jpa;
 
-import com.goodow.web.core.jpa.JpaResourceService;
 import com.goodow.web.core.jpa.JpaEntityService;
+import com.goodow.web.core.jpa.JpaResourceService;
 import com.goodow.web.core.shared.Resource;
 import com.goodow.web.core.shared.Section;
 import com.goodow.web.core.shared.SectionService;

@@ -71,7 +71,7 @@ public class WebPlace extends Place {
     }
   }
 
-  private String path;
+  private String pattern;
 
   private Animation animation;
 
@@ -83,7 +83,7 @@ public class WebPlace extends Place {
 
   private WebPlace welcomePlace;
 
-  public String parameter;
+  public String path;
 
   private IsWidget widget;
 
@@ -146,13 +146,13 @@ public class WebPlace extends Place {
 
   public WebPlace getChild(final String path) {
     for (WebPlace p : children) {
-      if (path.equals(p.getPath())) {
+      if (path.equals(p.getPattern())) {
         return p;
       }
     }
     for (WebPlace p : children) {
       if (p.isParamitized()) {
-        p.setParameter(path);
+        p.setPath(path);
         return p;
       }
     }
@@ -163,16 +163,19 @@ public class WebPlace extends Place {
     return children;
   }
 
-  public String getParameter() {
-    return parameter;
-  }
-
   public WebPlace getParent() {
     return parent;
   }
 
   public String getPath() {
+    if (!isParamitized()) {
+      return pattern;
+    }
     return path;
+  }
+
+  public String getPattern() {
+    return pattern;
   }
 
   /**
@@ -196,9 +199,9 @@ public class WebPlace extends Place {
     } else {
       StringBuilder builder = parent.getUriBuilder().append("/");
       if (isParamitized()) {
-        builder.append(getParameter());
+        builder.append(getPath());
       } else {
-        builder.append(path);
+        builder.append(pattern);
       }
       return builder;
     }
@@ -213,7 +216,7 @@ public class WebPlace extends Place {
   }
 
   public boolean isParamitized() {
-    return path.startsWith("{");
+    return pattern.startsWith("{");
   }
 
   public void render(final AcceptsOneWidget panel) {
@@ -224,31 +227,22 @@ public class WebPlace extends Place {
     this.animation = animation;
   }
 
-  /**
-   * @param buttonImage the buttonImage to set
-   */
   public void setButtonImage(final ImageResource buttonImage) {
     this.buttonImage = buttonImage;
   }
 
-  /**
-   * @param buttonText the buttonText to set
-   */
   public void setButtonText(final String buttonText) {
     this.buttonText = buttonText;
-  }
-
-  public void setParameter(final String parameter) {
-    this.parameter = parameter;
   }
 
   public void setPath(final String path) {
     this.path = path;
   }
 
-  /**
-   * @param startedChild the startedChild to set
-   */
+  public void setPattern(final String pattern) {
+    this.pattern = pattern;
+  }
+
   public void setStartedChild(final WebPlace startedChild) {
     this.startedChild = startedChild;
   }

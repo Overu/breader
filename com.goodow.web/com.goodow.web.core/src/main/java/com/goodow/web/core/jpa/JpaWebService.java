@@ -31,15 +31,10 @@ public class JpaWebService<E extends WebObject> implements WebService<E> {
             genericSuperClass));
   }
 
-  @Override
-  public Class<E> getObjectType() {
-    return domainClass;
-  }
-
   public Method getJavaMethod(final Operation operation) {
     Method method = operation.getJavaMethod();
     if (method == null) {
-      for (Method m : operation.getDeclaringType().getServiceClass().getDeclaredMethods()) {
+      for (Method m : operation.getDeclaringType().getServiceClass().getMethods()) {
         if (m.getName().equals(operation.getName())) {
           method = m;
           operation.setJavaMethod(method);
@@ -48,6 +43,11 @@ public class JpaWebService<E extends WebObject> implements WebService<E> {
       }
     }
     return method;
+  }
+
+  @Override
+  public Class<E> getObjectType() {
+    return domainClass;
   }
 
   @SuppressWarnings("unchecked")
