@@ -26,10 +26,10 @@ public class WebPlatform {
   public Operation getOperation(final String fullName) {
     int index = fullName.lastIndexOf(".");
     String typeName = fullName.substring(0, index);
-    ObjectType pkg = getObjectType(typeName);
-    if (pkg != null) {
+    ObjectType type = getObjectType(typeName);
+    if (type != null) {
       String simpleName = fullName.substring(index + 1);
-      return pkg.getOperation(simpleName);
+      return type.getOperation(simpleName);
     }
     return null;
 

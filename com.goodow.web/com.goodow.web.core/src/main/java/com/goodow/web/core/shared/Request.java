@@ -11,6 +11,8 @@ public class Request<T> implements Serializable {
 
   private transient Operation operation;
 
+  private transient ObjectType targetType;
+
   private Request<?> nextRequest;
 
   private transient Object[] args;
@@ -55,6 +57,10 @@ public class Request<T> implements Serializable {
     return receiver;
   }
 
+  public ObjectType getTargetType() {
+    return targetType;
+  }
+
   public void setArgs(final Object[] args) {
     this.args = args;
   }
@@ -70,6 +76,10 @@ public class Request<T> implements Serializable {
 
   public void setOperation(final Operation operation) {
     this.operation = operation;
+  }
+
+  public void setTargetType(final ObjectType targetType) {
+    this.targetType = targetType;
   }
 
   public Request<T> to(final Receiver<T> receiver) {

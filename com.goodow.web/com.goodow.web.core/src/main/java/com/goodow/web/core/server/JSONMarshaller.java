@@ -117,7 +117,12 @@ public class JSONMarshaller {
     try {
       JSONObject json = new JSONObject(payload);
       String operationName = json.getString("operation");
-      Operation operation = WebPlatform.getInstance().getOperation(operationName);
+      int index = operationName.lastIndexOf(".");
+      String typeName = operationName.substring(0, index);
+      ObjectType targetType = WebPlatform.getInstance().getObjectType(typeName);
+      request.setTargetType(targetType);
+      String operationSimpleName = operationName.substring(index + 1);
+      Operation operation = targetType.getOperation(operationSimpleName);
       request.setOperation(operation);
       if (json.has("entities")) {
         JSONArray entities = json.getJSONArray("entities");

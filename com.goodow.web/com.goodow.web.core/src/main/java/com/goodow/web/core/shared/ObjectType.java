@@ -84,6 +84,9 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
 
   public Operation getOperation(final String name) {
     Operation operation = operations.get(name);
+    if (operation == null && superType != null) {
+      operation = superType.getOperation(name);
+    }
     return operation;
   }
 

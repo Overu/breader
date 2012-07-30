@@ -83,7 +83,9 @@ public class ClientJSONMarshaller {
   public JSONObject serialize(final Message message) {
     JSONObject obj = new JSONObject();
     Request request = message.getRequest();
-    obj.put("operation", new JSONString(request.getOperation().getQualifiedName()));
+    String operatioName =
+        request.getTargetType().getQualifiedName() + "." + request.getOperation().getName();
+    obj.put("operation", new JSONString(operatioName));
 
     if (!request.getOperation().getParameters().isEmpty()) {
       JSONArray jsonArgs = new JSONArray();

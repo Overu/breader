@@ -1,11 +1,11 @@
 package com.goodow.web.core.server;
 
-import com.goodow.web.core.shared.WebEntityService;
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Operation;
 import com.goodow.web.core.shared.SerializationException;
 import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebEntityService;
 import com.goodow.web.core.shared.WebService;
 
 import com.google.inject.Inject;
@@ -33,8 +33,8 @@ public class ServerMessage extends Message {
     try {
       provider.parse(request, payload);
       Operation operation = request.getOperation();
-      ObjectType entityType = operation.getDeclaringType();
-      Class<? extends WebService> serviceClass = entityType.getServiceClass();
+      ObjectType targetType = request.getTargetType();
+      Class<? extends WebService> serviceClass = targetType.getServiceClass();
       WebService service = injector.getInstance(serviceClass);
       Object result = service.invoke(operation, request.getArgs());
       response.setResult(result);

@@ -3,6 +3,7 @@ package com.goodow.web.reader.client;
 import com.goodow.web.core.shared.AsyncSectionService;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Section;
+import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
 import com.google.gwt.cell.client.AbstractCell;
@@ -21,6 +22,7 @@ import com.google.gwt.view.client.TreeViewModel;
 import com.google.gwt.view.client.TreeViewModel.DefaultNodeInfo;
 import com.google.inject.Inject;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -43,6 +45,11 @@ public class BookEditor extends FormView<Book> {
   private class RootDataProvider extends AsyncDataProvider<Section> {
     @Override
     protected void onRangeChanged(final HasData<Section> display) {
+      if (book == null) {
+        display.setRowCount(0);
+        display.setRowData(0, Collections.EMPTY_LIST);
+        return;
+      }
       sectionService.find(book).fire(new Receiver<List<Section>>() {
         @Override
         public void onSuccess(final List<Section> result) {
@@ -115,6 +122,9 @@ public class BookEditor extends FormView<Book> {
 
   RootDataProvider rootProvider;
 
+  @Inject
+  AsyncBookService bookService;
+
   public AbstractCell<Section> getCell() {
     return new DefaultCell();
   }
@@ -128,8 +138,12 @@ public class BookEditor extends FormView<Book> {
   public void refresh() {
     super.refresh();
     if (place != null) {
-      Book book = (Book) place.getEntity();
-      setValue(book);
+      bookService.getById(place.getParameter()).fire(new Receiver<Book>() {
+        @Override
+        public void onSuccess(final Book result) {
+          setValue(result);
+        }
+      });
     }
   }
 

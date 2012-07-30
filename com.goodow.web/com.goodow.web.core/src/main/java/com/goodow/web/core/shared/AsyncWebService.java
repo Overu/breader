@@ -18,6 +18,7 @@ public class AsyncWebService<E extends WebObject> {
   public <T> Request<T> invoke(final Operation operation, final Object... args) {
     Message message = messageProvider.get();
     Request<T> request = message.getRequest();
+    request.setTargetType(getObjectType());
     request.setOperation(operation);
     request.setArgs(args);
     return request;

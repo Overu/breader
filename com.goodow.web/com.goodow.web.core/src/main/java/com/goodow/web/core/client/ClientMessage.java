@@ -46,8 +46,7 @@ public class ClientMessage extends Message implements RequestCallback {
       configureRequestBuilder(builder);
       builder.setRequestData(payload);
       builder.setCallback(this);
-
-      logger.finest("Sending fire request");
+      logger.info("Request: " + payload);
       builder.send();
     } catch (RequestException e) {
       logger.log(Level.SEVERE, SERVER_ERROR + " (" + e.getMessage() + ")", e);
@@ -68,6 +67,7 @@ public class ClientMessage extends Message implements RequestCallback {
     logger.finest("onResponseReceived");
     try {
       String body = response.getText();
+      logger.info("Response: " + body);
       JSONValue obj = JSONParser.parse(body);
       WebType type = this.request.getOperation().getType();
       Object result = messageProvider.parse(type, obj, this);

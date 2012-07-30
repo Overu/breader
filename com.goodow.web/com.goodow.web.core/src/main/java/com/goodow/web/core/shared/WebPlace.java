@@ -7,7 +7,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.TakesValue;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -85,8 +84,6 @@ public class WebPlace extends Place {
   private WebPlace welcomePlace;
 
   public String parameter;
-
-  public WebEntity entity;
 
   private IsWidget widget;
 
@@ -166,10 +163,6 @@ public class WebPlace extends Place {
     return children;
   }
 
-  public WebEntity getEntity() {
-    return entity;
-  }
-
   public String getParameter() {
     return parameter;
   }
@@ -243,16 +236,6 @@ public class WebPlace extends Place {
    */
   public void setButtonText(final String buttonText) {
     this.buttonText = buttonText;
-  }
-
-  public <T> void setEntity(final TakesValue<T> takesValue) {
-    if (entity != null) {
-      takesValue.setValue((T) entity);
-    }
-  }
-
-  public void setEntity(final WebEntity entity) {
-    this.entity = entity;
   }
 
   public void setParameter(final String parameter) {
