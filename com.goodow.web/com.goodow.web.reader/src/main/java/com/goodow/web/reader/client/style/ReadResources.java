@@ -58,6 +58,7 @@ public class ReadResources {
   }
 
   public interface Style extends CssResource {
+    String topBarButtonHOVER();
   }
 
   private static final Logger logger = Logger.getLogger(ReadResources.class.getName());

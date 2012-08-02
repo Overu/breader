@@ -1,0 +1,37 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+  <ui:style>
+    .root {
+      -webkit-box-align: center;
+      display: -webkit-box;
+      padding: 11px 16px 9px;
+      font: 75%/1.5 Arial, Helvetica, sans-serif;
+      text-shadow: 0 1px 2px black;
+      font-weight: bold;
+      font-size: 12px;
+      color: rgb(221, 221, 221);
+    }
+    
+   .root:HOVER {
+      color: white;
+      border-left-color: black;
+      border-right-color: black;
+      outline: none;
+      background: literal('-webkit-gradient(linear, left top, left bottom, from(black), to(rgb(34, 34, 34)))');
+    }
+    
+    .root[move]:AFTER {
+      content: "\25BC";
+      color: white;
+      padding: 0 0 0 2px;
+      opacity: 0.75;
+      font-weight: initial;
+      text-shadow: initial;
+      font: inherit;
+      font-size: inherit;
+    }
+  </ui:style>
+
+  <g:HTMLPanel ui:field="title" addStyleNames="{style.root}"></g:HTMLPanel>
+</ui:UiBinder>

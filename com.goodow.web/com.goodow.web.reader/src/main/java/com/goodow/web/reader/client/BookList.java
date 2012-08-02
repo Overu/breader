@@ -131,8 +131,6 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
 
   ListHandler<Book> listHandler;
 
-  private boolean selectionAll = false;
-
   @Inject
   ButtonBar buttonBar;
 
@@ -235,21 +233,11 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
     cellTable.setSelectionModel(selectionModel, DefaultSelectionEventManager
         .<Book> createCheckboxManager(0));
 
-    // selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-    //
-    // @Override
-    // public void onSelectionChange(final SelectionChangeEvent event) {
-    // }
-    // });
-
     final Column<Book, Boolean> bookCheck =
         addColumn(new CheckboxCell(), "选择", new GetValue<Boolean>() {
 
           @Override
           public Boolean getValue(final Book book) {
-            // if (selectionAll) {
-            // return
-            // }
             return selectionModel.isSelected(book);
           }
         }, new FieldUpdater<Book, Boolean>() {

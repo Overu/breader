@@ -3,3 +3,11 @@
 body {
   margin: 0;
 }
+
+.topBarButtonHOVER {
+  color: white!important;
+  border-left-color: black;
+  border-right-color: black;
+  outline: none;
+  background: literal('-webkit-gradient(linear, left top, left bottom, from(black), to(rgb(34, 34, 34)))');
+}
