@@ -27,6 +27,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 
 public class BookHeadPanel extends FlowView implements HeadTypeHandle {
 
@@ -41,7 +42,6 @@ public class BookHeadPanel extends FlowView implements HeadTypeHandle {
 
   private boolean isMouseMove = false;
 
-  PopupContainer popupTopBarPanel;
   TopBarButton topBarButtonIndex;
 
   @UiField
@@ -50,11 +50,14 @@ public class BookHeadPanel extends FlowView implements HeadTypeHandle {
   @UiField
   HTMLPanel rightPanel;
 
+  @Inject
+  PopupContainer popupContainer;
+
   private Timer timer = new Timer() {
 
     @Override
     public void run() {
-      popupTopBarPanel.hide();
+      popupContainer.hide();
       topBarButtonIndex.removeHover();
     }
   };
@@ -94,7 +97,7 @@ public class BookHeadPanel extends FlowView implements HeadTypeHandle {
 
         break;
       case MOUSEOVER:
-        popupTopBarPanel.show(topBarButton);
+        popupContainer.show(topBarButton);
         timer.cancel();
         topBarButton.addHover();
         if (topBarButtonIndex != null && topBarButton != topBarButtonIndex) {
@@ -111,8 +114,7 @@ public class BookHeadPanel extends FlowView implements HeadTypeHandle {
 
   @Override
   protected void start() {
-    popupTopBarPanel = new PopupContainer();
-    popupTopBarPanel.addDomHandler(new MouseMoveHandler() {
+    popupContainer.addDomHandler(new MouseMoveHandler() {
 
       @Override
       public void onMouseMove(final MouseMoveEvent event) {
@@ -124,7 +126,7 @@ public class BookHeadPanel extends FlowView implements HeadTypeHandle {
       }
     }, MouseMoveEvent.getType());
 
-    popupTopBarPanel.addDomHandler(new MouseOutHandler() {
+    popupContainer.addDomHandler(new MouseOutHandler() {
 
       @Override
       public void onMouseOut(final MouseOutEvent event) {

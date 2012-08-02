@@ -69,7 +69,7 @@ public class TopBarButton extends Composite {
   }
 
   public void setPopupComponent(final DropDownPanel popupComponent) {
-    title.getElement().setAttribute("move", "");
+    title.getElement().setAttribute("dropdown", "");
     this.popupComponent = popupComponent;
     this.addDomHandler(new MouseMoveHandler() {
 

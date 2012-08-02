@@ -68,11 +68,6 @@ public class BooksApp extends FlowView implements AcceptsOneWidget {
   private SimplePanel centerPanel;
 
   @Override
-  public void refresh() {
-    bannerPanel.refresh();
-  }
-
-  @Override
   public void setWidget(final IsWidget w) {
     centerPanel.setWidget(w);
   }

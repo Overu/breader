@@ -21,7 +21,7 @@
       background: literal('-webkit-gradient(linear, left top, left bottom, from(black), to(rgb(34, 34, 34)))');
     }
     
-    .root[move]:AFTER {
+    .root[dropdown]:AFTER {
       content: "\25BC";
       color: white;
       padding: 0 0 0 2px;

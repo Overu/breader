@@ -24,7 +24,7 @@
     .container>div>img {
       height: 48px!important;
       width: 48px!important;
-      background-size: cover; 
+      background-size: cover!important; 
     }
   </ui:style>
 

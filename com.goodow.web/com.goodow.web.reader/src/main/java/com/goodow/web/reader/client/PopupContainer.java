@@ -20,7 +20,6 @@ public class PopupContainer extends SimplePanel {
 
     style = element.getStyle();
     style.setPosition(Position.ABSOLUTE);
-    style.setBackgroundColor("white");
     style.setZIndex(100);
 
     RootPanel.get().add(this);
