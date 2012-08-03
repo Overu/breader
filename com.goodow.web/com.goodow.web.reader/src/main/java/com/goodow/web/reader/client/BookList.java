@@ -10,7 +10,6 @@ import com.goodow.web.reader.shared.Book;
 import com.google.gwt.cell.client.AbstractEditableCell;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.CheckboxCell;
-import com.google.gwt.cell.client.EditTextCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.ImageCell;
 import com.google.gwt.cell.client.ValueUpdater;
@@ -272,19 +271,26 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
     cellTable.addColumn(bookCheck, header);
     cellTable.setColumnWidth(bookCheck, 2, Unit.PX);
 
-    Column<Book, String> bookTitle = addColumn(new EditTextCell(), "书名", new GetValue<String>() {
+    // Column<Book, String> bookTitle = addColumn(new EditTextCell(), "书名", new GetValue<String>() {
+    //
+    // @Override
+    // public String getValue(final Book book) {
+    // return book.getTitle();
+    // }
+    // }, new FieldUpdater<Book, String>() {
+    //
+    // @Override
+    // public void update(final int index, final Book object, final String value) {
+    // pendingChanges.add(new BookTitleChange(object, value, bookService));
+    // }
+    // });
+    Column<Book, Book> bookTitle = addColumn(new BookHyperlinkCell(), "书名", new GetValue<Book>() {
 
       @Override
-      public String getValue(final Book book) {
-        return book.getTitle();
+      public Book getValue(final Book book) {
+        return book;
       }
-    }, new FieldUpdater<Book, String>() {
-
-      @Override
-      public void update(final int index, final Book object, final String value) {
-        pendingChanges.add(new BookTitleChange(object, value, bookService));
-      }
-    });
+    }, null);
     bookTitle.setSortable(true);
     listHandler.setComparator(bookTitle, new Comparator<Book>() {
 
