@@ -31,6 +31,7 @@ import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionModel;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
@@ -112,6 +113,9 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
 
     protected abstract void doCommit(Book book, T value);
   }
+
+  @Inject
+  Provider<BookHyperlinkCell> cellProvider;
 
   // @Inject
   // private ScrollPanel scrollPanel;
@@ -284,7 +288,7 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
     // pendingChanges.add(new BookTitleChange(object, value, bookService));
     // }
     // });
-    Column<Book, Book> bookTitle = addColumn(new BookHyperlinkCell(), "书名", new GetValue<Book>() {
+    Column<Book, Book> bookTitle = addColumn(cellProvider.get(), "书名", new GetValue<Book>() {
 
       @Override
       public Book getValue(final Book book) {
