@@ -12,6 +12,8 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTree;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
@@ -21,6 +23,10 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.TreeViewModel;
 import com.google.gwt.view.client.TreeViewModel.DefaultNodeInfo;
 import com.google.inject.Inject;
+
+import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.googlecode.mgwt.ui.client.widget.buttonbar.ActionButton;
 
 import java.util.Collections;
 import java.util.List;
@@ -109,6 +115,13 @@ public class BookEditor extends FormView<Book> {
 
   private static Binder uiBinder = GWT.create(Binder.class);
 
+  @Inject
+  @UiField(provided = true)
+  FlowPanel treeMenu;
+
+  @Inject
+  ActionButton addSection;
+
   @UiField(provided = true)
   CellTree sectionsTree;
 
@@ -134,6 +147,14 @@ public class BookEditor extends FormView<Book> {
     return book;
   }
 
+  public void redraw() {
+    if (rootProvider != null) {
+      for (HasData<Section> display : rootProvider.getDataDisplays()) {
+        rootProvider.onRangeChanged(display);
+      }
+    }
+  }
+
   @Override
   public void refresh() {
     super.refresh();
@@ -150,11 +171,7 @@ public class BookEditor extends FormView<Book> {
   @Override
   public void setValue(final Book value) {
     this.book = value;
-    if (rootProvider != null) {
-      for (HasData<Section> display : rootProvider.getDataDisplays()) {
-        rootProvider.onRangeChanged(display);
-      }
-    }
+    redraw();
   }
 
   @Override
@@ -181,6 +198,31 @@ public class BookEditor extends FormView<Book> {
 
     editorPanel.setWidget(selectionEditor);
     main.add(widget);
+
+    treeMenu.add(addSection);
+    addSection.setText("添加");
+    addSection.addTapHandler(new TapHandler() {
+
+      @Override
+      public void onTap(final TapEvent event) {
+        String title = Window.prompt("新建章节", "New section");
+        createSection(title);
+      }
+    });
+  }
+
+  private void createSection(final String title) {
+    Section section = new Section();
+    section.setTitle(title);
+    section.setContainer(book);
+    section.setDisplayOrder(book.getSections().size() + 1);
+    sectionService.save(section).fire(new Receiver<Section>() {
+      @Override
+      public void onSuccess(final Section result) {
+        book.getSections().add(result);
+        redraw();
+      }
+    });
   }
 
 }
