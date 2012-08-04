@@ -8,6 +8,7 @@ import com.goodow.web.core.shared.SectionService;
 import com.goodow.web.core.shared.WebEntity;
 
 import com.google.inject.Inject;
+import com.google.inject.persist.Transactional;
 
 import java.util.List;
 
@@ -28,10 +29,16 @@ public class JpaSectionService extends JpaEntityService<Section> implements Sect
   }
 
   @Override
+  @Transactional
   public Section save(final Section entity) {
     Resource resource = entity.getResource();
-    if (resource != null) {
+    if (resource == null) {
+      resource = new Resource();
+      resource.setFileName("chapter-" + entity.getDisplayOrder());
+      resource.setContainer(entity.getContainer());
+      resource.setMimeType("application/xhtml+xml");
       resourceService.save(resource);
+      entity.setResource(resource);
     }
     return super.save(entity);
   }

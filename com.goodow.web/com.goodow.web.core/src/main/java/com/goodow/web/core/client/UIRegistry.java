@@ -26,7 +26,7 @@ public class UIRegistry extends MapBinder<String, IsWidget> {
     }
   }
 
-  public void showWidget(final AcceptsOneWidget panel, final Resource resource) {
+  public boolean showWidget(final AcceptsOneWidget panel, final Resource resource) {
     final String widgetId = resource.getMimeType();
     IsWidget widget = get(widgetId);
     if (widget == null && getProvider(widgetId) != null) {
@@ -34,6 +34,7 @@ public class UIRegistry extends MapBinder<String, IsWidget> {
     }
     if (widget != null) {
       showResource(panel, widget, resource);
+      return true;
     } else {
       AsyncProvider<IsWidget> provider = getAsyncProvider(widgetId);
       if (provider != null) {
@@ -49,6 +50,9 @@ public class UIRegistry extends MapBinder<String, IsWidget> {
             showResource(panel, result, resource);
           }
         });
+        return true;
+      } else {
+        return false;
       }
     }
   }

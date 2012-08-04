@@ -12,7 +12,6 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTree;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -26,6 +25,7 @@ import com.google.inject.Inject;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.googlecode.mgwt.ui.client.widget.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ActionButton;
 
 import java.util.Collections;
@@ -59,6 +59,7 @@ public class BookEditor extends FormView<Book> {
       sectionService.find(book).fire(new Receiver<List<Section>>() {
         @Override
         public void onSuccess(final List<Section> result) {
+          book.setSections(result);
           display.setRowCount(result.size());
           display.setRowData(0, result);
         }
@@ -147,10 +148,16 @@ public class BookEditor extends FormView<Book> {
     return book;
   }
 
-  public void redraw() {
+  public void redraw(final boolean reload) {
     if (rootProvider != null) {
+      List<Section> sections = book.getSections();
       for (HasData<Section> display : rootProvider.getDataDisplays()) {
-        rootProvider.onRangeChanged(display);
+        if (reload || sections == null) {
+          rootProvider.onRangeChanged(display);
+        } else {
+          display.setRowCount(sections.size());
+          display.setRowData(0, sections);
+        }
       }
     }
   }
@@ -168,16 +175,21 @@ public class BookEditor extends FormView<Book> {
     }
   }
 
+  public void render() {
+    for (HasData<Section> display : rootProvider.getDataDisplays()) {
+      rootProvider.onRangeChanged(display);
+    }
+  }
+
   @Override
   public void setValue(final Book value) {
     this.book = value;
-    redraw();
+    redraw(false);
   }
 
   @Override
   protected void start() {
     rootProvider = new RootDataProvider();
-    rootNode = new DefaultNodeInfo<Section>(rootProvider, getCell(), selectionModel, null);
     selectionModel = new MultiSelectionModel<Section>();
     selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
       @Override
@@ -190,6 +202,8 @@ public class BookEditor extends FormView<Book> {
       }
     });
 
+    rootNode = new DefaultNodeInfo<Section>(rootProvider, getCell(), selectionModel, null);
+
     CellTree.Resources res = GWT.create(CellTree.BasicResources.class);
     sectionsTree = new CellTree(new SectionTreeViewModel(), null, res);
     sectionsTree.setAnimationEnabled(true);
@@ -199,28 +213,28 @@ public class BookEditor extends FormView<Book> {
     editorPanel.setWidget(selectionEditor);
     main.add(widget);
 
-    treeMenu.add(addSection);
+    HeaderPanel header = new HeaderPanel();
+    treeMenu.add(header);
+
+    header.setCenterWidget(addSection);
     addSection.setText("添加");
     addSection.addTapHandler(new TapHandler() {
 
       @Override
       public void onTap(final TapEvent event) {
-        String title = Window.prompt("新建章节", "New section");
-        createSection(title);
-      }
-    });
-  }
-
-  private void createSection(final String title) {
-    Section section = new Section();
-    section.setTitle(title);
-    section.setContainer(book);
-    section.setDisplayOrder(book.getSections().size() + 1);
-    sectionService.save(section).fire(new Receiver<Section>() {
-      @Override
-      public void onSuccess(final Section result) {
-        book.getSections().add(result);
-        redraw();
+        int order = book.getSections().size() + 1;
+        Section section = new Section();
+        section.setTitle("Chapater " + order);
+        section.setContainer(book);
+        section.setDisplayOrder(order);
+        sectionService.save(section).fire(new Receiver<Section>() {
+          @Override
+          public void onSuccess(final Section result) {
+            book.getSections().add(result);
+            redraw(false);
+            selectionModel.setSelected(result, true);
+          }
+        });
       }
     });
   }
