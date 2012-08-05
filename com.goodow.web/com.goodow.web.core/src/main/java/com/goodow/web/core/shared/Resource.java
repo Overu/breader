@@ -15,28 +15,38 @@ public class Resource extends WebEntity {
 
   private String mimeType;
 
-  public String getMimeType() {
-    return mimeType;
-  }
+  private String textContent;
 
   public String getFileName() {
     return fileName;
+  }
+
+  public String getMimeType() {
+    return mimeType;
   }
 
   public String getPath() {
     return path;
   }
 
-  public void setMimeType(final String contentType) {
-    this.mimeType = contentType;
+  public String getTextContent() {
+    return textContent;
   }
 
   public void setFileName(final String fileName) {
     this.fileName = fileName;
   }
 
+  public void setMimeType(final String contentType) {
+    this.mimeType = contentType;
+  }
+
   public void setPath(final String path) {
     this.path = path;
+  }
+
+  public void setTextContent(final String textContent) {
+    this.textContent = textContent;
   }
 
 }

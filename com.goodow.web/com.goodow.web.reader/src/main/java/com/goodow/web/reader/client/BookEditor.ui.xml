@@ -30,6 +30,7 @@
 
   <g:HTMLPanel>
     <g:HTMLPanel styleName="{style.left}">
+      <g:FlowPanel ui:field="treeMenu"></g:FlowPanel>
       <c:CellTree ui:field="sectionsTree"></c:CellTree>
     </g:HTMLPanel>
     <g:HTMLPanel ui:field="rightPanel" styleName="{style.right}">

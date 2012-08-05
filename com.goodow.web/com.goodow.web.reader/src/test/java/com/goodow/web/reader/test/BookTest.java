@@ -75,22 +75,18 @@ public class BookTest extends ExampleTest {
 
   @Test
   public void testEPubBook() {
-    try {
-      InputStream in = BookTest.class.getResourceAsStream("/test-data/book1.epub");
-      Resource resource = ServletMessage.createResource(in, "book1.epub", "application/epub+zip");
-      Book book = bookService.extract(resource);
-      String json = jsonMarshaller.serialize(book);
-      System.out.println(json);
-      assertEquals("大汉雄师", book.getTitle());
-      List<Book> books = bookService.getMyBooks();
-      assertTrue(books.size() > 0);
-      Book b = books.get(0);
-      assertEquals("大汉雄师", b.getTitle());
-      bookService.remove(b);
-      assertNull(bookService.getById(b.getId()));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    InputStream in = BookTest.class.getResourceAsStream("/test-data/book1.epub");
+    Resource resource = ServletMessage.createResource(in, "book1.epub", "application/epub+zip");
+    Book book = bookService.extract(resource);
+    String json = jsonMarshaller.serialize(book);
+    System.out.println(json);
+    assertEquals("大汉雄师", book.getTitle());
+    List<Book> books = bookService.getMyBooks();
+    assertTrue(books.size() > 0);
+    Book b = books.get(0);
+    assertEquals("大汉雄师", b.getTitle());
+    bookService.remove(b);
+    assertNull(bookService.getById(b.getId()));
   }
 
   @Test
@@ -104,22 +100,18 @@ public class BookTest extends ExampleTest {
 
   @Test
   public void testSelectedBooks() {
-    try {
-      InputStream in = BookTest.class.getResourceAsStream("/test-data/book1.epub");
-      Resource resource = ServletMessage.createResource(in, "book2.epub", "application/epub+zip");
-      Book book = bookService.extract(resource);
-      book.setSelected(true);
-      bookService.save(book);
-      List<Book> books = bookService.getSelectedBooks();
-      assertTrue(books.size() > 0);
-      Book firstBook = books.get(0);
-      assertEquals(book.getTitle(), firstBook.getTitle());
+    InputStream in = BookTest.class.getResourceAsStream("/test-data/book1.epub");
+    Resource resource = ServletMessage.createResource(in, "book2.epub", "application/epub+zip");
+    Book book = bookService.extract(resource);
+    book.setSelected(true);
+    bookService.save(book);
+    List<Book> books = bookService.getSelectedBooks();
+    assertTrue(books.size() > 0);
+    Book firstBook = books.get(0);
+    assertEquals(book.getTitle(), firstBook.getTitle());
 
-      for (Book b : books) {
-        assertTrue(b.isSelected());
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
+    for (Book b : books) {
+      assertTrue(b.isSelected());
     }
   }
 

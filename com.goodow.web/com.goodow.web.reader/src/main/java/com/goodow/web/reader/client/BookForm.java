@@ -212,6 +212,7 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
     });
 
     driver.initialize(this);
+    setValue(new Book());
   }
 
 }

@@ -14,7 +14,9 @@ public class ImageField extends ResourceField {
   @Override
   public void setValue(final Resource value) {
     super.setValue(value);
-    image.setUrl(GWT.getModuleBaseURL() + "resources/" + resource.getId());
+    if (value != null) {
+      image.setUrl(GWT.getModuleBaseURL() + "resources/" + resource.getId());
+    }
   }
 
   @Override

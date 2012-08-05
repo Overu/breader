@@ -54,7 +54,11 @@ public class ResourceField extends FormField<Resource> {
   @Override
   public void setValue(final Resource value) {
     this.resource = value;
-    registry.showWidget(editorPanel, resource);
+    if (resource != null && registry.showWidget(editorPanel, resource)) {
+      main.add(editorPanel);
+    } else {
+      main.add(formPanel);
+    }
   }
 
   @Override
@@ -62,8 +66,7 @@ public class ResourceField extends FormField<Resource> {
     super.start();
     fileUpload.setName("attachment");
     formPanel.add(fileUpload);
-    main.add(formPanel);
-    main.add(editorPanel);
+
     formPanel.setMethod("POST");
     formPanel.setEncoding("multipart/form-data");
     formPanel.setAction(GWT.getModuleBaseURL() + "resources");

@@ -15,6 +15,7 @@
 package com.goodow.web.core.servlet;
 
 import com.goodow.web.core.shared.Resource;
+import com.goodow.web.core.shared.WebException;
 
 import com.google.appengine.api.log.InvalidRequestException;
 
@@ -56,14 +57,18 @@ public class ServletMessage {
   private static final String FALSE = "false";
 
   public static Resource createResource(final InputStream is, final String fileName,
-      final String mimeType) throws IOException {
+      final String mimeType) {
     Resource resource = new Resource();
     UUID uuid = UUID.randomUUID();
     resource.setId(uuid.toString());
     resource.setFileName(fileName);
     resource.setMimeType(mimeType);
+    saveResource(resource, is);
+    return resource;
+  }
+
+  public static void saveResource(final Resource resource, final InputStream inputStream) {
     String filePath = "D:/DevData/resource/" + resource.getId();
-    resource.setPath(filePath);
     InputStream in = null;
     OutputStream out = null;
     try {
@@ -71,20 +76,23 @@ public class ServletMessage {
       // // file.mkdirs();
       file.getParentFile().mkdirs();
       file.createNewFile();
-      in = new BufferedInputStream(is);
+      in = new BufferedInputStream(inputStream);
       out = new FileOutputStream(filePath);
       byte[] buffer = new byte[1024];
       for (int bytesRead = in.read(buffer); bytesRead > 0; bytesRead = in.read(buffer)) {
         out.write(buffer, 0, bytesRead);
       }
+    } catch (IOException e) {
+      e.printStackTrace();
+      throw new WebException(e.getMessage());
     } finally {
       IOUtils.closeQuietly(in);
       IOUtils.closeQuietly(out);
     }
-    return resource;
   }
 
-  public static void writeResource(final Resource resource, final OutputStream out) throws IOException {
+  public static void writeResource(final Resource resource, final OutputStream out)
+      throws IOException {
     String filePath = "D:/DevData/resource/" + resource.getId();
     InputStream in = null;
     try {
