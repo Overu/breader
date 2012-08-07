@@ -1,0 +1,98 @@
+.cellTreeWidget {
+  
+}
+
+.cellTreeEmptyMessage {
+  padding-left: 16px;
+  font-style: italic;
+}
+  
+.cellTreeItem {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  cursor: hand;
+  cursor: pointer;
+  zoom: 1;
+  clear: left;
+}
+
+.cellTreeItem + div {
+  float: left;
+  width: 100%;
+}
+
+.cellTreeItem:HOVER {
+  background-color: #eee;
+}
+
+.cellTreeItem:HOVER>div>div:LAST-CHILD>div:LAST-CHILD {
+  opacity: 1;
+}
+
+.cellTreeItemImage {
+}
+
+.cellTreeItemImageValue {
+  zoom: 1;
+}
+
+.cellTreeItemValue {
+  padding-left: 3px;
+  padding-right: 3px;
+  outline: none;
+  overflow: hidden;
+}
+
+.cellTreeItemValue>div:FIRST-CHILD {
+  float: left;
+}
+
+.cellTreeItemValue>div:FOCUS {
+  outline: 0px auto transparent;
+}
+
+.cellTreeOpenItem {
+  
+}
+
+.cellTreeTopItem {
+  font-weight: bold;
+  color: #4b4a4a;
+  margin-top: 0px;
+  padding: 3px 13px 3px 10px !important;
+}
+
+.cellTreeTopItemImage {
+  
+}
+
+.cellTreeTopItemImageValue {
+  /* border-bottom: 1px solid #6f7277;
+  padding-bottom: 1px; */
+}
+
+.cellTreeKeyboardSelectedItem {
+  background-color: transparent;
+  outline: none;
+}
+
+.cellTreeSelectedItem {
+  background-color: #81A642!important;
+  color: white;
+  height: auto;
+  overflow: visible;
+  background-image: url("#");
+}
+
+.cellTreeSelectedItem>div {
+  background-color: #81A642!important;
+}
+
+.cellTreeSelectedItem>div>div:LAST-CHILD>div:LAST-CHILD {
+  opacity: 1;
+}
+
+.cellTreeShowMoreButton {
+  padding-left: 16px;
+  outline: none;
+}

@@ -1,16 +1,14 @@
 /*
  * Copyright 2008 Google Inc.
  * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
  * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
 package com.goodow.web.core.client.text;
@@ -37,17 +35,16 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * A sample toolbar for use with {@link RichTextArea}. It provides a simple UI
- * for all rich text formatting, dynamically displayed only for the available
- * functionality.
+ * A sample toolbar for use with {@link RichTextArea}. It provides a simple UI for all rich text
+ * formatting, dynamically displayed only for the available functionality.
  */
 @SuppressWarnings("deprecation")
 public class RichTextToolbar extends Composite {
 
   /**
-   * This {@link ClientBundle} is used for all the button icons. Using a bundle
-   * allows all of these images to be packed into a single image, which saves a
-   * lot of HTTP requests, drastically improving startup time.
+   * This {@link ClientBundle} is used for all the button icons. Using a bundle allows all of these
+   * images to be packed into a single image, which saves a lot of HTTP requests, drastically
+   * improving startup time.
    */
   public interface Images extends ClientBundle {
 
@@ -89,8 +86,7 @@ public class RichTextToolbar extends Composite {
   }
 
   /**
-   * This {@link Constants} interface is used to make the toolbar's strings
-   * internationalizable.
+   * This {@link Constants} interface is used to make the toolbar's strings internationalizable.
    */
   public interface Strings extends Constants {
 
@@ -166,13 +162,13 @@ public class RichTextToolbar extends Composite {
   }
 
   /**
-   * We use an inner EventHandler class to avoid exposing event methods on the
-   * RichTextToolbar itself.
+   * We use an inner EventHandler class to avoid exposing event methods on the RichTextToolbar
+   * itself.
    */
-  private class EventHandler implements ClickHandler, ChangeHandler,
-      KeyUpHandler {
+  private class EventHandler implements ClickHandler, ChangeHandler, KeyUpHandler {
 
-    public void onChange(ChangeEvent event) {
+    @Override
+    public void onChange(final ChangeEvent event) {
       Widget sender = (Widget) event.getSource();
 
       if (sender == backColors) {
@@ -190,7 +186,8 @@ public class RichTextToolbar extends Composite {
       }
     }
 
-    public void onClick(ClickEvent event) {
+    @Override
+    public void onClick(final ClickEvent event) {
       Widget sender = (Widget) event.getSource();
 
       if (sender == bold) {
@@ -243,7 +240,8 @@ public class RichTextToolbar extends Composite {
       }
     }
 
-    public void onKeyUp(KeyUpEvent event) {
+    @Override
+    public void onKeyUp(final KeyUpEvent event) {
       Widget sender = (Widget) event.getSource();
       if (sender == richText) {
         // We use the RichTextArea's onKeyUp event to update the toolbar status.
@@ -255,9 +253,8 @@ public class RichTextToolbar extends Composite {
   }
 
   private static final RichTextArea.FontSize[] fontSizesConstants = new RichTextArea.FontSize[] {
-      RichTextArea.FontSize.XX_SMALL, RichTextArea.FontSize.X_SMALL,
-      RichTextArea.FontSize.SMALL, RichTextArea.FontSize.MEDIUM,
-      RichTextArea.FontSize.LARGE, RichTextArea.FontSize.X_LARGE,
+      RichTextArea.FontSize.XX_SMALL, RichTextArea.FontSize.X_SMALL, RichTextArea.FontSize.SMALL,
+      RichTextArea.FontSize.MEDIUM, RichTextArea.FontSize.LARGE, RichTextArea.FontSize.X_LARGE,
       RichTextArea.FontSize.XX_LARGE};
 
   private Images images = (Images) GWT.create(Images.class);
@@ -300,7 +297,7 @@ public class RichTextToolbar extends Composite {
    * 
    * @param richText the rich text area to be controlled
    */
-  public RichTextToolbar(RichTextArea richText) {
+  public RichTextToolbar(final RichTextArea richText) {
     this.richText = richText;
     this.basic = richText.getBasicFormatter();
     this.extended = richText.getExtendedFormatter();
@@ -316,39 +313,28 @@ public class RichTextToolbar extends Composite {
 
     if (basic != null) {
       topPanel.add(bold = createToggleButton(images.bold(), strings.bold()));
-      topPanel.add(italic = createToggleButton(images.italic(),
-          strings.italic()));
-      topPanel.add(underline = createToggleButton(images.underline(),
-          strings.underline()));
-      topPanel.add(subscript = createToggleButton(images.subscript(),
-          strings.subscript()));
-      topPanel.add(superscript = createToggleButton(images.superscript(),
-          strings.superscript()));
-      topPanel.add(justifyLeft = createPushButton(images.justifyLeft(),
-          strings.justifyLeft()));
-      topPanel.add(justifyCenter = createPushButton(images.justifyCenter(),
-          strings.justifyCenter()));
-      topPanel.add(justifyRight = createPushButton(images.justifyRight(),
-          strings.justifyRight()));
+      topPanel.add(italic = createToggleButton(images.italic(), strings.italic()));
+      topPanel.add(underline = createToggleButton(images.underline(), strings.underline()));
+      topPanel.add(subscript = createToggleButton(images.subscript(), strings.subscript()));
+      topPanel.add(superscript = createToggleButton(images.superscript(), strings.superscript()));
+      topPanel.add(justifyLeft = createPushButton(images.justifyLeft(), strings.justifyLeft()));
+      topPanel.add(justifyCenter =
+          createPushButton(images.justifyCenter(), strings.justifyCenter()));
+      topPanel.add(justifyRight = createPushButton(images.justifyRight(), strings.justifyRight()));
     }
 
     if (extended != null) {
-      topPanel.add(strikethrough = createToggleButton(images.strikeThrough(),
-          strings.strikeThrough()));
+      topPanel.add(strikethrough =
+          createToggleButton(images.strikeThrough(), strings.strikeThrough()));
       topPanel.add(indent = createPushButton(images.indent(), strings.indent()));
-      topPanel.add(outdent = createPushButton(images.outdent(),
-          strings.outdent()));
+      topPanel.add(outdent = createPushButton(images.outdent(), strings.outdent()));
       topPanel.add(hr = createPushButton(images.hr(), strings.hr()));
       topPanel.add(ol = createPushButton(images.ol(), strings.ol()));
       topPanel.add(ul = createPushButton(images.ul(), strings.ul()));
-      topPanel.add(insertImage = createPushButton(images.insertImage(),
-          strings.insertImage()));
-      topPanel.add(createLink = createPushButton(images.createLink(),
-          strings.createLink()));
-      topPanel.add(removeLink = createPushButton(images.removeLink(),
-          strings.removeLink()));
-      topPanel.add(removeFormat = createPushButton(images.removeFormat(),
-          strings.removeFormat()));
+      topPanel.add(insertImage = createPushButton(images.insertImage(), strings.insertImage()));
+      topPanel.add(createLink = createPushButton(images.createLink(), strings.createLink()));
+      topPanel.add(removeLink = createPushButton(images.removeLink(), strings.removeLink()));
+      topPanel.add(removeFormat = createPushButton(images.removeFormat(), strings.removeFormat()));
     }
 
     if (basic != null) {
@@ -364,7 +350,7 @@ public class RichTextToolbar extends Composite {
     }
   }
 
-  private ListBox createColorList(String caption) {
+  private ListBox createColorList(final String caption) {
     ListBox lb = new ListBox();
     lb.addChangeHandler(handler);
     lb.setVisibleItemCount(1);
@@ -411,14 +397,14 @@ public class RichTextToolbar extends Composite {
     return lb;
   }
 
-  private PushButton createPushButton(ImageResource img, String tip) {
+  private PushButton createPushButton(final ImageResource img, final String tip) {
     PushButton pb = new PushButton(new Image(img));
     pb.addClickHandler(handler);
     pb.setTitle(tip);
     return pb;
   }
 
-  private ToggleButton createToggleButton(ImageResource img, String tip) {
+  private ToggleButton createToggleButton(final ImageResource img, final String tip) {
     ToggleButton tb = new ToggleButton(new Image(img));
     tb.addClickHandler(handler);
     tb.setTitle(tip);

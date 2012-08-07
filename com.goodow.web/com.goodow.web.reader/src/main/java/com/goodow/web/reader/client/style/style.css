@@ -11,3 +11,19 @@ body {
   outline: none;
   background: literal('-webkit-gradient(linear, left top, left bottom, from(black), to(rgb(34, 34, 34)))');
 }
+
+@sprite 
+.trangleCell {
+  gwt-image: "trangleButton"; 
+  opacity: 0;
+  padding: 0 5px;
+  position: absolute;
+  right: 0;
+}
+
+@sprite 
+.trangleCell:FOCUS {
+  gwt-image: "trangleButtoned"; 
+  opacity: 1;
+  outline: 0px;
+}

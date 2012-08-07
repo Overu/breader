@@ -18,6 +18,7 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.cellview.client.CellList;
+import com.google.gwt.user.cellview.client.CellTree;
 
 import com.googlecode.mgwt.ui.client.theme.base.ListCss;
 
@@ -37,13 +38,18 @@ public class ReadResources {
 
     @Source("readHeader.css")
     ReadHeader readHeadCss();
+
+    ImageResource trangleButton();
+
+    ImageResource trangleButtoned();
+
   }
 
   public interface CategoryListCss extends ListCss {
     String categorContainer();
   }
 
-  public static interface CellListResources extends CellList.Resources {
+  public interface CellListResources extends CellList.Resources {
     @Override
     @Source({CellList.Style.DEFAULT_CSS, "WaveCellList.css"})
     CellListStyle cellListStyle();
@@ -53,22 +59,37 @@ public class ReadResources {
     String cellListBasicImformation();
   }
 
+  public interface CellTreeResources extends CellTree.Resources {
+
+    @Override
+    @Source({CellTree.Style.DEFAULT_CSS, "WaveCellTree.css"})
+    CellTreeStyle cellTreeStyle();
+
+  }
+
+  public interface CellTreeStyle extends CellTree.Style {
+  }
+
   public interface ReadHeader extends CssResource {
     String headPanel();
   }
 
   public interface Style extends CssResource {
     String topBarButtonHOVER();
+
+    String trangleCell();
   }
 
   private static final Logger logger = Logger.getLogger(ReadResources.class.getName());
   private static Bundle INSTANCE;
   private static CellListResources CELLLISTSTYLE;
+  private static CellTreeResources CELLTREESTYLE;
 
   static {
     logger.finest("static init start");
     INSTANCE = GWT.create(Bundle.class);
     CELLLISTSTYLE = GWT.create(CellListResources.class);
+    CELLTREESTYLE = GWT.create(CellTreeResources.class);
     INSTANCE.css().ensureInjected();
     INSTANCE.categroyListCss().ensureInjected();
     INSTANCE.readHeadCss().ensureInjected();
@@ -77,6 +98,10 @@ public class ReadResources {
 
   public static CellListResources CELLLISTINSTANCE() {
     return CELLLISTSTYLE;
+  }
+
+  public static CellTreeResources CELLTREEINSTANCE() {
+    return CELLTREESTYLE;
   }
 
   public static Bundle INSTANCE() {

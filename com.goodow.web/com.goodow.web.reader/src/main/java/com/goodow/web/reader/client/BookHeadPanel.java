@@ -114,7 +114,7 @@ public class BookHeadPanel extends FlowView implements HeadTypeHandle {
 
   @Override
   protected void start() {
-    popupContainer.addDomHandler(new MouseMoveHandler() {
+    popupContainer.addContainerHandle(new MouseMoveHandler() {
 
       @Override
       public void onMouseMove(final MouseMoveEvent event) {
@@ -126,7 +126,7 @@ public class BookHeadPanel extends FlowView implements HeadTypeHandle {
       }
     }, MouseMoveEvent.getType());
 
-    popupContainer.addDomHandler(new MouseOutHandler() {
+    popupContainer.addContainerHandle(new MouseOutHandler() {
 
       @Override
       public void onMouseOut(final MouseOutEvent event) {
