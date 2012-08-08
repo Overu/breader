@@ -9,8 +9,6 @@ import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
@@ -19,12 +17,6 @@ public class TrangleButtonCell<T> extends AbstractCell<T> {
 
   public static interface Delegate<T> {
     void execute(T object);
-  }
-
-  interface Bundle extends ClientBundle {
-    ImageResource trangleButton();
-
-    ImageResource trangleButtoned();
   }
 
   interface Template extends SafeHtmlTemplates {
@@ -37,18 +29,20 @@ public class TrangleButtonCell<T> extends AbstractCell<T> {
 
   private boolean isClick = false;
 
-  private Delegate<T> delegate = new TrangleButtonCell.Delegate<T>() {
+  private Delegate<T> delegate;
 
-    @Override
-    public void execute(final T object) {
+  private Element thisElm;
 
-    }
-  };
-
-  // private Element imageElm;
-
-  public TrangleButtonCell() {
+  public TrangleButtonCell(final Delegate<T> delegate) {
     super(BrowserEvents.CLICK, BrowserEvents.BLUR);
+    this.delegate = delegate;
+  }
+
+  public Element getThisElm() {
+    if (thisElm == null) {
+      return null;
+    }
+    return thisElm;
   }
 
   @Override
@@ -71,6 +65,7 @@ public class TrangleButtonCell<T> extends AbstractCell<T> {
       }
 
       if (parent.isOrHasChild(Element.as(eventTarget))) {
+        thisElm = parent;
         if (!isClick) {
           isClick = true;
           parent.focus();

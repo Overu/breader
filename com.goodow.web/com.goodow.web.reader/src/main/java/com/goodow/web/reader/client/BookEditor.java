@@ -21,6 +21,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.CellTree;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
@@ -147,9 +148,22 @@ public class BookEditor extends FormView<Book> {
 
   Book book;
 
+  Section section;
+
   private final Logger logger = Logger.getLogger(BookEditor.class.getName());
 
   private static Binder uiBinder = GWT.create(Binder.class);
+
+  private static final DropDownPanel dropDownPanel = new ListDropDownPanel();
+
+  private TrangleButtonCell.Delegate<Section> delegate = new TrangleButtonCell.Delegate<Section>() {
+
+    @Override
+    public void execute(final Section object) {
+      section = object;
+      popupContainer.show((com.google.gwt.user.client.Element) tbCell.getThisElm(), dropDownPanel);
+    }
+  };
 
   @Inject
   @UiField(provided = true)
@@ -167,11 +181,16 @@ public class BookEditor extends FormView<Book> {
   @Inject
   SectionEditor selectionEditor;
 
+  @Inject
+  PopupContainer popupContainer;
+
   SingleSelectionModel<Section> selectionModel;
 
   RootDataProvider rootProvider;
 
   CustomSelectionEvent translator;
+
+  TrangleButtonCell<Section> tbCell = new TrangleButtonCell<Section>(delegate);
 
   @Inject
   AsyncBookService bookService;
@@ -202,7 +221,7 @@ public class BookEditor extends FormView<Book> {
 
     hasCells.add(new HasCell<Section, Section>() {
 
-      TrangleButtonCell<Section> tbCell = new TrangleButtonCell<Section>();
+      // tbCell = new TrangleButtonCell<Section>(delegate);
 
       @Override
       public Cell<Section> getCell() {
@@ -300,6 +319,10 @@ public class BookEditor extends FormView<Book> {
         selectionEditor.setValue(section);
       }
     });
+
+    dropDownPanel.addChild(new Label("添加"), null);
+    dropDownPanel.addChild(new Label("修改"), null);
+    dropDownPanel.addChild(new Label("删除"), null);
 
     translator = new CustomSelectionEvent();
     rootNode =

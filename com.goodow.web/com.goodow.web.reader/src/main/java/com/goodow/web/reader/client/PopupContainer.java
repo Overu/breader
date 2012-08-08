@@ -3,6 +3,8 @@ package com.goodow.web.reader.client;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -19,6 +21,8 @@ public class PopupContainer extends SimplePanel {
   private Style containerStyle;
 
   private SimplePanel container;
+
+  private DropDownPanel dropDownPanel;
 
   public PopupContainer() {
     container = new SimplePanel();
@@ -38,11 +42,23 @@ public class PopupContainer extends SimplePanel {
     this.setWidget(container);
     RootPanel.get().add(this);
 
+    this.addDomHandler(new ClickHandler() {
+
+      @Override
+      public void onClick(final ClickEvent event) {
+        hide();
+      }
+    }, ClickEvent.getType());
+
   }
 
   public <H extends EventHandler> HandlerRegistration addContainerHandle(final H handler,
       final DomEvent.Type<H> type) {
     return container.addDomHandler(handler, type);
+  }
+
+  public DropDownPanel getDropDownPanel() {
+    return dropDownPanel;
   }
 
   public void hide() {
@@ -55,13 +71,23 @@ public class PopupContainer extends SimplePanel {
     container.clear();
   }
 
-  public void show(final Widget attchPanel) {
-    int absoluteLeft = attchPanel.getAbsoluteLeft();
-    int absoluteTop = attchPanel.getAbsoluteTop() + attchPanel.getOffsetHeight();
+  public void setDropDownPanel(final DropDownPanel dropDownPanel) {
+    this.dropDownPanel = dropDownPanel;
+  }
+
+  public void show(final Element attchElm, final Widget popupPanel) {
+    int absoluteLeft = attchElm.getAbsoluteLeft();
+    int absoluteTop = attchElm.getAbsoluteTop() + attchElm.getOffsetHeight();
     mainStyle.setZIndex(99);
     containerStyle.setTop(absoluteTop, Unit.PX);
     containerStyle.setLeft(absoluteLeft, Unit.PX);
+    container.setWidget(popupPanel);
+  }
+
+  public void show(final Widget attchPanel, final Widget popupPanel) {
+    show(attchPanel.getElement(), popupPanel);
     if (attchPanel instanceof TopBarButton) {
+      container.clear();
       clearFullScreen();
       container.setWidget(((TopBarButton) attchPanel).getPopupComponent());
     }

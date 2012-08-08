@@ -58,6 +58,9 @@ public class BookHeadPanel extends FlowView implements HeadTypeHandle {
     @Override
     public void run() {
       popupContainer.hide();
+      if (topBarButtonIndex == null) {
+        return;
+      }
       topBarButtonIndex.removeHover();
     }
   };
@@ -97,7 +100,7 @@ public class BookHeadPanel extends FlowView implements HeadTypeHandle {
 
         break;
       case MOUSEOVER:
-        popupContainer.show(topBarButton);
+        popupContainer.show(topBarButton, topBarButton.getPopupComponent());
         timer.cancel();
         topBarButton.addHover();
         if (topBarButtonIndex != null && topBarButton != topBarButtonIndex) {
