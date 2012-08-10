@@ -16,6 +16,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -161,9 +163,13 @@ public class BookEditor extends FormView<Book> {
     @Override
     public void execute(final Section object) {
       section = object;
-      popupContainer.show((com.google.gwt.user.client.Element) tbCell.getThisElm(), dropDownPanel);
+      Element tbCellElm = tbCell.getThisElm();
+      cellParent = tbCellElm.getParentElement();
+      popupContainer.show((com.google.gwt.user.client.Element) tbCellElm, dropDownPanel);
     }
   };
+
+  Element cellParent;
 
   @Inject
   @UiField(provided = true)
@@ -199,23 +205,29 @@ public class BookEditor extends FormView<Book> {
 
     List<HasCell<Section, ?>> hasCells = new ArrayList<HasCell<Section, ?>>();
 
-    hasCells.add(new HasCell<Section, Section>() {
+    hasCells.add(new HasCell<Section, String>() {
 
-      DefaultCell defaultCell = new DefaultCell();
+      // DefaultCell defaultCell = new DefaultCell();
+      EditTextFocusCell etfcell = new EditTextFocusCell();
 
       @Override
-      public Cell<Section> getCell() {
-        return defaultCell;
+      public Cell<String> getCell() {
+        return etfcell;
       }
 
       @Override
-      public FieldUpdater<Section, Section> getFieldUpdater() {
-        return null;
+      public FieldUpdater<Section, String> getFieldUpdater() {
+        return new FieldUpdater<Section, String>() {
+
+          @Override
+          public void update(final int index, final Section object, final String value) {
+          }
+        };
       }
 
       @Override
-      public Section getValue(final Section object) {
-        return object;
+      public String getValue(final Section object) {
+        return object.getTitle();
       }
     });
 
@@ -320,10 +332,6 @@ public class BookEditor extends FormView<Book> {
       }
     });
 
-    dropDownPanel.addChild(new Label("添加"), null);
-    dropDownPanel.addChild(new Label("修改"), null);
-    dropDownPanel.addChild(new Label("删除"), null);
-
     translator = new CustomSelectionEvent();
     rootNode =
         new DefaultNodeInfo<Section>(rootProvider, getCell(), selectionModel,
@@ -331,6 +339,19 @@ public class BookEditor extends FormView<Book> {
 
     sectionsTree = new CellTree(new SectionTreeViewModel(), null, ReadResources.CELLTREEINSTANCE());
     sectionsTree.setAnimationEnabled(true);
+
+    dropDownPanel.addChild(new Label("添加"), null);
+    dropDownPanel.addChild(new Label("修改"), new ClickHandler() {
+
+      @Override
+      public void onClick(final ClickEvent event) {
+        Element firstChild = Element.as(cellParent.getFirstChild());
+        firstChild.setAttribute("tabindex", "-1");
+        firstChild.focus();
+      }
+    });
+    dropDownPanel.addChild(new Label("删除"), null);
+
     // Create the UiBinder.
     Widget widget = uiBinder.createAndBindUi(this);
 

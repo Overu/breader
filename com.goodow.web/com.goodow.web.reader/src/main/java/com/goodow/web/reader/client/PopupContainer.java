@@ -22,8 +22,6 @@ public class PopupContainer extends SimplePanel {
 
   private SimplePanel container;
 
-  private DropDownPanel dropDownPanel;
-
   public PopupContainer() {
     container = new SimplePanel();
 
@@ -57,10 +55,6 @@ public class PopupContainer extends SimplePanel {
     return container.addDomHandler(handler, type);
   }
 
-  public DropDownPanel getDropDownPanel() {
-    return dropDownPanel;
-  }
-
   public void hide() {
     if (this.getWidget() == null) {
       return;
@@ -69,10 +63,6 @@ public class PopupContainer extends SimplePanel {
     containerStyle.clearLeft();
     setFullScreen();
     container.clear();
-  }
-
-  public void setDropDownPanel(final DropDownPanel dropDownPanel) {
-    this.dropDownPanel = dropDownPanel;
   }
 
   public void show(final Element attchElm, final Widget popupPanel) {
