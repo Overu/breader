@@ -350,7 +350,26 @@ public class BookEditor extends FormView<Book> {
         firstChild.focus();
       }
     });
-    dropDownPanel.addChild(new Label("删除"), null);
+    dropDownPanel.addChild(new Label("删除"), new ClickHandler() {
+
+      @Override
+      public void onClick(final ClickEvent event) {
+        if (section == null) {
+          return;
+        }
+
+        sectionService.remove(section).fire(new Receiver<Void>() {
+
+          @Override
+          public void onSuccess(final Void result) {
+            logger.info("remove:" + section.getTitle());
+            book.getSections().remove(section);
+            redraw(false);
+            section = null;
+          }
+        });
+      }
+    });
 
     // Create the UiBinder.
     Widget widget = uiBinder.createAndBindUi(this);
