@@ -31,6 +31,8 @@ public class PlaceList extends FlowView {
 
   private WebPlace parentPlace;
 
+  private int oldIndex;
+
   public void addRightWidget(final Widget widget) {
     container.add(widget);
   }
@@ -53,7 +55,11 @@ public class PlaceList extends FlowView {
     cellListWithHeader.addCellSelectedHandler(new CellSelectedHandler() {
       @Override
       public void onCellSelected(final CellSelectedEvent event) {
-        WebPlace child = parentPlace.getChild(event.getIndex());
+        int index = event.getIndex();
+        cellListWithHeader.setSelectedIndex(oldIndex, false);
+        cellListWithHeader.setSelectedIndex(index, true);
+        oldIndex = index;
+        WebPlace child = parentPlace.getChild(index);
         placeController.goTo(child);
       }
     });
