@@ -37,7 +37,7 @@ public final class ReaderMobileClientModule extends AbstractGinModule {
   WebPlace defaultPlaceProvider(final WebPlace place) {
     place.setAnimation(Animation.FADE);
     place.setTitle("睿泰书城");
-    place.setPattern("");
+    place.setPath("");
     return place;
   }
 }
