@@ -105,6 +105,8 @@ public class WebPlace extends Place {
 
   private WebPlace startedChild;
 
+  private boolean parameterized;
+
   public void addChild(final WebPlace place) {
     children.add(place);
     place.parent = this;
@@ -114,6 +116,10 @@ public class WebPlace extends Place {
     String[] segments = uri.split("/");
     WebPlace result = this;
     for (String path : segments) {
+      if (result.isParameterized()) {
+        result.setPath(path);
+        continue;
+      }
       if (path.length() == 0) {
         continue;
       }
@@ -150,12 +156,6 @@ public class WebPlace extends Place {
         return p;
       }
     }
-    for (WebPlace p : children) {
-      if (p.isParamitized()) {
-        p.setPath(path);
-        return p;
-      }
-    }
     return null;
   }
 
@@ -168,7 +168,7 @@ public class WebPlace extends Place {
   }
 
   public String getPath() {
-    if (!isParamitized()) {
+    if (!isParameterized()) {
       return pattern;
     }
     return path;
@@ -197,11 +197,9 @@ public class WebPlace extends Place {
     if (parent == null) {
       return new StringBuilder();
     } else {
-      StringBuilder builder = parent.getUriBuilder().append("/");
-      if (isParamitized()) {
-        builder.append(getPath());
-      } else {
-        builder.append(pattern);
+      StringBuilder builder = parent.getUriBuilder().append("/").append(pattern);
+      if (isParameterized()) {
+        builder.append("/").append(path);
       }
       return builder;
     }
@@ -215,8 +213,8 @@ public class WebPlace extends Place {
     return widget;
   }
 
-  public boolean isParamitized() {
-    return pattern.startsWith("{");
+  public boolean isParameterized() {
+    return parameterized;
   }
 
   public void render(final AcceptsOneWidget panel) {
@@ -233,6 +231,10 @@ public class WebPlace extends Place {
 
   public void setButtonText(final String buttonText) {
     this.buttonText = buttonText;
+  }
+
+  public void setParameterized(final boolean parameterized) {
+    this.parameterized = parameterized;
   }
 
   public void setPath(final String path) {

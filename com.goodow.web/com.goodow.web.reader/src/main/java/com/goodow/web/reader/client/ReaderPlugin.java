@@ -172,9 +172,9 @@ public class ReaderPlugin {
     booksPlace.setWidget(booksApp);
     booksPlace.setWelcomePlace(booksBrowserPlace);
 
-    booksPlace.addChild(createBookPlace);
     booksPlace.addChild(booksBrowserPlace);
     booksPlace.addChild(editBookPlace);
+    booksPlace.addChild(createBookPlace);
 
     booksBrowserPlace.setPattern("browse");
     booksBrowserPlace.setAnimation(Animation.SLIDE);
@@ -213,7 +213,8 @@ public class ReaderPlugin {
     newBookPlace.setTitle("制作新书");
     newBookPlace.setWidget(bookForm);
 
-    editBookPlace.setPattern("{id}");
+    editBookPlace.setPattern("edit");
+    editBookPlace.setParameterized(true);
     editBookPlace.setAnimation(Animation.SLIDE);
     editBookPlace.setTitle("编辑图书");
     editBookPlace.setWidget(contentEditor);

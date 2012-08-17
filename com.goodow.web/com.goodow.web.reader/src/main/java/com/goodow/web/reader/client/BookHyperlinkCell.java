@@ -18,7 +18,7 @@ import com.google.inject.Inject;
 public class BookHyperlinkCell extends AbstractCell<Book> {
 
   interface Template extends SafeHtmlTemplates {
-    @Template("<a href=\"#/books/{0}\" onclick=\"javascript: return false;\">{1}</a>")
+    @Template("<a href=\"#/books/edit/{0}\" onclick=\"javascript: return false;\">{1}</a>")
     SafeHtml a(String value, String href);
   }
 
