@@ -71,7 +71,7 @@ public class WebPlace extends Place {
     }
   }
 
-  private String pattern;
+  private String path;
 
   private Animation animation;
 
@@ -83,7 +83,7 @@ public class WebPlace extends Place {
 
   private WebPlace welcomePlace;
 
-  public String path;
+  public String parameter;
 
   private IsWidget widget;
 
@@ -117,7 +117,7 @@ public class WebPlace extends Place {
     WebPlace result = this;
     for (String path : segments) {
       if (result.isParameterized()) {
-        result.setPath(path);
+        result.setParameter(path);
         continue;
       }
       if (path.length() == 0) {
@@ -152,7 +152,7 @@ public class WebPlace extends Place {
 
   public WebPlace getChild(final String path) {
     for (WebPlace p : children) {
-      if (path.equals(p.getPattern())) {
+      if (path.equals(p.getPath())) {
         return p;
       }
     }
@@ -167,15 +167,12 @@ public class WebPlace extends Place {
     return parent;
   }
 
-  public String getPath() {
-    if (!isParameterized()) {
-      return pattern;
-    }
-    return path;
+  public String getParameter() {
+    return parameter;
   }
 
-  public String getPattern() {
-    return pattern;
+  public String getPath() {
+    return path;
   }
 
   /**
@@ -197,9 +194,9 @@ public class WebPlace extends Place {
     if (parent == null) {
       return new StringBuilder();
     } else {
-      StringBuilder builder = parent.getUriBuilder().append("/").append(pattern);
+      StringBuilder builder = parent.getUriBuilder().append("/").append(path);
       if (isParameterized()) {
-        builder.append("/").append(path);
+        builder.append("/").append(parameter);
       }
       return builder;
     }
@@ -237,12 +234,12 @@ public class WebPlace extends Place {
     this.parameterized = parameterized;
   }
 
-  public void setPath(final String path) {
-    this.path = path;
+  public void setParameter(final String parameter) {
+    this.parameter = parameter;
   }
 
-  public void setPattern(final String pattern) {
-    this.pattern = pattern;
+  public void setPath(final String path) {
+    this.path = path;
   }
 
   public void setStartedChild(final WebPlace startedChild) {

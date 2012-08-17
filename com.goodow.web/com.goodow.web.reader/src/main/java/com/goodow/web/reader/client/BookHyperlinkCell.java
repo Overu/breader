@@ -59,7 +59,7 @@ public class BookHyperlinkCell extends AbstractCell<Book> {
   @Override
   protected void onEnterKeyDown(final Context context, final Element parent, final Book value,
       final NativeEvent event, final ValueUpdater<Book> valueUpdater) {
-    reader.editBookPlace.setPath(value.getId());
+    reader.editBookPlace.setParameter(value.getId());
     placeController.goTo(reader.editBookPlace);
   }
 }

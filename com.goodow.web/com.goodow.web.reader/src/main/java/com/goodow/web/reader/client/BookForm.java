@@ -158,7 +158,7 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
       @Override
       public void onSuccess(final Book result) {
         logger.info("book created: " + result.getId());
-        reader.editBookPlace.setPath(result.getId());
+        reader.editBookPlace.setParameter(result.getId());
         placeController.goTo(reader.editBookPlace);
       }
     });
