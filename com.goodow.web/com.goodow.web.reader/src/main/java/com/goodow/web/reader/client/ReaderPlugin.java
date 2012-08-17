@@ -39,6 +39,9 @@ public class ReaderPlugin {
   Provider<BooksApp> booksApp;
 
   @Inject
+  Provider<BooksBrowser> booksBrowser;
+
+  @Inject
   Provider<BookForm> bookForm;
 
   @Inject
@@ -79,6 +82,9 @@ public class ReaderPlugin {
   WebPlace booksPlace;
 
   @Inject
+  WebPlace booksBrowserPlace;
+
+  @Inject
   WebPlace createBookPlace;
 
   @Inject
@@ -95,9 +101,6 @@ public class ReaderPlugin {
 
   @Inject
   WebPlace newBookPlace;
-
-  @Inject
-  WebPlace booksViewPlace;
 
   @Inject
   WebPlace editBookPlace;
@@ -167,13 +170,20 @@ public class ReaderPlugin {
     booksPlace.setAnimation(Animation.SLIDE);
     booksPlace.setTitle("应用控制台");
     booksPlace.setWidget(booksApp);
-    booksPlace.setWelcomePlace(booksViewPlace);
+    booksPlace.setWelcomePlace(booksBrowserPlace);
+
     booksPlace.addChild(createBookPlace);
-    booksPlace.addChild(myBooksPlace);
-    booksPlace.addChild(othersBookPlace);
-    booksPlace.addChild(selectedBooksPlace);
-    booksPlace.addChild(bookcategoryPlace);
+    booksPlace.addChild(booksBrowserPlace);
     booksPlace.addChild(editBookPlace);
+
+    booksBrowserPlace.setPattern("browse");
+    booksBrowserPlace.setAnimation(Animation.SLIDE);
+    booksBrowserPlace.setTitle("浏览图书");
+    booksBrowserPlace.setWidget(booksBrowser);
+    booksBrowserPlace.addChild(myBooksPlace);
+    booksBrowserPlace.addChild(othersBookPlace);
+    booksBrowserPlace.addChild(selectedBooksPlace);
+    booksBrowserPlace.addChild(bookcategoryPlace);
 
     createBookPlace.setPattern("create");
     createBookPlace.setAnimation(Animation.SLIDE);
@@ -198,11 +208,6 @@ public class ReaderPlugin {
     bookcategoryPlace.setAnimation(Animation.SLIDE);
     bookcategoryPlace.setTitle("图书分类");
 
-    booksViewPlace.setPattern("booksview");
-    booksViewPlace.setAnimation(Animation.SLIDE);
-    booksViewPlace.setWidget(booksView);
-    booksViewPlace.setTitle("welcome");
-
     newBookPlace.setPattern("new");
     newBookPlace.setAnimation(Animation.SLIDE);
     newBookPlace.setTitle("制作新书");
@@ -210,7 +215,7 @@ public class ReaderPlugin {
 
     editBookPlace.setPattern("{id}");
     editBookPlace.setAnimation(Animation.SLIDE);
-    editBookPlace.setTitle("编辑内容");
+    editBookPlace.setTitle("编辑图书");
     editBookPlace.setWidget(contentEditor);
   }
 }

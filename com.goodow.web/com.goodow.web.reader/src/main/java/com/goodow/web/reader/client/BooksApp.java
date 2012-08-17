@@ -14,8 +14,6 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 
-import com.googlecode.mgwt.ui.client.MGWTStyle;
-
 public class BooksApp extends FlowView implements AcceptsOneWidget {
 
   interface Bundle extends ClientBundle {
@@ -42,9 +40,6 @@ public class BooksApp extends FlowView implements AcceptsOneWidget {
 
   @Inject
   private BookHeadPanel bannerPanel;
-
-  @Inject
-  private PlaceList leftPanel;
 
   // @Inject
   // private UserInfoPanel userInfoPanel;
@@ -110,17 +105,14 @@ public class BooksApp extends FlowView implements AcceptsOneWidget {
     // bannerPanel.add(topBarButton);
     // bannerPanel.add(userInfoPanel);
 
-    centerPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
-        .fillPanelExpandChild());
-
-    leftPanel.addRightWidget(centerPanel);
+    centerPanel.getElement().setId("main-center");
+    // centerPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
+    // .fillPanelExpandChild());
 
     main.addStyleName(bundle.booksAppCss().main());
-    // bannerPanel.addStyleName(bundle.booksAppCss().bannerPanel());
-    leftPanel.addStyleName(bundle.booksAppCss().placeList());
 
     main.add(bannerPanel);
-    main.add(leftPanel);
+    main.add(centerPanel);
   }
 
 }
