@@ -2,6 +2,7 @@ package com.goodow.web.reader.client;
 
 import com.goodow.web.core.shared.HomePlace;
 import com.goodow.web.core.shared.WebPlace;
+import com.goodow.web.reader.client.droppable.CellTableSample;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -49,6 +50,9 @@ public class ReaderPlugin {
 
   @Inject
   Provider<SelectedBookList> selectedBookList;
+
+  @Inject
+  Provider<CellTableSample> cellTableSample;
 
   @HomePlace
   @Inject
@@ -101,6 +105,9 @@ public class ReaderPlugin {
 
   @Inject
   WebPlace editBookPlace;
+
+  @Inject
+  WebPlace cellTablePlace;
 
   @Inject
   Provider<BookEditor> contentEditor;
@@ -174,6 +181,7 @@ public class ReaderPlugin {
     booksPlace.addChild(selectedBooksPlace);
     booksPlace.addChild(bookcategoryPlace);
     booksPlace.addChild(editBookPlace);
+    booksPlace.addChild(cellTablePlace);
 
     createBookPlace.setPattern("create");
     createBookPlace.setAnimation(Animation.SLIDE);
@@ -212,5 +220,10 @@ public class ReaderPlugin {
     editBookPlace.setAnimation(Animation.SLIDE);
     editBookPlace.setTitle("编辑内容");
     editBookPlace.setWidget(contentEditor);
+
+    cellTablePlace.setPattern("cellTable");
+    cellTablePlace.setAnimation(Animation.SLIDE);
+    cellTablePlace.setTitle("拖拽实验");
+    cellTablePlace.setWidget(cellTableSample);
   }
 }
