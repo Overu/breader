@@ -46,7 +46,7 @@ public class ClientMessage extends Message implements RequestCallback {
       configureRequestBuilder(builder);
       builder.setRequestData(payload);
       builder.setCallback(this);
-      logger.info("Request: " + payload);
+      logger.finest("Request: " + payload);
       builder.send();
     } catch (RequestException e) {
       logger.log(Level.SEVERE, SERVER_ERROR + " (" + e.getMessage() + ")", e);
@@ -64,10 +64,9 @@ public class ClientMessage extends Message implements RequestCallback {
   @Override
   public void onResponseReceived(final com.google.gwt.http.client.Request request,
       final com.google.gwt.http.client.Response response) {
-    logger.finest("onResponseReceived");
     try {
       String body = response.getText();
-      logger.info("Response: " + body);
+      logger.finest("Response: " + body);
       JSONValue obj = JSONParser.parse(body);
       WebType type = this.request.getOperation().getType();
       Object result = messageProvider.parse(type, obj, this);

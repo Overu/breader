@@ -27,6 +27,14 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- testgwtquery -->
+    <dependency>
+      <groupId>com.googlecode.gwtquery</groupId>
+      <artifactId>gwtquery</artifactId>
+      <scope>provided</scope>
+      <version>1.1.0</version>
+    </dependency>
+
     <!-- Google Web Toolkit (GWT) -->
     <dependency>
       <groupId>com.google.gwt</groupId>
@@ -36,7 +44,7 @@
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-servlet</artifactId>
     </dependency>
-    
+
     <!-- GIN and Guice for IoC / DI -->
     <dependency>
       <groupId>com.google.inject</groupId>

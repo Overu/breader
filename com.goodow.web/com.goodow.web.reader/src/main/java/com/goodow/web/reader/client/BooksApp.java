@@ -3,10 +3,6 @@ package com.goodow.web.reader.client;
 import com.goodow.web.core.client.FlowView;
 import com.goodow.web.reader.client.BookHeadPanel.LocationPanel;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.ClientBundle;
-import com.google.gwt.resources.client.CssResource;
-import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.IsWidget;
@@ -14,40 +10,10 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 
-import com.googlecode.mgwt.ui.client.MGWTStyle;
-
 public class BooksApp extends FlowView implements AcceptsOneWidget {
-
-  interface Bundle extends ClientBundle {
-    @Source("BooksApp.css")
-    Style booksAppCss();
-
-    ImageResource userFace();
-  }
-
-  interface Style extends CssResource {
-    // String bannerPanel();
-
-    String main();
-
-    String placeList();
-  }
-
-  private static Bundle bundle;
-
-  static {
-    bundle = GWT.create(Bundle.class);
-    bundle.booksAppCss().ensureInjected();
-  }
 
   @Inject
   private BookHeadPanel bannerPanel;
-
-  @Inject
-  private PlaceList leftPanel;
-
-  // @Inject
-  // private UserInfoPanel userInfoPanel;
 
   @Inject
   private TopBarButton topBarButton;
@@ -57,12 +23,6 @@ public class BooksApp extends FlowView implements AcceptsOneWidget {
   private TopBarButton topBarButton2;
   @Inject
   private TopBarButton topBarButton3;
-
-  // @Inject
-  // private FlowPanel centerPanel;
-  //
-  // @Inject
-  // private HeaderPanel centerHeader;
 
   @Inject
   private SimplePanel centerPanel;
@@ -90,7 +50,7 @@ public class BooksApp extends FlowView implements AcceptsOneWidget {
     pci1.addChild(new Label("公共Wiki"), null);
 
     DropDownPanel pci2 = new ListDropDownPanel();
-    Image image = new Image(bundle.userFace());
+    Image image = new Image(BooksBrowser.bundle.userFace());
     pci2.addChild(image, null);
     pci2.addChild(new Label("设置"), null);
     pci2.addChild(new Label("注销"), null);
@@ -110,17 +70,14 @@ public class BooksApp extends FlowView implements AcceptsOneWidget {
     // bannerPanel.add(topBarButton);
     // bannerPanel.add(userInfoPanel);
 
-    centerPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
-        .fillPanelExpandChild());
+    centerPanel.getElement().setId("main-center");
+    centerPanel.addStyleName(BooksBrowser.bundle.booksAppCss().centerpanel());
+    // centerPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
+    // .fillPanelExpandChild());
 
-    leftPanel.addRightWidget(centerPanel);
-
-    main.addStyleName(bundle.booksAppCss().main());
-    // bannerPanel.addStyleName(bundle.booksAppCss().bannerPanel());
-    leftPanel.addStyleName(bundle.booksAppCss().placeList());
+    main.addStyleName(BooksBrowser.bundle.booksAppCss().main());
 
     main.add(bannerPanel);
-    main.add(leftPanel);
+    main.add(centerPanel);
   }
-
 }

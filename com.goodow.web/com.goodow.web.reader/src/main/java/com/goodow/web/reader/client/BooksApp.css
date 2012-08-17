@@ -7,15 +7,14 @@
   display: -webkit-box;
 }
 
- /* .bannerPanel {
- -webkit-box-pack: justify; 
+.centerpanel {
+  -webkit-box-flex: 1;
+  -webkit-box-orient: vertical;
   display: -webkit-box;
+  height: 100%;
+  position: relative;
 }
 
-.bannerPanel>div {
-  margin: 2px 0 2px 0;
-}
-*/
 .placeList {
   -webkit-box-flex: 1;
   -webkit-box-orient: vertical;
