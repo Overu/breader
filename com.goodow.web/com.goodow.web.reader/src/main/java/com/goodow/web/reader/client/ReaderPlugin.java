@@ -118,11 +118,11 @@ public class ReaderPlugin {
     homePlace.addChild(booksPlace);
     homePlace.addChild(newBookPlace);
 
-    bookshelfPlace.setPattern("bookshelf");
+    bookshelfPlace.setPath("bookshelf");
     bookshelfPlace.setAnimation(Animation.SLIDE);
     bookshelfPlace.setWidget(bookshelf);
 
-    bookstorePlace.setPattern("bookstore");
+    bookstorePlace.setPath("bookstore");
     bookstorePlace.setAnimation(Animation.SLIDE);
     bookstorePlace.setWidget(bookstore);
     bookstorePlace.setWelcomePlace(recommendedPlace);
@@ -131,42 +131,42 @@ public class ReaderPlugin {
     bookstorePlace.addChild(mostViewedPlace);
     bookstorePlace.addChild(categorizedPlace);
 
-    recommendedPlace.setPattern("recommended");
+    recommendedPlace.setPath("recommended");
     recommendedPlace.setAnimation(Animation.SLIDE);
     recommendedPlace.setWidget(recommended);
     recommendedPlace.setTitle("精品推荐");
     recommendedPlace.setButtonText("推荐");
     recommendedPlace.setButtonImage(bundle.tabBarFeaturedImage());
 
-    favoritesPlace.setPattern("favorites");
+    favoritesPlace.setPath("favorites");
     favoritesPlace.setAnimation(Animation.SLIDE);
     favoritesPlace.setWidget(favorites);
     favoritesPlace.setTitle("我的收藏");
     favoritesPlace.setButtonText("收藏");
     favoritesPlace.setButtonImage(bundle.tabBarFavoritesImage());
 
-    discountedPlace.setPattern("discounted");
+    discountedPlace.setPath("discounted");
     discountedPlace.setAnimation(Animation.SLIDE);
     discountedPlace.setWidget(discounted);
     discountedPlace.setTitle("特价促销");
     discountedPlace.setButtonText("特价");
     discountedPlace.setButtonImage(bundle.tabBarHistoryImage());
 
-    mostViewedPlace.setPattern("mostviewed");
+    mostViewedPlace.setPath("mostviewed");
     mostViewedPlace.setAnimation(Animation.SLIDE);
     mostViewedPlace.setWidget(mostViewed);
     mostViewedPlace.setTitle("热门图书");
     mostViewedPlace.setButtonText("热门");
     mostViewedPlace.setButtonImage(bundle.tabBarMostViewedImage());
 
-    categorizedPlace.setPattern("categorized");
+    categorizedPlace.setPath("categorized");
     categorizedPlace.setAnimation(Animation.SLIDE);
     categorizedPlace.setWidget(categorized);
     categorizedPlace.setTitle("分类浏览");
     categorizedPlace.setButtonText("分类");
     categorizedPlace.setButtonImage(bundle.tabBarBookMarkImage());
 
-    booksPlace.setPattern("books");
+    booksPlace.setPath("books");
     booksPlace.setAnimation(Animation.SLIDE);
     booksPlace.setTitle("应用控制台");
     booksPlace.setWidget(booksApp);
@@ -176,7 +176,7 @@ public class ReaderPlugin {
     booksPlace.addChild(editBookPlace);
     booksPlace.addChild(createBookPlace);
 
-    booksBrowserPlace.setPattern("browse");
+    booksBrowserPlace.setPath("browse");
     booksBrowserPlace.setAnimation(Animation.SLIDE);
     booksBrowserPlace.setTitle("浏览图书");
     booksBrowserPlace.setWidget(booksBrowser);
@@ -185,35 +185,35 @@ public class ReaderPlugin {
     booksBrowserPlace.addChild(selectedBooksPlace);
     booksBrowserPlace.addChild(bookcategoryPlace);
 
-    createBookPlace.setPattern("create");
+    createBookPlace.setPath("create");
     createBookPlace.setAnimation(Animation.SLIDE);
     createBookPlace.setTitle("制作新书");
     createBookPlace.setWidget(bookForm);
 
-    myBooksPlace.setPattern("my");
+    myBooksPlace.setPath("my");
     myBooksPlace.setAnimation(Animation.SLIDE);
     myBooksPlace.setTitle("我的图书");
     myBooksPlace.setWidget(myBookList);
 
-    othersBookPlace.setPattern("others");
+    othersBookPlace.setPath("others");
     othersBookPlace.setAnimation(Animation.SLIDE);
     othersBookPlace.setTitle("其他图书");
 
-    selectedBooksPlace.setPattern("selected");
+    selectedBooksPlace.setPath("selected");
     selectedBooksPlace.setAnimation(Animation.SLIDE);
     selectedBooksPlace.setTitle("精品图书");
     selectedBooksPlace.setWidget(selectedBookList);
 
-    bookcategoryPlace.setPattern("category");
+    bookcategoryPlace.setPath("category");
     bookcategoryPlace.setAnimation(Animation.SLIDE);
     bookcategoryPlace.setTitle("图书分类");
 
-    newBookPlace.setPattern("new");
+    newBookPlace.setPath("new");
     newBookPlace.setAnimation(Animation.SLIDE);
     newBookPlace.setTitle("制作新书");
     newBookPlace.setWidget(bookForm);
 
-    editBookPlace.setPattern("edit");
+    editBookPlace.setPath("edit");
     editBookPlace.setParameterized(true);
     editBookPlace.setAnimation(Animation.SLIDE);
     editBookPlace.setTitle("编辑图书");
