@@ -100,9 +100,6 @@ public class ReaderPlugin {
   WebPlace bookcategoryPlace;
 
   @Inject
-  WebPlace newBookPlace;
-
-  @Inject
   WebPlace editBookPlace;
 
   @Inject
@@ -113,10 +110,9 @@ public class ReaderPlugin {
     MGWTClientBundle bundle = MGWTStyle.getTheme().getMGWTClientBundle();
 
     homePlace.setAnimation(Animation.FLIP);
-    homePlace.setWelcomePlace(bookshelfPlace);
+    homePlace.setWelcomePlace(booksPlace);
     homePlace.addChild(bookstorePlace);
     homePlace.addChild(booksPlace);
-    homePlace.addChild(newBookPlace);
 
     bookshelfPlace.setPath("bookshelf");
     bookshelfPlace.setAnimation(Animation.SLIDE);
@@ -172,7 +168,6 @@ public class ReaderPlugin {
     booksPlace.setWidget(booksApp);
     booksPlace.setWelcomePlace(booksBrowserPlace);
 
-    booksPlace.addChild(booksBrowserPlace);
     booksPlace.addChild(editBookPlace);
     booksPlace.addChild(createBookPlace);
 
@@ -207,11 +202,6 @@ public class ReaderPlugin {
     bookcategoryPlace.setPath("category");
     bookcategoryPlace.setAnimation(Animation.SLIDE);
     bookcategoryPlace.setTitle("图书分类");
-
-    newBookPlace.setPath("new");
-    newBookPlace.setAnimation(Animation.SLIDE);
-    newBookPlace.setTitle("制作新书");
-    newBookPlace.setWidget(bookForm);
 
     editBookPlace.setPath("edit");
     editBookPlace.setParameterized(true);
