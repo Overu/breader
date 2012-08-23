@@ -17,10 +17,17 @@ import com.google.inject.Singleton;
 @Singleton
 public class PopupContainer extends SimplePanel {
 
+  public enum Loction {
+    OVER, BELOW, LEFT, RIGHT
+  }
+
   private Style mainStyle;
   private Style containerStyle;
 
   private SimplePanel container;
+
+  int absoluteLeft;
+  int absoluteTop;
 
   public PopupContainer() {
     container = new SimplePanel();
@@ -66,20 +73,45 @@ public class PopupContainer extends SimplePanel {
   }
 
   public void show(final Element attchElm, final Widget popupPanel) {
-    int absoluteLeft = attchElm.getAbsoluteLeft();
-    int absoluteTop = attchElm.getAbsoluteTop() + attchElm.getOffsetHeight();
-    mainStyle.setZIndex(99);
-    containerStyle.setTop(absoluteTop, Unit.PX);
-    containerStyle.setLeft(absoluteLeft, Unit.PX);
-    container.setWidget(popupPanel);
+    showBase(attchElm, popupPanel, Loction.BELOW);
+  }
+
+  public void show(final Element attchElm, final Widget popupPanel, final Loction loction) {
+    showBase(attchElm, popupPanel, loction);
   }
 
   public void show(final Widget attchPanel, final Widget popupPanel) {
-    show(attchPanel.getElement(), popupPanel);
+    showBase(attchPanel.getElement(), popupPanel, Loction.BELOW);
     if (attchPanel instanceof TopBarButton) {
       container.clear();
       clearFullScreen();
       container.setWidget(((TopBarButton) attchPanel).getPopupComponent());
+    }
+  }
+
+  public void show(final Widget attchPanel, final Widget popupPanel, final Loction loction) {
+    showBase(attchPanel.getElement(), popupPanel, loction);
+  }
+
+  private void calculateLoction(final Loction loction, final Element attchElm,
+      final Widget popupPanel) {
+    switch (loction) {
+      case OVER:
+        absoluteTop -= popupPanel.getOffsetHeight();
+        absoluteLeft -= popupPanel.getOffsetWidth() / 2;
+        break;
+      case BELOW:
+        absoluteTop += attchElm.getOffsetHeight();
+        break;
+      case LEFT:
+
+        break;
+      case RIGHT:
+
+        break;
+
+      default:
+        break;
     }
   }
 
@@ -98,4 +130,13 @@ public class PopupContainer extends SimplePanel {
     mainStyle.setZIndex(-1);
   }
 
+  private void showBase(final Element attchElm, final Widget popupPanel, final Loction loction) {
+    absoluteLeft = attchElm.getAbsoluteLeft();
+    absoluteTop = attchElm.getAbsoluteTop();
+    container.setWidget(popupPanel);
+    calculateLoction(loction, attchElm, popupPanel);
+    mainStyle.setZIndex(99);
+    containerStyle.setTop(absoluteTop, Unit.PX);
+    containerStyle.setLeft(absoluteLeft, Unit.PX);
+  }
 }
