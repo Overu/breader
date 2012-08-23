@@ -1,0 +1,61 @@
+.base {
+  margin: 0 0 10px 7px;
+  padding: 8px 10px 8px 33px;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-border-radius: 5px;
+  border-width: 1px;
+  border-style: solid;
+  height: auto!important;
+  width: auto!important;
+  background-position-x: 10px!important;
+  background-position-y: 5px!important;
+  font-size: 12px;
+  line-height: 1;
+  z-index: 101;
+  position: relative;
+}
+
+@sprite 
+.addpage {
+  gwt-image: "addpage";
+  color: #888;
+  border-color: #DDD;
+}
+
+@sprite 
+.deletenowpage {
+  gwt-image: "deletepage";
+  color: #888;
+  border-color: #DDD;
+}
+
+.addpage:HOVER, .deletenowpage:HOVER {
+  color: #444;
+  border-color: #AAA;
+}
+
+@sprite 
+.save {
+  gwt-image: "save";
+  color: #87B226;
+  border-color: #87B226;
+}
+
+.save:HOVER {
+  border: 1px solid #669300;
+  color: #669300;
+}
+
+@sprite 
+.okstack {
+  gwt-image: "okstack";
+  color: white;
+  border-color: #87B226;
+  background-color: #87B226;
+}
+
+.okstack:HOVER {
+  border-color: #669300;
+  background-color: #669300;
+}

@@ -1,0 +1,47 @@
+.mgwt-Carousel {
+  position: relative;
+  display: -webkit-box;
+  -webkit-box-flex: 1;
+}
+
+.mgwt-Carousel-Scroller {
+  -webkit-box-flex: 1;
+}
+
+.mgwt-Carousel-Container {
+  display: \-webkit-box;
+  \-webkit-box-flex: 1;
+}
+
+.mgwt-Carousel-Indicator-Container {
+  top: 570px;
+  position: absolute;
+  left: 150px;
+  display: -webkit-box;
+  -webkit-box-pack: center;
+  background: whiteSmoke;
+  border: 1px #DDD solid;
+  border-radius: 20px;
+  padding: 0 5px;
+}
+
+.mgwt-Carousel-Indicator {
+  color: #888;
+  padding: 5px 10px;
+  display: inline-block;
+  text-shadow: 0 1px 1px white;
+  cursor: pointer;
+}
+
+.mgwt-Carousel-Indicator:HOVER {
+  color: black;
+}
+
+.mgwt-Carousel-Indicator-active {
+  color: black;
+}
+
+.mgwt-Carousel-Holder {
+  position: relative;
+  display: \-webkit-box;
+}
