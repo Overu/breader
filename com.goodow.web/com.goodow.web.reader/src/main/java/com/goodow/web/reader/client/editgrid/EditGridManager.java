@@ -2,9 +2,13 @@ package com.goodow.web.reader.client.editgrid;
 
 import com.goodow.web.reader.client.editgrid.EditGridCell.EditGridCellFunction;
 import com.goodow.web.reader.client.editgrid.EditGridCell.Layout;
+import com.goodow.web.reader.client.editgrid.EditGridCell.MouseHandle;
+import com.goodow.web.reader.client.editgrid.EditGridCell.SeparatorPanel;
 import com.goodow.web.reader.client.editgrid.EditGridCell.SplitCtrlsItem;
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Singleton;
@@ -13,6 +17,12 @@ import java.util.List;
 
 @Singleton
 public class EditGridManager {
+
+  private boolean separatorDragging = false;
+  private int separatorDraggingX;
+  private int separatorDraggingY;
+
+  private String pct = Unit.PCT.getType();
 
   public void calculateLayout(final EditGridCell parentCell, final boolean isPresent) {
     Layout layout = parentCell.getLayout();
@@ -121,8 +131,18 @@ public class EditGridManager {
     return topCell;
   }
 
+  private void beginDragging(final SeparatorPanel sPanel, final Event event) {
+    if (DOM.getCaptureElement() == null) {
+      separatorDragging = true;
+      Element target = sPanel.getElement();
+      DOM.setCapture(target);
+      separatorDraggingX = getX(target, event);
+      separatorDraggingY = getY(target, event);
+
+    }
+  }
+
   private void calculateHeightOrWidth(final EditGridCell cell, final boolean isHeight) {
-    String pct = Unit.PCT.getType();
     double separatorSize = EditGridCell.SEPARATOR_SIZE;
     double height = cell.getLayout().getHeight();
     double weith = cell.getLayout().getWeith();
@@ -161,6 +181,11 @@ public class EditGridManager {
     layout.setVertical(0);
   }
 
+  private void endDragging(final SeparatorPanel sPanel) {
+    separatorDragging = false;
+    DOM.releaseCapture(sPanel.getElement());
+  }
+
   private void generateChildCell(final EditGridCell parentCell) {
     List<EditGridCell> childsGridCell = parentCell.getChildsGridCell();
     for (int i = 0; i < 2; i++) {
@@ -168,6 +193,49 @@ public class EditGridManager {
       childsGridCell.add(childCell);
       parentCell.addChildCell(childCell);
     }
+  }
+
+  private int getX(final Element target, final Event event) {
+    return event.getClientX() - target.getAbsoluteLeft() + target.getScrollLeft()
+        + target.getOwnerDocument().getScrollLeft();
+  }
+
+  private int getY(final Element target, final Event event) {
+    return event.getClientY() - target.getAbsoluteTop() + target.getScrollTop()
+        + target.getOwnerDocument().getScrollTop();
+  }
+
+  private void initializeSeparatorPanelMouseHandle(final EditGridCell cell) {
+    final SeparatorPanel separatorPanel = cell.getSeparatorPanel();
+    if (separatorPanel.getMouseHandle() != null) {
+      return;
+    }
+    separatorPanel.setMouseHandle(new MouseHandle() {
+
+      @Override
+      public void addMouseDown(final EditGridCell cell, final Event event) {
+        event.stopPropagation();
+        beginDragging(separatorPanel, event);
+      }
+
+      @Override
+      public void addMouseMove(final EditGridCell cell, final Event event) {
+        moveDragging(cell, separatorPanel, event);
+      }
+
+      @Override
+      public void addMouseOut(final EditGridCell cell, final Event event) {
+      }
+
+      @Override
+      public void addMouseOver(final EditGridCell cell, final Event event) {
+      }
+
+      @Override
+      public void addMouseUp(final EditGridCell cell, final Event event) {
+        endDragging(separatorPanel);
+      }
+    });
   }
 
   private void initializeSplitCtrlsItemHandle(final EditGridCell cell) {
@@ -220,6 +288,51 @@ public class EditGridManager {
     return true;
   }
 
+  private void moveDragging(final EditGridCell cell, final SeparatorPanel sPanel, final Event event) {
+    Element target = sPanel.getElement();
+    if (separatorDragging) {
+      double cellHeight = cell.getOffsetHeight();
+      double cellChildsHeight = cellHeight - EditGridCell.SEPARATOR_SIZE;
+      double cellWidth = cell.getOffsetWidth();
+      double cellChildsWidth = cellWidth - EditGridCell.SEPARATOR_SIZE;
+      EditGridCell child1 = cell.getChildsGridCell().get(0);
+      EditGridCell child2 = cell.getChildsGridCell().get(1);
+      if (sPanel.isIshorizontal()) {
+        if (child1.getOffsetHeight() < EditGridCell.CELL_MIX_WEITH_HEIGHT) {
+          setCellHeight(child1, child2, cellChildsHeight, EditGridCell.CELL_MIX_WEITH_HEIGHT,
+              cellHeight);
+          endDragging(sPanel);
+          return;
+        }
+        if (child2.getOffsetHeight() < EditGridCell.CELL_MIX_WEITH_HEIGHT) {
+          setCellHeight(child2, child1, cellChildsHeight, EditGridCell.CELL_MIX_WEITH_HEIGHT,
+              cellHeight);
+          endDragging(sPanel);
+          return;
+        }
+        double child1Height = child1.getOffsetHeight();
+        double absChild1Height = child1Height + getY(target, event) - separatorDraggingY;
+        setCellHeight(child1, child2, cellChildsHeight, absChild1Height, cellHeight);
+      } else {
+        if (child1.getOffsetWidth() < EditGridCell.CELL_MIX_WEITH_HEIGHT) {
+          setCellWidth(child1, child2, cellChildsWidth, EditGridCell.CELL_MIX_WEITH_HEIGHT,
+              cellWidth);
+          endDragging(sPanel);
+          return;
+        }
+        if (child2.getOffsetWidth() < EditGridCell.CELL_MIX_WEITH_HEIGHT) {
+          setCellWidth(child2, child1, cellChildsWidth, EditGridCell.CELL_MIX_WEITH_HEIGHT,
+              cellWidth);
+          endDragging(sPanel);
+          return;
+        }
+        double child1Width = child1.getOffsetWidth();
+        double absChild1Width = child1Width + getX(target, event) - separatorDraggingX;
+        setCellWidth(child1, child2, cellChildsWidth, absChild1Width, cellWidth);
+      }
+    }
+  }
+
   private void presentChildCell(final EditGridCell parentCell, final int isHorizontal) {
     if (!ischildCell(parentCell)) {
       return;
@@ -244,6 +357,7 @@ public class EditGridManager {
       }
       calculateLayout(childCell, true);
     }
+    initializeSeparatorPanelMouseHandle(parentCell);
   }
 
   private void removeChildCell(final EditGridCell parentCell) {
@@ -287,6 +401,16 @@ public class EditGridManager {
     }
   }
 
+  private void setCellHeight(final EditGridCell child1, final EditGridCell child2,
+      final double cellChildsHeight, final double absChild1Height, final double cellHeight) {
+    double absChild1Pct = absChild1Height / cellHeight;
+    double absChile2Pct = (cellChildsHeight - absChild1Height) / cellHeight;
+    child1.setHeight(absChild1Pct * 100 + pct);
+    child2.setHeight(absChile2Pct * 100 + pct);
+    child1.getLayout().setHeight(absChild1Pct);
+    child2.getLayout().setHeight(absChile2Pct);
+  }
+
   private void setCellVertical(final EditGridCell cell, final boolean isHorizontal) {
     Layout layout = cell.getLayout();
     int vertical = layout.getVertical();
@@ -300,5 +424,15 @@ public class EditGridManager {
     } else {
       layout.setVertical(1);
     }
+  }
+
+  private void setCellWidth(final EditGridCell child1, final EditGridCell child2,
+      final double cellChildsWidth, final double absChild1Width, final double cellWidth) {
+    double absChild1Pct = absChild1Width / cellWidth;
+    double absChile2Pct = (cellChildsWidth - absChild1Width) / cellWidth;
+    child1.setWidth(absChild1Pct * 100 + pct);
+    child2.setWidth(absChile2Pct * 100 + pct);
+    child1.getLayout().setWeith(absChild1Pct);
+    child2.getLayout().setWeith(absChile2Pct);
   }
 }

@@ -107,6 +107,20 @@ public class EditGridCell extends Composite {
 
   }
 
+  interface MouseHandle {
+
+    public void addMouseDown(EditGridCell cell, Event event);
+
+    public void addMouseMove(EditGridCell cell, Event event);
+
+    public void addMouseOut(EditGridCell cell, Event event);
+
+    public void addMouseOver(EditGridCell cell, Event event);
+
+    public void addMouseUp(EditGridCell cell, Event event);
+
+  }
+
   interface MyStyle extends CssResource {
     String cellhover();
 
@@ -121,6 +135,8 @@ public class EditGridCell extends Composite {
 
     private boolean ishorizontal;
 
+    private MouseHandle mouseHandle;
+
     public SeparatorPanel(final boolean ishorizontal) {
       this.ishorizontal = ishorizontal;
       if (ishorizontal) {
@@ -130,22 +146,57 @@ public class EditGridCell extends Composite {
         main.removeStyleName(style.separatorHorizontal());
         main.addStyleName(style.separatorVertical());
       }
+      sinkEvents(Event.ONMOUSEDOWN | Event.ONMOUSEMOVE | Event.ONMOUSEOUT | Event.ONMOUSEOVER
+          | Event.ONMOUSEUP);
+    }
 
+    public MouseHandle getMouseHandle() {
+      return mouseHandle;
     }
 
     public boolean isIshorizontal() {
       return ishorizontal;
     }
 
+    @Override
+    public void onBrowserEvent(final Event event) {
+      if (getMouseHandle() == null) {
+        return;
+      }
+      int eventBus = DOM.eventGetType(event);
+      switch (eventBus) {
+        case Event.ONMOUSEDOWN:
+          getMouseHandle().addMouseDown(EditGridCell.this, event);
+          break;
+        case Event.ONMOUSEOVER:
+          getMouseHandle().addMouseOver(EditGridCell.this, event);
+          break;
+        case Event.ONMOUSEOUT:
+          getMouseHandle().addMouseOut(EditGridCell.this, event);
+          break;
+        case Event.ONMOUSEMOVE:
+          getMouseHandle().addMouseMove(EditGridCell.this, event);
+          break;
+        case Event.ONMOUSEUP:
+          getMouseHandle().addMouseUp(EditGridCell.this, event);
+          break;
+
+        default:
+          break;
+      }
+    }
+
     public void setIshorizontal(final boolean ishorizontal) {
       this.ishorizontal = ishorizontal;
     }
 
-    @Override
-    protected void start() {
-
+    public void setMouseHandle(final MouseHandle mouseHandle) {
+      this.mouseHandle = mouseHandle;
     }
 
+    @Override
+    protected void start() {
+    }
   }
 
   class SplitCtrlsItem extends FlowView {
@@ -154,10 +205,7 @@ public class EditGridCell extends Composite {
     private Element vsplitDiv;
     private Element removecellDiv;
 
-    private EditGridCell cell;
-
-    public SplitCtrlsItem(final EditGridCell cell) {
-      this.cell = cell;
+    public SplitCtrlsItem() {
       main.addStyleName(style.splitctrls());
       hsplitDiv = DOM.createDiv();
       vsplitDiv = DOM.createDiv();
@@ -193,7 +241,7 @@ public class EditGridCell extends Composite {
             if (f == null) {
               return;
             }
-            f.f(cell, event);
+            f.f(EditGridCell.this, event);
           }
         }
       });
@@ -234,7 +282,7 @@ public class EditGridCell extends Composite {
   public EditGridCell(final Layout layout) {
     initWidget(binder.createAndBindUi(this));
     contentCtrlsItem = new ContentCtrlsItem(this);
-    splitCtrlsItem = new SplitCtrlsItem(this);
+    splitCtrlsItem = new SplitCtrlsItem();
     childsGridCell = new ArrayList<EditGridCell>();
     fullOfContent();
     setHover(true);
@@ -244,8 +292,8 @@ public class EditGridCell extends Composite {
   public void addChildCell(final EditGridCell childCell) {
     int widgetCount = cellMain.getWidgetCount();
     if (widgetCount == 2) {
-      separatorPanel = new SeparatorPanel(layout.horizontal == 1 ? true : false);
-      cellMain.add(separatorPanel);
+      setSeparatorPanel(new SeparatorPanel(layout.horizontal == 1 ? true : false));
+      cellMain.add(getSeparatorPanel());
     }
     cellMain.add(childCell);
   }
@@ -266,6 +314,10 @@ public class EditGridCell extends Composite {
     return parentGridCell;
   }
 
+  public SeparatorPanel getSeparatorPanel() {
+    return separatorPanel;
+  }
+
   public SplitCtrlsItem getSplitCtrlsItem() {
     return splitCtrlsItem;
   }
@@ -279,8 +331,8 @@ public class EditGridCell extends Composite {
   }
 
   public boolean removeSeparatorPanel() {
-    boolean remove = cellMain.remove(separatorPanel);
-    separatorPanel = null;
+    boolean remove = cellMain.remove(getSeparatorPanel());
+    setSeparatorPanel(null);
     return remove;
   }
 
@@ -318,5 +370,9 @@ public class EditGridCell extends Composite {
       cellMain.insert(splitCtrlsItem, 0);
       isContent = false;
     }
+  }
+
+  private void setSeparatorPanel(final SeparatorPanel separatorPanel) {
+    this.separatorPanel = separatorPanel;
   }
 }

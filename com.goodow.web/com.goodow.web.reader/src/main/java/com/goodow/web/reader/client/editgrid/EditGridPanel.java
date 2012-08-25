@@ -15,6 +15,7 @@ import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 
@@ -48,6 +49,7 @@ public class EditGridPanel extends FlowView {
   PresplitPanel presplitPanel;
 
   private EditGridCarousel carousel;
+  private DialogBox dialogBox = new DialogBox();
 
   private HTMLPanel buttons;
   private EditGridButton addPage;
@@ -122,12 +124,31 @@ public class EditGridPanel extends FlowView {
     }, ClickEvent.getType());
 
     savePage = new SaveButton();
+    savePage.addDomHandler(new ClickHandler() {
+
+      @Override
+      public void onClick(final ClickEvent event) {
+        dialogBox.setText("abc");
+        dialogBox.center();
+        dialogBox.show();
+      }
+    }, ClickEvent.getType());
+
     okstackPage = new OkstackButton();
+    okstackPage.addDomHandler(new ClickHandler() {
+
+      @Override
+      public void onClick(final ClickEvent event) {
+        dialogBox.hide();
+      }
+    }, ClickEvent.getType());
+
+    dialogBox.add(okstackPage);
 
     buttons.add(addPage);
     buttons.add(deletePage);
     buttons.add(savePage);
-    buttons.add(okstackPage);
+    // buttons.add(okstackPage);
 
     main.add(carousel);
     main.add(buttons);
