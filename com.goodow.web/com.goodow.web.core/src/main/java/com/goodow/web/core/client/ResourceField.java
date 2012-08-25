@@ -37,7 +37,7 @@ public class ResourceField extends FormField<Resource> {
   ClientJSONMarshaller marshaller;
 
   @Inject
-  UIRegistry registry;
+  UIManager registry;
 
   Resource resource;
 
@@ -54,7 +54,7 @@ public class ResourceField extends FormField<Resource> {
   @Override
   public void setValue(final Resource value) {
     this.resource = value;
-    if (resource != null && registry.showWidget(editorPanel, resource)) {
+    if (resource != null && registry.show(editorPanel, resource)) {
       main.add(editorPanel);
     } else {
       main.add(formPanel);

@@ -163,12 +163,12 @@ public class WebPlace extends Place {
     return children;
   }
 
-  public WebPlace getParent() {
-    return parent;
-  }
-
   public String getParameter() {
     return parameter;
+  }
+
+  public WebPlace getParent() {
+    return parent;
   }
 
   public String getPath() {
@@ -230,12 +230,12 @@ public class WebPlace extends Place {
     this.buttonText = buttonText;
   }
 
-  public void setParameterized(final boolean parameterized) {
-    this.parameterized = parameterized;
-  }
-
   public void setParameter(final String parameter) {
     this.parameter = parameter;
+  }
+
+  public void setParameterized(final boolean parameterized) {
+    this.parameterized = parameterized;
   }
 
   public void setPath(final String path) {

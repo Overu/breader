@@ -66,14 +66,9 @@ public class BooksApp extends FlowView implements AcceptsOneWidget {
     bannerPanel.addTopBarButton(topBarButton1, LocationPanel.Left);
     bannerPanel.addTopBarButton(topBarButton2, LocationPanel.Right);
     bannerPanel.addTopBarButton(topBarButton3, LocationPanel.Right);
-    // bannerPanel.add(new Label("睿泰数字发行平台"));
-    // bannerPanel.add(topBarButton);
-    // bannerPanel.add(userInfoPanel);
 
     centerPanel.getElement().setId("main-center");
     centerPanel.addStyleName(BooksBrowser.bundle.booksAppCss().centerpanel());
-    // centerPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
-    // .fillPanelExpandChild());
 
     main.addStyleName(BooksBrowser.bundle.booksAppCss().main());
 

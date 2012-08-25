@@ -1,7 +1,7 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.core.client.TextResourceEditor;
-import com.goodow.web.core.client.UIRegistry;
+import com.goodow.web.core.client.UIManager;
 import com.goodow.web.reader.client.style.ReadResources;
 import com.goodow.web.reader.client.style.ReadResources.CellListResources;
 
@@ -18,7 +18,7 @@ public final class ReaderClientModule extends AbstractGinModule {
   @Singleton
   public static class Bind {
     @Inject
-    public Bind(final Provider<TextResourceEditor> textEditor, final UIRegistry registry) {
+    public Bind(final Provider<TextResourceEditor> textEditor, final UIManager registry) {
       ReadResources.INSTANCE();
       registry.bind("text/plain").toProvider(textEditor);
       registry.bind("application/xhtml+xml").toProvider(textEditor);

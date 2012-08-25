@@ -46,12 +46,12 @@ public class View extends ComplexPanel {
 
   private final Provider<View> panelProvider;
 
-  private final UIRegistry widgetRegistry;
+  private final UIManager widgetRegistry;
 
   private boolean renderred = false;
 
   @Inject
-  public View(final Provider<View> panelProvider, final UIRegistry widgetRegistry) {
+  public View(final Provider<View> panelProvider, final UIManager widgetRegistry) {
     this.panelProvider = panelProvider;
     this.widgetRegistry = widgetRegistry;
     Widget widget = uiBinder.createAndBindUi(this);

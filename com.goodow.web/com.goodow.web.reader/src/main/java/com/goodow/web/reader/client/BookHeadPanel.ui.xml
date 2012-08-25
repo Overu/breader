@@ -34,7 +34,7 @@
 
   <g:HTMLPanel addStyleNames="{style.root}">
     <g:HTMLPanel ui:field="leftPanel">
-      <span class="{style.title}">IBM Connections</span>
+      <span class="{style.title}">睿泰书城</span>
     </g:HTMLPanel>
     <g:HTMLPanel ui:field="rightPanel"></g:HTMLPanel>
   </g:HTMLPanel>
