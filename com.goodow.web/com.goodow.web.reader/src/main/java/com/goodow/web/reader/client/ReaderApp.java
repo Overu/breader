@@ -10,7 +10,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 
-public class BooksApp extends FlowView implements AcceptsOneWidget {
+public class ReaderApp extends FlowView implements AcceptsOneWidget {
 
   @Inject
   private BookHeadPanel bannerPanel;

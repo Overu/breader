@@ -83,8 +83,6 @@ public class WebPlace extends Place {
 
   private WebPlace welcomePlace;
 
-  public String parameter;
-
   private IsWidget widget;
 
   private ImageResource buttonImage;
@@ -105,7 +103,11 @@ public class WebPlace extends Place {
 
   private WebPlace startedChild;
 
-  private boolean parameterized;
+  private boolean feed;
+
+  private WebPlace entryPlace;
+
+  private String query;
 
   public void addChild(final WebPlace place) {
     children.add(place);
@@ -113,12 +115,19 @@ public class WebPlace extends Place {
   }
 
   public WebPlace findChild(final String uri) {
-    String[] segments = uri.split("/");
+    String[] pair = uri.split("\\?");
+    String query = pair.length > 1 ? pair[1] : null;
+    String[] segments = pair[0].split("/");
     WebPlace result = this;
     for (String path : segments) {
-      if (result.isParameterized()) {
-        result.setParameter(path);
-        continue;
+      if (result.isFeed()) {
+        if (entryPlace != null) {
+          result = entryPlace;
+          entryPlace.setPath(path);
+          continue;
+        } else {
+          return null;
+        }
       }
       if (path.length() == 0) {
         continue;
@@ -126,6 +135,15 @@ public class WebPlace extends Place {
       result = result.getChild(path);
       if (result == null) {
         break;
+      }
+    }
+
+    if (result != null && query != null) {
+      for (WebPlace child : result.getChildren()) {
+        if (query.equals(child.getQuery())) {
+          result = child;
+          break;
+        }
       }
     }
     return result;
@@ -163,8 +181,8 @@ public class WebPlace extends Place {
     return children;
   }
 
-  public String getParameter() {
-    return parameter;
+  public WebPlace getEntryPlace() {
+    return entryPlace;
   }
 
   public WebPlace getParent() {
@@ -175,9 +193,10 @@ public class WebPlace extends Place {
     return path;
   }
 
-  /**
-   * @return the startedChild
-   */
+  public String getQuery() {
+    return query;
+  }
+
   public WebPlace getStartedChild() {
     return startedChild;
   }
@@ -194,9 +213,11 @@ public class WebPlace extends Place {
     if (parent == null) {
       return new StringBuilder();
     } else {
-      StringBuilder builder = parent.getUriBuilder().append("/").append(path);
-      if (isParameterized()) {
-        builder.append("/").append(parameter);
+      StringBuilder builder = parent.getUriBuilder();
+      if (path != null) {
+        builder.append("/").append(path);
+      } else if (query != null) {
+        builder.append("?").append(query);
       }
       return builder;
     }
@@ -210,8 +231,8 @@ public class WebPlace extends Place {
     return widget;
   }
 
-  public boolean isParameterized() {
-    return parameterized;
+  public boolean isFeed() {
+    return feed;
   }
 
   public void render(final AcceptsOneWidget panel) {
@@ -230,16 +251,21 @@ public class WebPlace extends Place {
     this.buttonText = buttonText;
   }
 
-  public void setParameter(final String parameter) {
-    this.parameter = parameter;
+  public void setEntryPlace(final WebPlace entityPlace) {
+    this.entryPlace = entityPlace;
+    entityPlace.parent = this;
   }
 
-  public void setParameterized(final boolean parameterized) {
-    this.parameterized = parameterized;
+  public void setFeed(final boolean feed) {
+    this.feed = feed;
   }
 
   public void setPath(final String path) {
     this.path = path;
+  }
+
+  public void setQuery(final String query) {
+    this.query = query;
   }
 
   public void setStartedChild(final WebPlace startedChild) {

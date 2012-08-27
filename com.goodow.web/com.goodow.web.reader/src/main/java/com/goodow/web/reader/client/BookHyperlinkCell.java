@@ -19,7 +19,7 @@ import com.google.inject.Inject;
 public class BookHyperlinkCell extends AbstractCell<Book> {
 
   interface Template extends SafeHtmlTemplates {
-    @Template("<a href=\"#/books/edit/{0}\" onclick=\"javascript: return false;\">{1}</a>")
+    @Template("<a href=\"#/books/{0}/edit\" onclick=\"javascript: return false;\">{1}</a>")
     SafeHtml a(String value, String href);
   }
 
@@ -60,7 +60,7 @@ public class BookHyperlinkCell extends AbstractCell<Book> {
   @Override
   protected void onEnterKeyDown(final Context context, final Element parent, final Book value,
       final NativeEvent event, final ValueUpdater<Book> valueUpdater) {
-    reader.booksPlace.bookPlace.setParameter(value.getId());
+    reader.booksPlace.bookPlace.setPath(value.getId());
     placeController.goTo(reader.booksPlace.bookPlace.editBookPlace);
   }
 }

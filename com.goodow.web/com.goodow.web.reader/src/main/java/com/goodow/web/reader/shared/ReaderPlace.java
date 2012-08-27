@@ -1,7 +1,7 @@
 package com.goodow.web.reader.shared;
 
 import com.goodow.web.core.shared.WebPlace;
-import com.goodow.web.reader.client.BooksApp;
+import com.goodow.web.reader.client.ReaderApp;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -18,7 +18,7 @@ public class ReaderPlace extends WebPlace {
 
   @Inject
   public ReaderPlace(final BookStorePlace bookstorePlace, final BookShelfPlace bookshelfPlace,
-      final BooksPlace booksPlace, final Provider<BooksApp> booksApp) {
+      final BooksPlace booksPlace, final Provider<ReaderApp> readerApp) {
 
     this.bookstorePlace = bookstorePlace;
     this.bookshelfPlace = bookshelfPlace;
@@ -29,7 +29,7 @@ public class ReaderPlace extends WebPlace {
     addChild(bookshelfPlace);
 
     setAnimation(Animation.FLIP);
-    setWidget(booksApp);
+    setWidget(readerApp);
     setTitle("应用控制台");
   }
 }

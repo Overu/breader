@@ -20,47 +20,49 @@ public class BooksPlace extends WebPlace {
 
   public final WebPlace selectedBooksPlace;
 
-  public final WebPlace bookcategoryPlace;
+  public final WebPlace catogrizedPlace;
 
   @Inject
   public BooksPlace(final BookPlace bookPlace, final WebPlace myBooksPlace,
       final WebPlace othersBookPlace, final WebPlace selectedBooksPlace,
-      final WebPlace bookcategoryPlace, final Provider<BooksBrowser> booksBrowser,
+      final WebPlace catogrizedPlace, final Provider<BooksBrowser> booksBrowser,
       final Provider<MyBookList> myBookList, final Provider<SelectedBookList> selectedBookList) {
 
     this.bookPlace = bookPlace;
     this.myBooksPlace = myBooksPlace;
     this.othersBookPlace = othersBookPlace;
     this.selectedBooksPlace = selectedBooksPlace;
-    this.bookcategoryPlace = bookcategoryPlace;
+    this.catogrizedPlace = catogrizedPlace;
 
     setPath("books");
+    setFeed(true);
+    setEntryPlace(bookPlace);
+
     setAnimation(Animation.SLIDE);
     setWidget(booksBrowser);
 
-    addChild(bookPlace);
-    addChild(myBooksPlace);
+    setWelcomePlace(myBooksPlace);
     addChild(othersBookPlace);
     addChild(selectedBooksPlace);
-    addChild(bookcategoryPlace);
+    addChild(catogrizedPlace);
 
-    myBooksPlace.setPath("my");
+    myBooksPlace.setQuery("filter=my");
     myBooksPlace.setAnimation(Animation.SLIDE);
     myBooksPlace.setTitle("我的图书");
     myBooksPlace.setWidget(myBookList);
 
-    othersBookPlace.setPath("others");
+    othersBookPlace.setQuery("filter=others");
     othersBookPlace.setAnimation(Animation.SLIDE);
     othersBookPlace.setTitle("其他图书");
 
-    selectedBooksPlace.setPath("selected");
+    selectedBooksPlace.setQuery("filter=selected");
     selectedBooksPlace.setAnimation(Animation.SLIDE);
     selectedBooksPlace.setTitle("精品图书");
     selectedBooksPlace.setWidget(selectedBookList);
 
-    bookcategoryPlace.setPath("category");
-    bookcategoryPlace.setAnimation(Animation.SLIDE);
-    bookcategoryPlace.setTitle("图书分类");
+    catogrizedPlace.setQuery("filter=category");
+    catogrizedPlace.setAnimation(Animation.SLIDE);
+    catogrizedPlace.setTitle("图书分类");
   }
 
 }

@@ -19,7 +19,6 @@ public class BookPlace extends WebPlace {
   public BookPlace(final WebPlace createBookPlace, final WebPlace editBookPlace,
       final Provider<BookForm> bookForm, final Provider<BookEditor> contentEditor) {
 
-    setPath("{id}");
     setTitle("图书");
 
     this.createBookPlace = createBookPlace;
@@ -34,7 +33,6 @@ public class BookPlace extends WebPlace {
     createBookPlace.setWidget(bookForm);
 
     editBookPlace.setPath("edit");
-    editBookPlace.setParameterized(true);
     editBookPlace.setAnimation(Animation.SLIDE);
     editBookPlace.setTitle("编辑图书");
     editBookPlace.setWidget(contentEditor);

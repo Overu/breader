@@ -299,7 +299,7 @@ public class BookEditor extends FormView<Book> {
   public void refresh() {
     super.refresh();
     if (place != null) {
-      bookService.getById(place.getParameter()).fire(new Receiver<Book>() {
+      bookService.getById(place.getPath()).fire(new Receiver<Book>() {
         @Override
         public void onSuccess(final Book result) {
           setValue(result);
