@@ -253,7 +253,7 @@ public class WebPlace extends Place {
 
   public void setEntryPlace(final WebPlace entityPlace) {
     this.entryPlace = entityPlace;
-    entityPlace.parent = this;
+    entryPlace.parent = this;
   }
 
   public void setFeed(final boolean feed) {
