@@ -14,6 +14,7 @@ import com.goodow.web.core.shared.ResourceUploadedEvent;
 import com.goodow.web.core.shared.ResourceUploadedHandler;
 import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
+import com.goodow.web.reader.shared.ReaderPlace;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
@@ -98,7 +99,7 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
   PlaceController placeController;
 
   @Inject
-  ReaderPlugin reader;
+  ReaderPlace reader;
 
   @Inject
   ListBoxField category;
@@ -158,8 +159,8 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
       @Override
       public void onSuccess(final Book result) {
         logger.info("book created: " + result.getId());
-        reader.editBookPlace.setParameter(result.getId());
-        placeController.goTo(reader.editBookPlace);
+        reader.booksPlace.bookPlace.setParameter(result.getId());
+        placeController.goTo(reader.booksPlace.bookPlace.editBookPlace);
       }
     });
   }
@@ -207,7 +208,7 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
     cancelButton.addTapHandler(new TapHandler() {
       @Override
       public void onTap(final TapEvent event) {
-        placeController.goTo(reader.myBooksPlace);
+        placeController.goTo(reader.booksPlace.myBooksPlace);
       }
     });
 

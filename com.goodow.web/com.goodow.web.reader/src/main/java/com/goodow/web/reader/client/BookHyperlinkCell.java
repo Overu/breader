@@ -1,6 +1,7 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.reader.shared.Book;
+import com.goodow.web.reader.shared.ReaderPlace;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.ValueUpdater;
@@ -26,7 +27,7 @@ public class BookHyperlinkCell extends AbstractCell<Book> {
   PlaceController placeController;
 
   @Inject
-  ReaderPlugin reader;
+  ReaderPlace reader;
 
   private Template template = GWT.create(Template.class);
 
@@ -59,7 +60,7 @@ public class BookHyperlinkCell extends AbstractCell<Book> {
   @Override
   protected void onEnterKeyDown(final Context context, final Element parent, final Book value,
       final NativeEvent event, final ValueUpdater<Book> valueUpdater) {
-    reader.editBookPlace.setParameter(value.getId());
-    placeController.goTo(reader.editBookPlace);
+    reader.booksPlace.bookPlace.setParameter(value.getId());
+    placeController.goTo(reader.booksPlace.bookPlace.editBookPlace);
   }
 }

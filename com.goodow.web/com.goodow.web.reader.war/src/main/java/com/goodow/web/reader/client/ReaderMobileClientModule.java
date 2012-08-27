@@ -1,14 +1,10 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.shared.HomePlace;
-import com.goodow.web.core.shared.WebPlace;
+import com.goodow.web.reader.shared.ReaderPlace;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Inject;
-import com.google.inject.Provides;
 import com.google.inject.Singleton;
-
-import com.googlecode.mgwt.mvp.client.Animation;
 
 import java.util.logging.Logger;
 
@@ -18,8 +14,7 @@ public final class ReaderMobileClientModule extends AbstractGinModule {
   public static class Starter {
 
     @Inject
-    public Starter(final ReaderPlugin ext) {
-      ext.start();
+    public Starter(final ReaderPlace reader) {
     }
   }
 
@@ -31,13 +26,4 @@ public final class ReaderMobileClientModule extends AbstractGinModule {
     bind(Starter.class).asEagerSingleton();
   }
 
-  @Provides
-  @HomePlace
-  @Singleton
-  WebPlace defaultPlaceProvider(final WebPlace place) {
-    place.setAnimation(Animation.FADE);
-    place.setTitle("睿泰书城");
-    place.setPath("");
-    return place;
-  }
 }

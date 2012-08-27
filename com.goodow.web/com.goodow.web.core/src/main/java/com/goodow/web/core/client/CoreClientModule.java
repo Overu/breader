@@ -47,9 +47,6 @@ public class CoreClientModule extends AbstractGinModule {
 
   @Singleton
   public static class Render implements PlaceChangeEvent.Handler {
-    @Inject
-    @HomePlace
-    WebPlace homePlace;
 
     @Inject
     EventBus eventBus;

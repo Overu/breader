@@ -1,5 +1,7 @@
 package com.goodow.web.reader.client;
 
+import com.goodow.web.reader.shared.ReaderPlace;
+
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
@@ -29,7 +31,7 @@ public abstract class ThumbnailView extends Composite {
   protected PlaceController placeController;
 
   @Inject
-  protected ReaderPlugin readerExtension;
+  protected ReaderPlace readerExtension;
 
   public ThumbnailView() {
     main = new LayoutPanel();
