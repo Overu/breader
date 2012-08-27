@@ -52,7 +52,7 @@ public class BooksPlace extends WebPlace {
     addChild(selectedBooksPlace);
     addChild(catogrizedPlace);
 
-    createBookPlace.setQuery("new");
+    createBookPlace.setQuery("view=form");
     createBookPlace.setAnimation(Animation.SLIDE);
     createBookPlace.setTitle("制作新书");
     createBookPlace.setWidget(bookForm);
