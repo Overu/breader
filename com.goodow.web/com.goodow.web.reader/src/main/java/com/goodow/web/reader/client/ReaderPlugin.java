@@ -208,5 +208,6 @@ public class ReaderPlugin {
     editBookPlace.setAnimation(Animation.SLIDE);
     editBookPlace.setTitle("编辑图书");
     editBookPlace.setWidget(contentEditor);
+
   }
 }
