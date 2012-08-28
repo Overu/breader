@@ -2,8 +2,11 @@ package com.goodow.web.reader.client;
 
 import com.goodow.web.core.client.TextResourceEditor;
 import com.goodow.web.core.client.UIManager;
+import com.goodow.web.core.shared.HomePlace;
+import com.goodow.web.core.shared.WebPlace;
 import com.goodow.web.reader.client.style.ReadResources;
 import com.goodow.web.reader.client.style.ReadResources.CellListResources;
+import com.goodow.web.reader.shared.ReaderPlace;
 
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.gwt.user.cellview.client.CellList;
@@ -32,6 +35,7 @@ public final class ReaderClientModule extends AbstractGinModule {
     logger.info("configure ReaderClientModule");
     bind(Bind.class).asEagerSingleton();
     bind(CellList.Resources.class).to(CellListResources.class).in(Singleton.class);
+    bind(WebPlace.class).annotatedWith(HomePlace.class).to(ReaderPlace.class);
   }
 
 }

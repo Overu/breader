@@ -2,6 +2,7 @@ package com.goodow.web.reader.client;
 
 import com.goodow.web.core.client.FlowView;
 import com.goodow.web.core.shared.WebPlace;
+import com.goodow.web.reader.shared.ReaderPlace;
 
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -24,7 +25,7 @@ public class PlaceList extends FlowView {
   EventBus eventBus;
 
   @Inject
-  ReaderPlugin reader;
+  ReaderPlace reader;
 
   @Inject
   PlaceController placeController;
@@ -71,7 +72,7 @@ public class PlaceList extends FlowView {
     main.add(container);
     // eventBus.addHandler(PlaceChangeEvent.TYPE, this);
 
-    setInput(reader.booksBrowserPlace);
+    setInput(reader.booksPlace);
   }
 
   private void setInput(final WebPlace place) {

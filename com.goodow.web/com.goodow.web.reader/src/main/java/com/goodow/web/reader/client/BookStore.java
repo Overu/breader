@@ -2,6 +2,7 @@ package com.goodow.web.reader.client;
 
 import com.goodow.web.core.shared.WebPlace;
 import com.goodow.web.reader.client.style.ReadResources;
+import com.goodow.web.reader.shared.ReaderPlace;
 
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.logical.shared.SelectionEvent;
@@ -45,11 +46,11 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
   protected SimplePanel tabContainer;
   protected TabPanel.TabBar tabBar;
 
-  private final ReaderPlugin plugin;
+  private final ReaderPlace reader;
 
   @Inject
-  public BookStore(final EventBus eventBus, final ReaderPlugin plugin) {
-    this.plugin = plugin;
+  public BookStore(final EventBus eventBus, final ReaderPlace reader) {
+    this.reader = reader;
     main = new LayoutPanel();
 
     headerPanel = new HeaderPanel();
@@ -64,7 +65,7 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
 
       @Override
       public void onTap(final TapEvent event) {
-        placeController.goTo(plugin.bookshelfPlace);
+        placeController.goTo(reader.bookshelfPlace);
       }
     });
 
@@ -75,7 +76,7 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
 
       @Override
       public void onTap(final TapEvent event) {
-        placeController.goTo(plugin.booksPlace);
+        placeController.goTo(reader.booksPlace);
       }
     });
 
@@ -97,12 +98,12 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
       @Override
       public void onSelection(final SelectionEvent<Integer> event) {
         int index = event.getSelectedItem();
-        WebPlace newPlace = plugin.bookstorePlace.getChild(index);
+        WebPlace newPlace = reader.bookstorePlace.getChild(index);
         placeController.goTo(newPlace);
       }
     });
 
-    for (WebPlace place : plugin.bookstorePlace.getChildren()) {
+    for (WebPlace place : reader.bookstorePlace.getChildren()) {
       TabBarButton button = new TabBarButton(place.getButtonImage());
       button.setText(place.getButtonText());
       tabBar.add(button);
@@ -126,7 +127,7 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
 
   public void refresh() {
     WebPlace currentPlace = (WebPlace) placeController.getWhere();
-    int index = plugin.bookstorePlace.getChildren().indexOf(currentPlace);
+    int index = reader.bookstorePlace.getChildren().indexOf(currentPlace);
     if (index >= 0) {
       tabBar.setSelectedButton(index, true);
       title.setText(currentPlace.getTitle());
