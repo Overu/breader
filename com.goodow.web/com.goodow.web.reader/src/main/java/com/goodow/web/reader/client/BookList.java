@@ -3,7 +3,6 @@ package com.goodow.web.reader.client;
 import com.goodow.web.core.client.FlowView;
 import com.goodow.web.core.client.css.AppBundle;
 import com.goodow.web.core.shared.Receiver;
-import com.goodow.web.reader.client.style.ReadResources.CellListResources;
 import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
@@ -11,7 +10,6 @@ import com.google.gwt.cell.client.AbstractEditableCell;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
-import com.google.gwt.cell.client.ImageCell;
 import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Unit;
@@ -151,9 +149,6 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
 
   @Inject
   AsyncBookService bookService;
-
-  @Inject
-  CellListResources cellListResources;
 
   public <C> Column<Book, C> addColumn(final Cell<C> cell, final String headerString,
       final GetValue<C> getValue, final FieldUpdater<Book, C> fieldUpdater) {
