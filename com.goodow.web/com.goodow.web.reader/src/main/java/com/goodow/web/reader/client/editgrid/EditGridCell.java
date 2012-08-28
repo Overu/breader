@@ -215,15 +215,15 @@ public class EditGridCell extends Composite {
       main.getElement().appendChild(removecellDiv);
     }
 
-    public void addHsplitDivHandle(final EditGridCellFunction f) {
+    public void addHsplitDivHandle(final Function f) {
       addHandle(hsplitDiv, f);
     }
 
-    public void addRemovecellDivHandle(final EditGridCellFunction f) {
+    public void addRemovecellDivHandle(final Function f) {
       addHandle(removecellDiv, f);
     }
 
-    public void addVsplitDivHandle(final EditGridCellFunction f) {
+    public void addVsplitDivHandle(final Function f) {
       addHandle(vsplitDiv, f);
     }
 
@@ -231,7 +231,7 @@ public class EditGridCell extends Composite {
     protected void start() {
     }
 
-    private void addHandle(final Element elm, final EditGridCellFunction f) {
+    private void addHandle(final Element elm, final Function f) {
       DOM.sinkEvents(elm, Event.ONCLICK);
       DOM.setEventListener(elm, new EventListener() {
 

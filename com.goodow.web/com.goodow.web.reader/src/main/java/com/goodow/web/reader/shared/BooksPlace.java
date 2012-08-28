@@ -5,6 +5,7 @@ import com.goodow.web.reader.client.BookForm;
 import com.goodow.web.reader.client.BooksBrowser;
 import com.goodow.web.reader.client.MyBookList;
 import com.goodow.web.reader.client.SelectedBookList;
+import com.goodow.web.reader.client.editgrid.EditGridPanel;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -25,12 +26,15 @@ public class BooksPlace extends WebPlace {
 
   public final WebPlace catogrizedPlace;
 
+  public final WebPlace editGridPlace;
+
   @Inject
   public BooksPlace(final BookPlace bookPlace, final WebPlace createBookPlace,
       final WebPlace myBooksPlace, final WebPlace othersBookPlace,
       final WebPlace selectedBooksPlace, final WebPlace catogrizedPlace,
       final Provider<BookForm> bookForm, final Provider<BooksBrowser> booksBrowser,
-      final Provider<MyBookList> myBookList, final Provider<SelectedBookList> selectedBookList) {
+      final Provider<MyBookList> myBookList, final Provider<SelectedBookList> selectedBookList,
+      final WebPlace editGridPlace, final Provider<EditGridPanel> editGridPanel) {
 
     this.bookPlace = bookPlace;
     this.createBookPlace = createBookPlace;
@@ -38,6 +42,7 @@ public class BooksPlace extends WebPlace {
     this.othersBookPlace = othersBookPlace;
     this.selectedBooksPlace = selectedBooksPlace;
     this.catogrizedPlace = catogrizedPlace;
+    this.editGridPlace = editGridPlace;
 
     setPath("books");
     setFeed(true);
@@ -51,6 +56,7 @@ public class BooksPlace extends WebPlace {
     addChild(othersBookPlace);
     addChild(selectedBooksPlace);
     addChild(catogrizedPlace);
+    addChild(editGridPlace);
 
     createBookPlace.setQuery("view=form");
     createBookPlace.setAnimation(Animation.SLIDE);
@@ -74,6 +80,12 @@ public class BooksPlace extends WebPlace {
     catogrizedPlace.setQuery("filter=category");
     catogrizedPlace.setAnimation(Animation.SLIDE);
     catogrizedPlace.setTitle("图书分类");
+
+    editGridPlace.setQuery("filter=editgrid");
+    editGridPlace.setAnimation(Animation.SLIDE);
+    editGridPlace.setTitle("制作杂志");
+    editGridPlace.setWidget(editGridPanel);
+
   }
 
 }

@@ -1,6 +1,5 @@
 package com.goodow.web.reader.client.editgrid;
 
-import com.goodow.web.reader.client.editgrid.EditGridCell.EditGridCellFunction;
 import com.goodow.web.reader.client.editgrid.EditGridCell.Layout;
 import com.goodow.web.reader.client.editgrid.EditGridCell.MouseHandle;
 import com.goodow.web.reader.client.editgrid.EditGridCell.SeparatorPanel;
@@ -241,42 +240,45 @@ public class EditGridManager {
   private void initializeSplitCtrlsItemHandle(final EditGridCell cell) {
     SplitCtrlsItem splitCtrlsItem = cell.getSplitCtrlsItem();
 
-    splitCtrlsItem.addHsplitDivHandle(new EditGridCellFunction() {
+    splitCtrlsItem.addHsplitDivHandle(new Function() {
 
       @Override
-      public void f(final EditGridCell cell, final Event event) {
+      public boolean f(final EditGridCell cell, final Event event) {
         if (cell.getOffsetHeight() < EditGridCell.CELL_MIX_SPLIT_WEITH_HEIGHT) {
           Window.alert("高度不能分割");
-          return;
+          return false;
         }
         setCellVertical(cell, true);
         calculateLayout(cell, false);
+        return false;
       }
     });
 
-    splitCtrlsItem.addVsplitDivHandle(new EditGridCellFunction() {
+    splitCtrlsItem.addVsplitDivHandle(new Function() {
 
       @Override
-      public void f(final EditGridCell cell, final Event event) {
+      public boolean f(final EditGridCell cell, final Event event) {
         if (cell.getOffsetWidth() < EditGridCell.CELL_MIX_SPLIT_WEITH_HEIGHT) {
           Window.alert("宽度不能分割");
-          return;
+          return false;
         }
         setCellVertical(cell, false);
         calculateLayout(cell, false);
+        return false;
       }
     });
 
-    splitCtrlsItem.addRemovecellDivHandle(new EditGridCellFunction() {
+    splitCtrlsItem.addRemovecellDivHandle(new Function() {
 
       @Override
-      public void f(final EditGridCell cell, final Event event) {
+      public boolean f(final EditGridCell cell, final Event event) {
         if (cell.getElement().getAttribute(EditGridCell.TOP_CELL).equals(EditGridCell.TOP_CELL)) {
           Window.alert("顶层不能删除");
-          return;
+          return false;
         }
         EditGridCell parentGridCell = cell.getParentGridCell();
         removeChildCell(parentGridCell);
+        return false;
       }
     });
   }
