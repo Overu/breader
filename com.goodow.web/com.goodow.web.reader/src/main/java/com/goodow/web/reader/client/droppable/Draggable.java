@@ -144,13 +144,13 @@ public class Draggable extends SimpleQuery {
   protected boolean mouseMove(final Element element, final Event event) {
     if (mouseStarted) {
       event.preventDefault();
-      return mouseDragImpl(getHandler(element), event, false);
+      return mouseDragImpl(element, getHandler(element), event, false);
     }
 
     if (distanceConditionMet(event)) {
       mouseStarted = mouseStart(element, mouseDownEvent);
       if (mouseStarted) {
-        mouseDragImpl(getHandler(element), event, false);
+        mouseDragImpl(element, getHandler(element), event, false);
       } else {
         mouseUp(element, event);
       }
@@ -164,14 +164,19 @@ public class Draggable extends SimpleQuery {
     DraggableHandler dragHandler = getHandler(draggable);
 
     dragHandler.createHelper(draggable);
-    dragHandler.initialize(draggable);
+
+    if (getDragAndDropManager().isHandleDroppable()) {
+      getDragAndDropManager().setCurrentDraggable(draggable);
+    }
+
+    dragHandler.initialize(draggable, event);
 
     try {
       trigger(new DragStartEvent(draggable));
     } catch (UmbrellaException e) {
       for (Throwable t : e.getCauses()) {
         if (t instanceof RuntimeException) {
-          mouseStop(draggable);
+          mouseStop(draggable, event);
           return false;
         }
       }
@@ -179,15 +184,23 @@ public class Draggable extends SimpleQuery {
 
     dragHandler.cacheHelperSize();
 
+    if (getDragAndDropManager().isHandleDroppable()) {
+      getDragAndDropManager().initialize(draggable, event);
+    }
+
     getHelper(draggable).addClassName(CssClassNames.GWT_DRAGGABLE_DRAGGING);
 
-    mouseDragImpl(dragHandler, event, true);
+    mouseDragImpl(draggable, dragHandler, event, true);
     return true;
   }
 
-  protected boolean mouseStop(final Element draggable) {
+  protected boolean mouseStop(final Element draggable, final Event event) {
 
     final DraggableHandler handler = getHandler(draggable);
+
+    if (getDragAndDropManager().isHandleDroppable()) {
+      getDragAndDropManager().drop(draggable, event);
+    }
 
     if (draggable == null) {
       return false;
@@ -204,7 +217,7 @@ public class Draggable extends SimpleQuery {
     if (mouseStarted) {
       mouseStarted = false;
       preventClickEvent = (event.getCurrentEventTarget() == mouseDownEvent.getCurrentEventTarget());
-      mouseStop(element);
+      mouseStop(element, event);
     }
     return false;
   }
@@ -239,10 +252,15 @@ public class Draggable extends SimpleQuery {
     return mouseDistance >= NEEDEDDISTANCE;
   }
 
+  private DragAndDropManager getDragAndDropManager() {
+    return DragAndDropManager.getInstance();
+  }
+
   private DraggableHandler getHandler(final Element draggable) {
 
     if (currentDragHandler == null) {
-      currentDragHandler = q(draggable).data(DraggableHandler.DRAGGABLE_HANDLER_KEY);
+      currentDragHandler =
+          q(draggable).data(DraggableHandler.DRAGGABLE_HANDLER_KEY, DraggableHandler.class);
     }
     return currentDragHandler;
   }
@@ -261,8 +279,8 @@ public class Draggable extends SimpleQuery {
                                                      event.mouseHandled = true;
                                                      }-*/;
 
-  private boolean mouseDragImpl(final DraggableHandler dragHandler, final Event event,
-      final boolean isStart) {
+  private boolean mouseDragImpl(final Element draggable, final DraggableHandler dragHandler,
+      final Event event, final boolean isStart) {
     if (isStart) {
       dragHandler.initHelperPostition();
     } else {
@@ -270,6 +288,10 @@ public class Draggable extends SimpleQuery {
     }
 
     dragHandler.moveHelper(isStart);
+
+    if (getDragAndDropManager().isHandleDroppable()) {
+      getDragAndDropManager().drag(draggable, event);
+    }
     return false;
   }
 

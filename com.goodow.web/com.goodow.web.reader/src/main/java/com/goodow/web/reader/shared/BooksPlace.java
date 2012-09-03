@@ -5,6 +5,7 @@ import com.goodow.web.reader.client.BookForm;
 import com.goodow.web.reader.client.BooksBrowser;
 import com.goodow.web.reader.client.MyBookList;
 import com.goodow.web.reader.client.SelectedBookList;
+import com.goodow.web.reader.client.droppable.CellListDrag;
 import com.goodow.web.reader.client.editgrid.EditGridPanel;
 
 import com.google.inject.Inject;
@@ -28,13 +29,16 @@ public class BooksPlace extends WebPlace {
 
   public final WebPlace editGridPlace;
 
+  public final WebPlace cellListDragPlace;
+
   @Inject
   public BooksPlace(final BookPlace bookPlace, final WebPlace createBookPlace,
       final WebPlace myBooksPlace, final WebPlace othersBookPlace,
       final WebPlace selectedBooksPlace, final WebPlace catogrizedPlace,
+      final WebPlace editGridPlace, final WebPlace cellListDragPlace,
       final Provider<BookForm> bookForm, final Provider<BooksBrowser> booksBrowser,
       final Provider<MyBookList> myBookList, final Provider<SelectedBookList> selectedBookList,
-      final WebPlace editGridPlace, final Provider<EditGridPanel> editGridPanel) {
+      final Provider<EditGridPanel> editGridPanel, final Provider<CellListDrag> cellListDrag) {
 
     this.bookPlace = bookPlace;
     this.createBookPlace = createBookPlace;
@@ -43,6 +47,7 @@ public class BooksPlace extends WebPlace {
     this.selectedBooksPlace = selectedBooksPlace;
     this.catogrizedPlace = catogrizedPlace;
     this.editGridPlace = editGridPlace;
+    this.cellListDragPlace = cellListDragPlace;
 
     setPath("books");
     setFeed(true);
@@ -57,6 +62,7 @@ public class BooksPlace extends WebPlace {
     addChild(selectedBooksPlace);
     addChild(catogrizedPlace);
     addChild(editGridPlace);
+    addChild(cellListDragPlace);
 
     createBookPlace.setQuery("view=form");
     createBookPlace.setAnimation(Animation.SLIDE);
@@ -86,6 +92,10 @@ public class BooksPlace extends WebPlace {
     editGridPlace.setTitle("制作杂志");
     editGridPlace.setWidget(editGridPanel);
 
+    cellListDragPlace.setQuery("filter=celllistdrag");
+    cellListDragPlace.setAnimation(Animation.SLIDE);
+    cellListDragPlace.setTitle("拖动实验");
+    cellListDragPlace.setWidget(cellListDrag);
   }
 
 }

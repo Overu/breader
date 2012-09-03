@@ -6,15 +6,19 @@ import com.google.gwt.user.client.Event;
 public class Function {
 
   public boolean f(final EditGridCell cell, final Event event) {
-    return false;
+    return true;
   }
 
   public boolean f(final Element element) {
-    return false;
+    return true;
+  }
+
+  public boolean f(final Event event) {
+    return true;
   }
 
   public boolean f(final Event event, final Object d) {
-    return false;
+    return f(event);
   }
 
 }

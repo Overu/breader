@@ -110,8 +110,12 @@ public class SimpleQuery {
     return this;
   }
 
-  @SuppressWarnings("unchecked")
-  public <T> T data(final String name) {
+  public Object data(final String name) {
+    return isEmpty() ? null : data(get(0), name, null);
+  }
+
+  @SuppressWarnings("unused")
+  public <T> T data(final String name, final Class<T> clz) {
     return isEmpty() ? null : (T) data(get(0), name, null);
   }
 

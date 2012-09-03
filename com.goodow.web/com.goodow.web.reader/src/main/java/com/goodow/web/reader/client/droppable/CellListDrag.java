@@ -8,8 +8,7 @@ import com.goodow.web.reader.shared.Book;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.user.client.DOM;
-import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.inject.Inject;
 
@@ -60,9 +59,30 @@ public class CellListDrag extends FlowView {
   protected void start() {
     dataProvider = new ListDataProvider<Book>();
     cellList = new DragAndDropCellList<Book>(cell, null);
-    Element createDiv = DOM.createDiv();
-    createDiv.setInnerText("asfd");
     cellList.getDraggableOptions().setHelperType(HelperType.CLONE);
+
+    cellList.addDragStartHandler(new DragStartEvent.DragStartEventHandler() {
+
+      @Override
+      public void onDragStart(final DragStartEvent event) {
+
+      }
+    });
+
+    final TextArea textArea = new TextArea();
+
+    DroppableWidget<TextArea> dw = new DroppableWidget<TextArea>(textArea);
+    dw.addDropHandler(new DropEvent.DropEventHandler() {
+
+      @Override
+      public void onDrop(final DropEvent event) {
+        Book draggableData = (Book) event.getDraggableData();
+        textArea.setValue(draggableData.getTitle());
+      }
+
+    }, DropEvent.TYPE);
+
     main.add(cellList);
+    main.add(dw);
   }
 }

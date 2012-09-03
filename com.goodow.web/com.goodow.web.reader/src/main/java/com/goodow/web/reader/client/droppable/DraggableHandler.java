@@ -11,7 +11,7 @@ public class DraggableHandler {
   public static final String DRAGGABLE_HANDLER_KEY = "draggableHandler";
 
   public static DraggableHandler getInstance(final Element draggable) {
-    return SimpleQuery.q(draggable).data(DRAGGABLE_HANDLER_KEY);
+    return SimpleQuery.q(draggable).data(DRAGGABLE_HANDLER_KEY, DraggableHandler.class);
   }
 
   private Element helper;
@@ -25,9 +25,11 @@ public class DraggableHandler {
   private int nowPageY;
   private int helperClientTop;
   private int helperClientLeft;
+  private int offsetClickLeft;
+  private int offsetClickTop;
 
   DraggableHandler(final DraggableOptions options) {
-    this.options = options;
+    this.setOptions(options);
   }
 
   public void cacheHelperSize() {
@@ -52,7 +54,7 @@ public class DraggableHandler {
   }
 
   public void createHelper(final Element draggable) {
-    helper = options.getHelperType().createHelper(draggable, options.getHelper());
+    helper = getOptions().getHelperType().createHelper(draggable, getOptions().getHelper());
     if (!isElementAttached(getHelper())) {
       RootPanel.get().getElement().appendChild(getHelper());
       // draggable.getParentElement().appendChild(getHelper());
@@ -85,23 +87,47 @@ public class DraggableHandler {
     return helper;
   }
 
+  public int getHelperClientLeft() {
+    return helperClientLeft;
+  }
+
+  public int getHelperClientTop() {
+    return helperClientTop;
+  }
+
+  public int getOffsetClickLeft() {
+    return offsetClickLeft;
+  }
+
+  public int getOffsetClickTop() {
+    return offsetClickTop;
+  }
+
+  public DraggableOptions getOptions() {
+    return options;
+  }
+
   public void initHelperPostition() {
     helperClientTop = absPositionTop;
     helperClientLeft = absPositionLeft;
+
   }
 
-  public void initialize(final Element element) {
+  public void initialize(final Element element, final Event event) {
 
     absPositionLeft = element.getAbsoluteLeft() - 6;
     absPositionTop = element.getAbsoluteTop() - 6;
+
+    offsetClickLeft = pageX(event) - absPositionLeft;
+    offsetClickTop = pageY(event) - absPositionTop;
   }
 
   public void moveHelper(final boolean isStart) {
     if (isStart) {
       return;
     }
-    helper.getStyle().setLeft(helperClientLeft, Unit.PX);
-    helper.getStyle().setTop(helperClientTop, Unit.PX);
+    helper.getStyle().setLeft(getHelperClientLeft(), Unit.PX);
+    helper.getStyle().setTop(getHelperClientTop(), Unit.PX);
   }
 
   public final int pageX(final Event e) {
@@ -115,6 +141,10 @@ public class DraggableHandler {
   public void recovery() {
     nowPageX = 0;
     nowPageY = 0;
+  }
+
+  public void setOptions(final DraggableOptions options) {
+    this.options = options;
   }
 
   private boolean isElementAttached(final Element helper) {

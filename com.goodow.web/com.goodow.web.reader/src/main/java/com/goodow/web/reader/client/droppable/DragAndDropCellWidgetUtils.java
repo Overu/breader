@@ -4,6 +4,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.EventBus;
 
 public class DragAndDropCellWidgetUtils {
+
   public static final String VALUE_KEY = "__dragAndDropCellAssociatedValue";
 
   private static final DragAndDropCellWidgetUtils INSTANCE = new DragAndDropCellWidgetUtils();

@@ -2,9 +2,8 @@ package com.goodow.web.reader.client.droppable;
 
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.EventHandler;
-import com.google.gwt.event.shared.GwtEvent;
 
-public class DragStartEvent extends GwtEvent<DragStartEvent.DragStartEventHandler> {
+public class DragStartEvent extends AbstractDraggableEvent<DragStartEvent.DragStartEventHandler> {
 
   public interface DragStartEventHandler extends EventHandler {
     public void onDragStart(DragStartEvent event);
@@ -13,6 +12,7 @@ public class DragStartEvent extends GwtEvent<DragStartEvent.DragStartEventHandle
   public static Type<DragStartEventHandler> TYPE = new Type<DragStartEventHandler>();
 
   public DragStartEvent(final Element draggable) {
+    super(draggable);
   }
 
   @Override
