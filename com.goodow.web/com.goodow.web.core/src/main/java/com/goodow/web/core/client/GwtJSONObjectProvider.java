@@ -5,7 +5,7 @@ import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.ObjectReader;
 import com.goodow.web.core.shared.ObjectWriter;
 import com.goodow.web.core.shared.Property;
-import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebContent;
 import com.goodow.web.core.shared.WebObject;
 
 import com.google.gwt.json.client.JSONObject;
@@ -32,8 +32,8 @@ public class GwtJSONObjectProvider<T extends WebObject> implements ObjectReader<
 
   @Override
   public void writeTo(final T obj, final JSONObject json, final Message message) {
-    if (obj instanceof WebEntity) {
-      EntityId eid = message.getEntityId((WebEntity) obj);
+    if (obj instanceof WebContent) {
+      EntityId eid = message.getEntityId((WebContent) obj);
       json.put("e_id", new JSONString(eid.toString()));
     }
     for (Property prop : obj.getObjectType().getAllProperties().values()) {

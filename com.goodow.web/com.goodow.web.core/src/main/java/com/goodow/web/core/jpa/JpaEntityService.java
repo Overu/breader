@@ -1,7 +1,7 @@
 package com.goodow.web.core.jpa;
 
-import com.goodow.web.core.shared.WebEntityService;
-import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebContentService;
+import com.goodow.web.core.shared.WebContent;
 
 import com.google.inject.persist.Transactional;
 
@@ -11,8 +11,8 @@ import java.util.logging.Logger;
 
 import javax.persistence.TypedQuery;
 
-public class JpaEntityService<E extends WebEntity> extends JpaWebService<E> implements
-    WebEntityService<E> {
+public class JpaEntityService<E extends WebContent> extends JpaWebService<E> implements
+    WebContentService<E> {
 
   private static final Logger logger = Logger.getLogger(JpaEntityService.class.getName());
 
@@ -22,7 +22,7 @@ public class JpaEntityService<E extends WebEntity> extends JpaWebService<E> impl
   }
 
   @Override
-  public List<E> find(final WebEntity container) {
+  public List<E> find(final WebContent container) {
     String hsql = "select e from " + getObjectType().getName() + " e where e.container=:container";
     TypedQuery<E> query = em.get().createQuery(hsql, getObjectType());
     query.setParameter("container", container);

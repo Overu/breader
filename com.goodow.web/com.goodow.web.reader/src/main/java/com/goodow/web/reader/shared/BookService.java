@@ -1,11 +1,11 @@
 package com.goodow.web.reader.shared;
 
 import com.goodow.web.core.shared.Resource;
-import com.goodow.web.core.shared.WebEntityService;
+import com.goodow.web.core.shared.WebContentService;
 
 import java.util.List;
 
-public interface BookService extends WebEntityService<Book> {
+public interface BookService extends WebContentService<Book> {
 
   Book extract(Resource resource);
 

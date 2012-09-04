@@ -1,7 +1,7 @@
 package com.goodow.web.mvp.jpa;
 
 import com.goodow.web.core.jpa.JpaEntityService;
-import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebContent;
 import com.goodow.web.mvp.shared.BaseService;
 
 import com.google.inject.persist.Transactional;
@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-public class JpaBaseService<E extends WebEntity> extends JpaEntityService<E> implements BaseService<E> {
+public class JpaBaseService<E extends WebContent> extends JpaEntityService<E> implements BaseService<E> {
 
   @Override
   @Transactional

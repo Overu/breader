@@ -5,7 +5,7 @@ import static com.google.gwt.user.client.rpc.RpcRequestBuilder.STRONG_NAME_HEADE
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Receiver;
-import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebContent;
 import com.goodow.web.core.shared.WebType;
 import com.goodow.web.feature.client.FeatureDetection;
 
@@ -28,7 +28,7 @@ public class ClientMessage extends Message implements RequestCallback {
   ClientJSONMarshaller messageProvider;
 
   @Override
-  public WebEntity find(final ObjectType objectType, final String id) {
+  public WebContent find(final ObjectType objectType, final String id) {
     return null;
   }
 

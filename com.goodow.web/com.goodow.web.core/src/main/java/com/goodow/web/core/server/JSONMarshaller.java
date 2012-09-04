@@ -11,7 +11,7 @@ import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.Response;
 import com.goodow.web.core.shared.SerializationException;
 import com.goodow.web.core.shared.ValueType;
-import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebContent;
 import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.WebPlatform;
 import com.goodow.web.core.shared.WebType;
@@ -36,8 +36,8 @@ public class JSONMarshaller {
       return JSONObject.NULL;
     } else if (value instanceof WebObject) {
       WebObject obj = (WebObject) value;
-      if (obj instanceof WebEntity) {
-        WebEntity entity = (WebEntity) obj;
+      if (obj instanceof WebContent) {
+        WebContent entity = (WebContent) obj;
         EntityId id = message.getEntityId(entity);
         if (message.isSerialized(entity)) {
           return id.toString();

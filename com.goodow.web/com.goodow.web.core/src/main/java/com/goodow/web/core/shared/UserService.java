@@ -13,7 +13,7 @@
  */
 package com.goodow.web.core.shared;
 
-public interface UserService extends WebEntityService<User> {
+public interface UserService extends WebContentService<User> {
 
   User findUserByUsername(final String userName);
 

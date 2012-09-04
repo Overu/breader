@@ -36,8 +36,8 @@ public class PrincipalType implements UserType {
     if (o1 == null || o2 == null) {
       return false;
     }
-    final WebEntity p1 = (WebEntity) o1;
-    final WebEntity p2 = (WebEntity) o2;
+    final WebContent p1 = (WebContent) o1;
+    final WebContent p2 = (WebContent) o2;
     return p1.getClass() == p2.getClass() && p1.getId().equals(p2.getId());
   }
 
@@ -70,7 +70,7 @@ public class PrincipalType implements UserType {
       StringType.INSTANCE.nullSafeSet(st, null, index, session);
       StringType.INSTANCE.nullSafeSet(st, null, index + 1, session);
     } else {
-      WebEntity entity = (WebEntity) value;
+      WebContent entity = (WebContent) value;
       StringType.INSTANCE.nullSafeSet(st, entity.getClass().getName(), index, session);
       StringType.INSTANCE.nullSafeSet(st, entity.getId(), index + 1, session);
     }
@@ -84,7 +84,7 @@ public class PrincipalType implements UserType {
 
   @Override
   public Class<?> returnedClass() {
-    return WebEntity.class;
+    return WebContent.class;
   }
 
   @Override

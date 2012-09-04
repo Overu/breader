@@ -2,9 +2,9 @@ package com.goodow.web.core.shared;
 
 import java.util.List;
 
-public interface WebEntityService<E extends WebEntity> extends WebService<E> {
+public interface WebContentService<E extends WebContent> extends WebService<E> {
 
-  List<E> find(WebEntity container);
+  List<E> find(WebContent container);
 
   E getById(String id);
 

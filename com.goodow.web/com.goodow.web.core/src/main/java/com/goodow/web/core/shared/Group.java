@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "t_group")
-public class Group extends WebEntity {
+public class Group extends WebContent {
 
   protected String name;
 

@@ -31,7 +31,7 @@ public abstract class Message implements Serializable {
   @SuppressWarnings("rawtypes")
   protected Response response;
 
-  private Set<WebEntity> serialized = new HashSet<WebEntity>();
+  private Set<WebContent> serialized = new HashSet<WebContent>();
 
   @SuppressWarnings("rawtypes")
   public Message() {
@@ -39,7 +39,7 @@ public abstract class Message implements Serializable {
     response = new Response(this);
   }
 
-  public abstract WebEntity find(ObjectType objectType, String id);
+  public abstract WebContent find(ObjectType objectType, String id);
 
   public Message fire() {
     return this;
@@ -64,7 +64,7 @@ public abstract class Message implements Serializable {
     return entity;
   }
 
-  public EntityId getEntityId(final WebEntity entity) {
+  public EntityId getEntityId(final WebContent entity) {
     EntityId id = entityIds.get(entity);
     if (id == null) {
       id = new EntityId(entity.getObjectType().getQualifiedName());
@@ -93,11 +93,11 @@ public abstract class Message implements Serializable {
     return response;
   }
 
-  public boolean isSerialized(final WebEntity entity) {
+  public boolean isSerialized(final WebContent entity) {
     return serialized.contains(entity);
   }
 
-  public void setSerialized(final WebEntity entity) {
+  public void setSerialized(final WebContent entity) {
     serialized.add(entity);
   }
 

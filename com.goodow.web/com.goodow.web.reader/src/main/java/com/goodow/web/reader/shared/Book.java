@@ -3,7 +3,7 @@ package com.goodow.web.reader.shared;
 import com.goodow.web.core.shared.Category;
 import com.goodow.web.core.shared.Resource;
 import com.goodow.web.core.shared.Section;
-import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebContent;
 
 import java.util.Date;
 import java.util.List;
@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 @Entity
 @Table(name = "t_book")
-public class Book extends WebEntity {
+public class Book extends WebContent {
 
   private String title;
 

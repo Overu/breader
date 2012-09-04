@@ -2,7 +2,7 @@ package com.goodow.web.core.client;
 
 import com.goodow.wave.bootstrap.shared.MapBinder;
 import com.goodow.web.core.shared.Resource;
-import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebContent;
 
 import com.google.gwt.inject.client.AsyncProvider;
 import com.google.gwt.user.client.TakesValue;
@@ -19,9 +19,9 @@ public class UIManager extends MapBinder<String, IsWidget> {
 
   private static final Logger logger = Logger.getLogger(CoreClientModule.class.getName());
 
-  public void render(final AcceptsOneWidget panel, final WebEntity entity, final String widgetId,
+  public void render(final AcceptsOneWidget panel, final WebContent entity, final String widgetId,
       final AsyncCallback<AcceptsOneWidget> callback) {
-    WebEntity container = entity.getContainer();
+    WebContent container = entity.getContainer();
     if (container != null) {
       render(panel, container, "container", new AsyncCallback<AcceptsOneWidget>() {
         @Override
@@ -44,7 +44,7 @@ public class UIManager extends MapBinder<String, IsWidget> {
     return show(panel, resource, resource.getMimeType(), null);
   }
 
-  public boolean show(final AcceptsOneWidget panel, final WebEntity entity, final String widgetId,
+  public boolean show(final AcceptsOneWidget panel, final WebContent entity, final String widgetId,
       final AsyncCallback<AcceptsOneWidget> callback) {
     IsWidget widget = get(widgetId);
     if (widget == null) {
@@ -83,10 +83,10 @@ public class UIManager extends MapBinder<String, IsWidget> {
   }
 
   private void appendWidget(final AcceptsOneWidget panel, final IsWidget widget,
-      final WebEntity entity, final AsyncCallback<AcceptsOneWidget> callback) {
+      final WebContent entity, final AsyncCallback<AcceptsOneWidget> callback) {
     panel.setWidget(widget);
     if (widget instanceof TakesValue) {
-      TakesValue<WebEntity> takesValue = (TakesValue<WebEntity>) widget;
+      TakesValue<WebContent> takesValue = (TakesValue<WebContent>) widget;
       takesValue.setValue(entity);
     }
     if (callback != null && widget instanceof AcceptsOneWidget) {

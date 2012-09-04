@@ -6,7 +6,7 @@ import com.goodow.web.core.shared.ObjectReader;
 import com.goodow.web.core.shared.ObjectWriter;
 import com.goodow.web.core.shared.Property;
 import com.goodow.web.core.shared.SerializationException;
-import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebContent;
 import com.goodow.web.core.shared.WebObject;
 
 import com.google.inject.Inject;
@@ -40,15 +40,15 @@ public class JSONObjectProvider<T extends WebObject> implements ObjectReader<T, 
   @Override
   public void writeTo(final T source, final JSONObject target, final Message message) {
     try {
-      if (source instanceof WebEntity) {
-        EntityId eid = message.getEntityId((WebEntity) source);
+      if (source instanceof WebContent) {
+        EntityId eid = message.getEntityId((WebContent) source);
         target.put("e_id", eid.toString());
       }
       for (Property prop : source.getObjectType().getAllProperties().values()) {
 
         Object value = source.get(prop);
         if (prop.getName().equals("container") && value != null) {
-          WebEntity entity = (WebEntity) value;
+          WebContent entity = (WebContent) value;
           EntityId id = message.getEntityId(entity);
           target.put(prop.getName(), id.toString());
         } else {

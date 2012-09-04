@@ -14,12 +14,12 @@
 package com.goodow.web.reader.shared;
 
 import com.goodow.web.core.shared.Resource;
-import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebContent;
 
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType
-public class Video extends WebEntity {
+public class Video extends WebContent {
 
   private Resource media;
 

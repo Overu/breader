@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 @Entity
 @Table(name = "t_section")
-public class Section extends WebEntity {
+public class Section extends WebContent {
 
   private String title;
 

@@ -8,7 +8,7 @@ import com.goodow.web.core.shared.ObjectWriter;
 import com.goodow.web.core.shared.Parameter;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.ValueType;
-import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebContent;
 import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.WebType;
 
@@ -45,8 +45,8 @@ public class ClientJSONMessageProvider {
         String key = json.isString().stringValue();
         EntityId id = EntityId.parseId(key);
         obj = message.getEntity(id);
-        if (obj instanceof WebEntity) {
-          ((WebEntity) obj).setId(id.getStableId());
+        if (obj instanceof WebContent) {
+          ((WebContent) obj).setId(id.getStableId());
         }
       } else {
         JSONString eId = jsonObj.get("e_id").isString();
@@ -76,8 +76,8 @@ public class ClientJSONMessageProvider {
         jsonArgs.set(i, jsonValue);
         if (param.getType() instanceof ObjectType) {
           // TODO many=true
-          if (arg instanceof WebEntity) {
-            WebEntity entity = (WebEntity) arg;
+          if (arg instanceof WebContent) {
+            WebContent entity = (WebContent) arg;
             message.getEntityId(entity);
           }
         }
@@ -106,8 +106,8 @@ public class ClientJSONMessageProvider {
       return JSONNull.getInstance();
     }
 
-    if (obj instanceof WebEntity) {
-      EntityId id = message.getEntityId((WebEntity) obj);
+    if (obj instanceof WebContent) {
+      EntityId id = message.getEntityId((WebContent) obj);
       return new JSONString(id.toString());
     } else if (obj instanceof WebObject) {
       WebObject o = (WebObject) obj;

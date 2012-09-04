@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 @Entity
 @Table(name = "t_resource")
-public class Resource extends WebEntity {
+public class Resource extends WebContent {
 
   private String path;
 

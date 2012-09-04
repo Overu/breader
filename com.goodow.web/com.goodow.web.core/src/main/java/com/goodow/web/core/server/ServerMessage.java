@@ -4,8 +4,8 @@ import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.ObjectType;
 import com.goodow.web.core.shared.Operation;
 import com.goodow.web.core.shared.SerializationException;
-import com.goodow.web.core.shared.WebEntity;
-import com.goodow.web.core.shared.WebEntityService;
+import com.goodow.web.core.shared.WebContent;
+import com.goodow.web.core.shared.WebContentService;
 import com.goodow.web.core.shared.WebService;
 
 import com.google.inject.Inject;
@@ -20,13 +20,13 @@ public class ServerMessage extends Message {
   JSONMarshaller provider;
 
   @Override
-  public WebEntity find(final ObjectType objectType, final String id) {
+  public WebContent find(final ObjectType objectType, final String id) {
     WebService<?> service = objectType.getService();
     if (service == null) {
       service = injector.getInstance(objectType.getServiceClass());
       objectType.setService(service);
     }
-    return ((WebEntityService<?>) service).getById(id);
+    return ((WebContentService<?>) service).getById(id);
   }
 
   public String process(final String payload) throws Exception {

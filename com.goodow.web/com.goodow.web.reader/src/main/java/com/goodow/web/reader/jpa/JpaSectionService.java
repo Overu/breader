@@ -5,7 +5,7 @@ import com.goodow.web.core.jpa.JpaResourceService;
 import com.goodow.web.core.shared.Resource;
 import com.goodow.web.core.shared.Section;
 import com.goodow.web.core.shared.SectionService;
-import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebContent;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
@@ -19,7 +19,7 @@ public class JpaSectionService extends JpaEntityService<Section> implements Sect
   JpaResourceService resourceService;
 
   @Override
-  public List<Section> find(final WebEntity container) {
+  public List<Section> find(final WebContent container) {
     String hsql =
         "select e from " + getObjectType().getName()
             + " e where e.container=:container order by e.displayOrder asc";

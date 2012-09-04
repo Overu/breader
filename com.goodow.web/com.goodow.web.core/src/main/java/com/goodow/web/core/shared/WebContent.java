@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
 @TypeDef(name = "principal", typeClass = PrincipalType.class)
 @MappedSuperclass
 @XmlType
-public class WebEntity extends WebObject {
+public class WebContent extends WebObject {
 
   @Id
   protected String id;
@@ -29,14 +29,14 @@ public class WebEntity extends WebObject {
   @XmlTransient
   @Type(type = "principal")
   @Columns(columns = {@Column(name = "tenantType"), @Column(name = "tenantName")})
-  private WebEntity tenant;
+  private WebContent tenant;
 
   @XmlTransient
   @Type(type = "principal")
   @Columns(columns = {@Column(name = "containerType"), @Column(name = "containerId")})
-  private WebEntity container;
+  private WebContent container;
 
-  public WebEntity getContainer() {
+  public WebContent getContainer() {
     return container;
   }
 
@@ -49,7 +49,7 @@ public class WebEntity extends WebObject {
   }
 
   @XmlTransient
-  public WebEntity getTenant() {
+  public WebContent getTenant() {
     return tenant;
   }
 
@@ -57,7 +57,7 @@ public class WebEntity extends WebObject {
     return version;
   }
 
-  public void setContainer(final WebEntity container) {
+  public void setContainer(final WebContent container) {
     this.container = container;
   }
 
@@ -69,7 +69,7 @@ public class WebEntity extends WebObject {
     this.owner = owner;
   }
 
-  public void setTenant(final WebEntity tenant) {
+  public void setTenant(final WebContent tenant) {
     this.tenant = tenant;
   }
 

@@ -1,6 +1,6 @@
 package com.goodow.web.reader.shared;
 
-import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebContent;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement
 @Entity
 @Table(name = "t_library")
-public class Library extends WebEntity {
+public class Library extends WebContent {
 
   protected String title;
 

@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 @Entity
 @Table(name = "t_category")
-public class Category extends WebEntity {
+public class Category extends WebContent {
 
   private String title;
 

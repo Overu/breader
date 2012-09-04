@@ -15,11 +15,11 @@ import javax.persistence.Table;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "t_member")
-public class Member extends WebEntity {
+public class Member extends WebContent {
 
   @Type(type = "principal")
   @Columns(columns = {@Column(name = "principalType"), @Column(name = "principalName")})
-  private WebEntity principal;
+  private WebContent principal;
 
   @Type(type = "role")
   @Columns(columns = {@Column(name = "roleType"), @Column(name = "roleName")})
@@ -32,7 +32,7 @@ public class Member extends WebEntity {
     return comment;
   }
 
-  public WebEntity getPrincipal() {
+  public WebContent getPrincipal() {
     return principal;
   }
 
@@ -44,7 +44,7 @@ public class Member extends WebEntity {
     this.comment = comment;
   }
 
-  public void setPrincipal(final WebEntity principal) {
+  public void setPrincipal(final WebContent principal) {
     this.principal = principal;
   }
 

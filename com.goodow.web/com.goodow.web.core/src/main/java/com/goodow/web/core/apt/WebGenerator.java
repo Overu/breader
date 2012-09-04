@@ -10,7 +10,7 @@ import com.goodow.web.core.shared.Package;
 import com.goodow.web.core.shared.Request;
 import com.goodow.web.core.shared.SharedModule;
 import com.goodow.web.core.shared.ValueInfo;
-import com.goodow.web.core.shared.WebEntity;
+import com.goodow.web.core.shared.WebContent;
 import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.WebService;
 
@@ -139,7 +139,7 @@ public class WebGenerator extends AbstractProcessor {
       String implClassName = pkgName + "." + serviceName;
       String superServiceName;
 
-      if (entityType.getQualifiedName().toString().equals(WebEntity.class.getName())) {
+      if (entityType.getQualifiedName().toString().equals(WebContent.class.getName())) {
         superServiceName = AsyncWebService.class.getName();
       } else {
         TypeMirror superClass = entityType.getSuperclass();
@@ -869,8 +869,8 @@ public class WebGenerator extends AbstractProcessor {
     return operationName;
   }
 
-  private String getServiceClass(final TypeElement entityType) {
-    TypeElement serviceType = getServiceType(entityType);
+  private String getServiceClass(final TypeElement webType) {
+    TypeElement serviceType = getServiceType(webType);
     if (serviceType == null) {
       return null;
     } else {
