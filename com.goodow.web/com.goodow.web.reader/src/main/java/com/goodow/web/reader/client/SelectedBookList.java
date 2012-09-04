@@ -6,6 +6,6 @@ import com.google.inject.Singleton;
 public class SelectedBookList extends BookList {
   @Override
   public void refresh() {
-    bookService.getMyBooks().fire(this);
+    bookService.getSelectedBooks().fire(this);
   }
 }
