@@ -9,8 +9,6 @@ import javax.xml.bind.annotation.XmlType;
 @Table(name = "t_resource")
 public class Resource extends WebContent {
 
-  private String path;
-
   private String fileName;
 
   private String mimeType;
@@ -25,10 +23,6 @@ public class Resource extends WebContent {
     return mimeType;
   }
 
-  public String getPath() {
-    return path;
-  }
-
   public String getTextContent() {
     return textContent;
   }
@@ -39,10 +33,6 @@ public class Resource extends WebContent {
 
   public void setMimeType(final String contentType) {
     this.mimeType = contentType;
-  }
-
-  public void setPath(final String path) {
-    this.path = path;
   }
 
   public void setTextContent(final String textContent) {

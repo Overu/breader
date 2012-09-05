@@ -12,6 +12,7 @@ import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Resource;
 import com.goodow.web.core.shared.ResourceUploadedEvent;
 import com.goodow.web.core.shared.ResourceUploadedHandler;
+import com.goodow.web.core.shared.WebPlaceMapper;
 import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 import com.goodow.web.reader.shared.ReaderPlace;
@@ -19,7 +20,6 @@ import com.goodow.web.reader.shared.ReaderPlace;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.Editor;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
-import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class BookForm extends FormView<Book> implements ResourceUploadedHandler, Editor<Book> {
+
   interface Bundle extends ClientBundle {
 
     @Source("BookForm.css")
@@ -54,6 +55,8 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
 
     String utilityCss();
   }
+
+  public static final String NAME = "form";
 
   private static Driver driver = GWT.create(Driver.class);
 
@@ -96,7 +99,7 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
   AsyncCategoryService categoryService;
 
   @Inject
-  PlaceController placeController;
+  WebPlaceMapper placeManager;
 
   @Inject
   ReaderPlace reader;
@@ -159,8 +162,7 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
       @Override
       public void onSuccess(final Book result) {
         logger.info("book created: " + result.getId());
-        reader.booksPlace.bookPlace.setPath(result.getId());
-        placeController.goTo(reader.booksPlace.bookPlace.editBookPlace);
+        placeManager.gotoContent(result);
       }
     });
   }
@@ -208,7 +210,7 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
     cancelButton.addTapHandler(new TapHandler() {
       @Override
       public void onTap(final TapEvent event) {
-        placeController.goTo(reader.booksPlace.myBooksPlace);
+        placeManager.gotoFeed(null, "books");
       }
     });
 

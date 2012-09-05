@@ -1,6 +1,7 @@
 package com.goodow.web.core.shared;
 
 import com.goodow.web.core.client.ScrollView;
+import com.goodow.web.core.client.UIManager;
 import com.goodow.web.core.client.WebView;
 
 import com.google.gwt.core.client.GWT;
@@ -13,6 +14,7 @@ import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import com.googlecode.mgwt.mvp.client.AnimatableDisplay;
@@ -71,6 +73,12 @@ public class WebPlace extends Place {
     }
   }
 
+  @Inject
+  Provider<WebPlace> placeProvider;
+
+  @Inject
+  Provider<WebPlaceMapper> placeManager;
+
   private String path;
 
   private Animation animation;
@@ -105,9 +113,16 @@ public class WebPlace extends Place {
 
   private boolean feed;
 
-  private WebPlace entryPlace;
+  private WebContent content;
 
-  private String query;
+  private ObjectType objectType;
+
+  private ViewType viewType;
+
+  private Property property;
+
+  @Inject
+  private UIManager ui;
 
   public void addChild(final WebPlace place) {
     children.add(place);
@@ -116,31 +131,19 @@ public class WebPlace extends Place {
 
   public WebPlace findChild(final String uri) {
     String[] pair = uri.split("\\?");
-    String query = pair.length > 1 ? pair[1] : null;
+    String viewType = pair.length > 1 ? pair[1] : null;
     String[] segments = pair[0].split("/");
     WebPlace result = this;
     for (String path : segments) {
-      if (result.isFeed()) {
-        if (entryPlace != null) {
-          result = entryPlace;
-          entryPlace.setPath(path);
-          continue;
-        } else {
-          return null;
-        }
-      }
       if (path.length() == 0) {
         continue;
       }
       result = result.getChild(path);
-      if (result == null) {
-        break;
-      }
     }
 
-    if (result != null && query != null) {
-      for (WebPlace child : result.getChildren()) {
-        if (query.equals(child.getQuery())) {
+    if (result != null && viewType != null) {
+      for (WebPlace child : result.getViewerPlaces()) {
+        if (viewType.equals(child.getViewType().getName())) {
           result = child;
           break;
         }
@@ -174,15 +177,35 @@ public class WebPlace extends Place {
         return p;
       }
     }
-    return null;
+    WebPlace result = null;
+    Property property = getObjectType().getProperty(path);
+    if (property != null) {
+      result = placeProvider.get();
+      result.setObjectType((ObjectType) property.getType());
+    } else if (isFeed()) {
+      result = placeProvider.get();
+      result.setObjectType((ObjectType) getProperty().getType());
+    }
+    if (result != null) {
+      result.setPath(path);
+      addChild(result);
+    }
+    return result;
   }
 
   public List<WebPlace> getChildren() {
     return children;
   }
 
-  public WebPlace getEntryPlace() {
-    return entryPlace;
+  public WebContent getContent() {
+    return content;
+  }
+
+  public ObjectType getObjectType() {
+    if (objectType == null && viewType != null) {
+      objectType = getParent().getObjectType();
+    }
+    return objectType;
   }
 
   public WebPlace getParent() {
@@ -193,8 +216,11 @@ public class WebPlace extends Place {
     return path;
   }
 
-  public String getQuery() {
-    return query;
+  public Property getProperty() {
+    if (property == null && parent != null) {
+      property = parent.getObjectType().getProperty(path);
+    }
+    return property;
   }
 
   public WebPlace getStartedChild() {
@@ -216,11 +242,28 @@ public class WebPlace extends Place {
       StringBuilder builder = parent.getUriBuilder();
       if (path != null) {
         builder.append("/").append(path);
-      } else if (query != null) {
-        builder.append("?").append(query);
+      } else if (viewType != null) {
+        builder.append("?view=").append(viewType.getName());
       }
       return builder;
     }
+  }
+
+  public List<WebPlace> getViewerPlaces() {
+    List<WebPlace> result = new ArrayList<WebPlace>();
+    for (ViewType viewType : getObjectType().getViewers()) {
+      WebPlace place = placeProvider.get();
+      place.setViewType(viewType);
+      place.setTitle(viewType.getTitle());
+      place.parent = this;
+      result.add(place);
+    }
+    return result;
+
+  }
+
+  public ViewType getViewType() {
+    return viewType;
   }
 
   public WebPlace getWelcomePlace() {
@@ -231,8 +274,19 @@ public class WebPlace extends Place {
     return widget;
   }
 
+  public boolean isChildOf(final WebPlace place) {
+    if (place == this) {
+      return true;
+    } else if (parent != null) {
+      return parent.isChildOf(place);
+    } else {
+      return false;
+
+    }
+  }
+
   public boolean isFeed() {
-    return feed;
+    return parent != null && getProperty().isMany();
   }
 
   public void render(final AcceptsOneWidget panel) {
@@ -251,21 +305,24 @@ public class WebPlace extends Place {
     this.buttonText = buttonText;
   }
 
-  public void setEntryPlace(final WebPlace entityPlace) {
-    this.entryPlace = entityPlace;
-    entryPlace.parent = this;
+  public void setContent(final WebContent content) {
+    this.content = content;
   }
 
   public void setFeed(final boolean feed) {
     this.feed = feed;
   }
 
+  public void setObjectType(final ObjectType objectType) {
+    this.objectType = objectType;
+  }
+
   public void setPath(final String path) {
     this.path = path;
   }
 
-  public void setQuery(final String query) {
-    this.query = query;
+  public void setProperty(final Property property) {
+    this.property = property;
   }
 
   public void setStartedChild(final WebPlace startedChild) {
@@ -274,6 +331,10 @@ public class WebPlace extends Place {
 
   public void setTitle(final String title) {
     this.title = title;
+  }
+
+  public void setViewType(final ViewType viewType) {
+    this.viewType = viewType;
   }
 
   public void setWelcomePlace(final WebPlace place) {
@@ -301,6 +362,25 @@ public class WebPlace extends Place {
   }
 
   private void append(final AcceptsOneWidget panel, final AsyncCallback<AcceptsOneWidget> callback) {
+    if (widget == null && widgetProvider == null && asyncWidgetProvider == null) {
+      Object view = null;
+      if (this.viewType != null) {
+        view = getObjectType().getNativeViewer(this.viewType);
+      } else if (isFeed()) {
+        view = getObjectType().getNativeViewer(ContainerViewer.FEED);
+      } else {
+        view = getObjectType().getNativeViewer(ContainerViewer.ENTRY);
+      }
+      if (view != null) {
+        if (view instanceof AsyncProvider) {
+          asyncWidgetProvider = (AsyncProvider<IsWidget>) view;
+        } else if (view instanceof Provider) {
+          widgetProvider = (Provider<IsWidget>) view;
+        } else if (view instanceof IsWidget) {
+          widget = (IsWidget) view;
+        }
+      }
+    }
     if (widget == null && widgetProvider == null && asyncWidgetProvider == null) {
       widget = new SimplePanel();
     }
@@ -330,7 +410,7 @@ public class WebPlace extends Place {
         }
       });
     }
-  }
+  };
 
   private void render(final AcceptsOneWidget panel, final AsyncCallback<AcceptsOneWidget> callback) {
     if (parent != null) {
@@ -349,7 +429,7 @@ public class WebPlace extends Place {
     } else {
       append(panel, callback);
     }
-  };
+  }
 
   private void showError(final AcceptsOneWidget panel, final String message) {
     Label label = new Label(message);

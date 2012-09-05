@@ -1,7 +1,8 @@
 package com.goodow.web.reader.client;
 
+import com.goodow.web.core.shared.EntryViewer;
+import com.goodow.web.core.shared.WebPlaceMapper;
 import com.goodow.web.reader.shared.Book;
-import com.goodow.web.reader.shared.ReaderPlace;
 
 import com.google.gwt.cell.client.AbstractCell;
 import com.google.gwt.cell.client.ValueUpdater;
@@ -9,7 +10,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
-import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates.Template;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -24,10 +24,7 @@ public class BookHyperlinkCell extends AbstractCell<Book> {
   }
 
   @Inject
-  PlaceController placeController;
-
-  @Inject
-  ReaderPlace reader;
+  WebPlaceMapper placeManager;
 
   private Template template = GWT.create(Template.class);
 
@@ -60,7 +57,6 @@ public class BookHyperlinkCell extends AbstractCell<Book> {
   @Override
   protected void onEnterKeyDown(final Context context, final Element parent, final Book value,
       final NativeEvent event, final ValueUpdater<Book> valueUpdater) {
-    reader.booksPlace.bookPlace.setPath(value.getId());
-    placeController.goTo(reader.booksPlace.bookPlace.editBookPlace);
+    placeManager.gotoContent(value, EntryViewer.FORM);
   }
 }

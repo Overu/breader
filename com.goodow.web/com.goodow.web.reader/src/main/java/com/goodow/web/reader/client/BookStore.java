@@ -1,14 +1,13 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.core.shared.WebPlace;
+import com.goodow.web.core.shared.WebPlaceMapper;
 import com.goodow.web.reader.client.style.ReadResources;
-import com.goodow.web.reader.shared.ReaderPlace;
 
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.place.shared.PlaceChangeEvent;
-import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -29,11 +28,13 @@ import com.googlecode.mgwt.ui.client.widget.LayoutPanel;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarButton;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 
+import java.util.List;
+
 @Singleton
 public class BookStore extends Composite implements AcceptsOneWidget, PlaceChangeEvent.Handler {
 
   @Inject
-  protected PlaceController placeController;
+  protected WebPlaceMapper placeController;
 
   private LayoutPanel main;
 
@@ -46,11 +47,10 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
   protected SimplePanel tabContainer;
   protected TabPanel.TabBar tabBar;
 
-  private final ReaderPlace reader;
+  protected List<WebPlace> bookStorePlaces;
 
   @Inject
-  public BookStore(final EventBus eventBus, final ReaderPlace reader) {
-    this.reader = reader;
+  public BookStore(final EventBus eventBus) {
     main = new LayoutPanel();
 
     headerPanel = new HeaderPanel();
@@ -65,7 +65,7 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
 
       @Override
       public void onTap(final TapEvent event) {
-        placeController.goTo(reader.bookshelfPlace);
+        placeController.gotoFeed(null, "books", "bookshelf");
       }
     });
 
@@ -76,7 +76,7 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
 
       @Override
       public void onTap(final TapEvent event) {
-        placeController.goTo(reader.booksPlace);
+        placeController.gotoFeed(null, "books", "mybooks");
       }
     });
 
@@ -98,12 +98,12 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
       @Override
       public void onSelection(final SelectionEvent<Integer> event) {
         int index = event.getSelectedItem();
-        WebPlace newPlace = reader.bookstorePlace.getChild(index);
+        WebPlace newPlace = bookStorePlaces.get(index);
         placeController.goTo(newPlace);
       }
     });
 
-    for (WebPlace place : reader.bookstorePlace.getChildren()) {
+    for (WebPlace place : bookStorePlaces) {
       TabBarButton button = new TabBarButton(place.getButtonImage());
       button.setText(place.getButtonText());
       tabBar.add(button);
@@ -127,7 +127,7 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
 
   public void refresh() {
     WebPlace currentPlace = (WebPlace) placeController.getWhere();
-    int index = reader.bookstorePlace.getChildren().indexOf(currentPlace);
+    int index = bookStorePlaces.indexOf(currentPlace);
     if (index >= 0) {
       tabBar.setSelectedButton(index, true);
       title.setText(currentPlace.getTitle());

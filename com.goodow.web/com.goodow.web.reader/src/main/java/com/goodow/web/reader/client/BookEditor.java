@@ -390,6 +390,7 @@ public class BookEditor extends FormView<Book> {
         Section section = new Section();
         section.setTitle("Chapater " + order);
         section.setContainer(book);
+        section.setPath("sections");
         section.setDisplayOrder(order);
         sectionService.save(section).fire(new Receiver<Section>() {
           @Override

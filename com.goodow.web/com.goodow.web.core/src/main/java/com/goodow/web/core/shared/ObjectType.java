@@ -4,6 +4,7 @@ import com.google.inject.Provider;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
@@ -20,6 +21,8 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
   private boolean _abstract;
 
   private ObjectType superType;
+
+  private String feedPath;
 
   private transient Class<? extends WebService> serviceClass;
 
@@ -39,6 +42,8 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
 
   private transient Map<String, ObjectWriter> writers = new HashMap<String, ObjectWriter>();
 
+  private transient Map<ViewType, Object> viewers = new HashMap<ViewType, Object>();
+
   public void addOperation(final Operation operation) {
     operations.put(operation.getName(), operation);
   }
@@ -50,6 +55,10 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
   public <T, W extends WebObject> void addReader(final Class<T> mediatorType,
       final ObjectReader<W, T> provider) {
     readers.put(mediatorType.getName(), provider);
+  }
+
+  public void addViewer(final ViewType type, final Object viewer) {
+    viewers.put(type, viewer);
   }
 
   public <T, W extends WebObject> void addWriter(final Class<T> mediatorType,
@@ -80,6 +89,29 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
       }
     }
     return allProperties;
+  }
+
+  public String getFeedPath() {
+    if (feedPath == null) {
+      feedPath = getName() + "s";
+    }
+    return feedPath;
+  }
+
+  public Object getNativeViewer(final String name) {
+    ViewType viewer = getViewer(name);
+    if (viewer != null) {
+      return getNativeViewer(viewer);
+    }
+    return null;
+  }
+
+  public Object getNativeViewer(final ViewType v) {
+    Object result = viewers.get(v);
+    if (result == null && superType != null) {
+      result = superType.getNativeViewer(v);
+    }
+    return result;
   }
 
   public Operation getOperation(final String name) {
@@ -139,6 +171,19 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
     return superType;
   }
 
+  public ViewType getViewer(final String name) {
+    for (ViewType v : viewers.keySet()) {
+      if (name.equals(v.getName())) {
+        return v;
+      }
+    }
+    return null;
+  }
+
+  public Set<ViewType> getViewers() {
+    return viewers.keySet();
+  }
+
   public <W extends WebObject, T> ObjectWriter<W, T> getWriter(final Class<T> mediatorType) {
     ObjectWriter<W, T> result = (ObjectWriter<W, T>) writers.get(mediatorType.getName());
     if (result == null && !writers.containsKey(mediatorType.getName())) {
@@ -158,6 +203,10 @@ public class ObjectType extends WebType implements Wrapper<ObjectType> {
 
   public void setAccessor(final Accessor accessor) {
     this.accessor = accessor;
+  }
+
+  public void setFeedPath(final String feedName) {
+    this.feedPath = feedName;
   }
 
   public void setProvider(final Provider<? extends WebObject> provider) {

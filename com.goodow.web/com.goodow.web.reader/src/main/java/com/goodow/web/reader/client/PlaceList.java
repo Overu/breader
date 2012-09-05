@@ -14,7 +14,9 @@ import com.googlecode.mgwt.ui.client.widget.CellList;
 import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedEvent;
 import com.googlecode.mgwt.ui.client.widget.celllist.CellSelectedHandler;
 
-public class PlaceList extends FlowView {
+import java.util.List;
+
+public abstract class PlaceList extends FlowView {
 
   private CellList<WebPlace> cellListWithHeader;
 
@@ -30,13 +32,23 @@ public class PlaceList extends FlowView {
   @Inject
   PlaceController placeController;
 
-  private WebPlace parentPlace;
-
   private int oldIndex;
+
+  private List<WebPlace> places;
 
   public void addRightWidget(final Widget widget) {
     container.add(widget);
   }
+
+  @Override
+  public void setPlace(final WebPlace place) {
+    super.setPlace(place);
+    if (cellListWithHeader != null) {
+      cellListWithHeader.render(places = place.getChildren());
+    }
+  }
+
+  protected abstract List<WebPlace> getPlaces();
 
   @Override
   protected void start() {
@@ -60,7 +72,7 @@ public class PlaceList extends FlowView {
         cellListWithHeader.setSelectedIndex(oldIndex, false);
         cellListWithHeader.setSelectedIndex(index, true);
         oldIndex = index;
-        WebPlace child = parentPlace.getChild(index);
+        WebPlace child = places.get(index);
         placeController.goTo(child);
       }
     });
@@ -71,13 +83,9 @@ public class PlaceList extends FlowView {
 
     main.add(container);
     // eventBus.addHandler(PlaceChangeEvent.TYPE, this);
-
-    setInput(reader.booksPlace);
-  }
-
-  private void setInput(final WebPlace place) {
-    this.parentPlace = place;
-    cellListWithHeader.render(place.getChildren());
+    if (place != null) {
+      cellListWithHeader.render(places = getPlaces());
+    }
   }
 
 }

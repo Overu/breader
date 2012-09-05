@@ -1,14 +1,11 @@
 package com.goodow.web.core.shared;
 
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "t_page")
 public class PageConfig extends UIConfig {
-
-  private String path;
 
   private PageConfig parent;
 
@@ -28,10 +25,6 @@ public class PageConfig extends UIConfig {
     return parent;
   }
 
-  public String getPath() {
-    return path;
-  }
-
   public int getStatus() {
     return status;
   }
@@ -44,6 +37,7 @@ public class PageConfig extends UIConfig {
     return title;
   }
 
+  @Override
   public String getUri() {
     if (getParent() == null) {
       return "";
@@ -51,6 +45,7 @@ public class PageConfig extends UIConfig {
     return getUriBuilder().toString();
   }
 
+  @Override
   public StringBuilder getUriBuilder() {
     if (getParent() == null) {
       return new StringBuilder();
@@ -68,10 +63,6 @@ public class PageConfig extends UIConfig {
 
   public void setParent(final PageConfig parent) {
     this.parent = parent;
-  }
-
-  public void setPath(final String path) {
-    this.path = path;
   }
 
   public void setStatus(final int status) {

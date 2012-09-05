@@ -1,6 +1,7 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.core.client.FlowView;
+import com.goodow.web.core.shared.WebPlace;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
@@ -39,10 +40,16 @@ public class BooksBrowser extends FlowView implements AcceptsOneWidget {
   }
 
   @Inject
-  private PlaceList leftPanel;
+  private FeedViewerList leftPanel;
 
   @Inject
   private SimplePanel centerPanel;
+
+  @Override
+  public void setPlace(final WebPlace place) {
+    super.setPlace(place);
+    leftPanel.setPlace(place);
+  }
 
   @Override
   public void setWidget(final IsWidget w) {

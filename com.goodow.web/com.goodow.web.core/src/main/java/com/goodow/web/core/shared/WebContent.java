@@ -36,6 +36,17 @@ public class WebContent extends WebObject {
   @Columns(columns = {@Column(name = "containerType"), @Column(name = "containerId")})
   private WebContent container;
 
+  private String path;
+
+  private transient Property contaimentProperty;
+
+  public Property getContaimentProperty() {
+    if (contaimentProperty == null) {
+      contaimentProperty = container.getObjectType().getProperty(path);
+    }
+    return contaimentProperty;
+  }
+
   public WebContent getContainer() {
     return container;
   }
@@ -48,13 +59,46 @@ public class WebContent extends WebObject {
     return owner;
   }
 
+  public String getPath() {
+    return path;
+  }
+
   @XmlTransient
   public WebContent getTenant() {
     return tenant;
   }
 
+  public String getUri() {
+    return getUriBuilder().toString();
+  }
+
+  public StringBuilder getUriBuilder() {
+    if (container == null) {
+      return new StringBuilder();
+    }
+    StringBuilder builder = container.getUriBuilder();
+    builder.append("/");
+    if (path == null) {
+      if (getContaimentProperty().isMany()) {
+        path = getObjectType().getFeedPath();
+      } else {
+        path = getObjectType().getName();
+      }
+    }
+    builder.append(path);
+    if (getContaimentProperty().isMany()) {
+      builder.append("/").append(getId());
+    }
+    return builder;
+  }
+
   public Long getVersion() {
     return version;
+  }
+
+  public void setContaimentProperty(final Property contaimentProperty) {
+    this.contaimentProperty = contaimentProperty;
+    this.path = contaimentProperty.getName();
   }
 
   public void setContainer(final WebContent container) {
@@ -69,6 +113,10 @@ public class WebContent extends WebObject {
     this.owner = owner;
   }
 
+  public void setPath(final String path) {
+    this.path = path;
+  }
+
   public void setTenant(final WebContent tenant) {
     this.tenant = tenant;
   }
@@ -76,5 +124,4 @@ public class WebContent extends WebObject {
   public void setVersion(final Long version) {
     this.version = version;
   }
-
 }

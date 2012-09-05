@@ -26,6 +26,8 @@ import javax.xml.bind.annotation.XmlType;
 @Table(name = "t_section")
 public class Section extends WebContent {
 
+  public static final String SECTIONS = "sections";
+
   private String title;
 
   private int displayOrder;

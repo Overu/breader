@@ -1,8 +1,7 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.reader.shared.ReaderPlace;
+import com.goodow.web.core.shared.WebPlaceMapper;
 
-import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -28,10 +27,7 @@ public abstract class ThumbnailView extends Composite {
   protected HTMLPanel content;
 
   @Inject
-  protected PlaceController placeController;
-
-  @Inject
-  protected ReaderPlace readerExtension;
+  protected WebPlaceMapper placeController;
 
   public ThumbnailView() {
     main = new LayoutPanel();
@@ -50,7 +46,7 @@ public abstract class ThumbnailView extends Composite {
     rightButton.addTapHandler(new TapHandler() {
       @Override
       public void onTap(final TapEvent event) {
-        placeController.goTo(readerExtension.bookstorePlace);
+        placeController.goTo(null);
       }
     });
 
