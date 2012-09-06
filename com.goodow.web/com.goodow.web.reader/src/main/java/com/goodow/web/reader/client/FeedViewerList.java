@@ -10,7 +10,7 @@ public class FeedViewerList extends PlaceList {
   @Override
   protected List<WebPlace> getPlaces() {
     List<WebPlace> result = place.getChildren();
-    for (WebPlace child : place.getViewerPlaces()) {
+    for (WebPlace child : place.getViewers()) {
       if (child.getViewType() instanceof FeedViewer) {
         result.add(child);
       }

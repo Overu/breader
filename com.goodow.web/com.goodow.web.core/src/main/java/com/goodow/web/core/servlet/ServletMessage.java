@@ -67,17 +67,21 @@ public class ServletMessage {
     return resource;
   }
 
+  public static File getFile(final Resource res) {
+    String filePath = "D:/DevData/resource/" + res.getId();
+    return new File(filePath);
+  }
+
   public static void saveResource(final Resource resource, final InputStream inputStream) {
-    String filePath = "D:/DevData/resource/" + resource.getId();
     InputStream in = null;
     OutputStream out = null;
     try {
-      File file = new File(filePath);
+      File file = getFile(resource);
       // // file.mkdirs();
       file.getParentFile().mkdirs();
       file.createNewFile();
       in = new BufferedInputStream(inputStream);
-      out = new FileOutputStream(filePath);
+      out = new FileOutputStream(file);
       byte[] buffer = new byte[1024];
       for (int bytesRead = in.read(buffer); bytesRead > 0; bytesRead = in.read(buffer)) {
         out.write(buffer, 0, bytesRead);
@@ -93,10 +97,9 @@ public class ServletMessage {
 
   public static void writeResource(final Resource resource, final OutputStream out)
       throws IOException {
-    String filePath = "D:/DevData/resource/" + resource.getId();
     InputStream in = null;
     try {
-      File file = new File(filePath);
+      File file = getFile(resource);
       in = new BufferedInputStream(new FileInputStream(file));
       byte[] buffer = new byte[1024];
       for (int bytesRead = in.read(buffer); bytesRead > 0; bytesRead = in.read(buffer)) {

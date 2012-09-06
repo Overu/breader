@@ -2,7 +2,7 @@ package com.goodow.web.core.shared;
 
 public enum FeedViewer implements ViewType {
 
-  FORM, ALL_CONTENT, MY_CONTENT, SELECTED_CONTENTE;
+  FORM, ALL_CONTENT, MY_CONTENT, SELECTED_CONTENT;
 
   @Override
   public boolean acceptsFeed() {
@@ -23,7 +23,7 @@ public enum FeedViewer implements ViewType {
         return "所有图书";
       case MY_CONTENT:
         return "我的图书";
-      case SELECTED_CONTENTE:
+      case SELECTED_CONTENT:
         return "精选图书";
       default:
         break;

@@ -24,7 +24,10 @@ import com.googlecode.mgwt.ui.client.MGWTStyle;
 import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class WebPlace extends Place {
@@ -124,6 +127,8 @@ public class WebPlace extends Place {
   @Inject
   private UIManager ui;
 
+  private Map<ViewType, WebPlace> viewers;
+
   public void addChild(final WebPlace place) {
     children.add(place);
     place.parent = this;
@@ -142,7 +147,7 @@ public class WebPlace extends Place {
     }
 
     if (result != null && viewType != null) {
-      for (WebPlace child : result.getViewerPlaces()) {
+      for (WebPlace child : result.getViewers()) {
         if (viewType.equals(child.getViewType().getName())) {
           result = child;
           break;
@@ -243,23 +248,29 @@ public class WebPlace extends Place {
       if (path != null) {
         builder.append("/").append(path);
       } else if (viewType != null) {
-        builder.append("?view=").append(viewType.getName());
+        builder.append("?").append(viewType.getName());
       }
       return builder;
     }
   }
 
-  public List<WebPlace> getViewerPlaces() {
-    List<WebPlace> result = new ArrayList<WebPlace>();
-    for (ViewType viewType : getObjectType().getViewers()) {
-      WebPlace place = placeProvider.get();
-      place.setViewType(viewType);
-      place.setTitle(viewType.getTitle());
-      place.parent = this;
-      result.add(place);
-    }
-    return result;
+  public WebPlace getViewerPlace(final ViewType viewType) {
+    getViewers();
+    return viewers.get(viewType);
+  }
 
+  public Collection<WebPlace> getViewers() {
+    if (viewers == null) {
+      viewers = new HashMap<ViewType, WebPlace>();
+      for (ViewType viewType : getObjectType().getViewers()) {
+        WebPlace place = placeProvider.get();
+        place.setViewType(viewType);
+        place.setTitle(viewType.getTitle());
+        place.parent = this;
+        viewers.put(viewType, place);
+      }
+    }
+    return viewers.values();
   }
 
   public ViewType getViewType() {
@@ -286,7 +297,7 @@ public class WebPlace extends Place {
   }
 
   public boolean isFeed() {
-    return parent != null && getProperty().isMany();
+    return parent != null && !parent.isFeed() && getProperty().isMany();
   }
 
   public void render(final AcceptsOneWidget panel) {

@@ -46,7 +46,7 @@ public final class ReaderClientModule extends AbstractGinModule {
       ReaderPackage.Book.as().addViewer(ContainerViewer.FEED, booksBrowser);
       ReaderPackage.Book.as().addViewer(FeedViewer.FORM, bookForm);
       ReaderPackage.Book.as().addViewer(FeedViewer.MY_CONTENT, mybooksList);
-      ReaderPackage.Book.as().addViewer(FeedViewer.SELECTED_CONTENTE, selectedBooks);
+      ReaderPackage.Book.as().addViewer(FeedViewer.SELECTED_CONTENT, selectedBooks);
 
       homePlace.setWidget(readerApp);
 

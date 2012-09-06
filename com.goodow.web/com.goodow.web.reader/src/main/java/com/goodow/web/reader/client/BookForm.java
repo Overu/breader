@@ -8,6 +8,7 @@ import com.goodow.web.core.client.RichTextField;
 import com.goodow.web.core.client.TextField;
 import com.goodow.web.core.shared.AsyncCategoryService;
 import com.goodow.web.core.shared.Category;
+import com.goodow.web.core.shared.EntryViewer;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Resource;
 import com.goodow.web.core.shared.ResourceUploadedEvent;
@@ -162,7 +163,7 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
       @Override
       public void onSuccess(final Book result) {
         logger.info("book created: " + result.getId());
-        placeManager.gotoContent(result);
+        placeManager.goTo(result, EntryViewer.FORM);
       }
     });
   }

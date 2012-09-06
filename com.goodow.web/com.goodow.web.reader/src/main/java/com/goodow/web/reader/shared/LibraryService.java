@@ -4,6 +4,8 @@ import com.goodow.web.core.shared.WebContentService;
 
 public interface LibraryService extends WebContentService<Library> {
 
+  Library getMyLibrary();
+
   Library save(Library library, final boolean flag, final int size);
 
 }

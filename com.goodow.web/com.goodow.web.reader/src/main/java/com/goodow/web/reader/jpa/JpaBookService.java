@@ -3,17 +3,19 @@
  */
 package com.goodow.web.reader.jpa;
 
-import com.goodow.web.core.jpa.JpaResourceService;
 import com.goodow.web.core.jpa.JpaEntityService;
+import com.goodow.web.core.jpa.JpaResourceService;
 import com.goodow.web.core.servlet.ServletMessage;
 import com.goodow.web.core.shared.Resource;
 import com.goodow.web.core.shared.Section;
 import com.goodow.web.reader.shared.Book;
 import com.goodow.web.reader.shared.BookService;
+import com.goodow.web.reader.shared.Library;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Date;
@@ -36,14 +38,17 @@ public class JpaBookService extends JpaEntityService<Book> implements BookServic
   @Inject
   JpaSectionService sectionService;
 
+  @Inject
+  JpaLibraryService libraryService;
+
   @Override
   @Transactional
   public Book extract(final Resource resource) {
     Book book = new Book();
     book.setTitle(resource.getFileName());
-    String zipName = resource.getPath();
     try {
-      FileInputStream fis = new FileInputStream(zipName);
+      File file = ServletMessage.getFile(resource);
+      FileInputStream fis = new FileInputStream(file);
       nl.siegmann.epublib.domain.Book b = new EpubReader().readEpub(fis);
       book.setTitle(b.getTitle());
       nl.siegmann.epublib.domain.Resource cover = b.getCoverImage();
@@ -108,6 +113,11 @@ public class JpaBookService extends JpaEntityService<Book> implements BookServic
     }
     if (entity.getDateModified() == null) {
       entity.setDateModified(currentTime);
+    }
+    if (entity.getContainer() == null) {
+      Library library = libraryService.getMyLibrary();
+      entity.setContainer(library);
+      entity.setPath("books");
     }
     return super.save(entity);
   }

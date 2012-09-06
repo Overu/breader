@@ -37,12 +37,18 @@ public class WebPlaceMapper implements PlaceHistoryMapper {
   }
 
   public void gotoContent(final WebContent content) {
-    gotoContent(content, EntryViewer.FORM);
+    goTo(content, EntryViewer.FORM);
   }
 
-  public void gotoContent(final WebContent content, final ViewType viewer) {
+  public void goTo(final WebContent content, final ViewType viewType) {
     String uri = content.getUri();
-    homePlace.findChild(uri);
+    WebPlace place = homePlace.findChild(uri);
+    if (place != null) {
+      place = place.getViewerPlace(viewType);
+    }
+    if (place != null) {
+      placeController.goTo(place);
+    }
   }
 
   public void gotoFeed(final WebContent content, final String feed) {

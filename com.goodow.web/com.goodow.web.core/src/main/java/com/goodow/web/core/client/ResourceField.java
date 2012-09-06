@@ -55,8 +55,10 @@ public class ResourceField extends FormField<Resource> {
   public void setValue(final Resource value) {
     this.resource = value;
     if (resource != null && registry.show(editorPanel, resource)) {
+      main.remove(formPanel);
       main.add(editorPanel);
     } else {
+      main.remove(editorPanel);
       main.add(formPanel);
     }
   }
@@ -94,6 +96,6 @@ public class ResourceField extends FormField<Resource> {
         fireEvent(new ResourceUploadedEvent(resource));
       }
     });
-
+    main.add(formPanel);
   }
 }
