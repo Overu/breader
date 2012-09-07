@@ -37,7 +37,7 @@ public class WebPlaceMapper implements PlaceHistoryMapper {
   }
 
   public void gotoContent(final WebContent content) {
-    goTo(content, EntryViewer.FORM);
+    goTo(content, EntryViewer.EDIT);
   }
 
   public void goTo(final WebContent content, final ViewType viewType) {

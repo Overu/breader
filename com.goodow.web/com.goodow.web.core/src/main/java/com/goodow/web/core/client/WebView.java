@@ -37,6 +37,7 @@ public abstract class WebView<T extends Widget> extends Composite {
 
   public void setPlace(final WebPlace place) {
     this.place = place;
+    refresh();
   }
 
   protected abstract T createRoot();

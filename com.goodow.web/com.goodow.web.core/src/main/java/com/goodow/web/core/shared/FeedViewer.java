@@ -2,7 +2,7 @@ package com.goodow.web.core.shared;
 
 public enum FeedViewer implements ViewType {
 
-  FORM, ALL_CONTENT, MY_CONTENT, SELECTED_CONTENT;
+  NEW, ALL_CONTENT, MY_CONTENT, SELECTED_CONTENT;
 
   @Override
   public boolean acceptsFeed() {
@@ -17,7 +17,7 @@ public enum FeedViewer implements ViewType {
   @Override
   public String getTitle() {
     switch (this) {
-      case FORM:
+      case NEW:
         return "制作新书";
       case ALL_CONTENT:
         return "所有图书";
