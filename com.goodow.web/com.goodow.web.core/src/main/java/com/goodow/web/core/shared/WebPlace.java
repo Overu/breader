@@ -68,8 +68,8 @@ public class WebPlace extends Place {
         @Override
         public void onAnimationEnd() {
           if (widget instanceof WebView) {
-            WebView view = (WebView) widget;
-            view.refresh();
+            // WebView view = (WebView) widget;
+            // view.refresh();
           }
         }
       });
@@ -233,6 +233,9 @@ public class WebPlace extends Place {
   }
 
   public String getTitle() {
+    if (title == null) {
+      return getPath();
+    }
     return title;
   }
 

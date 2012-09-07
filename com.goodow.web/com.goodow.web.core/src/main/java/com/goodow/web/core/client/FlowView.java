@@ -10,10 +10,6 @@ public abstract class FlowView extends WebView<FlowPanel> {
   }
 
   @Override
-  public void refresh() {
-  }
-
-  @Override
   protected FlowPanel createRoot() {
     return new FlowPanel();
   }
