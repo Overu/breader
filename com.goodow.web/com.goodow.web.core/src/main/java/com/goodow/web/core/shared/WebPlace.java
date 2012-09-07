@@ -1,7 +1,6 @@
 package com.goodow.web.core.shared;
 
 import com.goodow.web.core.client.ScrollView;
-import com.goodow.web.core.client.UIManager;
 import com.goodow.web.core.client.WebView;
 
 import com.google.gwt.core.client.GWT;
@@ -114,8 +113,6 @@ public class WebPlace extends Place {
 
   private WebPlace startedChild;
 
-  private boolean feed;
-
   private WebContent content;
 
   private ObjectType objectType;
@@ -123,9 +120,6 @@ public class WebPlace extends Place {
   private ViewType viewType;
 
   private Property property;
-
-  @Inject
-  private UIManager ui;
 
   private Map<ViewType, WebPlace> viewers;
 
@@ -321,10 +315,6 @@ public class WebPlace extends Place {
 
   public void setContent(final WebContent content) {
     this.content = content;
-  }
-
-  public void setFeed(final boolean feed) {
-    this.feed = feed;
   }
 
   public void setObjectType(final ObjectType objectType) {
