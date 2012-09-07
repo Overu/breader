@@ -8,7 +8,6 @@ import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.google.gwt.user.client.Event;
 
 public class DroppableHandler {
 
@@ -42,7 +41,7 @@ public class DroppableHandler {
 
   }
 
-  public void activate(final Element droppable, final Event e) {
+  public void activate(final Element droppable) {
     if (options.getActiveClass() != null) {
       droppable.addClassName(options.getActiveClass());
     }
@@ -76,7 +75,7 @@ public class DroppableHandler {
     }
   }
 
-  public void drag(final Element droppable, final Element draggable, final Event e) {
+  public void drag(final Element droppable, final Element draggable) {
     if (options.isDisabled() || greedyChild || !visible) {
       return;
     }
@@ -98,16 +97,15 @@ public class DroppableHandler {
     if (c == PositionStatus.IS_OUT) {
       isOut = true;
       isOver = false;
-      out(droppable, draggable, e);
+      out(droppable, draggable);
     } else {
       isOver = true;
       isOut = false;
-      over(droppable, draggable, e);
+      over(droppable, draggable);
     }
   }
 
-  public boolean drop(final Element droppable, final Element draggable, final Event e,
-      final boolean alreadyDrop) {
+  public boolean drop(final Element droppable, final Element draggable) {
     if (options == null) {
       return false;
     }
@@ -152,7 +150,7 @@ public class DroppableHandler {
     return visible;
   }
 
-  public void out(final Element droppable, final Element currentDraggable, final Event e) {
+  public void out(final Element droppable, final Element currentDraggable) {
     if (currentDraggable == null || currentDraggable == droppable) {
       return;
     }
@@ -173,7 +171,7 @@ public class DroppableHandler {
     }
   }
 
-  public void over(final Element droppable, final Element currentDraggable, final Event e) {
+  public void over(final Element droppable, final Element currentDraggable) {
     if (currentDraggable == null || currentDraggable == droppable) {
       return;
     }

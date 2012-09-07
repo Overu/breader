@@ -3,6 +3,11 @@ package com.goodow.web.reader.client.editgrid;
 import com.goodow.web.core.client.FlowView;
 import com.goodow.web.reader.client.PopupContainer;
 import com.goodow.web.reader.client.PopupContainer.Loction;
+import com.goodow.web.reader.client.droppable.AbstractDraggableEvent;
+import com.goodow.web.reader.client.droppable.CellListDrag;
+import com.goodow.web.reader.client.droppable.DroppableOptions;
+import com.goodow.web.reader.client.droppable.Events;
+import com.goodow.web.reader.client.droppable.SimpleQuery;
 import com.goodow.web.reader.client.editgrid.EditGridCell.Layout;
 
 import com.google.gwt.core.client.GWT;
@@ -14,6 +19,9 @@ import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.SelectionHandler;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
@@ -46,6 +54,9 @@ public class EditGridPanel extends FlowView {
 
   @Inject
   PresplitPanel presplitPanel;
+
+  @Inject
+  private CellListDrag cellListDrag;
 
   private EditGridCarousel carousel;
 
@@ -130,19 +141,46 @@ public class EditGridPanel extends FlowView {
     }, ClickEvent.getType());
 
     okstackPage = new OkstackButton();
-    okstackPage.addDomHandler(new ClickHandler() {
+    // okstackPage.addDomHandler(new ClickHandler() {
+    //
+    // @Override
+    // public void onClick(final ClickEvent event) {
+    // }
+    // }, ClickEvent.getType());
 
+    Element createDiv = DOM.createDiv();
+    createDiv.getStyle().setWidth(50, Unit.PX);
+    createDiv.getStyle().setHeight(50, Unit.PX);
+    HTMLPanel h = new HTMLPanel("");
+    h.setWidth("50px");
+    h.setHeight("50px");
+    h.getElement().appendChild(createDiv);
+
+    SimpleQuery.q(createDiv).as(Events.Events).bind(Event.ONCLICK, (Object) null, new Function() {
       @Override
-      public void onClick(final ClickEvent event) {
+      public boolean f(final Event event) {
+        Window.alert("asdf");
+        return false;
       }
-    }, ClickEvent.getType());
+    });
 
     buttons.add(addPage);
     buttons.add(deletePage);
     buttons.add(savePage);
     buttons.add(okstackPage);
+    buttons.add(h);
 
+    cellListDrag.getElement().getStyle().setMarginTop(50, Unit.PX);
+    cellListDrag.setFunction(new Function() {
+      @Override
+      public boolean f(final AbstractDraggableEvent event) {
+        cellListDrag.setScope(DroppableOptions.DEFAULT_SCOPE
+            + carousel.getCurrentWidget().getElement().hashCode());
+        return true;
+      }
+    });
     main.add(carousel);
     main.add(buttons);
+    main.add(cellListDrag);
   }
 }

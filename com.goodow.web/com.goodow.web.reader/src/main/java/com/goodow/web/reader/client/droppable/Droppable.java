@@ -27,6 +27,11 @@ public class Droppable extends SimpleQuery {
     super(sq);
   }
 
+  public void changeScope(final String oldScope, final String newScope) {
+    DragAndDropManager ddm = DragAndDropManager.getInstance();
+    ddm.changeScope(oldScope, newScope);
+  }
+
   public Droppable destroy() {
     DragAndDropManager ddm = DragAndDropManager.getInstance();
     for (Element e : elements()) {
@@ -35,6 +40,8 @@ public class Droppable extends SimpleQuery {
       e.removeClassName(CssClassNames.GWTQUERY_DROPPABLE);
       e.removeClassName(CssClassNames.GWTQUERY_DROPPABLE_DISABLED);
       SimpleQuery.q(e).removeData(DROPPABLE_HANDLER_KEY);
+    }
+    if (ddm.scopeIsClear()) {
       ddm.setDraggable();
     }
     return this;

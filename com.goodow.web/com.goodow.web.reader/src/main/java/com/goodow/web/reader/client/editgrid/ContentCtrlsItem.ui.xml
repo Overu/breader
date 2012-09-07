@@ -1,0 +1,114 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+  <ui:style>
+    .root {
+      position: absolute;
+      top: 0;
+      right: -1px;
+      border: 1px solid #DDD;
+      background: white;
+      width: 75px;
+      z-index: 100;
+      display: none;
+    }
+    
+    .root>div {
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    
+    .root>div:HOVER {
+      background: whiteSmoke;
+    }
+    
+    .root>div:nth-child\(2\):HOVER>div {
+      display: block;
+    }
+    
+    .root>div:nth-child\(3\):HOVER>div {
+      display: block;
+    }
+    
+    .templates,.splitctrls {
+      top: -1px;
+      right: 75px;
+      z-index: 200;
+      position: absolute;
+      display: none;
+      border: 1px solid #DDD;
+    }
+    
+    .templates>div:HOVER,.splitctrls>div:HOVER {
+      background-color: whiteSmoke !important;
+    }
+    
+    .templates>div,.splitctrls>div {
+      background-color: white !important;
+    }
+    
+    @sprite 
+    .templates>div:nth-child\(1\) {
+      gwt-image: "floatleft";
+    }
+    
+    @sprite 
+    .templates>div:nth-child\(2\) {
+      gwt-image: "floatright";
+    }
+    
+    @sprite 
+    .templates>div:nth-child\(3\) {
+      gwt-image: "dockingtop";
+    }
+    
+    @sprite 
+    .templates>div:nth-child\(4\) {
+      gwt-image: "dockingleft";
+    }
+    
+    @sprite 
+    .templates>div:nth-child\(5\) {
+      gwt-image: "none";
+    }
+    
+    @sprite 
+    .splitctrls>div:nth-child\(1\) {
+      gwt-image: "hsplit";
+    }
+    
+    @sprite 
+    .splitctrls>div:nth-child\(2\) {
+      gwt-image: "vsplit";
+    }
+  </ui:style>
+  <ui:image field="hsplit" />
+  <ui:image field="vsplit" />
+  <ui:image field="floatleft" />
+  <ui:image field="floatright" />
+  <ui:image field="dockingtop" />
+  <ui:image field="dockingleft" />
+  <ui:image field="none" />
+
+  <g:HTMLPanel addStyleNames="{style.root}">
+    <div ui:field="clearElm">清除内容</div>
+    <div>
+      更换排版
+      <div class="{style.templates}">
+        <div ui:field="floatLeftElm"></div>
+        <div ui:field="floatRightElm"></div>
+        <div ui:field="dockingTopElm"></div>
+        <div ui:field="dockingLeftElm"></div>
+        <div ui:field="noneElm"></div>
+      </div>
+    </div>
+    <div>
+      切分板块
+      <div class="{style.splitctrls}">
+        <div ui:field="hsplitElm"></div>
+        <div ui:field="vsplitElm"></div>
+      </div>
+    </div>
+    <div ui:field="editBookElm">编辑内容</div>
+  </g:HTMLPanel>
+</ui:UiBinder>
