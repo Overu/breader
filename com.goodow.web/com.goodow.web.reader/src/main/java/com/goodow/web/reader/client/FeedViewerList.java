@@ -11,11 +11,10 @@ public class FeedViewerList extends PlaceList {
   protected List<WebPlace> getPlaces() {
     List<WebPlace> result = place.getChildren();
     for (WebPlace child : place.getViewers()) {
-      if (child.getViewType() instanceof FeedViewer) {
+      if (child.getViewType() instanceof FeedViewer && !result.contains(child)) {
         result.add(child);
       }
     }
     return result;
   }
-
 }
