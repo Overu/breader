@@ -44,12 +44,7 @@ public abstract class PlaceList extends FlowView {
   public void setPlace(final WebPlace place) {
     super.setPlace(place);
     if (cellListWithHeader != null) {
-      List<WebPlace> newPlaces = getPlaces();
-      if (places.containsAll(newPlaces)) {
-        return;
-      }
-      places = newPlaces;
-      cellListWithHeader.render(places);
+      cellListWithHeader.render(places = getPlaces());
     }
   }
 
