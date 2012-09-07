@@ -176,7 +176,7 @@ public class Draggable extends SimpleQuery {
     } catch (UmbrellaException e) {
       for (Throwable t : e.getCauses()) {
         if (t instanceof RuntimeException) {
-          mouseStop(draggable, event);
+          mouseStop(draggable);
           return false;
         }
       }
@@ -194,12 +194,12 @@ public class Draggable extends SimpleQuery {
     return true;
   }
 
-  protected boolean mouseStop(final Element draggable, final Event event) {
+  protected boolean mouseStop(final Element draggable) {
 
     final DraggableHandler handler = getHandler(draggable);
 
     if (getDragAndDropManager().isHandleDroppable()) {
-      getDragAndDropManager().drop(draggable, event);
+      getDragAndDropManager().drop(draggable);
     }
 
     if (draggable == null) {
@@ -217,7 +217,7 @@ public class Draggable extends SimpleQuery {
     if (mouseStarted) {
       mouseStarted = false;
       preventClickEvent = (event.getCurrentEventTarget() == mouseDownEvent.getCurrentEventTarget());
-      mouseStop(element, event);
+      mouseStop(element);
     }
     return false;
   }
@@ -290,7 +290,7 @@ public class Draggable extends SimpleQuery {
     dragHandler.moveHelper(isStart);
 
     if (getDragAndDropManager().isHandleDroppable()) {
-      getDragAndDropManager().drag(draggable, event);
+      getDragAndDropManager().drag(draggable);
     }
     return false;
   }

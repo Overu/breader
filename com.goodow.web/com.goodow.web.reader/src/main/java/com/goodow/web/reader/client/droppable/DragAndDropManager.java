@@ -41,7 +41,15 @@ public class DragAndDropManager {
     droppables.add(droppable);
   }
 
-  public void drag(final Element draggable, final Event e) {
+  public void changeScope(final String oldScope, final String newScope) {
+    if (droppablesByScope.containsKey(oldScope)) {
+      Collection<Element> collection = droppablesByScope.get(oldScope);
+      droppablesByScope.remove(oldScope);
+      droppablesByScope.put(newScope, collection);
+    }
+  }
+
+  public void drag(final Element draggable) {
     DraggableHandler draggableHandler = DraggableHandler.getInstance(draggable);
     Collection<Element> droppables = getDroppablesByScope(draggableHandler.getOptions().getScope());
     if (droppables == null || droppables.size() == 0) {
@@ -50,11 +58,11 @@ public class DragAndDropManager {
 
     for (Element droppable : droppables) {
       DroppableHandler dropHandler = DroppableHandler.getInstance(droppable);
-      dropHandler.drag(droppable, draggable, e);
+      dropHandler.drag(droppable, draggable);
     }
   }
 
-  public boolean drop(final Element draggable, final Event e) {
+  public boolean drop(final Element draggable) {
     boolean dropped = false;
     DraggableHandler draggableHandler = DraggableHandler.getInstance(draggable);
     Collection<Element> droppables = getDroppablesByScope(draggableHandler.getOptions().getScope());
@@ -64,7 +72,7 @@ public class DragAndDropManager {
 
     for (Element droppable : droppables) {
       DroppableHandler droppableHandler = DroppableHandler.getInstance(droppable);
-      dropped |= droppableHandler.drop(droppable, draggable, e, dropped);
+      dropped |= droppableHandler.drop(droppable, draggable);
     }
 
     return dropped;
@@ -114,7 +122,7 @@ public class DragAndDropManager {
         droppableHandler.setDroppableOffset(droppable);
         droppableHandler.setDroppableDimension(droppable);
         if (e == null || e.getTypeInt() == ONMOUSEDOWN) {
-          droppableHandler.activate(droppable, e);
+          droppableHandler.activate(droppable);
         }
       }
     }
@@ -122,6 +130,10 @@ public class DragAndDropManager {
 
   public boolean isHandleDroppable() {
     return droppableOnly;
+  }
+
+  public boolean scopeIsClear() {
+    return droppablesByScope.isEmpty();
   }
 
   public void setCurrentDraggable(final Element currentDraggable) {

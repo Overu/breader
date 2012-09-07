@@ -23,6 +23,10 @@ public class Events extends SimpleQuery {
     return hasProperty(n, "alert") || n.getNodeType() != 3 && n.getNodeType() != 8;
   }
 
+  private int[] eventbits;
+  private int[] eventbits2;
+  private int[] eventbits3;
+
   protected Events(final SimpleQuery sq) {
     super(sq);
   }

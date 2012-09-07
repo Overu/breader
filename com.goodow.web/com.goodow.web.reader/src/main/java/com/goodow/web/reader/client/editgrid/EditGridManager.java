@@ -1,9 +1,12 @@
 package com.goodow.web.reader.client.editgrid;
 
+import com.goodow.web.reader.client.droppable.DropEvent;
+import com.goodow.web.reader.client.droppable.DroppableOptions;
 import com.goodow.web.reader.client.editgrid.EditGridCell.Layout;
 import com.goodow.web.reader.client.editgrid.EditGridCell.MouseHandle;
 import com.goodow.web.reader.client.editgrid.EditGridCell.SeparatorPanel;
 import com.goodow.web.reader.client.editgrid.EditGridCell.SplitCtrlsItem;
+import com.goodow.web.reader.shared.Book;
 
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.DOM;
@@ -57,15 +60,27 @@ public class EditGridManager {
     return initializeEditGirdCell(parent, new Layout());
   }
 
+  public EditGridCell initializeEditGirdCell(final EditGridCell parent,
+      final DroppableOptions options) {
+    return initializeEditGirdCell(parent, new Layout(), options);
+  }
+
   public EditGridCell initializeEditGirdCell(final EditGridCell parent, final Layout layout) {
-    EditGridCell cell = new EditGridCell(layout);
+    return initializeEditGirdCell(parent, layout, new DroppableOptions());
+  }
+
+  public EditGridCell initializeEditGirdCell(final EditGridCell parent, final Layout layout,
+      final DroppableOptions options) {
+    EditGridCell cell = new EditGridCell(layout, options);
 
     if (parent != null) {
       cell.setTopGridCell(parent.getTopGridCell());
       cell.setParentGridCell(parent);
       parent.setHover(false);
     }
+    initializeCellDropHandle(cell);
     initializeSplitCtrlsItemHandle(cell);
+    initializeCellContentHandle(cell);
     return cell;
   }
 
@@ -78,6 +93,7 @@ public class EditGridManager {
     if (cell.getTopGridCell() == null && cell.getParentGridCell() == null) {
       cell.setTopGridCell(cell);
       cell.getElement().setAttribute(EditGridCell.TOP_CELL, EditGridCell.TOP_CELL);
+      cell.setScope(cell.getDroppableOptions().getScope() + cell.getElement().hashCode());
       cell.setParentGridCell(cell);
       cell.getLayout().setHeight(1.0);
       cell.getLayout().setWeith(1.0);
@@ -137,7 +153,6 @@ public class EditGridManager {
       DOM.setCapture(target);
       separatorDraggingX = getX(target, event);
       separatorDraggingY = getY(target, event);
-
     }
   }
 
@@ -188,7 +203,8 @@ public class EditGridManager {
   private void generateChildCell(final EditGridCell parentCell) {
     List<EditGridCell> childsGridCell = parentCell.getChildsGridCell();
     for (int i = 0; i < 2; i++) {
-      EditGridCell childCell = initializeEditGirdCell(parentCell);
+      EditGridCell childCell =
+          initializeEditGirdCell(parentCell, parentCell.getTopGridCell().getDroppableOptions());
       childsGridCell.add(childCell);
       parentCell.addChildCell(childCell);
     }
@@ -202,6 +218,31 @@ public class EditGridManager {
   private int getY(final Element target, final Event event) {
     return event.getClientY() - target.getAbsoluteTop() + target.getScrollTop()
         + target.getOwnerDocument().getScrollTop();
+  }
+
+  private void initializeCellContentHandle(final EditGridCell cell) {
+    ContentCtrlsItem contentCtrlsItem = cell.getContentCtrlsItem();
+    contentCtrlsItem.addClearElmHandle(new Function() {
+
+      @Override
+      public boolean f(final Event event) {
+        cell.clearEditGridContent();
+        return true;
+      }
+    });
+
+  }
+
+  private void initializeCellDropHandle(final EditGridCell cell) {
+    cell.addDropHandle(new DropEvent.DropEventHandler() {
+
+      @Override
+      public void onDrop(final DropEvent event) {
+        Book book = (Book) event.getDraggableData();
+        cell.addAndInsteadEditGridContent(book.getTitle(), book.getDescription(), book
+            .getDescription());
+      }
+    }, DropEvent.TYPE);
   }
 
   private void initializeSeparatorPanelMouseHandle(final EditGridCell cell) {

@@ -21,7 +21,7 @@ public class DroppableOptions {
     }
   };
 
-  private String scope;
+  private String scope = DEFAULT_SCOPE;
   private AcceptFunction accept = ACCEPT_ALL;
   private boolean disabled;
   private String activeClass = null;

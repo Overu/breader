@@ -1,8 +1,15 @@
 package com.goodow.web.reader.client.editgrid;
 
 import com.goodow.web.core.client.FlowView;
+import com.goodow.web.reader.client.droppable.Droppable;
+import com.goodow.web.reader.client.droppable.DroppableOptions;
+import com.goodow.web.reader.client.droppable.SimpleQuery;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.EventHandler;
+import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -13,6 +20,7 @@ import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.web.bindery.event.shared.HandlerRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,21 +28,6 @@ import java.util.List;
 public class EditGridCell extends Composite {
 
   interface Binder extends UiBinder<Widget, EditGridCell> {
-  }
-
-  class ContentCtrlsItem extends FlowView {
-
-    private EditGridCell cell;
-
-    public ContentCtrlsItem(final EditGridCell cell) {
-      this.cell = cell;
-    }
-
-    @Override
-    protected void start() {
-
-    }
-
   }
 
   interface EditGridCellFunction {
@@ -249,6 +242,7 @@ public class EditGridCell extends Composite {
 
   }
 
+  private final static String CELLDROPWIDGET = "__droppableWidget";
   private static Binder binder = GWT.create(Binder.class);
 
   public static final double SEPARATOR_SIZE = 4.0;
@@ -270,23 +264,49 @@ public class EditGridCell extends Composite {
   private ContentCtrlsItem contentCtrlsItem;
   private SplitCtrlsItem splitCtrlsItem;
   private SeparatorPanel separatorPanel;
+  private EditGridContent editGridContent;
 
   private Layout layout;
 
-  private boolean isContent = false;
+  private DroppableOptions droppableOptions;
+  private EventBus dropHandlerManager;
 
   public EditGridCell() {
     this(new Layout());
   }
 
   public EditGridCell(final Layout layout) {
+    this(layout, new DroppableOptions());
+  }
+
+  public EditGridCell(final Layout layout, final DroppableOptions droppableOptions) {
     initWidget(binder.createAndBindUi(this));
-    contentCtrlsItem = new ContentCtrlsItem(this);
+    contentCtrlsItem = new ContentCtrlsItem();
     splitCtrlsItem = new SplitCtrlsItem();
     childsGridCell = new ArrayList<EditGridCell>();
-    fullOfContent();
+    fullOfContent(false);
     setHover(true);
     setLayout(layout);
+    setDroppableOptions(droppableOptions);
+    bindDropHandle();
+  }
+
+  public void addAndInsteadEditGridContent(final EditGridContent editGridContent) {
+    addAndInsteadEditGridContent(editGridContent.getCaption(), editGridContent.getDes(),
+        editGridContent.getSnippet());
+  }
+
+  public void addAndInsteadEditGridContent(final String caption, final String des,
+      final String snippet) {
+    EditGridContent content = getEditGridContent();
+    content.setCaption(caption);
+    content.setDes(des);
+    content.setSnippet(snippet);
+    if (cellMain.getWidgetIndex(editGridContent) != -1) {
+      return;
+    }
+    fullOfContent(true);
+    cellMain.add(editGridContent);
   }
 
   public void addChildCell(final EditGridCell childCell) {
@@ -294,8 +314,32 @@ public class EditGridCell extends Composite {
     if (widgetCount == 2) {
       setSeparatorPanel(new SeparatorPanel(layout.horizontal == 1 ? true : false));
       cellMain.add(getSeparatorPanel());
+      destory();
     }
     cellMain.add(childCell);
+  }
+
+  public <H extends EventHandler> HandlerRegistration addDropHandle(final H handler,
+      final Type<H> type) {
+    return ensureDropHandlers().addHandler(type, handler);
+  }
+
+  public void bindDropHandle() {
+    SimpleQuery.q(getElement()).as(Droppable.Droppable).droppable(getDroppableOptions(),
+        ensureDropHandlers()).data(CELLDROPWIDGET, this);
+  }
+
+  public void clearEditGridContent() {
+    if (editGridContent == null || cellMain.getWidgetIndex(editGridContent) == -1) {
+      return;
+    }
+    cellMain.remove(editGridContent);
+    fullOfContent(false);
+    editGridContent = null;
+  }
+
+  public void destory() {
+    SimpleQuery.q(getElement()).as(Droppable.Droppable).destroy().removeData(CELLDROPWIDGET);
   }
 
   public List<EditGridCell> getChildsGridCell() {
@@ -304,6 +348,17 @@ public class EditGridCell extends Composite {
 
   public ContentCtrlsItem getContentCtrlsItem() {
     return contentCtrlsItem;
+  }
+
+  public DroppableOptions getDroppableOptions() {
+    return droppableOptions;
+  }
+
+  public EditGridContent getEditGridContent() {
+    if (editGridContent == null) {
+      editGridContent = new EditGridContent();
+    }
+    return editGridContent;
   }
 
   public Layout getLayout() {
@@ -327,13 +382,19 @@ public class EditGridCell extends Composite {
   }
 
   public boolean remove(final EditGridCell childCell) {
+    childCell.destory();
     return cellMain.remove(childCell);
   }
 
   public boolean removeSeparatorPanel() {
     boolean remove = cellMain.remove(getSeparatorPanel());
     setSeparatorPanel(null);
+    bindDropHandle();
     return remove;
+  }
+
+  public void setDroppableOptions(final DroppableOptions droppableOptions) {
+    this.droppableOptions = droppableOptions;
   }
 
   public void setHover(final boolean isHover) {
@@ -352,23 +413,33 @@ public class EditGridCell extends Composite {
     this.parentGridCell = parentGridCell;
   }
 
+  public void setScope(final String scope) {
+    SimpleQuery.q(getElement()).as(Droppable.Droppable).changeScope(droppableOptions.getScope(),
+        scope);
+    droppableOptions.setScope(scope);
+  }
+
   public void setTopGridCell(final EditGridCell topGridCell) {
     this.topGridCell = topGridCell;
   }
 
-  private void fullOfContent() {
+  protected EventBus ensureDropHandlers() {
+    return dropHandlerManager == null ? dropHandlerManager = new SimpleEventBus()
+        : dropHandlerManager;
+  }
+
+  private void fullOfContent(final boolean isContent) {
     if (cellMain.getWidgetCount() == 0 && !isContent) {
       cellMain.add(splitCtrlsItem);
+      // cellMain.add(contentCtrlsItem);
       return;
     }
 
     cellMain.remove(0);
     if (isContent) {
       cellMain.insert(contentCtrlsItem, 0);
-      isContent = true;
     } else {
       cellMain.insert(splitCtrlsItem, 0);
-      isContent = false;
     }
   }
 

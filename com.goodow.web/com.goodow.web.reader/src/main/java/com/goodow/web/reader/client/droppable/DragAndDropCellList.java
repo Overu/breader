@@ -65,6 +65,10 @@ public class DragAndDropCellList<T> extends CellList<T> {
     this.draggableOptions = draggableOptions;
   }
 
+  public void setScope(final String scope) {
+    draggableOptions.setScope(scope);
+  }
+
   protected void addDragAndDropBehaviour(final List<T> values, final int start) {
     int end = start + values.size();
 
