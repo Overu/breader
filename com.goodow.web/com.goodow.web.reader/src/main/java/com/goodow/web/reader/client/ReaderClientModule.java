@@ -22,8 +22,6 @@ import com.google.inject.Provider;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
-import com.googlecode.mgwt.mvp.client.Animation;
-
 import java.util.logging.Logger;
 
 public final class ReaderClientModule extends AbstractGinModule {
@@ -56,12 +54,10 @@ public final class ReaderClientModule extends AbstractGinModule {
       booksPlace.addChild(cellListDragPlace);
 
       editGridPlace.setPath("editgrid");
-      editGridPlace.setAnimation(Animation.SLIDE);
       editGridPlace.setTitle("制作杂志");
       editGridPlace.setWidget(editGridPanel);
 
       cellListDragPlace.setPath("celllistdrag");
-      cellListDragPlace.setAnimation(Animation.SLIDE);
       cellListDragPlace.setTitle("拖动实验");
       cellListDragPlace.setWidget(cellListDrag);
       homePlace.setObjectType(WebPlatform.getInstance().getObjectType(Library.class.getName()));

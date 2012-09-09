@@ -14,7 +14,4 @@ public abstract class FlowView extends WebView<FlowPanel> {
     return new FlowPanel();
   }
 
-  @Override
-  protected abstract void start();
-
 }

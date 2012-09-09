@@ -7,14 +7,13 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.ImageResource;
-import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 
 import com.googlecode.mgwt.ui.client.MGWTStyle;
 
-public class BooksBrowser extends FlowView implements AcceptsOneWidget {
+public class BooksBrowser extends FlowView {
 
   public interface Style extends CssResource {
 
@@ -46,14 +45,14 @@ public class BooksBrowser extends FlowView implements AcceptsOneWidget {
   private SimplePanel centerPanel;
 
   @Override
-  public void setPlace(final WebPlace place) {
-    super.setPlace(place);
-    leftPanel.setPlace(place);
+  public void setChildWidget(final IsWidget w) {
+    centerPanel.setWidget(w);
   }
 
   @Override
-  public void setWidget(final IsWidget w) {
-    centerPanel.setWidget(w);
+  public void setPlace(final WebPlace place) {
+    super.setPlace(place);
+    leftPanel.setPlace(place);
   }
 
   @Override

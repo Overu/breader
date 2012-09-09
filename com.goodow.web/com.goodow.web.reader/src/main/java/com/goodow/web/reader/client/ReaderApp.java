@@ -3,14 +3,13 @@ package com.goodow.web.reader.client;
 import com.goodow.web.core.client.FlowView;
 import com.goodow.web.reader.client.BookHeadPanel.LocationPanel;
 
-import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.inject.Inject;
 
-public class ReaderApp extends FlowView implements AcceptsOneWidget {
+public class ReaderApp extends FlowView {
 
   @Inject
   private BookHeadPanel bannerPanel;
@@ -28,7 +27,7 @@ public class ReaderApp extends FlowView implements AcceptsOneWidget {
   private SimplePanel centerPanel;
 
   @Override
-  public void setWidget(final IsWidget w) {
+  public void setChildWidget(final IsWidget w) {
     centerPanel.setWidget(w);
   }
 
