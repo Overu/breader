@@ -190,6 +190,13 @@ public class EditGridManager {
 
   }
 
+  private void changeContentLoction(final EditGridCell cell) {
+    EditGridContent editGridContent = cell.getEditGridContent();
+    cell.clearEditGridContent();
+    calculateLayout(cell, false);
+    cell.getChildsGridCell().get(0).addAndInsteadEditGridContent(editGridContent);
+  }
+
   private void clearLayout(final Layout layout) {
     layout.setHorizontal(0);
     layout.setVertical(0);
@@ -220,6 +227,20 @@ public class EditGridManager {
         + target.getOwnerDocument().getScrollTop();
   }
 
+  private boolean hsplitBaseHandle(final EditGridCell cell, final boolean isContent) {
+    if (cell.getOffsetHeight() < EditGridCell.CELL_MIX_SPLIT_WEITH_HEIGHT) {
+      Window.alert("高度不能分割");
+      return false;
+    }
+    setCellVertical(cell, true);
+    if (isContent) {
+      changeContentLoction(cell);
+      return true;
+    }
+    calculateLayout(cell, false);
+    return true;
+  }
+
   private void initializeCellContentHandle(final EditGridCell cell) {
     ContentCtrlsItem contentCtrlsItem = cell.getContentCtrlsItem();
     contentCtrlsItem.addClearElmHandle(new Function() {
@@ -229,6 +250,25 @@ public class EditGridManager {
         cell.clearEditGridContent();
         return true;
       }
+    });
+
+    contentCtrlsItem.addHsplitElmHandle(new Function() {
+
+      @Override
+      public boolean f(final Event event) {
+        hsplitBaseHandle(cell, true);
+        return true;
+      }
+    });
+
+    contentCtrlsItem.addVsplitElmHandle(new Function() {
+
+      @Override
+      public boolean f(final Event event) {
+        vsplitBaseHandle(cell, true);
+        return true;
+      }
+
     });
 
   }
@@ -285,13 +325,7 @@ public class EditGridManager {
 
       @Override
       public boolean f(final EditGridCell cell, final Event event) {
-        if (cell.getOffsetHeight() < EditGridCell.CELL_MIX_SPLIT_WEITH_HEIGHT) {
-          Window.alert("高度不能分割");
-          return false;
-        }
-        setCellVertical(cell, true);
-        calculateLayout(cell, false);
-        return false;
+        return !hsplitBaseHandle(cell, false);
       }
     });
 
@@ -299,13 +333,7 @@ public class EditGridManager {
 
       @Override
       public boolean f(final EditGridCell cell, final Event event) {
-        if (cell.getOffsetWidth() < EditGridCell.CELL_MIX_SPLIT_WEITH_HEIGHT) {
-          Window.alert("宽度不能分割");
-          return false;
-        }
-        setCellVertical(cell, false);
-        calculateLayout(cell, false);
-        return false;
+        return !vsplitBaseHandle(cell, false);
       }
     });
 
@@ -477,5 +505,19 @@ public class EditGridManager {
     child2.setWidth(absChile2Pct * 100 + pct);
     child1.getLayout().setWeith(absChild1Pct);
     child2.getLayout().setWeith(absChile2Pct);
+  }
+
+  private boolean vsplitBaseHandle(final EditGridCell cell, final boolean isContent) {
+    if (cell.getOffsetWidth() < EditGridCell.CELL_MIX_SPLIT_WEITH_HEIGHT) {
+      Window.alert("宽度不能分割");
+      return false;
+    }
+    setCellVertical(cell, false);
+    if (isContent) {
+      changeContentLoction(cell);
+      return true;
+    }
+    calculateLayout(cell, false);
+    return true;
   }
 }
