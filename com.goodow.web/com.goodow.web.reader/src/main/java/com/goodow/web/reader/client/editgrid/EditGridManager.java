@@ -436,6 +436,7 @@ public class EditGridManager {
       return;
     }
     List<EditGridCell> childsGridCell = parentCell.getChildsGridCell();
+    EditGridContent editGridContent = null;
 
     int indexChildRemove = -1;
 
@@ -450,13 +451,20 @@ public class EditGridManager {
       return;
     }
     for (EditGridCell childCell : childsGridCell) {
+      if (childCell.isCotent()) {
+        editGridContent = childCell.getEditGridContent();
+        childCell.clearEditGridContent();
+      }
       parentCell.remove(childCell);
       childCell = null;
     }
     childsGridCell.clear();
     parentCell.removeSeparatorPanel();
-    parentCell.setHover(true);
     clearLayout(parentCell.getLayout());
+    parentCell.setHover(true);
+    if (editGridContent != null) {
+      parentCell.addAndInsteadEditGridContent(editGridContent);
+    }
   }
 
   private void removeParentCell(final EditGridCell parentCell) {

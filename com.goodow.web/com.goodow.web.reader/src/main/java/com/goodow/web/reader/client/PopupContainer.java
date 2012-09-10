@@ -18,7 +18,7 @@ import com.google.inject.Singleton;
 public class PopupContainer extends SimplePanel {
 
   public enum Loction {
-    OVER, BELOW, LEFT, RIGHT
+    OVER, BELOW, LEFT, RIGHT, CENTER
   }
 
   private Style mainStyle;
@@ -28,6 +28,8 @@ public class PopupContainer extends SimplePanel {
 
   int absoluteLeft;
   int absoluteTop;
+
+  private boolean isPopup = true;
 
   public PopupContainer() {
     container = new SimplePanel();
@@ -51,6 +53,9 @@ public class PopupContainer extends SimplePanel {
 
       @Override
       public void onClick(final ClickEvent event) {
+        if (!isPopup) {
+          return;
+        }
         hide();
       }
     }, ClickEvent.getType());
@@ -62,6 +67,16 @@ public class PopupContainer extends SimplePanel {
     return container.addDomHandler(handler, type);
   }
 
+  public void dialog(final Widget dialogWidget) {
+    dialog(dialogWidget, Loction.CENTER);
+  }
+
+  public void dialog(final Widget dialogWidget, final Loction loction) {
+    isPopup = false;
+    mainStyle.setBackgroundColor("rgba(0, 0, 0, 0.6)");
+    showBase(this.getElement(), dialogWidget, loction);
+  }
+
   public void hide() {
     if (this.getWidget() == null) {
       return;
@@ -70,6 +85,7 @@ public class PopupContainer extends SimplePanel {
     containerStyle.clearLeft();
     setFullScreen();
     container.clear();
+    isPopup = true;
   }
 
   public void show(final Element attchElm, final Widget popupPanel) {
@@ -109,6 +125,14 @@ public class PopupContainer extends SimplePanel {
       case RIGHT:
 
         break;
+      case CENTER:
+        int clientHeight = attchElm.getClientHeight() / 2;
+        int clientWidth = attchElm.getClientWidth() / 2;
+        int offsetHeight = popupPanel.getOffsetHeight();
+        int offsetWidth = popupPanel.getOffsetWidth() / 2;
+        absoluteTop = clientHeight - offsetHeight;
+        absoluteLeft = clientWidth - offsetWidth;
+        break;
 
       default:
         break;
@@ -123,6 +147,7 @@ public class PopupContainer extends SimplePanel {
   }
 
   private void setFullScreen() {
+    mainStyle.clearBackgroundColor();
     mainStyle.setTop(0, Unit.PX);
     mainStyle.setBottom(0, Unit.PX);
     mainStyle.setLeft(0, Unit.PX);

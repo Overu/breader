@@ -30,11 +30,15 @@ public abstract class EditGridButton extends Composite {
 
     String base();
 
+    String cancel();
+
     String deletenowpage();
 
     String okstack();
 
     String save();
+
+    String savetext();
 
   }
 

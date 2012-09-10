@@ -6,10 +6,10 @@
   -webkit-border-radius: 5px;
   border-width: 1px;
   border-style: solid;
-  height: auto!important;
-  width: auto!important;
-  background-position-x: 10px!important;
-  background-position-y: 5px!important;
+  height: auto !important;
+  width: auto !important;
+  background-position-x: 10px !important;
+  background-position-y: 5px !important;
   font-size: 12px;
   line-height: 1;
   z-index: 101;
@@ -30,7 +30,7 @@
   border-color: #DDD;
 }
 
-.addpage:HOVER, .deletenowpage:HOVER {
+.addpage:HOVER,.deletenowpage:HOVER {
   color: #444;
   border-color: #AAA;
 }
@@ -58,4 +58,26 @@
 .okstack:HOVER {
   border-color: #669300;
   background-color: #669300;
+}
+
+.cancel {
+  text-align: center;
+  padding: 6px 26px 6px 28px;
+  color: white;
+  background-color: #CCC;
+}
+
+.cancel:HOVER {
+  background-color: #BBB;
+}
+
+.savetext {
+  text-align: center;
+  padding: 6px 26px 6px 28px;
+  color: white;
+  background-color: #87B226;;
+}
+
+.savetext:HOVER {
+  background-color: #7EA623;
 }

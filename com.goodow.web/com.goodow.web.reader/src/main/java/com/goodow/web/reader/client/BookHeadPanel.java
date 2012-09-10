@@ -82,6 +82,29 @@ public class BookHeadPanel extends FlowView implements HeadTypeHandle {
         break;
     }
     button.addHeadTypeHandler(this);
+    DropDownPanel dropDownPanel = button.getPopupComponent();
+    if (dropDownPanel != null) {
+      dropDownPanel.addDomHandler(new MouseMoveHandler() {
+
+        @Override
+        public void onMouseMove(final MouseMoveEvent event) {
+          if (isMouseMove) {
+            return;
+          }
+          isMouseMove = true;
+          timer.cancel();
+        }
+      }, MouseMoveEvent.getType());
+
+      dropDownPanel.addDomHandler(new MouseOutHandler() {
+
+        @Override
+        public void onMouseOut(final MouseOutEvent event) {
+          isMouseMove = false;
+          timer.schedule(1000);
+        }
+      }, MouseOutEvent.getType());
+    }
   }
 
   @Override
@@ -100,7 +123,8 @@ public class BookHeadPanel extends FlowView implements HeadTypeHandle {
 
         break;
       case MOUSEOVER:
-        popupContainer.show(topBarButton, topBarButton.getPopupComponent());
+        DropDownPanel popupComponent = topBarButton.getPopupComponent();
+        popupContainer.show(topBarButton, popupComponent);
         timer.cancel();
         topBarButton.addHover();
         if (topBarButtonIndex != null && topBarButton != topBarButtonIndex) {
@@ -117,25 +141,5 @@ public class BookHeadPanel extends FlowView implements HeadTypeHandle {
 
   @Override
   protected void start() {
-    popupContainer.addContainerHandle(new MouseMoveHandler() {
-
-      @Override
-      public void onMouseMove(final MouseMoveEvent event) {
-        if (isMouseMove) {
-          return;
-        }
-        isMouseMove = true;
-        timer.cancel();
-      }
-    }, MouseMoveEvent.getType());
-
-    popupContainer.addContainerHandle(new MouseOutHandler() {
-
-      @Override
-      public void onMouseOut(final MouseOutEvent event) {
-        isMouseMove = false;
-        timer.schedule(1000);
-      }
-    }, MouseOutEvent.getType());
   }
 }

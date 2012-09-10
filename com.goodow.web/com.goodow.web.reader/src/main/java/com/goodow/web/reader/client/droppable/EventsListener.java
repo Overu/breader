@@ -2,7 +2,6 @@ package com.goodow.web.reader.client.droppable;
 
 import com.goodow.web.reader.client.editgrid.Function;
 
-import com.google.gwt.core.client.Duration;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
@@ -111,8 +110,8 @@ public class EventsListener implements EventListener {
   private Element element;
 
   int eventBits = 0;
-  double lastEvnt = 0;
-  int lastType = 0;
+  // double lastEvnt = 0;
+  // int lastType = 0;
 
   public static int ONSUBMIT = 0x10000000;
   public static int ONRESIZE = 0x8000000;
@@ -169,13 +168,16 @@ public class EventsListener implements EventListener {
 
   @Override
   public void onBrowserEvent(final Event event) {
-    double now = Duration.currentTimeMillis();
-    if (lastType == event.getTypeInt() && (now - lastEvnt < 10)
-        && "body".equalsIgnoreCase(element.getTagName())) {
+    if ("body".equalsIgnoreCase(element.getTagName())) {
       return;
     }
-    lastEvnt = now;
-    lastType = event.getTypeInt();
+    // double now = Duration.currentTimeMillis();
+    // if (lastType == event.getTypeInt() && (now - lastEvnt < 10)
+    // && "body".equalsIgnoreCase(element.getTagName())) {
+    // return;
+    // }
+    // lastEvnt = now;
+    // lastType = event.getTypeInt();
 
     if (getOriginalEventListener() != null) {
       getOriginalEventListener().onBrowserEvent(event);

@@ -381,6 +381,10 @@ public class EditGridCell extends Composite {
     return topGridCell;
   }
 
+  public boolean isCotent() {
+    return cellMain.getWidgetCount() == 2 ? true : false;
+  }
+
   public boolean remove(final EditGridCell childCell) {
     childCell.destory();
     return cellMain.remove(childCell);

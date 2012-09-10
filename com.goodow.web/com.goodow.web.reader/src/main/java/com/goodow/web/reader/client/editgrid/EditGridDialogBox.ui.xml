@@ -1,0 +1,35 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:r="urn:import:com.goodow.web.reader.client.editgrid">
+
+  <ui:style>
+    .main {
+      position: absolute;
+      z-index: 1000;
+      width: 500px;
+      padding: 10px;
+      -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+      background-color: white;
+    }
+  </ui:style>
+
+  <g:HTMLPanel addStyleNames="{style.main}">
+    <h3>编辑内容</h3>
+    <div>
+      <lable class="{}">修改标题：</lable>
+      <input type="text"></input>
+    </div>
+    <div>
+      <lable>书签描述：</lable>
+      <textarea rows="3"></textarea>
+    </div>
+    <div>
+      <lable>网页摘要：</lable>
+      <textarea rows="3"></textarea>
+    </div>
+    <g:HTMLPanel>
+      <r:CancelButton ui:field="cancelButton"></r:CancelButton>
+      <r:SaveTextButton ui:field="saveTextButton"></r:SaveTextButton>
+    </g:HTMLPanel>
+  </g:HTMLPanel>
+</ui:UiBinder>
