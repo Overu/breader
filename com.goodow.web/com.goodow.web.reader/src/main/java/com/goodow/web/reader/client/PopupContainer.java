@@ -128,9 +128,8 @@ public class PopupContainer extends SimplePanel {
       case CENTER:
         int clientHeight = attchElm.getClientHeight() / 2;
         int clientWidth = attchElm.getClientWidth() / 2;
-        int offsetHeight = popupPanel.getOffsetHeight();
         int offsetWidth = popupPanel.getOffsetWidth() / 2;
-        absoluteTop = clientHeight - offsetHeight;
+        absoluteTop = clientHeight / 3;
         absoluteLeft = clientWidth - offsetWidth;
         break;
 

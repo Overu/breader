@@ -30,6 +30,7 @@
     .des {
       gwt-image: "quote";
       padding-left: 30px;
+      width: auto;
       color: #666;
       background-attachment: scroll !important;
       background-position-x: 0px !important;

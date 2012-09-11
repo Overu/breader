@@ -13,12 +13,16 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import java.util.List;
 
 @Singleton
 public class EditGridManager {
+
+  @Inject
+  EditGridDialogBox dialogBox;
 
   private boolean separatorDragging = false;
   private int separatorDraggingX;
@@ -269,6 +273,15 @@ public class EditGridManager {
         return true;
       }
 
+    });
+
+    contentCtrlsItem.addEditBookElmHandle(new Function() {
+
+      @Override
+      public boolean f(final Event event) {
+        dialogBox.dialog(cell);
+        return true;
+      }
     });
 
   }

@@ -53,9 +53,6 @@ public class EditGridPanel extends FlowView {
   @Inject
   private CellListDrag cellListDrag;
 
-  @Inject
-  EditGridDialogBox dialogBox;
-
   private EditGridCarousel carousel;
 
   private HTMLPanel buttons;
@@ -143,7 +140,6 @@ public class EditGridPanel extends FlowView {
 
       @Override
       public void onClick(final ClickEvent event) {
-        dialogBox.dialog();
       }
     }, ClickEvent.getType());
 
