@@ -3,33 +3,93 @@
   xmlns:r="urn:import:com.goodow.web.reader.client.editgrid">
 
   <ui:style>
+    @sprite 
     .main {
+      gwt-image: "overlay";
       position: absolute;
       z-index: 1000;
       width: 500px;
+      height: auto;
       padding: 10px;
+      background-repeat: repeat;
       -webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-      background-color: white;
+    }
+    
+    .content {
+      background-color: whiteSmoke;
+      height: 100%;
+    }
+    
+    .content>div:nth-child\(2\)>textarea, .content>div:nth-child\(3\)>textarea {
+      height: 45px;
+      overflow: auto;
+      vertical-align: top;
+    }
+    
+    @sprite 
+    .headerbg {
+      gwt-image: "headerbg";
+      background-repeat: repeat;
+      color: white;
+      height: 30px;
+      padding-top: 15px;
+      text-align: center;
+      margin-bottom: 20px;
+      width: 500px;
+    }
+    
+    .line {
+      margin-bottom: 15px;
+      padding: 0 20px 0 20px;
+    }
+    
+    .line>lable {
+      font-size: 14px;
+      color: #444;
+    }
+    
+    .line>*:last-child {
+      border: 1px solid #CCC;
+      border-radius: 5px 5px 5px 5px;
+      padding: 5px;
+      width: 450px;
+      margin-top: 7px;
+      resize: none;
+    }
+    
+    .buttoncontainer {
+      background-color: whiteSmoke;
+      width: 100%;
+      float: right;
+    }
+    
+    .buttoncontainer>div {
+      float: right;
+      margin: 0 20px 20px 0px;
     }
   </ui:style>
+  <ui:image field="overlay" />
+  <ui:image field="headerbg" />
 
-  <g:HTMLPanel addStyleNames="{style.main}">
-    <h3>编辑内容</h3>
-    <div>
-      <lable class="{}">修改标题：</lable>
-      <input type="text"></input>
-    </div>
-    <div>
-      <lable>书签描述：</lable>
-      <textarea rows="3"></textarea>
-    </div>
-    <div>
-      <lable>网页摘要：</lable>
-      <textarea rows="3"></textarea>
-    </div>
-    <g:HTMLPanel>
-      <r:CancelButton ui:field="cancelButton"></r:CancelButton>
-      <r:SaveTextButton ui:field="saveTextButton"></r:SaveTextButton>
+  <g:SimplePanel addStyleNames="{style.main}">
+    <g:HTMLPanel addStyleNames="{style.content}">
+      <h3 class="{style.headerbg}">编辑内容</h3>
+      <div class="{style.line}">
+        <lable>修改标题：</lable>
+        <input ui:field="titleElm" type="text"></input>
+      </div>
+      <div class="{style.line}">
+        <lable>书签描述：</lable>
+        <textarea ui:field="desElm" rows="3"></textarea>
+      </div>
+      <div class="{style.line}">
+        <lable>网页摘要：</lable>
+        <textarea ui:field="snippetElm" rows="3"></textarea>
+      </div>
+      <g:HTMLPanel addStyleNames="{style.buttoncontainer}">
+        <r:SaveTextButton ui:field="saveTextButton"></r:SaveTextButton>
+        <r:CancelButton ui:field="cancelButton"></r:CancelButton>
+      </g:HTMLPanel>
     </g:HTMLPanel>
-  </g:HTMLPanel>
+  </g:SimplePanel>
 </ui:UiBinder>
