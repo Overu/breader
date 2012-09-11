@@ -211,7 +211,7 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
     cancelButton.addTapHandler(new TapHandler() {
       @Override
       public void onTap(final TapEvent event) {
-        placeManager.gotoFeed(null, "books");
+        placeManager.goTo(null, "books");
       }
     });
 

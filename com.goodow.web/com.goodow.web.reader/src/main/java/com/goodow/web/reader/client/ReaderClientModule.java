@@ -3,6 +3,7 @@ package com.goodow.web.reader.client;
 import com.goodow.web.core.client.TextResourceEditor;
 import com.goodow.web.core.client.UIManager;
 import com.goodow.web.core.shared.ContainerViewer;
+import com.goodow.web.core.shared.CorePackage;
 import com.goodow.web.core.shared.EntryViewer;
 import com.goodow.web.core.shared.FeedViewer;
 import com.goodow.web.core.shared.HomePlace;
@@ -32,14 +33,16 @@ public final class ReaderClientModule extends AbstractGinModule {
     public Bind(final Provider<TextResourceEditor> textEditor, final UIManager registry,
         final Provider<BooksBrowser> booksBrowser, final Provider<BookForm> bookForm,
         final Provider<MyBookList> mybooksList, final Provider<SelectedBookList> selectedBooks,
-        final Provider<SectionsExplorer> bookEditor, final ReaderApp readerApp,
+        final Provider<SectionsExplorer> sectionsExplorer, final ReaderApp readerApp,
         @HomePlace final WebPlace homePlace, final WebPlace editGridPlace,
         final WebPlace cellListDragPlace, final EditGridPanel editGridPanel,
         final Provider<CellListDrag> cellListDrag) {
 
       ReaderPackage.Library.as().addViewer(ContainerViewer.ENTRY, readerApp);
 
-      ReaderPackage.Book.as().addViewer(EntryViewer.EDIT, bookEditor);
+      CorePackage.Section.as().addViewer(ContainerViewer.FEED, sectionsExplorer);
+
+      ReaderPackage.Book.as().addViewer(EntryViewer.EDIT, sectionsExplorer);
 
       ReaderPackage.Book.as().addViewer(ContainerViewer.FEED, booksBrowser);
       ReaderPackage.Book.as().addViewer(FeedViewer.NEW, bookForm);

@@ -60,6 +60,17 @@ public class WebPlaceManager implements PlaceHistoryMapper {
     goTo(content, EntryViewer.EDIT);
   }
 
+  public void goTo(final WebContent content, final String feed) {
+    StringBuilder uriBuilder = content.getUriBuilder();
+    if (feed.startsWith("/")) {
+      uriBuilder.append(feed);
+    } else {
+      uriBuilder.append("/").append(feed);
+    }
+    String uri = uriBuilder.toString();
+    goTo(uri);
+  }
+
   public void goTo(final WebContent content, final ViewType viewType) {
     String uri = content.getUri();
     goTo(uri, viewType);
@@ -67,14 +78,6 @@ public class WebPlaceManager implements PlaceHistoryMapper {
 
   public void goTo(final WebPlace place) {
     placeController.goTo(place);
-  }
-
-  public void gotoFeed(final WebContent content, final String feed) {
-
-  }
-
-  public void gotoFeed(final WebContent content, final String feed, final String presenterName) {
-
   }
 
 }

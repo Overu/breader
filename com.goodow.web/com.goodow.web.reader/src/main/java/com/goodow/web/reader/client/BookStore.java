@@ -34,7 +34,7 @@ import java.util.List;
 public class BookStore extends Composite implements AcceptsOneWidget, PlaceChangeEvent.Handler {
 
   @Inject
-  protected WebPlaceManager placeController;
+  protected WebPlaceManager placeManager;
 
   private LayoutPanel main;
 
@@ -65,7 +65,7 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
 
       @Override
       public void onTap(final TapEvent event) {
-        placeController.gotoFeed(null, "books", "bookshelf");
+        placeManager.goTo("/bookshelf");
       }
     });
 
@@ -76,7 +76,7 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
 
       @Override
       public void onTap(final TapEvent event) {
-        placeController.gotoFeed(null, "books", "mybooks");
+        placeManager.goTo("/bookshelf?my");
       }
     });
 
@@ -99,7 +99,7 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
       public void onSelection(final SelectionEvent<Integer> event) {
         int index = event.getSelectedItem();
         WebPlace newPlace = bookStorePlaces.get(index);
-        placeController.goTo(newPlace);
+        placeManager.goTo(newPlace);
       }
     });
 
@@ -126,7 +126,7 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
   }
 
   public void refresh() {
-    WebPlace currentPlace = (WebPlace) placeController.getWhere();
+    WebPlace currentPlace = (WebPlace) placeManager.getWhere();
     int index = bookStorePlaces.indexOf(currentPlace);
     if (index >= 0) {
       tabBar.setSelectedButton(index, true);
