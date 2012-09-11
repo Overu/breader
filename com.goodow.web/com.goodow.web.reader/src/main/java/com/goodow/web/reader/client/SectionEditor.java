@@ -56,6 +56,8 @@ public class SectionEditor extends FormField<Section> {
       // A sub-editor reported errors
     }
 
+    logger.info("Saving...");
+
     sectionService.save(section).fire(new Receiver<Section>() {
       @Override
       public void onSuccess(final Section result) {

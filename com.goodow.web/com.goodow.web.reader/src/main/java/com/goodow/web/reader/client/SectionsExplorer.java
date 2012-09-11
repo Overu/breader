@@ -47,9 +47,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class BookEditor extends FormView<Book> {
+public class SectionsExplorer extends FormView<Book> {
 
-  interface Binder extends UiBinder<Widget, BookEditor> {
+  interface Binder extends UiBinder<Widget, SectionsExplorer> {
   }
 
   private static class CustomSelectionEvent implements
@@ -152,7 +152,7 @@ public class BookEditor extends FormView<Book> {
 
   Section section;
 
-  private final Logger logger = Logger.getLogger(BookEditor.class.getName());
+  private final Logger logger = Logger.getLogger(SectionsExplorer.class.getName());
 
   private static Binder uiBinder = GWT.create(Binder.class);
 

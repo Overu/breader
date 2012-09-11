@@ -118,12 +118,13 @@ public class TextResourceEditor extends FlowView implements TakesValue<Resource>
         saveResource();
         return true;
       }
-    }, 20000);
+    }, 5000);
   }
 
   private void saveResource() {
     if (isChanged()) {
       resource.setTextContent(textArea.getHTML());
+      logger.info("Saving...");
       resourceSerivce.save(resource).fire(new Receiver<Resource>() {
         @Override
         public void onSuccess(final Resource result) {

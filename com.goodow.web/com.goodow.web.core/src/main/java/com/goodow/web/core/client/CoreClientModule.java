@@ -6,7 +6,7 @@ import com.goodow.web.core.shared.HomePlace;
 import com.goodow.web.core.shared.Message;
 import com.goodow.web.core.shared.WebObject;
 import com.goodow.web.core.shared.WebPlace;
-import com.goodow.web.core.shared.WebPlaceMapper;
+import com.goodow.web.core.shared.WebPlaceManager;
 import com.goodow.web.core.shared.WebPlatform;
 
 import com.google.gwt.core.client.GWT;
@@ -124,7 +124,7 @@ public class CoreClientModule extends AbstractGinModule {
     logger.finest("configure");
     requestStaticInjection(WebPlatform.class);
     bind(Message.class).to(ClientMessage.class);
-    bind(PlaceHistoryMapper.class).to(WebPlaceMapper.class).in(Singleton.class);
+    bind(PlaceHistoryMapper.class).to(WebPlaceManager.class).in(Singleton.class);
     bind(Binder.class).asEagerSingleton();
     bind(Render.class).asEagerSingleton();
   }

@@ -32,7 +32,7 @@ public final class ReaderClientModule extends AbstractGinModule {
     public Bind(final Provider<TextResourceEditor> textEditor, final UIManager registry,
         final Provider<BooksBrowser> booksBrowser, final Provider<BookForm> bookForm,
         final Provider<MyBookList> mybooksList, final Provider<SelectedBookList> selectedBooks,
-        final Provider<BookEditor> bookEditor, final ReaderApp readerApp,
+        final Provider<SectionsExplorer> bookEditor, final ReaderApp readerApp,
         @HomePlace final WebPlace homePlace, final WebPlace editGridPlace,
         final WebPlace cellListDragPlace, final EditGridPanel editGridPanel,
         final Provider<CellListDrag> cellListDrag) {

@@ -1,7 +1,7 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.core.shared.WebPlace;
-import com.goodow.web.core.shared.WebPlaceMapper;
+import com.goodow.web.core.shared.WebPlaceManager;
 import com.goodow.web.reader.client.style.ReadResources;
 
 import com.google.gwt.dom.client.Style.Position;
@@ -34,7 +34,7 @@ import java.util.List;
 public class BookStore extends Composite implements AcceptsOneWidget, PlaceChangeEvent.Handler {
 
   @Inject
-  protected WebPlaceMapper placeController;
+  protected WebPlaceManager placeController;
 
   private LayoutPanel main;
 

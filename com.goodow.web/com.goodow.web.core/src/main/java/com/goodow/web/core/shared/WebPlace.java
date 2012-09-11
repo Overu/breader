@@ -28,7 +28,7 @@ public class WebPlace extends Place {
   Provider<WebPlace> placeProvider;
 
   @Inject
-  Provider<WebPlaceMapper> placeManager;
+  Provider<WebPlaceManager> placeManager;
 
   private String path;
 

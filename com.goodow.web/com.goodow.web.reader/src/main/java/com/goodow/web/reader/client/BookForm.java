@@ -13,7 +13,7 @@ import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.core.shared.Resource;
 import com.goodow.web.core.shared.ResourceUploadedEvent;
 import com.goodow.web.core.shared.ResourceUploadedHandler;
-import com.goodow.web.core.shared.WebPlaceMapper;
+import com.goodow.web.core.shared.WebPlaceManager;
 import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 import com.goodow.web.reader.shared.ReaderPlace;
@@ -100,7 +100,7 @@ public class BookForm extends FormView<Book> implements ResourceUploadedHandler,
   AsyncCategoryService categoryService;
 
   @Inject
-  WebPlaceMapper placeManager;
+  WebPlaceManager placeManager;
 
   @Inject
   ReaderPlace reader;

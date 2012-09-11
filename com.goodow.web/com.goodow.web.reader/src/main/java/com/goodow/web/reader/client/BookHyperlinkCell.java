@@ -1,7 +1,7 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.core.shared.EntryViewer;
-import com.goodow.web.core.shared.WebPlaceMapper;
+import com.goodow.web.core.shared.WebPlaceManager;
 import com.goodow.web.reader.shared.Book;
 
 import com.google.gwt.cell.client.AbstractCell;
@@ -24,7 +24,7 @@ public class BookHyperlinkCell extends AbstractCell<Book> {
   }
 
   @Inject
-  WebPlaceMapper placeManager;
+  WebPlaceManager placeManager;
 
   private Template template = GWT.create(Template.class);
 

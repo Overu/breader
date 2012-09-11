@@ -1,8 +1,14 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.core.client.FlowView;
+import com.goodow.web.core.shared.ContainerViewer;
+import com.goodow.web.core.shared.HomePlace;
+import com.goodow.web.core.shared.WebPlace;
+import com.goodow.web.core.shared.WebPlaceManager;
 import com.goodow.web.reader.client.BookHeadPanel.LocationPanel;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Label;
@@ -15,16 +21,29 @@ public class ReaderApp extends FlowView {
   private BookHeadPanel bannerPanel;
 
   @Inject
+  private TopBarButton booksButton;
+
+  @Inject
   private TopBarButton topBarButton;
+
   @Inject
   private TopBarButton topBarButton1;
+
   @Inject
   private TopBarButton topBarButton2;
+
   @Inject
   private TopBarButton topBarButton3;
 
   @Inject
   private SimplePanel centerPanel;
+
+  @Inject
+  @HomePlace
+  WebPlace homePlace;
+
+  @Inject
+  WebPlaceManager placeManager;
 
   @Override
   public void setChildWidget(final IsWidget w) {
@@ -54,6 +73,14 @@ public class ReaderApp extends FlowView {
     pci2.addChild(new Label("设置"), null);
     pci2.addChild(new Label("注销"), null);
 
+    booksButton.setTitle("图书");
+    booksButton.addDomHandler(new ClickHandler() {
+      @Override
+      public void onClick(final ClickEvent event) {
+        placeManager.goTo("/books", ContainerViewer.FEED);
+      }
+    }, ClickEvent.getType());
+
     topBarButton.setPopupComponent(pci);
     topBarButton.setTitle("社区");
     topBarButton1.setPopupComponent(pci1);
@@ -61,6 +88,7 @@ public class ReaderApp extends FlowView {
     topBarButton2.setPopupComponent(pci2);
     topBarButton2.setTitle("用户管理");
     topBarButton3.setTitle("共享");
+    bannerPanel.addTopBarButton(booksButton, LocationPanel.Left);
     bannerPanel.addTopBarButton(topBarButton, LocationPanel.Left);
     bannerPanel.addTopBarButton(topBarButton1, LocationPanel.Left);
     bannerPanel.addTopBarButton(topBarButton2, LocationPanel.Right);

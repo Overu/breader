@@ -7,7 +7,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
-public class WebPlaceMapper implements PlaceHistoryMapper {
+public class WebPlaceManager implements PlaceHistoryMapper {
 
   @HomePlace
   @Inject
@@ -32,16 +32,21 @@ public class WebPlaceMapper implements PlaceHistoryMapper {
     return (WebPlace) placeController.getWhere();
   }
 
-  public void goTo(final WebPlace place) {
-    placeController.goTo(place);
+  public void goTo(final String uri) {
+    WebPlace place = homePlace.findChild(uri);
+    if (place != null) {
+      if (place.isFeed()) {
+        place = place.getViewerPlace(FeedViewer.ALL_CONTENT);
+      } else {
+        place = place.getViewerPlace(EntryViewer.EDIT);
+      }
+    }
+    if (place != null) {
+      placeController.goTo(place);
+    }
   }
 
-  public void gotoContent(final WebContent content) {
-    goTo(content, EntryViewer.EDIT);
-  }
-
-  public void goTo(final WebContent content, final ViewType viewType) {
-    String uri = content.getUri();
+  public void goTo(final String uri, final ViewType viewType) {
     WebPlace place = homePlace.findChild(uri);
     if (place != null) {
       place = place.getViewerPlace(viewType);
@@ -49,6 +54,19 @@ public class WebPlaceMapper implements PlaceHistoryMapper {
     if (place != null) {
       placeController.goTo(place);
     }
+  }
+
+  public void goTo(final WebContent content) {
+    goTo(content, EntryViewer.EDIT);
+  }
+
+  public void goTo(final WebContent content, final ViewType viewType) {
+    String uri = content.getUri();
+    goTo(uri, viewType);
+  }
+
+  public void goTo(final WebPlace place) {
+    placeController.goTo(place);
   }
 
   public void gotoFeed(final WebContent content, final String feed) {
