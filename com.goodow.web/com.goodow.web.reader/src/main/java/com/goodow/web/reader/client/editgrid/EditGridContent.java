@@ -44,26 +44,26 @@ public class EditGridContent extends Composite {
   }
 
   public void setCaption(final String caption) {
+    this.caption = caption;
     if (isNull(caption, titleElm)) {
       return;
     }
-    this.caption = caption;
     titleElm.setInnerHTML(caption);
   }
 
   public void setDes(final String des) {
+    this.des = des;
     if (isNull(des, desElm)) {
       return;
     }
-    this.des = des;
     desElm.setInnerHTML(des);
   }
 
   public void setSnippet(final String snippet) {
+    this.snippet = snippet;
     if (isNull(snippet, snippetElm)) {
       return;
     }
-    this.snippet = snippet;
     snippetElm.setInnerHTML(snippet);
   }
 
