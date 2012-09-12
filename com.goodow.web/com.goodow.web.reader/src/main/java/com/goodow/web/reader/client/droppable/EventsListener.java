@@ -50,62 +50,73 @@ public class EventsListener implements EventListener {
   }
 
   public static void clean(final Element e) {
-    EventsListener ret = getSqueryEventListener(e);
+    // EventsListener ret = getSqueryEventListener(e);
+    EventsListener ret = getEventListener(e);
     if (ret != null) {
       ret.clean();
     }
   }
 
   public static EventsListener getInstance(final Element e) {
-    EventsListener ret = getSqueryEventListener(e);
+    // EventsListener ret = getSqueryEventListener(e);
+    EventsListener ret = getEventListener(e);
     return ret != null ? ret : new EventsListener(e);
   }
 
   public static void rebind(final Element e) {
-    EventsListener ret = getSqueryEventListener(e);
+    // EventsListener ret = getSqueryEventListener(e);
+    EventsListener ret = getEventListener(e);
     if (ret != null && ret.eventBits != 0) {
       ret.sink();
     }
   }
 
-  private static native void cleanSqListeners(Element elm) /*-{
-                                                            if (elm.__gwtlistener) {
-                                                            elm.__listener = elm.__gwtlistener;
-                                                            }
-                                                            elm.__sqevent = null;
-                                                            elm.__squery = null;
+  // private static native void cleanSqListeners(Element elm) /*-{
+  // if (elm.__gwtlistener) {
+  // elm.__listener = elm.__gwtlistener;
+  // }
+  // elm.__sqevent = null;
+  // elm.__squery = null;
+  //
+  // }-*/;
 
-                                                            }-*/;
-
-  private static native EventListener getGwtEventListener(Element elm) /*-{
-                                                                        return elm.__gwtlistener;
-                                                                        }-*/;
-
-  private static native EventsListener getSqueryEventListener(Element elm) /*-{
-                                                                            return elm.__sqevent;
-                                                                            }-*/;
-
-  private static native void init(Element elm, EventsListener sqevent)/*-{
-                                                                       elm.__gwtlistener = elm.__listener;
-                                                                       elm.__sqevent = sqevent;
+  private static native EventsListener getEventListener(Element elm) /*-{
+                                                                       return elm.__listener;
                                                                        }-*/;
 
-  private static native void sinkEvent(Element elm, String name) /*-{
-                                                                  if (!elm.__squery)
-                                                                  elm.__squery = [];
-                                                                  if (elm.__squery[name])
-                                                                  return;
-                                                                  elm.__squery[name] = true;
+  // private static native EventListener getGwtEventListener(Element elm) /*-{
+  // return elm.__gwtlistener;
+  // }-*/;
 
-                                                                  var handle = function(event) {
-                                                                  elm.__sqevent.@com.goodow.web.reader.client.droppable.EventsListener::dispatchEvent(Lcom/google/gwt/user/client/Event;)(event);
-                                                                  };
+  // private static native EventsListener getSqueryEventListener(Element elm) /*-{
+  // return elm.__sqevent;
+  // }-*/;
 
-                                                                  if (elm.addEventListener)
-                                                                  elm.addEventListener(name, handle, true);
-                                                                  else
-                                                                  elm.attachEvent("on" + name, handle);
-                                                                  }-*/;
+  // private static native void init(Element elm, EventsListener sqevent)/*-{
+  // elm.__gwtlistener = elm.__listener;
+  // elm.__sqevent = sqevent;
+  // }-*/;
+
+  private static native void init(Element elm, EventsListener sqevent)/*-{
+                                                                      elm.__listener = sqevent;
+                                                                      }-*/;
+
+  // private static native void sinkEvent(Element elm, String name) /*-{
+  // if (!elm.__squery)
+  // elm.__squery = [];
+  // if (elm.__squery[name])
+  // return;
+  // elm.__squery[name] = true;
+  //
+  // var handle = function(event) {
+  // elm.__sqevent.@com.goodow.web.reader.client.droppable.EventsListener::dispatchEvent(Lcom/google/gwt/user/client/Event;)(event);
+  // };
+  //
+  // if (elm.addEventListener)
+  // elm.addEventListener(name, handle, true);
+  // else
+  // elm.attachEvent("on" + name, handle);
+  // }-*/;
 
   private Element element;
 
@@ -162,9 +173,9 @@ public class EventsListener implements EventListener {
     }
   }
 
-  public EventListener getOriginalEventListener() {
-    return getGwtEventListener(element);
-  }
+  // public EventListener getOriginalEventListener() {
+  // return getGwtEventListener(element);
+  // }
 
   @Override
   public void onBrowserEvent(final Event event) {
@@ -179,9 +190,9 @@ public class EventsListener implements EventListener {
     // lastEvnt = now;
     // lastType = event.getTypeInt();
 
-    if (getOriginalEventListener() != null) {
-      getOriginalEventListener().onBrowserEvent(event);
-    }
+    // if (getOriginalEventListener() != null) {
+    // getOriginalEventListener().onBrowserEvent(event);
+    // }
 
     dispatchEvent(event);
   }
@@ -198,6 +209,7 @@ public class EventsListener implements EventListener {
           namespace == null || namespace.isEmpty() || listener.nameSpace.equals(namespace);
       boolean matchEV = eventbits <= 0 || listener.hasEventType(eventbits);
       if (matchNS && matchEV) {
+        listener = null;
         continue;
       }
       newList.add(listener);
@@ -213,7 +225,7 @@ public class EventsListener implements EventListener {
   }
 
   private void clean() {
-    cleanSqListeners(element);
+    // cleanSqListeners(element);
     elementEvents = JsObjectArray.createArray().cast();
     // liveBindFunctionByEventType = JsMap.create();
   }
@@ -239,23 +251,24 @@ public class EventsListener implements EventListener {
   }
 
   private int getTypeInt(final String eventName) {
-    return "submit".equals(eventName) ? ONSUBMIT : "resize".equals(eventName) ? ONRESIZE : Event
-        .getTypeInt(eventName);
+    // return "submit".equals(eventName) ? ONSUBMIT : "resize".equals(eventName) ? ONRESIZE : Event
+    // .getTypeInt(eventName);
+    return Event.getTypeInt(eventName);
   }
 
   private void sink() {
     DOM.setEventListener((com.google.gwt.user.client.Element) element, this);
-    if (eventBits == ONSUBMIT) {
-      sinkEvent(element, "submit");
-    } else if ((eventBits | ONRESIZE) == ONRESIZE) {
-      sinkEvent(element, "resize");
-    } else {
-      if ((eventBits | Event.FOCUSEVENTS) == Event.FOCUSEVENTS
-          && element.getAttribute("tabIndex").length() == 0) {
-        element.setAttribute("tabIndex", "0");
-      }
-      DOM.sinkEvents((com.google.gwt.user.client.Element) element, eventBits
-          | DOM.getEventsSunk((com.google.gwt.user.client.Element) element));
+    // if (eventBits == ONSUBMIT) {
+    // sinkEvent(element, "submit");
+    // } else if ((eventBits | ONRESIZE) == ONRESIZE) {
+    // sinkEvent(element, "resize");
+    // } else {
+    if ((eventBits | Event.FOCUSEVENTS) == Event.FOCUSEVENTS
+        && element.getAttribute("tabIndex").length() == 0) {
+      element.setAttribute("tabIndex", "0");
     }
+    DOM.sinkEvents((com.google.gwt.user.client.Element) element, eventBits
+        | DOM.getEventsSunk((com.google.gwt.user.client.Element) element));
+    // }
   }
 }

@@ -27,9 +27,9 @@ public class DragAndDropCellWidgetUtils {
       qCell.as(Draggable.Draggable).destroy();
     }
 
-    // if (DroppableHandler.getInstance(cell) != null) {
-    // qCell.as(Droppable).destroy();
-    // }
+    if (DroppableHandler.getInstance(cell) != null) {
+      qCell.as(Droppable.Droppable).destroy();
+    }
 
     qCell.removeData(VALUE_KEY);
   }
@@ -45,10 +45,10 @@ public class DragAndDropCellWidgetUtils {
       qCell.as(Draggable.Draggable).draggable(eventBus, darggableOptions);
     }
 
-    if ((cellDragAndDropBehaviour == null || cellDragAndDropBehaviour.isDroppable())
-        && DraggableHandler.getInstance(cell) == null) {
-      qCell.as(Draggable.Draggable).draggable(eventBus, darggableOptions);
-    }
+    // if ((cellDragAndDropBehaviour == null || cellDragAndDropBehaviour.isDroppable())
+    // && DraggableHandler.getInstance(cell) == null) {
+    // qCell.as(D).draggable(eventBus, darggableOptions);
+    // }
 
     qCell.data(VALUE_KEY, value);
   }

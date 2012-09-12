@@ -104,6 +104,8 @@ public class DragAndDropCellList<T> extends CellList<T> {
 
   @Override
   protected void onUnload() {
+    cleanAllCells();
+
     super.onUnload();
   }
 

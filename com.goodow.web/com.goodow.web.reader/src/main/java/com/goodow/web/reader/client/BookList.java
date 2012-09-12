@@ -11,7 +11,7 @@ import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.ValueUpdater;
-import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -199,6 +199,13 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
     }
   }
 
+  public void removeHeaderElmShade() {
+    Element headerElm1 = cellTable.getElement().getFirstChildElement().getFirstChildElement();
+    Element headerElm2 = headerElm1.getNextSiblingElement();
+    headerElm1.removeFromParent();
+    headerElm2.removeFromParent();
+  }
+
   @Override
   protected void onUnload() {
     super.onUnload();
@@ -226,6 +233,7 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
     };
     cellTable = new DataGrid<Book>(6, keyProvider);
     cellTable.setWidth("100%");
+    removeHeaderElmShade();
 
     final SelectionModel<Book> selectionModel = new MultiSelectionModel<Book>(keyProvider);
     cellTable.setSelectionModel(selectionModel, DefaultSelectionEventManager
@@ -261,9 +269,8 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
       @Override
       public void update(final Boolean value) {
         List<Book> visibleItems = cellTable.getVisibleItems();
-        for (int i = 0; i < visibleItems.size(); i++) {
-          Book object = visibleItems.get(i);
-          bookCheck.getFieldUpdater().update(i, object, value);
+        for (Book book : visibleItems) {
+          selectionModel.setSelected(book, value);
         }
       }
     });
@@ -339,7 +346,8 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
 
       @Override
       public String getValue(final Book book) {
-        return GWT.getModuleBaseURL() + "resources/" + book.getCover().getId();
+        return "";
+        // return GWT.getModuleBaseURL() + "resources/" + book.getCover().getId();
       }
     }, null);
     ColumnEntity<Book> bookImageColumn = new ColumnEntity<Book>(bookImage, 4, 4);
