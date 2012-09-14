@@ -1,0 +1,33 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+  <ui:style>
+    .container>div {
+      text-align: left;
+      color: rgb(34, 34, 34);
+      margin: 1px;
+      padding: 10px;
+      white-space: nowrap;
+      font: 75%/1.5 Arial, Helvetica, sans-serif;
+      font-size: 12px;
+    }
+    
+    .container>div:HOVER {
+      background-color: rgb(225, 244, 249);
+      text-decoration: none;
+    }
+    
+    .columnstyle {
+      
+    }
+  </ui:style>
+
+  <g:HTMLPanel addStyleNames="{style.container}">
+    <div ui:field="ascElm">asc</div>
+    <div ui:field="dscElm">dsc</div>
+    <div class="{style.columnstyle}">
+      column
+      <div ui:field="columnContainer"></div>
+    </div>
+  </g:HTMLPanel>
+</ui:UiBinder>

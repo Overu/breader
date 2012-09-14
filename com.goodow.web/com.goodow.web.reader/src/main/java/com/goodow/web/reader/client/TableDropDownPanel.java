@@ -24,7 +24,6 @@ public class TableDropDownPanel extends DropDownPanel {
   private HTMLPanel linePanel;
 
   public TableDropDownPanel(final int row) {
-    main.add(binder.createAndBindUi(this));
     this.row = row;
   }
 
@@ -45,8 +44,8 @@ public class TableDropDownPanel extends DropDownPanel {
   }
 
   @Override
-  protected void start() {
-
+  public Widget initMainWidget() {
+    return binder.createAndBindUi(this);
   }
 
 }

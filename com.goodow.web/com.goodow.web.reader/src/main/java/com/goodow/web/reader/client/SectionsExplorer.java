@@ -36,6 +36,7 @@ import com.google.gwt.view.client.SingleSelectionModel;
 import com.google.gwt.view.client.TreeViewModel;
 import com.google.gwt.view.client.TreeViewModel.DefaultNodeInfo;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
@@ -47,6 +48,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Singleton
 public class SectionsExplorer extends FormView<Book> {
 
   interface Binder extends UiBinder<Widget, SectionsExplorer> {

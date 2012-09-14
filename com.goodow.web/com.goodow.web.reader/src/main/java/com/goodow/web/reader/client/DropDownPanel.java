@@ -1,15 +1,14 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.client.FlowView;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
 
-public abstract class DropDownPanel extends FlowView {
+public abstract class DropDownPanel extends Composite {
 
   interface Bundle extends ClientBundle {
 
@@ -31,9 +30,14 @@ public abstract class DropDownPanel extends FlowView {
   }
 
   public DropDownPanel() {
-    main.addStyleName(bundle.css().root());
+    Widget widget = initMainWidget();
+    initWidget(widget);
+    widget.addStyleName(bundle.css().root());
+    // main.addStyleName(bundle.css().root());
   }
 
   public abstract Widget addChild(IsWidget isWidget, ClickHandler clickHandler);
+
+  public abstract Widget initMainWidget();
 
 }

@@ -21,10 +21,6 @@ public class ListDropDownPanel extends DropDownPanel {
   @UiField
   HTMLPanel container;
 
-  public ListDropDownPanel() {
-    main.add(binder.createAndBindUi(this));
-  }
-
   @Override
   public Widget addChild(final IsWidget isWidget, final ClickHandler clickHandler) {
     Widget widget = isWidget.asWidget();
@@ -40,7 +36,8 @@ public class ListDropDownPanel extends DropDownPanel {
   }
 
   @Override
-  protected void start() {
-
+  public Widget initMainWidget() {
+    return binder.createAndBindUi(this);
   }
+
 }

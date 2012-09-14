@@ -7,7 +7,7 @@ body {
 }
 
 .topBarButtonHOVER {
-  color: white!important;
+  color: white !important;
   border-left-color: black;
   border-right-color: black;
   outline: none;
@@ -16,7 +16,7 @@ body {
 
 @sprite 
 .trangleCell {
-  gwt-image: "trangleButton"; 
+  gwt-image: "trangleButton";
   opacity: 0;
   padding: 0 5px;
   position: absolute;
@@ -25,7 +25,14 @@ body {
 
 @sprite 
 .trangleCell:FOCUS {
-  gwt-image: "trangleButtoned"; 
+  gwt-image: "trangleButtoned";
   opacity: 1;
   outline: 0px;
+}
+
+.sortButtonCell {
+  display: inline-block;
+  background-color: red;
+  width: 20px;
+  height: 10px;
 }
