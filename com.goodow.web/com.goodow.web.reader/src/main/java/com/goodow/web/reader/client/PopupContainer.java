@@ -8,7 +8,10 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DomEvent;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.EventListener;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -26,10 +29,16 @@ public class PopupContainer extends SimplePanel {
 
   private SimplePanel container;
 
+  private int ignoreTop;
+  private int ignoreLeft;
+  private int ignoreBottom;
+  private int ignoreRight;
+
   int absoluteLeft;
   int absoluteTop;
 
   private boolean isPopup = true;
+  private boolean isIgnore = false;
 
   public PopupContainer() {
     container = new SimplePanel();
@@ -54,6 +63,9 @@ public class PopupContainer extends SimplePanel {
       @Override
       public void onClick(final ClickEvent event) {
         if (!isPopup) {
+          return;
+        }
+        if (ignoreCope(event)) {
           return;
         }
         hide();
@@ -86,6 +98,26 @@ public class PopupContainer extends SimplePanel {
     setFullScreen();
     container.clear();
     isPopup = true;
+  }
+
+  public void ignore(final Element elm) {
+    DOM.sinkEvents(elm, Event.ONCLICK);
+    DOM.setEventListener(elm, new EventListener() {
+
+      @Override
+      public void onBrowserEvent(final Event event) {
+        if (DOM.eventGetType(event) == Event.ONCLICK) {
+          if (isIgnore) {
+            return;
+          }
+          isIgnore = true;
+          ignoreLeft = elm.getAbsoluteLeft();
+          ignoreTop = elm.getAbsoluteTop();
+          ignoreBottom = elm.getClientHeight() + ignoreTop;
+          ignoreRight = elm.getClientWidth() + ignoreLeft;
+        }
+      }
+    });
   }
 
   public void show(final Element attchElm, final Widget popupPanel) {
@@ -143,6 +175,24 @@ public class PopupContainer extends SimplePanel {
     mainStyle.clearLeft();
     mainStyle.clearRight();
     mainStyle.clearBottom();
+  }
+
+  private boolean ignoreCope(final ClickEvent e) {
+    if (!isIgnore) {
+      return false;
+    }
+    int x = e.getClientX();
+    int y = e.getClientY();
+    if ((x >= ignoreLeft && x <= ignoreRight) && (y >= ignoreTop && y <= ignoreBottom)) {
+      return true;
+    } else {
+      isIgnore = false;
+      ignoreLeft = 0;
+      ignoreTop = 0;
+      ignoreBottom = 0;
+      ignoreRight = 0;
+    }
+    return false;
   }
 
   private void setFullScreen() {
