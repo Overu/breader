@@ -14,6 +14,7 @@ import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.ValueUpdater;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.cellview.client.Column;
@@ -37,7 +38,7 @@ import com.googlecode.mgwt.ui.client.widget.buttonbar.TrashButton;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -238,7 +239,7 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
     editableCells = new ArrayList<AbstractEditableCell<?, ?>>();
     dataProvider = new ListDataProvider<Book>();
     listHandler = new ListHandler<Book>(dataProvider.getList());
-    columns = new HashMap<String, ColumnEntity<Book>>();
+    columns = new LinkedHashMap<String, ColumnEntity<Book>>();
     csddPanel.addAscElmHandle(new Function() {
       @Override
       public boolean f(final Event event) {
@@ -309,6 +310,19 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
     cellTable.addColumn(bookCheck, header);
     cellTable.setColumnWidth(bookCheck, 2, Unit.PX);
 
+    Column<Book, String> bookImage = addColumn(new ImageCell(), new GetValue<String>() {
+
+      @Override
+      public String getValue(final Book book) {
+        if (book.getCover() == null) {
+          return "";
+        }
+        return GWT.getModuleBaseURL() + "resources/" + book.getCover().getId();
+      }
+    }, null);
+    ColumnEntity<Book> bookImageColumn = new ColumnEntity<Book>(bookImage, 4, 4);
+    columns.put("", bookImageColumn);
+
     Column<Book, Book> bookTitle = addColumn(cellProvider.get(), new GetValue<Book>() {
 
       @Override
@@ -316,6 +330,7 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
         return book;
       }
     }, null);
+
     Header<String> bookTitleHeader =
         new Header<String>(new SortButtonCell<String>(delegate, bookTitle) {
           @Override
@@ -371,17 +386,6 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
         });
     ColumnEntity<Book> bookDescriptionColumn = new ColumnEntity<Book>(bookDescription, 3, 4);
     columns.put("简介", bookDescriptionColumn);
-
-    Column<Book, String> bookImage = addColumn(new ImageCell(), new GetValue<String>() {
-
-      @Override
-      public String getValue(final Book book) {
-        return "";
-        // return GWT.getModuleBaseURL() + "resources/" + book.getCover().getId();
-      }
-    }, null);
-    ColumnEntity<Book> bookImageColumn = new ColumnEntity<Book>(bookImage, 4, 4);
-    columns.put("图片", bookImageColumn);
 
     // FlowPanel flowPanel = new FlowPanel();
     for (final Map.Entry<String, ColumnEntity<Book>> entry : columns.entrySet()) {

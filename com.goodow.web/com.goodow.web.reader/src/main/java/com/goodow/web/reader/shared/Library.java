@@ -21,8 +21,15 @@ public class Library extends WebContent {
   @Transient
   private List<Book> books;
 
+  @Transient
+  private List<Magazine> magazines;
+
   public List<Book> getBooks() {
     return books;
+  }
+
+  public List<Magazine> getMagazines() {
+    return magazines;
   }
 
   public String getTitle() {
@@ -31,6 +38,10 @@ public class Library extends WebContent {
 
   public void setBooks(final List<Book> books) {
     this.books = books;
+  }
+
+  public void setMagazines(final List<Magazine> magazines) {
+    this.magazines = magazines;
   }
 
   public void setTitle(final String title) {

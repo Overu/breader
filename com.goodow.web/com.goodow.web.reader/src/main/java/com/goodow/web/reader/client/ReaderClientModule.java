@@ -51,10 +51,12 @@ public final class ReaderClientModule extends AbstractGinModule {
 
       homePlace.setWidget(readerApp);
 
-      WebPlace booksPlace = homePlace.getChild("books");
+      WebPlace magazinesPlace = homePlace.getChild("magazines");
+      magazinesPlace.setTitle("杂志");
+      magazinesPlace.setWidget(booksBrowser);
 
-      booksPlace.addChild(editGridPlace);
-      booksPlace.addChild(cellListDragPlace);
+      magazinesPlace.addChild(editGridPlace);
+      magazinesPlace.addChild(cellListDragPlace);
 
       editGridPlace.setPath("editgrid");
       editGridPlace.setTitle("制作杂志");

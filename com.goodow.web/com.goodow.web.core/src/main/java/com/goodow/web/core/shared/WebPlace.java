@@ -116,13 +116,13 @@ public class WebPlace extends Place {
     if (property != null) {
       result = placeProvider.get();
       result.setObjectType((ObjectType) property.getType());
+      result.setPath(path);
+      addChild(result);
     } else if (isFeed()) {
       result = placeProvider.get();
       result.setObjectType((ObjectType) getProperty().getType());
-    }
-    if (result != null) {
       result.setPath(path);
-      addChild(result);
+      result.parent = this;
     }
     return result;
   }
@@ -190,12 +190,14 @@ public class WebPlace extends Place {
   public Collection<WebPlace> getViewers() {
     if (viewers == null) {
       viewers = new HashMap<ViewType, WebPlace>();
-      for (ViewType viewType : getObjectType().getViewers()) {
-        WebPlace place = placeProvider.get();
-        place.setViewType(viewType);
-        place.setTitle(viewType.getTitle());
-        place.parent = this;
-        viewers.put(viewType, place);
+      if (getObjectType() != null) {
+        for (ViewType viewType : getObjectType().getViewers()) {
+          WebPlace place = placeProvider.get();
+          place.setViewType(viewType);
+          place.setTitle(viewType.getTitle());
+          place.parent = this;
+          viewers.put(viewType, place);
+        }
       }
     }
     return viewers.values();
