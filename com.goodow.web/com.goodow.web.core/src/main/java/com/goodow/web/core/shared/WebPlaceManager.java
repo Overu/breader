@@ -35,13 +35,6 @@ public class WebPlaceManager implements PlaceHistoryMapper {
   public void goTo(final String uri) {
     WebPlace place = homePlace.findChild(uri);
     if (place != null) {
-      if (place.isFeed()) {
-        place = place.getViewerPlace(FeedViewer.ALL_CONTENT);
-      } else {
-        place = place.getViewerPlace(EntryViewer.EDIT);
-      }
-    }
-    if (place != null) {
       placeController.goTo(place);
     }
   }

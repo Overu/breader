@@ -1,7 +1,7 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.core.client.FlowView;
-import com.goodow.web.core.shared.ContainerViewer;
+import com.goodow.web.core.shared.FeedViewer;
 import com.goodow.web.core.shared.HomePlace;
 import com.goodow.web.core.shared.WebPlace;
 import com.goodow.web.core.shared.WebPlaceManager;
@@ -24,10 +24,10 @@ public class ReaderApp extends FlowView {
   private TopBarButton booksButton;
 
   @Inject
-  private TopBarButton topBarButton;
+  private TopBarButton magazinesButton;
 
   @Inject
-  private TopBarButton topBarButton1;
+  private TopBarButton topBarButton;
 
   @Inject
   private TopBarButton topBarButton2;
@@ -77,20 +77,26 @@ public class ReaderApp extends FlowView {
     booksButton.addDomHandler(new ClickHandler() {
       @Override
       public void onClick(final ClickEvent event) {
-        placeManager.goTo("/books", ContainerViewer.FEED);
+        placeManager.goTo("/books", FeedViewer.MY_CONTENT);
+      }
+    }, ClickEvent.getType());
+
+    magazinesButton.setTitle("杂志");
+    magazinesButton.addDomHandler(new ClickHandler() {
+      @Override
+      public void onClick(final ClickEvent event) {
+        placeManager.goTo("/magazines");
       }
     }, ClickEvent.getType());
 
     topBarButton.setPopupComponent(pci);
     topBarButton.setTitle("社区");
-    topBarButton1.setPopupComponent(pci1);
-    topBarButton1.setTitle("应用程序");
     topBarButton2.setPopupComponent(pci2);
-    topBarButton2.setTitle("用户管理");
-    topBarButton3.setTitle("共享");
+    topBarButton2.setTitle("登录");
+    topBarButton3.setTitle("客户端");
     bannerPanel.addTopBarButton(booksButton, LocationPanel.Left);
+    bannerPanel.addTopBarButton(magazinesButton, LocationPanel.Left);
     bannerPanel.addTopBarButton(topBarButton, LocationPanel.Left);
-    bannerPanel.addTopBarButton(topBarButton1, LocationPanel.Left);
     bannerPanel.addTopBarButton(topBarButton2, LocationPanel.Right);
     bannerPanel.addTopBarButton(topBarButton3, LocationPanel.Right);
 

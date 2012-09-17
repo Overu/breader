@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlType
 @Entity
-@Table(name = "t_book")
-public class Book extends Publication {
+@Table(name = "t_magazine")
+public class Magazine extends Publication {
 
 }

@@ -135,6 +135,7 @@ public class WebGenerator extends AbstractProcessor {
 
     try {
       String serviceName = "Async" + serviceType.getSimpleName().toString();
+      boolean isFinal = serviceType.getModifiers().contains(Modifier.FINAL);
 
       String implClassName = pkgName + "." + serviceName;
       String superServiceName;
@@ -162,6 +163,10 @@ public class WebGenerator extends AbstractProcessor {
       String typeName = entityType.getQualifiedName().toString();
 
       w.print("public class ").print(serviceName);
+
+      // if (!isFinal) {
+      // w.print("<T>");
+      // }
 
       List<? extends TypeParameterElement> typeVars = serviceType.getTypeParameters();
       if (!typeVars.isEmpty()) {
