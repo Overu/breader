@@ -20,6 +20,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.Header;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.MultiSelectionModel;
@@ -238,7 +239,6 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
     editableCells = new ArrayList<AbstractEditableCell<?, ?>>();
     dataProvider = new ListDataProvider<Book>();
     listHandler = new ListHandler<Book>(dataProvider.getList());
-    columns = new LinkedHashMap<String, ColumnEntity<Book>>();
     columns = new LinkedHashMap<String, ColumnEntity<Book>>();
     csddPanel.addAscElmHandle(new Function() {
       @Override
