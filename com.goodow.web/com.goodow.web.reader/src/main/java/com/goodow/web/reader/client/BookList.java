@@ -5,7 +5,6 @@ import com.goodow.web.core.client.css.AppBundle;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.reader.client.ColumnSortEvent.ListHandler;
 import com.goodow.web.reader.client.ColumnSortEvent.Sort;
-import com.goodow.web.reader.client.editgrid.Function;
 import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
@@ -20,7 +19,6 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.Header;
-import com.google.gwt.user.client.Event;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.MultiSelectionModel;
@@ -240,21 +238,6 @@ public class BookList extends FlowView implements Receiver<List<Book>> {
     dataProvider = new ListDataProvider<Book>();
     listHandler = new ListHandler<Book>(dataProvider.getList());
     columns = new LinkedHashMap<String, ColumnEntity<Book>>();
-    csddPanel.addAscElmHandle(new Function() {
-      @Override
-      public boolean f(final Event event) {
-        asc();
-        return true;
-      }
-    });
-
-    csddPanel.addDscElmHandle(new Function() {
-      @Override
-      public boolean f(final Event event) {
-        dsc();
-        return true;
-      }
-    });
 
     ProvidesKey<Book> keyProvider = new ProvidesKey<Book>() {
 
