@@ -210,6 +210,14 @@ public class BookList extends FlowView implements Receiver<List<Book>>, ColumnVi
 
   @Override
   public void onColumnVisiable(final ColumnVisiableEvent columnVisiableEvent) {
+    boolean checked = columnVisiableEvent.isChecked();
+    ColumnEntity<Book> columnEntity = (ColumnEntity<Book>) columnVisiableEvent.getColumnEntity();
+    if (checked) {
+      cellTable.setColumnWidth(columnEntity.getColumn(), columnEntity.getWidth(), Unit.PX);
+    } else {
+      cellTable.setColumnWidth(columnEntity.getColumn(), 0, Unit.PX);
+    }
+    popupContainer.refresh();
   }
 
   @Override
@@ -364,28 +372,6 @@ public class BookList extends FlowView implements Receiver<List<Book>>, ColumnVi
     }, null);
     ColumnEntity<Book> imageColumnEntity = new ColumnEntity<Book>(imageColumn, 4, 4);
     putColumn(addHeader(imageName, imageColumn), imageColumnEntity);
-
-    // FlowPanel flowPanel = new FlowPanel();
-    // for (final Map.Entry<String, ColumnEntity<Book>> entry : columns.entrySet()) {
-    // final Column<Book, ?> column = entry.getValue().getColumn();
-    // String title = entry.getKey();
-    // final CheckBox checkBox = new CheckBox(title);
-    // flowPanel.add(checkBox);
-    // cellTable.addColumn(column, title);
-    // cellTable.setColumnWidth(column, entry.getValue().getWidth(), Unit.PX);
-    // checkBox.setValue(true);
-    // checkBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-    //
-    // @Override
-    // public void onValueChange(final ValueChangeEvent<Boolean> event) {
-    // if (event.getValue()) {
-    // cellTable.setColumnWidth(column, entry.getValue().getWidth(), Unit.PX);
-    // } else {
-    // cellTable.setColumnWidth(column, 0, Unit.PX);
-    // }
-    // }
-    // });
-    // }
 
     // scrollPanel.setWidget(new SimplePanel(cellTable));
     // scrollPanel.setScrollingEnabledX(false);

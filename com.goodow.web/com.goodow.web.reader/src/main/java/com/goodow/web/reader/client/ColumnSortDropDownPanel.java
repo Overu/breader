@@ -6,6 +6,7 @@ import com.goodow.web.reader.client.editgrid.Function;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -77,12 +78,21 @@ public class ColumnSortDropDownPanel extends DropDownPanel {
     map.put(header, columnEntity);
     com.google.gwt.user.client.Element div = DOM.createDiv();
     com.google.gwt.user.client.Element headerDiv = DOM.createDiv();
-    com.google.gwt.user.client.Element inputCheck = DOM.createInputCheck();
+    final InputElement inputCheck =
+        DOM.createInputCheck().<com.google.gwt.dom.client.InputElement> cast();
     headerDiv.setInnerText(header);
-    inputCheck.setAttribute(CHECKED, "");
+    inputCheck.setChecked(true);
     div.appendChild(inputCheck);
     div.appendChild(headerDiv);
     columnContainer.appendChild(div);
+    addElmHandle(inputCheck, new Function() {
+      @Override
+      public boolean f(final Event event) {
+        ColumnVisiableEvent
+            .fire(ColumnSortDropDownPanel.this, columnEntity, inputCheck.isChecked());
+        return true;
+      }
+    });
   }
 
   public HandlerRegistration addColumnSortHandler(final ColumnSortEvent.Handler handler) {

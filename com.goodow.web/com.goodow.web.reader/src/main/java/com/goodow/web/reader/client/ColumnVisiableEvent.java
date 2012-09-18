@@ -13,8 +13,8 @@ public class ColumnVisiableEvent extends GwtEvent<ColumnVisiableEvent.Handle> {
   public static Type<Handle> TYPE = new Type<Handle>();
 
   public static ColumnVisiableEvent fire(final HasHandlers source,
-      final ColumnEntity<?> columnEntity) {
-    ColumnVisiableEvent event = new ColumnVisiableEvent(columnEntity);
+      final ColumnEntity<?> columnEntity, final boolean checked) {
+    ColumnVisiableEvent event = new ColumnVisiableEvent(columnEntity, checked);
     if (TYPE != null) {
       source.fireEvent(event);
     }
@@ -22,9 +22,11 @@ public class ColumnVisiableEvent extends GwtEvent<ColumnVisiableEvent.Handle> {
   }
 
   private ColumnEntity<?> columnEntity;
+  private boolean checked;
 
-  public ColumnVisiableEvent(final ColumnEntity<?> columnEntity) {
+  public ColumnVisiableEvent(final ColumnEntity<?> columnEntity, final boolean checked) {
     this.columnEntity = columnEntity;
+    this.checked = checked;
   }
 
   @Override
@@ -34,6 +36,14 @@ public class ColumnVisiableEvent extends GwtEvent<ColumnVisiableEvent.Handle> {
 
   public ColumnEntity<?> getColumnEntity() {
     return columnEntity;
+  }
+
+  public boolean isChecked() {
+    return checked;
+  }
+
+  public void setChecked(final boolean checked) {
+    this.checked = checked;
   }
 
   @Override
