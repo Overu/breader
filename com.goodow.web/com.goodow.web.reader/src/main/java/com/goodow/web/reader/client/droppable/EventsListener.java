@@ -161,7 +161,8 @@ public class EventsListener implements EventListener {
   }
 
   public void dispatchEvent(final Event event) {
-    int etype = getTypeInt(event.getType());
+    // int etype = getTypeInt(event.getType());
+    int etype = DOM.eventGetType(event);
     for (int i = 0; i < elementEvents.length(); i++) {
       BindFunction listener = elementEvents.get(i);
       if (listener.hasEventType(etype)) {

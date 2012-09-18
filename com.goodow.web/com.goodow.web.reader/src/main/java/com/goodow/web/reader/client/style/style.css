@@ -30,9 +30,19 @@ body {
   outline: 0px;
 }
 
+@sprite 
 .sortButtonCell {
+  gwt-image: "trangleButton";
   display: inline-block;
-  background-color: red;
+  /* background-color: red;
   width: 20px;
-  height: 10px;
+  height: 10px; */
+}
+
+@sprite 
+.sortButtonCellaction {
+  gwt-image: "trangleButtoned";
+  /* background-color: red;
+  width: 20px;
+  height: 10px; */
 }

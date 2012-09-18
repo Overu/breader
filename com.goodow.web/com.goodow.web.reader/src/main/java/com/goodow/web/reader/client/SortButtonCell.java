@@ -21,7 +21,7 @@ public abstract class SortButtonCell<T> extends AbstractCell<T> {
   }
 
   public interface Template extends SafeHtmlTemplates {
-    @SafeHtmlTemplates.Template("<div style=\"display: inline-block;\">{0}</div><div class=\"{1}\"></div>")
+    @SafeHtmlTemplates.Template("<div style=\"display: inline-block;padding: 0 5px 0 0;\">{0}</div><div class=\"{1}\"></div>")
     SafeHtml content(String name, String className);
   }
 

@@ -4,6 +4,7 @@ import com.goodow.web.core.client.FlowView;
 import com.goodow.web.core.client.css.AppBundle;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.reader.client.ColumnSortEvent.ListHandler;
+import com.goodow.web.reader.client.style.ReadResources;
 import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
@@ -123,6 +124,7 @@ public class BookList extends FlowView implements Receiver<List<Book>>, ColumnVi
     @Override
     public void execute(final String object, final Column<?, ?> column, final Element curElm) {
       BookList.this.csddPanel.setCurColumn(column);
+      popupContainer.setActionClassName(ReadResources.INSTANCE().css().sortButtonCellaction());
       popupContainer.show(curElm.<com.google.gwt.user.client.Element> cast(),
           BookList.this.csddPanel);
     }

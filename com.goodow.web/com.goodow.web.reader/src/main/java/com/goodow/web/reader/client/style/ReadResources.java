@@ -77,6 +77,8 @@ public class ReadResources {
   public interface Style extends CssResource {
     String sortButtonCell();
 
+    String sortButtonCellaction();
+
     String topBarButtonHOVER();
 
     String trangleCell();

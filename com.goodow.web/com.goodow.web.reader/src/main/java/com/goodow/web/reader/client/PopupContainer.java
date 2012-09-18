@@ -26,6 +26,7 @@ public class PopupContainer extends SimplePanel {
 
   private Style mainStyle;
   private Style containerStyle;
+  private String actionClassName;
 
   private SimplePanel container;
   private Element attchElm;
@@ -35,9 +36,8 @@ public class PopupContainer extends SimplePanel {
   private int ignoreLeft;
   private int ignoreBottom;
   private int ignoreRight;
-
-  int absoluteLeft;
-  int absoluteTop;
+  private int absoluteLeft;
+  private int absoluteTop;
 
   private boolean isPopup = true;
   private boolean isIgnore = false;
@@ -73,7 +73,6 @@ public class PopupContainer extends SimplePanel {
         hide();
       }
     }, ClickEvent.getType());
-
   }
 
   public <H extends EventHandler> HandlerRegistration addContainerHandle(final H handler,
@@ -91,10 +90,18 @@ public class PopupContainer extends SimplePanel {
     showBase(this.getElement(), dialogWidget, loction);
   }
 
+  public String getActionClassName() {
+    return actionClassName == null || actionClassName.equals("") ? null : actionClassName;
+  }
+
   public void hide() {
-    if (this.getWidget() == null) {
+    if (container.getWidget() == null) {
       return;
     }
+    if (getActionClassName() != null && attchElm != null) {
+      attchElm.removeClassName(getActionClassName());
+    }
+    setActionClassName(null);
     containerStyle.clearTop();
     containerStyle.clearLeft();
     setFullScreen();
@@ -128,6 +135,10 @@ public class PopupContainer extends SimplePanel {
       return;
     }
     showBase(attchElm, popupPanel, curLoction);
+  }
+
+  public void setActionClassName(final String actionClassName) {
+    this.actionClassName = actionClassName;
   }
 
   public void show(final Element attchElm, final Widget popupPanel) {
@@ -222,6 +233,9 @@ public class PopupContainer extends SimplePanel {
     this.curLoction = loction;
     absoluteLeft = attchElm.getAbsoluteLeft();
     absoluteTop = attchElm.getAbsoluteTop();
+    if (getActionClassName() != null) {
+      attchElm.addClassName(getActionClassName());
+    }
     if (popupPanel != container.getWidget()) {
       container.setWidget(popupPanel);
     }
