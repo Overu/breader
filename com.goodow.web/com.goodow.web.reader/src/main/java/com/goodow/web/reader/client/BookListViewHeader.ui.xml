@@ -1,0 +1,30 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+
+  <ui:style>
+    .root {
+      margin: 2px 5px 5px 2px;
+    }
+    
+    .root>div {
+      display: inline-block;
+    }
+    
+    .root>div>label {
+      color: #1970B0;
+      cursor: pointer;
+      margin: 0 5px 0 0;
+    }
+    
+    .root>div>label:HOVER {
+      color: #05386B;
+      text-decoration: underline;
+    }
+  </ui:style>
+
+  <g:HTMLPanel addStyleNames="{style.root}">
+    <input ui:field="checkBoxElm" type="checkbox" value="on" />
+    <label>排序依据：</label>
+    <div ui:field="sortContainer"></div>
+  </g:HTMLPanel>
+</ui:UiBinder>

@@ -3,7 +3,6 @@ package com.goodow.web.reader.client;
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
-import com.google.gwt.user.cellview.client.Column;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,8 +19,7 @@ public class ColumnSortEvent extends GwtEvent<ColumnSortEvent.Handler> {
 
   public static class ListHandler<T> implements Handler {
 
-    private final Map<Column<?, ?>, Comparator<T>> comparators =
-        new HashMap<Column<?, ?>, Comparator<T>>();
+    private final Map<String, Comparator<T>> comparators = new HashMap<String, Comparator<T>>();
     private List<T> list;
     private Sort curSort;
 
@@ -35,17 +33,21 @@ public class ColumnSortEvent extends GwtEvent<ColumnSortEvent.Handler> {
 
     @Override
     public void onColumnSort(final ColumnSortEvent event) {
-      Column<?, ?> column = event.getColumn();
-      if (column == null) {
+      String header = event.getHeader();
+      if (header == null || header.equals("")) {
         return;
       }
 
-      final Comparator<T> comparator = comparators.get(column);
+      final Comparator<T> comparator = comparators.get(header);
       if (comparator == null) {
         return;
       }
 
       Sort sort = event.getSort();
+
+      if (sort == null) {
+        sort = curSort != Sort.ASC ? Sort.ASC : Sort.DSC;
+      }
       if (curSort != null && curSort.equals(sort)) {
         return;
       }
@@ -63,8 +65,8 @@ public class ColumnSortEvent extends GwtEvent<ColumnSortEvent.Handler> {
       curSort = sort;
     }
 
-    public void setComparator(final Column<T, ?> column, final Comparator<T> comparator) {
-      comparators.put(column, comparator);
+    public void setComparator(final String header, final Comparator<T> comparator) {
+      comparators.put(header, comparator);
     }
 
     public void setList(final List<T> list) {
@@ -92,21 +94,24 @@ public class ColumnSortEvent extends GwtEvent<ColumnSortEvent.Handler> {
 
   public static Type<Handler> TYPE = new Type<Handler>();
 
-  public static ColumnSortEvent fire(final HasHandlers source, final Column<?, ?> column,
-      final Sort sort) {
-    ColumnSortEvent event = new ColumnSortEvent(column, sort);
+  public static ColumnSortEvent fire(final HasHandlers source, final String header) {
+    return fire(source, header, null);
+  }
+
+  public static ColumnSortEvent fire(final HasHandlers source, final String header, final Sort sort) {
+    ColumnSortEvent event = new ColumnSortEvent(header, sort);
     if (TYPE != null) {
       source.fireEvent(event);
     }
     return event;
   }
 
-  private Column<?, ?> column;
+  private String header;
   private Sort sort;
 
-  public ColumnSortEvent(final Column<?, ?> column, final Sort sort) {
-    this.setColumn(column);
+  public ColumnSortEvent(final String header, final Sort sort) {
     this.setSort(sort);
+    this.setHeader(header);
   }
 
   @Override
@@ -114,16 +119,16 @@ public class ColumnSortEvent extends GwtEvent<ColumnSortEvent.Handler> {
     return TYPE;
   }
 
-  public Column<?, ?> getColumn() {
-    return column;
+  public String getHeader() {
+    return header;
   }
 
   public Sort getSort() {
     return sort;
   }
 
-  public void setColumn(final Column<?, ?> column) {
-    this.column = column;
+  public void setHeader(final String header) {
+    this.header = header;
   }
 
   public void setSort(final Sort sort) {

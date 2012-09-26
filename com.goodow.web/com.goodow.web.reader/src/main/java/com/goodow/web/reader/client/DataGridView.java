@@ -1,10 +1,6 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.client.FlowView;
-import com.goodow.web.core.client.css.AppBundle;
 import com.goodow.web.core.shared.Receiver;
-import com.goodow.web.reader.client.ColumnSortEvent.ListHandler;
-import com.goodow.web.reader.client.style.ReadResources;
 import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
@@ -12,32 +8,34 @@ import com.google.gwt.cell.client.AbstractEditableCell;
 import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.cell.client.ValueUpdater;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.cellview.client.AbstractHasData;
 import com.google.gwt.user.cellview.client.Column;
+import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.Header;
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.MultiSelectionModel;
-import com.google.gwt.view.client.ProvidesKey;
 import com.google.gwt.view.client.SelectionModel;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.Singleton;
 
-import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
-import com.googlecode.mgwt.ui.client.widget.buttonbar.ActionButton;
-import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
-import com.googlecode.mgwt.ui.client.widget.buttonbar.RefreshButton;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.TrashButton;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class BookList extends FlowView implements Receiver<List<Book>>, ColumnVisiableEvent.Handle {
+@Singleton
+public class DataGridView extends Composite implements Receiver<List<Book>>, BaseViewBrowser {
 
   private static class BookSelectionChange extends PendingChange<Boolean> {
 
@@ -106,43 +104,17 @@ public class BookList extends FlowView implements Receiver<List<Book>>, ColumnVi
   @Inject
   Provider<BookHyperlinkCell> cellProvider;
 
-  // @Inject
-  // private ScrollPanel scrollPanel;
-
   private DataGrid<Book> cellTable;
 
   private ListDataProvider<Book> dataProvider;
 
   private List<AbstractEditableCell<?, ?>> editableCells;
 
-  private List<PendingChange<?>> pendingChanges = new ArrayList<BookList.PendingChange<?>>();
+  private ListHandler<Book> listHandler;
 
-  private SortButtonCell.Delegate<String> delegate = new SortButtonCell.Delegate<String>() {
-
-    @Override
-    public void execute(final String object, final Element curElm) {
-      BookList.this.csddPanel.setCurHeader(object);
-      popupContainer.setActionClassName(ReadResources.INSTANCE().css().sortButtonCellaction());
-      popupContainer.show(curElm.<com.google.gwt.user.client.Element> cast(),
-          BookList.this.csddPanel);
-    }
-  };
+  private List<PendingChange<?>> pendingChanges = new ArrayList<DataGridView.PendingChange<?>>();
 
   ArrayList<Book> books;
-
-  ListHandler<Book> listHandler;
-
-  @Inject
-  ButtonBar buttonBar;
-
-  @Inject
-  RefreshButton refreshButton;
-
-  @Inject
-  ActionButton actionButton;
-
-  // @Inject
-  // ActionButton dialogButton;
 
   @Inject
   TrashButton deleteButton;
@@ -150,11 +122,18 @@ public class BookList extends FlowView implements Receiver<List<Book>>, ColumnVi
   @Inject
   AsyncBookService bookService;
 
-  @Inject
-  ColumnSortDropDownPanel csddPanel;
-
-  @Inject
-  PopupContainer popupContainer;
+  public DataGridView() {
+    cellTable = new DataGrid<Book>(6, BaseViewBrowser.keyProvider);
+    getCellTable().setWidth("100%");
+    removeHeaderElmShade();
+    initWidget(getCellTable());
+    new Timer() {
+      @Override
+      public void run() {
+        start();
+      }
+    }.schedule(1);
+  }
 
   public <C> Column<Book, C> addColumn(final Cell<C> cell, final GetValue<C> getValue,
       final FieldUpdater<Book, C> fieldUpdater) {
@@ -175,12 +154,8 @@ public class BookList extends FlowView implements Receiver<List<Book>>, ColumnVi
   }
 
   public Header<String> addHeader(final String name) {
-    Header<String> header = new Header<String>(new SortButtonCell<String>(delegate) {
-      @Override
-      public String getValue(final String value) {
-        return value;
-      }
-    }) {
+    // Header<String> header = new Header<String>(new SortButtonCell<String>(delegate, column) {
+    Header<String> header = new Header<String>(new TextCell()) {
 
       @Override
       public String getValue() {
@@ -208,66 +183,65 @@ public class BookList extends FlowView implements Receiver<List<Book>>, ColumnVi
 
   }
 
+  public DataGrid<Book> getCellTable() {
+    return cellTable;
+  }
+
   @Override
-  public void onColumnVisiable(final ColumnVisiableEvent columnVisiableEvent) {
-    boolean checked = columnVisiableEvent.isChecked();
-    ColumnEntity<Book> columnEntity = (ColumnEntity<Book>) columnVisiableEvent.getColumnEntity();
-    if (checked) {
-      cellTable.setColumnWidth(columnEntity.getColumn(), columnEntity.getWidth(), Unit.PX);
-    } else {
-      cellTable.setColumnWidth(columnEntity.getColumn(), 0, Unit.PX);
-    }
-    popupContainer.refresh();
+  public <T extends AbstractHasData<Book>> T getCellView() {
+    return (T) cellTable;
+  }
+
+  @Override
+  public Widget getView() {
+    return this;
   }
 
   @Override
   public void onSuccess(final List<Book> result) {
-    if (cellTable != null) {
-      dataProvider.setList(result);
-      listHandler.setList(dataProvider.getList());
-      if (!dataProvider.getDataDisplays().contains(cellTable)) {
-        dataProvider.addDataDisplay(cellTable);
-      }
+    dataProvider.setList(result);
+    listHandler.setList(dataProvider.getList());
+    if (!dataProvider.getDataDisplays().contains(getCellTable())) {
+      dataProvider.addDataDisplay(getCellTable());
     }
   }
 
+  @Override
+  public void refresh() {
+    bookService.getMyBooks().fire(this);
+  }
+
   public void removeHeaderElmShade() {
-    Element headerElm1 = cellTable.getElement().getFirstChildElement().getFirstChildElement();
+    Element headerElm1 = getCellTable().getElement().getFirstChildElement().getFirstChildElement();
     Element headerElm2 = headerElm1.getNextSiblingElement();
     headerElm1.removeFromParent();
     headerElm2.removeFromParent();
   }
 
   @Override
-  protected void onUnload() {
-    super.onUnload();
-    if (dataProvider.getDataDisplays().contains(cellTable)) {
-      dataProvider.removeDataDisplay(cellTable);
-    }
+  protected void onLoad() {
+    super.onLoad();
+    refresh();
   }
 
   @Override
+  protected void onUnload() {
+    super.onUnload();
+    if (dataProvider.getDataDisplays().contains(getCellTable())) {
+      dataProvider.removeDataDisplay(getCellTable());
+    }
+  }
+
   protected void start() {
     editableCells = new ArrayList<AbstractEditableCell<?, ?>>();
     dataProvider = new ListDataProvider<Book>();
     listHandler = new ListHandler<Book>(dataProvider.getList());
-    csddPanel.addColumnSortHandler(listHandler);
-    csddPanel.addColumnVisiableHandle(this);
+    cellTable.addColumnSortHandler(listHandler);
 
-    ProvidesKey<Book> keyProvider = new ProvidesKey<Book>() {
-
-      @Override
-      public Object getKey(final Book item) {
-        return item == null ? null : item.getId();
-      }
-    };
-    cellTable = new DataGrid<Book>(6, keyProvider);
-    cellTable.setWidth("100%");
-    removeHeaderElmShade();
-
-    final SelectionModel<Book> selectionModel = new MultiSelectionModel<Book>(keyProvider);
-    cellTable.setSelectionModel(selectionModel, DefaultSelectionEventManager
-        .<Book> createCheckboxManager(0));
+    final SelectionModel<Book> selectionModel =
+        new MultiSelectionModel<Book>(BaseViewBrowser.keyProvider);
+    getCellTable().setSelectionModel(selectionModel,
+        DefaultSelectionEventManager.<Book> createCheckboxManager(0));
 
     final Column<Book, Boolean> bookCheck = addColumn(new CheckboxCell(), new GetValue<Boolean>() {
 
@@ -298,15 +272,15 @@ public class BookList extends FlowView implements Receiver<List<Book>>, ColumnVi
 
       @Override
       public void update(final Boolean value) {
-        List<Book> visibleItems = cellTable.getVisibleItems();
+        List<Book> visibleItems = getCellTable().getVisibleItems();
         for (Book book : visibleItems) {
           selectionModel.setSelected(book, value);
           bookCheck.getFieldUpdater().update(0, book, value);
         }
       }
     });
-    cellTable.addColumn(bookCheck, header);
-    cellTable.setColumnWidth(bookCheck, 2, Unit.PX);
+    getCellTable().addColumn(bookCheck, header);
+    getCellTable().setColumnWidth(bookCheck, 2, Unit.PX);
 
     final String titleName = "书名";
     Column<Book, Book> bookTitleColumn = addColumn(cellProvider.get(), new GetValue<Book>() {
@@ -368,51 +342,34 @@ public class BookList extends FlowView implements Receiver<List<Book>>, ColumnVi
     }, null);
     putColumn(addHeader(imageName), imageColumn, 4);
 
-    // scrollPanel.setWidget(new SimplePanel(cellTable));
-    // scrollPanel.setScrollingEnabledX(false);
-    // scrollPanel.addStyleName(AppBundle.INSTANCE.css().webKitFlex());
-
-    cellTable.addStyleName(AppBundle.INSTANCE.css().webKitFlex());
-
-    // buttonBar.add(refreshButton);
-    // buttonBar.add(deleteButton);
-    // buttonBar.add(actionButton);
-
-    main.addStyleName(AppBundle.INSTANCE.css().fullScreenStyle());
-
-    main.add(cellTable);
-    // main.add(buttonBar);
-
-    refreshButton.addTapHandler(new TapHandler() {
-
-      @Override
-      public void onTap(final TapEvent event) {
-        refresh();
-      }
-    });
-
-    deleteButton.addTapHandler(new TapHandler() {
-
-      @Override
-      public void onTap(final TapEvent event) {
-        delete();
-      }
-    });
-
-    actionButton.addTapHandler(new TapHandler() {
-
-      @Override
-      public void onTap(final TapEvent event) {
-        for (PendingChange<?> pendingChange : pendingChanges) {
-          pendingChange.commit();
-        }
-        pendingChanges.clear();
-
-        dataProvider.refresh();
-      }
-    });
-
-    refresh();
+    // refreshButton.addTapHandler(new TapHandler() {
+    //
+    // @Override
+    // public void onTap(final TapEvent event) {
+    // refresh();
+    // }
+    // });
+    //
+    // deleteButton.addTapHandler(new TapHandler() {
+    //
+    // @Override
+    // public void onTap(final TapEvent event) {
+    // delete();
+    // }
+    // });
+    //
+    // actionButton.addTapHandler(new TapHandler() {
+    //
+    // @Override
+    // public void onTap(final TapEvent event) {
+    // for (PendingChange<?> pendingChange : pendingChanges) {
+    // pendingChange.commit();
+    // }
+    // pendingChanges.clear();
+    //
+    // dataProvider.refresh();
+    // }
+    // });
   }
 
   private void putColumn(final Header<String> header, final Column<Book, ?> column, final int width) {
@@ -421,13 +378,13 @@ public class BookList extends FlowView implements Receiver<List<Book>>, ColumnVi
 
   private void putColumn(final Header<String> header, final Column<Book, ?> column,
       final int width, final Comparator<Book> comparator) {
-    cellTable.addColumn(column, header);
-    cellTable.setColumnWidth(column, width, Unit.PX);
+    getCellTable().addColumn(column, header);
+    getCellTable().setColumnWidth(column, width, Unit.PX);
     if (comparator != null) {
-      listHandler.setComparator(header.getValue(), comparator);
+      column.setSortable(true);
+      listHandler.setComparator(column, comparator);
     }
     ColumnEntity<Book> entity = new ColumnEntity<Book>(column, width, comparator);
-    csddPanel.addColumn(header.getValue(), entity);
+    columns.put(header.getValue(), entity);
   }
-
 }

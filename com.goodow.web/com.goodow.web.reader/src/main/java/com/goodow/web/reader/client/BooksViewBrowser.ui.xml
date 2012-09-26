@@ -1,0 +1,139 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+  xmlns:o="urn:import:org.apache.xpath.operations">
+
+  <ui:style type="com.goodow.web.reader.client.BooksViewBrowser.MyStyle">
+    .main {
+      overflow: hidden;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+    }
+    
+    .button {
+      display: inline-block;
+      background-image: literal('-webkit-gradient(linear, left top, left bottom, from(#EDEDED), to(#E1E1E1))');
+      -webkit-border-radius: 3px;
+      padding: 7px 15px;
+      margin: 1px 4px 4px 3px;
+      text-shadow: 0 1px 1px white;
+      -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    .button:HOVER {
+      -webkit-box-shadow: 0 2px 1px rgba(0, 0, 0, 0.5);
+      color: black;
+    }
+    
+    .viewcontainer {
+      float: right;
+    }
+    
+    .viewcontainer>div {
+      display: inline-block;
+    }
+    
+    .toolbar {
+      background-image: literal('-webkit-gradient(linear, left top, left bottom, from(#EDEDED), to(#E1E1E1))');
+      -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+      -webkit-border-radius: 3px;
+      border: 0;
+      margin: 3px 5px 1px 0px;
+      padding: 3px;
+    }
+    
+    .toolbar>div {
+      width: 18px !important;
+      height: 18px !important;
+      float: left;
+      cursor: pointer;
+    }
+    
+    .toolbaron {
+      margin: 0px !important;
+      border: 1px solid #666;
+      background-color: transparent;
+      -webkit-border-radius: 2px;
+    }
+    
+    @sprite 
+    .toolbar>div:FIRST-CHILD {
+      gwt-image: "lotusHSprite";
+      background-position: -395px -7px;
+      margin: 1px;
+    }
+    
+    @sprite 
+    .toolbar>div:LAST-CHILD {
+      gwt-image: "lotusHSprite";
+      background-position: -351px -7px;
+      margin: 1px;
+    }
+    
+    .custombutton {
+      color: #1970B0;
+      cursor: pointer;
+      margin: 0 5px 0 0;
+    }
+    
+    .custombutton:HOVER {
+      color: #05386B;
+      text-decoration: underline;
+    }
+    
+    .checkrootnone {
+      display: none;
+    }
+    
+    .checkrootblack {
+      display: block;
+    }
+    
+    .checkContainer>div {
+      margin: 2px 2px 0px 2px;
+      display: inline-block;
+    }
+    
+    .checkContainer>div>div {
+      display: inline-block;
+    }
+    
+    .container {
+      height: 100%;
+    }
+    
+    .container>div {
+      height: 100%;
+    }
+  </ui:style>
+  <ui:image field="lotusHSprite" />
+
+  <g:HTMLPanel addStyleNames="{style.main}">
+    <div>
+      <div>
+        <div class="{style.viewcontainer}">
+          <div>显示：</div>
+          <div class="{style.toolbar}">
+            <div ui:field="customElm"></div>
+            <div ui:field="listElm"></div>
+          </div>
+          <div ui:field="customButton" class="{style.custombutton}">定制</div>
+        </div>
+        <div>
+          <div class="{style.button}">提交</div>
+          <div class="{style.button}">删除</div>
+          <div class="{style.button}">刷新</div>
+        </div>
+      </div>
+      <div class="{style.checkrootnone}">
+        <div ui:field="checkContainer" class="{style.checkContainer}"></div>
+        <div ui:field="cancelButton" class="{style.button}">取消</div>
+      </div>
+    </div>
+    <g:SimplePanel ui:field="container" addStyleNames="{style.container}"></g:SimplePanel>
+  </g:HTMLPanel>
+</ui:UiBinder>

@@ -11,7 +11,6 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.EventListener;
@@ -27,8 +26,6 @@ public class ColumnSortDropDownPanel extends DropDownPanel {
   interface Binder extends UiBinder<Widget, ColumnSortDropDownPanel> {
   }
 
-  public static final String CHECKED = "checked";
-
   private static Binder binder = GWT.create(Binder.class);
 
   @UiField
@@ -38,7 +35,7 @@ public class ColumnSortDropDownPanel extends DropDownPanel {
   @UiField
   DivElement columnContainer;
 
-  private Column<?, ?> curColumn;
+  private String curHeader;
   private Map<String, ColumnEntity<?>> map;
 
   @Inject
@@ -119,8 +116,8 @@ public class ColumnSortDropDownPanel extends DropDownPanel {
     });
   }
 
-  public Column<?, ?> getCurColumn() {
-    return curColumn;
+  public String getCurHeader() {
+    return curHeader;
   }
 
   @Override
@@ -128,8 +125,8 @@ public class ColumnSortDropDownPanel extends DropDownPanel {
     return binder.createAndBindUi(this);
   }
 
-  public void setCurColumn(final Column<?, ?> curColumn) {
-    this.curColumn = curColumn;
+  public void setCurHeader(final String curHeader) {
+    this.curHeader = curHeader;
   }
 
   private void asc() {
@@ -141,6 +138,6 @@ public class ColumnSortDropDownPanel extends DropDownPanel {
   }
 
   private void sort(final Sort sort) {
-    ColumnSortEvent.fire(this, getCurColumn(), sort);
+    ColumnSortEvent.fire(this, getCurHeader(), sort);
   }
 }

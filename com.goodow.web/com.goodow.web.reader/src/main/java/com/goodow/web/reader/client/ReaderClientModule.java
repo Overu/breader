@@ -36,7 +36,7 @@ public final class ReaderClientModule extends AbstractGinModule {
         final Provider<SectionsExplorer> sectionsExplorer, final ReaderApp readerApp,
         @HomePlace final WebPlace homePlace, final WebPlace editGridPlace,
         final WebPlace cellListDragPlace, final EditGridPanel editGridPanel,
-        final Provider<CellListDrag> cellListDrag) {
+        final Provider<CellListDrag> cellListDrag, final BooksViewBrowser booksViewBrowser) {
 
       ReaderPackage.Library.as().addViewer(ContainerViewer.ENTRY, readerApp);
 
@@ -46,7 +46,7 @@ public final class ReaderClientModule extends AbstractGinModule {
 
       ReaderPackage.Book.as().addViewer(ContainerViewer.FEED, booksBrowser);
       ReaderPackage.Book.as().addViewer(FeedViewer.NEW, bookForm);
-      ReaderPackage.Book.as().addViewer(FeedViewer.MY_CONTENT, mybooksList);
+      ReaderPackage.Book.as().addViewer(FeedViewer.MY_CONTENT, booksViewBrowser);
       ReaderPackage.Book.as().addViewer(FeedViewer.SELECTED_CONTENT, selectedBooks);
 
       homePlace.setWidget(readerApp);

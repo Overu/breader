@@ -12,12 +12,11 @@ import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
-import com.google.gwt.user.cellview.client.Column;
 
 public abstract class SortButtonCell<T> extends AbstractCell<T> {
 
   public static interface Delegate<T> {
-    void execute(T object, Column<?, ?> column, Element curElm);
+    void execute(T object, Element curElm);
   }
 
   public interface Template extends SafeHtmlTemplates {
@@ -27,12 +26,10 @@ public abstract class SortButtonCell<T> extends AbstractCell<T> {
 
   private static Template template = GWT.create(Template.class);
   private final Delegate<T> delegate;
-  private Column<?, ?> column;
 
-  public SortButtonCell(final Delegate<T> delegate, final Column<?, ?> column) {
+  public SortButtonCell(final Delegate<T> delegate) {
     super(BrowserEvents.CLICK);
     this.delegate = delegate;
-    this.column = column;
   }
 
   public abstract String getValue(T value);
@@ -61,6 +58,6 @@ public abstract class SortButtonCell<T> extends AbstractCell<T> {
   @Override
   protected void onEnterKeyDown(final Context context, final Element parent, final T value,
       final NativeEvent event, final ValueUpdater<T> valueUpdater) {
-    delegate.execute(value, column, parent);
+    delegate.execute(value, parent);
   }
 }
