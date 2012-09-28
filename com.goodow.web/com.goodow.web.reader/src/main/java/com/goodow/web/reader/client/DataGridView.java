@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.MultiSelectionModel;
-import com.google.gwt.view.client.SelectionModel;
+import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -33,6 +33,7 @@ import com.googlecode.mgwt.ui.client.widget.buttonbar.TrashButton;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 @Singleton
 public class DataGridView extends Composite implements Receiver<List<Book>>, BaseViewBrowser {
@@ -111,6 +112,8 @@ public class DataGridView extends Composite implements Receiver<List<Book>>, Bas
   private List<AbstractEditableCell<?, ?>> editableCells;
 
   private ListHandler<Book> listHandler;
+
+  private MultiSelectionModel<Book> selectionModel;
 
   private List<PendingChange<?>> pendingChanges = new ArrayList<DataGridView.PendingChange<?>>();
 
@@ -198,6 +201,15 @@ public class DataGridView extends Composite implements Receiver<List<Book>>, Bas
   }
 
   @Override
+  public boolean isChecked() {
+    Set<Book> selectedSet = selectionModel.getSelectedSet();
+    if (selectedSet.size() != 0) {
+      return true;
+    }
+    return false;
+  }
+
+  @Override
   public void onSuccess(final List<Book> result) {
     dataProvider.setList(result);
     listHandler.setList(dataProvider.getList());
@@ -238,10 +250,20 @@ public class DataGridView extends Composite implements Receiver<List<Book>>, Bas
     listHandler = new ListHandler<Book>(dataProvider.getList());
     cellTable.addColumnSortHandler(listHandler);
 
-    final SelectionModel<Book> selectionModel =
-        new MultiSelectionModel<Book>(BaseViewBrowser.keyProvider);
+    selectionModel = new MultiSelectionModel<Book>(BaseViewBrowser.keyProvider);
     getCellTable().setSelectionModel(selectionModel,
         DefaultSelectionEventManager.<Book> createCheckboxManager(0));
+    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+
+      @Override
+      public void onSelectionChange(final SelectionChangeEvent event) {
+        if (isChecked()) {
+          BooksViewBrowser.enable();
+          return;
+        }
+        BooksViewBrowser.diable();
+      }
+    });
 
     final Column<Book, Boolean> bookCheck = addColumn(new CheckboxCell(), new GetValue<Boolean>() {
 

@@ -10,27 +10,37 @@
       width: 100%;
     }
     
-    .button {
+    .main:FIRST-CHILD {
+      margin: 10px 0 10px 0;
+    }
+    
+    .buttonbase {
       display: inline-block;
       background-image: literal('-webkit-gradient(linear, left top, left bottom, from(#EDEDED), to(#E1E1E1))');
       -webkit-border-radius: 3px;
       padding: 7px 15px;
       margin: 1px 4px 4px 3px;
       text-shadow: 0 1px 1px white;
-      -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
-      cursor: pointer;
       font-size: 12px;
       font-weight: bold;
-      color: #333;
+      color: #7C7C7C;
+      border-width: 0;
+      -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
     }
     
-    .button:HOVER {
+    .buttonbase[enable] {
+      color: #333;
+      cursor: pointer;
+    }
+    
+    .buttonbase[enable]:HOVER {
       -webkit-box-shadow: 0 2px 1px rgba(0, 0, 0, 0.5);
       color: black;
     }
     
     .viewcontainer {
       float: right;
+      margin: 0 10px 0 0;
     }
     
     .viewcontainer>div {
@@ -42,8 +52,9 @@
       -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
       -webkit-border-radius: 3px;
       border: 0;
-      margin: 3px 5px 1px 0px;
+      margin: 0px 5px 1px 0px;
       padding: 3px;
+      overflow: auto;
     }
     
     .toolbar>div {
@@ -77,7 +88,7 @@
     .custombutton {
       color: #1970B0;
       cursor: pointer;
-      margin: 0 5px 0 0;
+      margin: 0 5px 0 5px;
     }
     
     .custombutton:HOVER {
@@ -87,6 +98,11 @@
     
     .checkrootnone {
       display: none;
+      margin: 8px;
+    }
+    
+    .checkrootnone>div:last-child {
+      margin: 20px 0 0 0;
     }
     
     .checkrootblack {
@@ -104,6 +120,7 @@
     
     .container {
       height: 100%;
+      margin: 15px 0 0 0;
     }
     
     .container>div {
@@ -116,22 +133,32 @@
     <div>
       <div>
         <div class="{style.viewcontainer}">
-          <div>显示：</div>
-          <div class="{style.toolbar}">
-            <div ui:field="customElm"></div>
-            <div ui:field="listElm"></div>
-          </div>
-          <div ui:field="customButton" class="{style.custombutton}">定制</div>
+          <table>
+            <tbody>
+              <tr>
+                <td>显示：</td>
+                <td>
+                  <div class="{style.toolbar}">
+                    <div ui:field="customElm"></div>
+                    <div ui:field="listElm"></div>
+                  </div>
+                </td>
+                <td>
+                  <div ui:field="customButton" class="{style.custombutton}">定制</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <div>
-          <div class="{style.button}">提交</div>
-          <div class="{style.button}">删除</div>
-          <div class="{style.button}">刷新</div>
+          <div ui:field="commitElm" class="{style.buttonbase}">提交</div>
+          <div ui:field="deleteElm" class="{style.buttonbase}">删除</div>
+          <div ui:field="refreshElm" class="{style.buttonbase}">刷新</div>
         </div>
       </div>
       <div class="{style.checkrootnone}">
         <div ui:field="checkContainer" class="{style.checkContainer}"></div>
-        <div ui:field="cancelButton" class="{style.button}">取消</div>
+        <div ui:field="cancelButton" class="{style.buttonbase}" enable="">取消</div>
       </div>
     </div>
     <g:SimplePanel ui:field="container" addStyleNames="{style.container}"></g:SimplePanel>

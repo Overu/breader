@@ -21,9 +21,13 @@ public interface BaseViewBrowser {
 
   Map<String, ColumnEntity<?>> columns = new HashMap<String, ColumnEntity<?>>();
 
+  boolean isChecked = false;
+
   public <T extends AbstractHasData<Book>> T getCellView();
 
   public Widget getView();
+
+  public boolean isChecked();
 
   public void refresh();
 }

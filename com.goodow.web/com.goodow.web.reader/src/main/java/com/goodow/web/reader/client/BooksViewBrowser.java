@@ -22,7 +22,6 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
-import java.util.Map;
 import java.util.Map.Entry;
 
 @Singleton
@@ -38,6 +37,26 @@ public class BooksViewBrowser extends Composite implements ColumnVisiableEvent.H
   }
 
   private static Binder binder = GWT.create(Binder.class);
+  private static final String ENABLE = "enable";
+
+  @UiField
+  protected static DivElement commitElm;
+  @UiField
+  protected static DivElement deleteElm;
+  @UiField
+  protected static DivElement refreshElm;
+
+  public static void diable() {
+    commitElm.removeAttribute(ENABLE);
+    deleteElm.removeAttribute(ENABLE);
+    refreshElm.removeAttribute(ENABLE);
+  }
+
+  public static void enable() {
+    commitElm.setAttribute(ENABLE, "");
+    deleteElm.setAttribute(ENABLE, "");
+    refreshElm.setAttribute(ENABLE, "");
+  }
 
   @UiField
   MyStyle style;
@@ -49,6 +68,7 @@ public class BooksViewBrowser extends Composite implements ColumnVisiableEvent.H
   DivElement listElm;
   @UiField
   DivElement customButton;
+
   @UiField
   DivElement cancelButton;
   @UiField
@@ -56,6 +76,7 @@ public class BooksViewBrowser extends Composite implements ColumnVisiableEvent.H
 
   @Inject
   private DataGridView dataGridView;
+
   @Inject
   private BookListView bookListView;
 
@@ -110,8 +131,10 @@ public class BooksViewBrowser extends Composite implements ColumnVisiableEvent.H
   public void onColumnVisiable(final ColumnVisiableEvent columnVisiableEvent) {
     boolean checked = columnVisiableEvent.isChecked();
     ColumnEntity<Book> columnEntity = (ColumnEntity<Book>) columnVisiableEvent.getColumnEntity();
-    setCurView(customElm, dataGridView);
-    DataGrid<Book> cellView = (DataGrid<Book>) currentView.getCellView();
+    if (currentView != dataGridView) {
+      setCurView(customElm, dataGridView);
+    }
+    DataGrid<Book> cellView = currentView.<DataGrid<Book>> getCellView();
     if (checked) {
       cellView.setColumnWidth(columnEntity.getColumn(), columnEntity.getWidth(), Unit.PX);
     } else {
@@ -144,8 +167,7 @@ public class BooksViewBrowser extends Composite implements ColumnVisiableEvent.H
     if (checkContainer.getChildCount() != 0) {
       return;
     }
-    Map<String, ColumnEntity<?>> map = dataGridView.columns;
-    for (Entry<String, ColumnEntity<?>> entry : map.entrySet()) {
+    for (Entry<String, ColumnEntity<?>> entry : dataGridView.columns.entrySet()) {
       String header = entry.getKey();
       final ColumnEntity<?> columnEntity = entry.getValue();
       com.google.gwt.user.client.Element div = DOM.createDiv();
@@ -186,4 +208,5 @@ public class BooksViewBrowser extends Composite implements ColumnVisiableEvent.H
   private void start() {
     setCurView(customElm, dataGridView);
   }
+
 }

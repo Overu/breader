@@ -27,7 +27,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.MultiSelectionModel;
-import com.google.gwt.view.client.SelectionModel;
+import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 
 @Singleton
 public class BookListView extends Composite implements Receiver<List<Book>>, BaseViewBrowser {
@@ -58,7 +59,7 @@ public class BookListView extends Composite implements Receiver<List<Book>>, Bas
 
   private CellList<Book> cellList;
   private ListDataProvider<Book> dataProvider;
-  private SelectionModel<Book> selectionModel;
+  private MultiSelectionModel<Book> selectionModel;
   private FlowPanel main;
   private ListHandler<Book> listHandler;
 
@@ -74,6 +75,18 @@ public class BookListView extends Composite implements Receiver<List<Book>>, Bas
     dataProvider = new ListDataProvider<Book>();
     listHandler = new ListHandler<Book>(dataProvider.getList());
     selectionModel = new MultiSelectionModel<Book>(keyProvider);
+    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+
+      @Override
+      public void onSelectionChange(final SelectionChangeEvent event) {
+        if (isChecked()) {
+          BooksViewBrowser.enable();
+          return;
+        }
+        BooksViewBrowser.diable();
+      }
+
+    });
 
     List<HasCell<Book, ?>> hasCells = new ArrayList<HasCell<Book, ?>>();
     hasCells.add(new HasCell<Book, Boolean>() {
@@ -132,7 +145,7 @@ public class BookListView extends Composite implements Receiver<List<Book>>, Bas
       protected <X> void render(final com.google.gwt.cell.client.Cell.Context context,
           final Book value, final SafeHtmlBuilder sb, final HasCell<Book, X> hasCell) {
         Cell<X> cell = hasCell.getCell();
-        sb.appendHtmlConstant("<td>");
+        sb.appendHtmlConstant("<td style=\"padding: 0 0 0 7px;\">");
         cell.render(context, hasCell.getValue(value), sb);
         sb.appendHtmlConstant("</td>");
       }
@@ -156,6 +169,15 @@ public class BookListView extends Composite implements Receiver<List<Book>>, Bas
   }
 
   @Override
+  public boolean isChecked() {
+    Set<Book> selectedSet = selectionModel.getSelectedSet();
+    if (selectedSet.size() != 0) {
+      return true;
+    }
+    return false;
+  }
+
+  @Override
   public void onSuccess(final List<Book> result) {
     dataProvider.setList(result);
     listHandler.setList(dataProvider.getList());
@@ -167,9 +189,6 @@ public class BookListView extends Composite implements Receiver<List<Book>>, Bas
   @Override
   public void refresh() {
     bookSerivce.getMyBooks().fire(this);
-    if (dataProvider.getList().size() == 0) {
-      return;
-    }
   }
 
   @Override
