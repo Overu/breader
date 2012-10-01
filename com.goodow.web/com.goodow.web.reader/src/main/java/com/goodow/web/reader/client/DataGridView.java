@@ -17,26 +17,18 @@ import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.Header;
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
-import com.google.gwt.view.client.ListDataProvider;
-import com.google.gwt.view.client.MultiSelectionModel;
-import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
-import com.googlecode.mgwt.ui.client.widget.buttonbar.TrashButton;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 @Singleton
-public class DataGridView extends Composite implements Receiver<List<Book>>, BaseViewBrowser {
+public class DataGridView extends BaseViewBrowser {
 
   private static class BookSelectionChange extends PendingChange<Boolean> {
 
@@ -102,168 +94,19 @@ public class DataGridView extends Composite implements Receiver<List<Book>>, Bas
     protected abstract void doCommit(Book book, T value);
   }
 
-  @Inject
   Provider<BookHyperlinkCell> cellProvider;
 
-  private DataGrid<Book> cellTable;
-
-  private ListDataProvider<Book> dataProvider;
-
-  private List<AbstractEditableCell<?, ?>> editableCells;
+  private DataGrid<Book> dataGrid;
 
   private ListHandler<Book> listHandler;
 
-  private MultiSelectionModel<Book> selectionModel;
-
+  private List<AbstractEditableCell<?, ?>> editableCells;
   private List<PendingChange<?>> pendingChanges = new ArrayList<DataGridView.PendingChange<?>>();
-
-  ArrayList<Book> books;
-
-  @Inject
-  TrashButton deleteButton;
+  private List<Book> books;
 
   @Inject
-  AsyncBookService bookService;
-
-  public DataGridView() {
-    cellTable = new DataGrid<Book>(6, BaseViewBrowser.keyProvider);
-    getCellTable().setWidth("100%");
-    removeHeaderElmShade();
-    initWidget(getCellTable());
-    new Timer() {
-      @Override
-      public void run() {
-        start();
-      }
-    }.schedule(1);
-  }
-
-  public <C> Column<Book, C> addColumn(final Cell<C> cell, final GetValue<C> getValue,
-      final FieldUpdater<Book, C> fieldUpdater) {
-    Column<Book, C> column = new Column<Book, C>(cell) {
-
-      @Override
-      public C getValue(final Book object) {
-        return getValue.getValue(object);
-      }
-    };
-
-    column.setFieldUpdater(fieldUpdater);
-
-    if (cell instanceof AbstractEditableCell<?, ?>) {
-      editableCells.add((AbstractEditableCell<?, ?>) cell);
-    }
-    return column;
-  }
-
-  public Header<String> addHeader(final String name) {
-    // Header<String> header = new Header<String>(new SortButtonCell<String>(delegate, column) {
-    Header<String> header = new Header<String>(new TextCell()) {
-
-      @Override
-      public String getValue() {
-        return name;
-      }
-    };
-    return header;
-  }
-
-  public void delete() {
-
-    if (books == null || books.size() == 0) {
-      return;
-    }
-
-    for (Book book : books) {
-      bookService.remove(book).fire(new Receiver<Void>() {
-        @Override
-        public void onSuccess(final Void result) {
-          refresh();
-          books.clear();
-        }
-      });
-    }
-
-  }
-
-  public DataGrid<Book> getCellTable() {
-    return cellTable;
-  }
-
-  @Override
-  public <T extends AbstractHasData<Book>> T getCellView() {
-    return (T) cellTable;
-  }
-
-  @Override
-  public Widget getView() {
-    return this;
-  }
-
-  @Override
-  public boolean isChecked() {
-    Set<Book> selectedSet = selectionModel.getSelectedSet();
-    if (selectedSet.size() != 0) {
-      return true;
-    }
-    return false;
-  }
-
-  @Override
-  public void onSuccess(final List<Book> result) {
-    dataProvider.setList(result);
-    listHandler.setList(dataProvider.getList());
-    if (!dataProvider.getDataDisplays().contains(getCellTable())) {
-      dataProvider.addDataDisplay(getCellTable());
-    }
-  }
-
-  @Override
-  public void refresh() {
-    bookService.getMyBooks().fire(this);
-  }
-
-  public void removeHeaderElmShade() {
-    Element headerElm1 = getCellTable().getElement().getFirstChildElement().getFirstChildElement();
-    Element headerElm2 = headerElm1.getNextSiblingElement();
-    headerElm1.removeFromParent();
-    headerElm2.removeFromParent();
-  }
-
-  @Override
-  protected void onLoad() {
-    super.onLoad();
-    refresh();
-  }
-
-  @Override
-  protected void onUnload() {
-    super.onUnload();
-    if (dataProvider.getDataDisplays().contains(getCellTable())) {
-      dataProvider.removeDataDisplay(getCellTable());
-    }
-  }
-
-  protected void start() {
-    editableCells = new ArrayList<AbstractEditableCell<?, ?>>();
-    dataProvider = new ListDataProvider<Book>();
-    listHandler = new ListHandler<Book>(dataProvider.getList());
-    cellTable.addColumnSortHandler(listHandler);
-
-    selectionModel = new MultiSelectionModel<Book>(BaseViewBrowser.keyProvider);
-    getCellTable().setSelectionModel(selectionModel,
-        DefaultSelectionEventManager.<Book> createCheckboxManager(0));
-    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-
-      @Override
-      public void onSelectionChange(final SelectionChangeEvent event) {
-        if (isChecked()) {
-          BooksViewBrowser.enable();
-          return;
-        }
-        BooksViewBrowser.diable();
-      }
-    });
+  public DataGridView(final Provider<BookHyperlinkCell> cellProvider) {
+    this.cellProvider = cellProvider;
 
     final Column<Book, Boolean> bookCheck = addColumn(new CheckboxCell(), new GetValue<Boolean>() {
 
@@ -392,6 +235,101 @@ public class DataGridView extends Composite implements Receiver<List<Book>>, Bas
     // dataProvider.refresh();
     // }
     // });
+  }
+
+  public <C> Column<Book, C> addColumn(final Cell<C> cell, final GetValue<C> getValue,
+      final FieldUpdater<Book, C> fieldUpdater) {
+    Column<Book, C> column = new Column<Book, C>(cell) {
+
+      @Override
+      public C getValue(final Book object) {
+        return getValue.getValue(object);
+      }
+    };
+
+    column.setFieldUpdater(fieldUpdater);
+
+    if (cell instanceof AbstractEditableCell<?, ?>) {
+      editableCells.add((AbstractEditableCell<?, ?>) cell);
+    }
+    return column;
+  }
+
+  public Header<String> addHeader(final String name) {
+    // Header<String> header = new Header<String>(new SortButtonCell<String>(delegate, column) {
+    Header<String> header = new Header<String>(new TextCell()) {
+
+      @Override
+      public String getValue() {
+        return name;
+      }
+    };
+    return header;
+  }
+
+  public void delete() {
+
+    if (books == null || books.size() == 0) {
+      return;
+    }
+
+    for (Book book : books) {
+      bookService.remove(book).fire(new Receiver<Void>() {
+        @Override
+        public void onSuccess(final Void result) {
+          refresh();
+          books.clear();
+        }
+      });
+    }
+
+  }
+
+  public DataGrid<Book> getCellTable() {
+    return dataGrid;
+  }
+
+  @Override
+  public <T extends AbstractHasData<Book>> T getCellView() {
+    return (T) dataGrid;
+  }
+
+  @Override
+  public Widget getView() {
+    return this;
+  }
+
+  @Override
+  public void refresh() {
+    bookService.getMyBooks().fire(this);
+  }
+
+  public void removeHeaderElmShade() {
+    Element headerElm1 = getCellTable().getElement().getFirstChildElement().getFirstChildElement();
+    Element headerElm2 = headerElm1.getNextSiblingElement();
+    headerElm1.removeFromParent();
+    headerElm2.removeFromParent();
+  }
+
+  @Override
+  public void setListHandler() {
+    listHandler.setList(dataProvider.getList());
+  }
+
+  @Override
+  protected Widget init() {
+    dataGrid = new DataGrid<Book>(6, keyProvider);
+    getCellTable().setWidth("100%");
+    removeHeaderElmShade();
+
+    editableCells = new ArrayList<AbstractEditableCell<?, ?>>();
+
+    listHandler = new ListHandler<Book>(dataProvider.getList());
+    dataGrid.addColumnSortHandler(listHandler);
+
+    getCellTable().setSelectionModel(selectionModel,
+        DefaultSelectionEventManager.<Book> createCheckboxManager(0));
+    return dataGrid;
   }
 
   private void putColumn(final Header<String> header, final Column<Book, ?> column, final int width) {

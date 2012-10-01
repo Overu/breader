@@ -3,7 +3,6 @@ package com.goodow.web.reader.client;
 import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.reader.client.ColumnSortEvent.ListHandler;
 import com.goodow.web.reader.client.editgrid.Function;
-import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
 import com.google.gwt.cell.client.AbstractCell;
@@ -21,13 +20,9 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.user.cellview.client.AbstractHasData;
 import com.google.gwt.user.cellview.client.CellList;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.DefaultSelectionEventManager;
-import com.google.gwt.view.client.ListDataProvider;
-import com.google.gwt.view.client.MultiSelectionModel;
-import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -35,10 +30,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Set;
 
 @Singleton
-public class BookListView extends Composite implements Receiver<List<Book>>, BaseViewBrowser {
+public class BookListView extends BaseViewBrowser implements Receiver<List<Book>> {
 
   public interface Template extends SafeHtmlTemplates {
     @SafeHtmlTemplates.Template("<td><img style=\"height: 42px;width: 32px;\" src=\"{0}\"></td><td style=\"vertical-align: top;\"><div>{1}</div><div>{2}</div></td>")
@@ -58,35 +52,40 @@ public class BookListView extends Composite implements Receiver<List<Book>>, Bas
   private static Template template = GWT.create(Template.class);
 
   private CellList<Book> cellList;
-  private ListDataProvider<Book> dataProvider;
-  private MultiSelectionModel<Book> selectionModel;
   private FlowPanel main;
   private ListHandler<Book> listHandler;
 
   private boolean headerOnload = false;
 
-  AsyncBookService bookSerivce;
-
   @Inject
-  public BookListView(final AsyncBookService bookSerivce) {
-    this.bookSerivce = bookSerivce;
+  public BookListView() {
+  }
+
+  @Override
+  public <T extends AbstractHasData<Book>> T getCellView() {
+    return (T) cellList;
+  }
+
+  @Override
+  public Widget getView() {
+    return this;
+  }
+
+  @Override
+  public void refresh() {
+    bookService.getMyBooks().fire(this);
+  }
+
+  @Override
+  public void setListHandler() {
+    listHandler.setList(dataProvider.getList());
+  }
+
+  @Override
+  protected Widget init() {
     final BookListCell bookListCell = new BookListCell();
     main = new FlowPanel();
-    dataProvider = new ListDataProvider<Book>();
     listHandler = new ListHandler<Book>(dataProvider.getList());
-    selectionModel = new MultiSelectionModel<Book>(keyProvider);
-    selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-
-      @Override
-      public void onSelectionChange(final SelectionChangeEvent event) {
-        if (isChecked()) {
-          BooksViewBrowser.enable();
-          return;
-        }
-        BooksViewBrowser.diable();
-      }
-
-    });
 
     List<HasCell<Book, ?>> hasCells = new ArrayList<HasCell<Book, ?>>();
     hasCells.add(new HasCell<Book, Boolean>() {
@@ -155,59 +154,17 @@ public class BookListView extends Composite implements Receiver<List<Book>>, Bas
     cellList.setSelectionModel(selectionModel, DefaultSelectionEventManager
         .<Book> createCheckboxManager(0));
     main.add(cellList);
-    initWidget(main);
-  }
-
-  @Override
-  public <T extends AbstractHasData<Book>> T getCellView() {
-    return (T) cellList;
-  }
-
-  @Override
-  public Widget getView() {
-    return this;
-  }
-
-  @Override
-  public boolean isChecked() {
-    Set<Book> selectedSet = selectionModel.getSelectedSet();
-    if (selectedSet.size() != 0) {
-      return true;
-    }
-    return false;
-  }
-
-  @Override
-  public void onSuccess(final List<Book> result) {
-    dataProvider.setList(result);
-    listHandler.setList(dataProvider.getList());
-    if (!dataProvider.getDataDisplays().contains(getCellView())) {
-      dataProvider.addDataDisplay(getCellView());
-    }
-  }
-
-  @Override
-  public void refresh() {
-    bookSerivce.getMyBooks().fire(this);
+    return main;
   }
 
   @Override
   protected void onLoad() {
     super.onLoad();
-    refresh();
     if (headerOnload) {
       return;
     }
     headerOnload = true;
     addHeader();
-  }
-
-  @Override
-  protected void onUnload() {
-    super.onUnload();
-    if (dataProvider.getDataDisplays().contains(getCellView())) {
-      dataProvider.removeDataDisplay(getCellView());
-    }
   }
 
   private void addHeader() {
