@@ -57,6 +57,31 @@ public abstract class BaseViewBrowser extends Composite implements Receiver<List
     initWidget(init());
   }
 
+  public void clear() {
+    selectionModel.clear();
+    BooksViewBrowser.diable();
+    clearViewChected(true);
+  }
+
+  public abstract void commit();
+
+  public void delete() {
+    final Set<Book> deleteBooks = selectionModel.getSelectedSet();
+    if (deleteBooks == null || deleteBooks.size() == 0) {
+      return;
+    }
+
+    for (final Book book : deleteBooks) {
+      bookService.remove(book).fire(new Receiver<Void>() {
+        @Override
+        public void onSuccess(final Void result) {
+          refresh();
+          clear();
+        }
+      });
+    }
+  }
+
   public abstract <T extends AbstractHasData<Book>> T getCellView();
 
   public abstract Widget getView();
@@ -76,11 +101,16 @@ public abstract class BaseViewBrowser extends Composite implements Receiver<List
     if (!dataProvider.getDataDisplays().contains(getCellView())) {
       dataProvider.addDataDisplay(getCellView());
     }
+    clearViewChected(false);
   }
 
-  public abstract void refresh();
+  public void refresh() {
+    bookService.getMyBooks().fire(this);
+  }
 
   public abstract void setListHandler();
+
+  protected abstract void clearViewChected(boolean ignore);
 
   protected abstract Widget init();
 
@@ -88,6 +118,7 @@ public abstract class BaseViewBrowser extends Composite implements Receiver<List
   protected void onLoad() {
     super.onLoad();
     refresh();
+    clear();
   }
 
   @Override

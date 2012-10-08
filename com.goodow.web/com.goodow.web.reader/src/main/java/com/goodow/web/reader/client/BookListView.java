@@ -55,10 +55,17 @@ public class BookListView extends BaseViewBrowser implements Receiver<List<Book>
   private FlowPanel main;
   private ListHandler<Book> listHandler;
 
+  private InputElement allCheckElm;
+
   private boolean headerOnload = false;
 
   @Inject
   public BookListView() {
+  }
+
+  @Override
+  public void commit() {
+    return;
   }
 
   @Override
@@ -72,13 +79,16 @@ public class BookListView extends BaseViewBrowser implements Receiver<List<Book>
   }
 
   @Override
-  public void refresh() {
-    bookService.getMyBooks().fire(this);
+  public void setListHandler() {
+    listHandler.setList(dataProvider.getList());
   }
 
   @Override
-  public void setListHandler() {
-    listHandler.setList(dataProvider.getList());
+  protected void clearViewChected(final boolean ignore) {
+    if (ignore) {
+      return;
+    }
+    allCheckElm.setChecked(false);
   }
 
   @Override
@@ -177,13 +187,16 @@ public class BookListView extends BaseViewBrowser implements Receiver<List<Book>
     headerView.addAllCheckHandle(new Function() {
       @Override
       public boolean f(final Event event) {
-        Element as = Element.as(event.getEventTarget());
-        if (!as.getTagName().equalsIgnoreCase("input")) {
-          return true;
+        if (allCheckElm == null) {
+          Element as = Element.as(event.getEventTarget());
+          if (!as.getTagName().equalsIgnoreCase("input")) {
+            return true;
+          }
+          InputElement cast = as.<com.google.gwt.dom.client.InputElement> cast();
+          allCheckElm = cast;
         }
-        InputElement cast = as.<com.google.gwt.dom.client.InputElement> cast();
         for (Book book : cellList.getVisibleItems()) {
-          selectionModel.setSelected(book, cast.isChecked());
+          selectionModel.setSelected(book, allCheckElm.isChecked());
         }
         return true;
       }

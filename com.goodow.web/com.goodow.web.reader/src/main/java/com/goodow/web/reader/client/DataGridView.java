@@ -10,8 +10,15 @@ import com.google.gwt.cell.client.CheckboxCell;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.cell.client.ValueUpdater;
+import com.google.gwt.dom.client.BrowserEvents;
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.InputElement;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.safehtml.shared.SafeHtml;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.cellview.client.AbstractHasData;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.ColumnSortEvent.ListHandler;
@@ -66,6 +73,87 @@ public class DataGridView extends BaseViewBrowser {
     }
   }
 
+  private static class CheckBoxCell extends AbstractEditableCell<Boolean, Boolean> {
+
+    private static final SafeHtml INPUT_CHECKED = SafeHtmlUtils
+        .fromSafeConstant("<input type=\"checkbox\" tabindex=\"-1\" checked/>");
+
+    private static final SafeHtml INPUT_UNCHECKED = SafeHtmlUtils
+        .fromSafeConstant("<input type=\"checkbox\" tabindex=\"-1\"/>");
+
+    private boolean isClearChecked = false;
+
+    public CheckBoxCell() {
+      super(BrowserEvents.CHANGE, BrowserEvents.KEYDOWN);
+    }
+
+    public boolean isClearChecked() {
+      return isClearChecked;
+    }
+
+    @Override
+    public boolean isEditing(final com.google.gwt.cell.client.Cell.Context context,
+        final Element parent, final Boolean value) {
+      return false;
+    }
+
+    @Override
+    public void onBrowserEvent(final com.google.gwt.cell.client.Cell.Context context,
+        final Element parent, final Boolean value, final NativeEvent event,
+        final ValueUpdater<Boolean> valueUpdater) {
+      String type = event.getType();
+
+      boolean enterPressed =
+          BrowserEvents.KEYDOWN.equals(type) && event.getKeyCode() == KeyCodes.KEY_ENTER;
+      if (BrowserEvents.CHANGE.equals(type) || enterPressed) {
+        InputElement input = parent.getFirstChild().cast();
+        Boolean isChecked = input.isChecked();
+
+        if (enterPressed && (handlesSelection() || !dependsOnSelection())) {
+          isChecked = !isChecked;
+          input.setChecked(isChecked);
+        }
+
+        if (value != isChecked && !dependsOnSelection()) {
+          setViewData(context.getKey(), isChecked);
+        } else {
+          clearViewData(context.getKey());
+        }
+
+        if (valueUpdater != null) {
+          valueUpdater.update(isChecked);
+        }
+      }
+    }
+
+    @Override
+    public void render(final com.google.gwt.cell.client.Cell.Context context, final Boolean value,
+        final SafeHtmlBuilder sb) {
+      if (isClearChecked()) {
+        setClearChecked(false);
+        sb.append(INPUT_UNCHECKED);
+        return;
+      }
+
+      Object key = context.getKey();
+      Boolean viewData = getViewData(key);
+      if (viewData != null && viewData.equals(value)) {
+        clearViewData(key);
+        viewData = null;
+      }
+
+      if (value != null && ((viewData != null) ? viewData : value)) {
+        sb.append(INPUT_CHECKED);
+      } else {
+        sb.append(INPUT_UNCHECKED);
+      }
+    }
+
+    public void setClearChecked(final boolean isClearChecked) {
+      this.isClearChecked = isClearChecked;
+    }
+  }
+
   private static interface GetValue<C> {
     C getValue(Book book);
   }
@@ -104,6 +192,10 @@ public class DataGridView extends BaseViewBrowser {
   private List<PendingChange<?>> pendingChanges = new ArrayList<DataGridView.PendingChange<?>>();
   private List<Book> books;
 
+  private InputElement allCheckElm;
+
+  private CheckBoxCell allCheckcell;
+
   @Inject
   public DataGridView(final Provider<BookHyperlinkCell> cellProvider) {
     this.cellProvider = cellProvider;
@@ -126,14 +218,15 @@ public class DataGridView extends BaseViewBrowser {
             value ? !books.contains(object) ? books.add(object) : false : books.remove(object);
       }
     });
-    Header<Boolean> header = new Header<Boolean>(new CheckboxCell()) {
+    allCheckcell = new CheckBoxCell();
+    Header<Boolean> checkHeader = new Header<Boolean>(allCheckcell) {
 
       @Override
       public Boolean getValue() {
         return false;
       }
     };
-    header.setUpdater(new ValueUpdater<Boolean>() {
+    checkHeader.setUpdater(new ValueUpdater<Boolean>() {
 
       @Override
       public void update(final Boolean value) {
@@ -144,7 +237,7 @@ public class DataGridView extends BaseViewBrowser {
         }
       }
     });
-    getCellTable().addColumn(bookCheck, header);
+    getCellTable().addColumn(bookCheck, checkHeader);
     getCellTable().setColumnWidth(bookCheck, 2, Unit.PX);
 
     final String titleName = "书名";
@@ -207,34 +300,6 @@ public class DataGridView extends BaseViewBrowser {
     }, null);
     putColumn(addHeader(imageName), imageColumn, 4);
 
-    // refreshButton.addTapHandler(new TapHandler() {
-    //
-    // @Override
-    // public void onTap(final TapEvent event) {
-    // refresh();
-    // }
-    // });
-    //
-    // deleteButton.addTapHandler(new TapHandler() {
-    //
-    // @Override
-    // public void onTap(final TapEvent event) {
-    // delete();
-    // }
-    // });
-    //
-    // actionButton.addTapHandler(new TapHandler() {
-    //
-    // @Override
-    // public void onTap(final TapEvent event) {
-    // for (PendingChange<?> pendingChange : pendingChanges) {
-    // pendingChange.commit();
-    // }
-    // pendingChanges.clear();
-    //
-    // dataProvider.refresh();
-    // }
-    // });
   }
 
   public <C> Column<Book, C> addColumn(final Cell<C> cell, final GetValue<C> getValue,
@@ -256,7 +321,6 @@ public class DataGridView extends BaseViewBrowser {
   }
 
   public Header<String> addHeader(final String name) {
-    // Header<String> header = new Header<String>(new SortButtonCell<String>(delegate, column) {
     Header<String> header = new Header<String>(new TextCell()) {
 
       @Override
@@ -267,22 +331,14 @@ public class DataGridView extends BaseViewBrowser {
     return header;
   }
 
-  public void delete() {
-
-    if (books == null || books.size() == 0) {
-      return;
+  @Override
+  public void commit() {
+    for (PendingChange<?> pendingChange : pendingChanges) {
+      pendingChange.commit();
     }
+    pendingChanges.clear();
 
-    for (Book book : books) {
-      bookService.remove(book).fire(new Receiver<Void>() {
-        @Override
-        public void onSuccess(final Void result) {
-          refresh();
-          books.clear();
-        }
-      });
-    }
-
+    dataProvider.refresh();
   }
 
   public DataGrid<Book> getCellTable() {
@@ -299,11 +355,6 @@ public class DataGridView extends BaseViewBrowser {
     return this;
   }
 
-  @Override
-  public void refresh() {
-    bookService.getMyBooks().fire(this);
-  }
-
   public void removeHeaderElmShade() {
     Element headerElm1 = getCellTable().getElement().getFirstChildElement().getFirstChildElement();
     Element headerElm2 = headerElm1.getNextSiblingElement();
@@ -314,6 +365,14 @@ public class DataGridView extends BaseViewBrowser {
   @Override
   public void setListHandler() {
     listHandler.setList(dataProvider.getList());
+  }
+
+  @Override
+  protected void clearViewChected(final boolean ignore) {
+    if (ignore) {
+      return;
+    }
+    allCheckcell.setClearChecked(true);
   }
 
   @Override

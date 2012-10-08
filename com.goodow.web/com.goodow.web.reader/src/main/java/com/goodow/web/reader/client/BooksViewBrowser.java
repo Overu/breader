@@ -47,15 +47,11 @@ public class BooksViewBrowser extends Composite implements ColumnVisiableEvent.H
   protected static DivElement refreshElm;
 
   public static void diable() {
-    commitElm.removeAttribute(ENABLE);
     deleteElm.removeAttribute(ENABLE);
-    refreshElm.removeAttribute(ENABLE);
   }
 
   public static void enable() {
-    commitElm.setAttribute(ENABLE, "");
     deleteElm.setAttribute(ENABLE, "");
-    refreshElm.setAttribute(ENABLE, "");
   }
 
   @UiField
@@ -116,6 +112,27 @@ public class BooksViewBrowser extends Composite implements ColumnVisiableEvent.H
       @Override
       public boolean f(final Event event) {
         checkContainer.getParentElement().removeClassName(style.checkrootblack());
+        return true;
+      }
+    });
+    addListenerHandler(commitElm, new Function() {
+      @Override
+      public boolean f(final Event event) {
+        currentView.commit();
+        return true;
+      }
+    });
+    addListenerHandler(refreshElm, new Function() {
+      @Override
+      public boolean f(final Event event) {
+        currentView.refresh();
+        return true;
+      }
+    });
+    addListenerHandler(deleteElm, new Function() {
+      @Override
+      public boolean f(final Event event) {
+        currentView.delete();
         return true;
       }
     });

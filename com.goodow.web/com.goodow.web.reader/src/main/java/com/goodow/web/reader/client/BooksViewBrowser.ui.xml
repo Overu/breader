@@ -151,9 +151,9 @@
           </table>
         </div>
         <div>
-          <div ui:field="commitElm" class="{style.buttonbase}">提交</div>
+          <div ui:field="commitElm" class="{style.buttonbase}" enable="">提交</div>
           <div ui:field="deleteElm" class="{style.buttonbase}">删除</div>
-          <div ui:field="refreshElm" class="{style.buttonbase}">刷新</div>
+          <div ui:field="refreshElm" class="{style.buttonbase}" enable="">刷新</div>
         </div>
       </div>
       <div class="{style.checkrootnone}">
