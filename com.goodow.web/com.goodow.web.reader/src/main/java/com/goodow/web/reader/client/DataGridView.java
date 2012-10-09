@@ -61,17 +61,17 @@ public class DataGridView extends BaseViewBrowser {
     }
   }
 
-  private static class BookTitleChange extends PendingChange<String> {
-
-    public BookTitleChange(final Book book, final String value) {
-      super(book, value);
-    }
-
-    @Override
-    protected void doCommit(final Book book, final String value) {
-      book.setTitle(value);
-    }
-  }
+  // private static class BookTitleChange extends PendingChange<String> {
+  //
+  // public BookTitleChange(final Book book, final String value) {
+  // super(book, value);
+  // }
+  //
+  // @Override
+  // protected void doCommit(final Book book, final String value) {
+  // book.setTitle(value);
+  // }
+  // }
 
   private static class CheckBoxCell extends AbstractEditableCell<Boolean, Boolean> {
 
@@ -159,10 +159,20 @@ public class DataGridView extends BaseViewBrowser {
   }
 
   private abstract static class PendingChange<T> {
+
+    public static AsyncBookService getBookServic() {
+      return bookServic;
+    }
+
+    public static void setBookServic(final AsyncBookService bookServic) {
+      PendingChange.bookServic = bookServic;
+    }
+
     private final Book book;
+
     private final T value;
-    @Inject
-    AsyncBookService bookServic2;
+
+    private static AsyncBookService bookServic;
 
     public PendingChange(final Book book, final T value) {
       this.book = book;
@@ -171,7 +181,7 @@ public class DataGridView extends BaseViewBrowser {
 
     public void commit() {
       doCommit(book, value);
-      bookServic2.save(book).fire(new Receiver<Book>() {
+      getBookServic().save(book).fire(new Receiver<Book>() {
 
         @Override
         public void onSuccess(final Book result) {
@@ -191,8 +201,6 @@ public class DataGridView extends BaseViewBrowser {
   private List<AbstractEditableCell<?, ?>> editableCells;
   private List<PendingChange<?>> pendingChanges = new ArrayList<DataGridView.PendingChange<?>>();
   private List<Book> books;
-
-  private InputElement allCheckElm;
 
   private CheckBoxCell allCheckcell;
 
@@ -333,6 +341,10 @@ public class DataGridView extends BaseViewBrowser {
 
   @Override
   public void commit() {
+    if (PendingChange.getBookServic() == null) {
+      PendingChange.setBookServic(bookService);
+    }
+
     for (PendingChange<?> pendingChange : pendingChanges) {
       pendingChange.commit();
     }

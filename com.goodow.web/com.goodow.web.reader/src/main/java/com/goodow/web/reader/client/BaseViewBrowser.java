@@ -60,7 +60,7 @@ public abstract class BaseViewBrowser extends Composite implements Receiver<List
   public void clear() {
     selectionModel.clear();
     BooksViewBrowser.diable();
-    clearViewChected(true);
+    clearViewChected(false);
   }
 
   public abstract void commit();

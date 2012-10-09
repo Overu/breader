@@ -1,6 +1,5 @@
 package com.goodow.web.reader.client;
 
-import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.reader.client.ColumnSortEvent.ListHandler;
 import com.goodow.web.reader.client.editgrid.Function;
 import com.goodow.web.reader.shared.Book;
@@ -32,7 +31,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 @Singleton
-public class BookListView extends BaseViewBrowser implements Receiver<List<Book>> {
+public class BookListView extends BaseViewBrowser {
 
   public interface Template extends SafeHtmlTemplates {
     @SafeHtmlTemplates.Template("<td><img style=\"height: 42px;width: 32px;\" src=\"{0}\"></td><td style=\"vertical-align: top;\"><div>{1}</div><div>{2}</div></td>")
