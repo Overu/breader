@@ -38,8 +38,8 @@ public class JpaUserService extends JpaEntityService<User> implements UserServic
     }
     String hashedPwd =
         new SimpleHash(JpaRealm.ALGORITHM_NAME, newPwd.toCharArray(), ByteSource.Util.bytes(user
-            .getPasswordSalt())).toHex();
-    user.setPassword(hashedPwd);
+            .getPhone())).toHex();
+    user.setEmail(hashedPwd);
     em.get().persist(user);
   }
 }

@@ -57,10 +57,10 @@ public class JpaRealm extends AuthorizingRealm {
       return null;
     }
     SimpleAuthenticationInfo info = null;
-    info = new SimpleAuthenticationInfo(userName, user.getPassword().toCharArray(), getName());
+    info = new SimpleAuthenticationInfo(userName, user.getEmail().toCharArray(), getName());
 
-    if (user.getPasswordSalt() != null) {
-      info.setCredentialsSalt(ByteSource.Util.bytes(user.getPasswordSalt()));
+    if (user.getPhone() != null) {
+      info.setCredentialsSalt(ByteSource.Util.bytes(user.getPhone()));
     }
     return info;
   }

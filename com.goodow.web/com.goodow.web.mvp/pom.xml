@@ -42,12 +42,6 @@
       <artifactId>gwt-dev</artifactId>
     </dependency>
 
-    <dependency>
-      <groupId>com.googlecode.gwtmodernizr</groupId>
-      <artifactId>gwtmodernizr</artifactId>
-      <version>1.0.1</version>
-    </dependency>
-
     <!-- test -->
     <dependency>
       <groupId>com.goodow.wave</groupId>

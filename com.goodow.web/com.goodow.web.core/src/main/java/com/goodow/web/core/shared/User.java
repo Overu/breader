@@ -10,37 +10,57 @@ import javax.xml.bind.annotation.XmlType;
 @Table(name = "t_user")
 public class User extends WebContent {
 
-  @NotNull(message = "你必须指定用户名")
-  private String loginId;
+	@NotNull(message = "你必须指定用户名")
+	private String name;
 
-  private String password;
+	private String email;
 
-  private String passwordSalt;
+	private String phone;
 
-  public String getLoginId() {
-    return loginId;
-  }
+	private String state;
 
-  public String getPassword() {
-    return password;
-  }
+	public String getState() {
+		return state;
+	}
 
-  public String getPasswordSalt() {
-    return passwordSalt;
-  }
+	public void setState(String state) {
+		this.state = state;
+	}
 
-  public void setLoginId(final String userName) {
-    this.loginId = userName;
-  }
+	public String getZip() {
+		return zip;
+	}
 
-  public User setPassword(final String password) {
-    this.password = password;
-    return this;
-  }
+	public void setZip(String zip) {
+		this.zip = zip;
+	}
 
-  public User setPasswordSalt(final String passwordSalt) {
-    this.passwordSalt = passwordSalt;
-    return this;
-  }
+	private String zip;
+
+	public String getName() {
+		return name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setName(final String userName) {
+		this.name = userName;
+	}
+
+	public User setEmail(final String password) {
+		this.email = password;
+		return this;
+	}
+
+	public User setPhone(final String passwordSalt) {
+		this.phone = passwordSalt;
+		return this;
+	}
 
 }
