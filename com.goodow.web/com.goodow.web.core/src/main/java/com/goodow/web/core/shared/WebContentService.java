@@ -4,11 +4,15 @@ import java.util.List;
 
 public interface WebContentService<E extends WebContent> extends WebService<E> {
 
-  List<E> find(WebContent container);
+	WebContent getContainer();
 
-  E getById(String id);
+	void setContainer(WebContent container);
 
-  void remove(final E entity);
+	List<E> find(WebContent container);
 
-  E save(final E entity);
+	E getById(String id);
+
+	void remove(final E entity);
+
+	E save(final E entity);
 }

@@ -4,22 +4,23 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-@XmlType
+@XmlRootElement
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "t_group")
 public class Group extends WebContent {
 
-  protected String name;
+	protected String name;
 
-  public String getName() {
-    return name;
-  }
+	public String getName() {
+		return name;
+	}
 
-  public void setName(final String name) {
-    this.name = name;
-  }
+	public void setName(final String name) {
+		this.name = name;
+	}
 
 }

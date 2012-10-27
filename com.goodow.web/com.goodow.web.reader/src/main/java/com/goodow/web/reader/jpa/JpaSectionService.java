@@ -1,6 +1,6 @@
 package com.goodow.web.reader.jpa;
 
-import com.goodow.web.core.jpa.JpaEntityService;
+import com.goodow.web.core.jpa.JpaWebContentService;
 import com.goodow.web.core.jpa.JpaResourceService;
 import com.goodow.web.core.shared.Resource;
 import com.goodow.web.core.shared.Section;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import javax.persistence.TypedQuery;
 
-public class JpaSectionService extends JpaEntityService<Section> implements SectionService {
+public class JpaSectionService extends JpaWebContentService<Section> implements SectionService {
   @Inject
   JpaResourceService resourceService;
 

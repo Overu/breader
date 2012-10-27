@@ -21,7 +21,7 @@ import java.util.List;
 import javax.annotation.Generated;
 
 @Generated("cloudlet")
-public class JpaCategoryService extends JpaEntityService<Category> implements CategoryService {
+public class JpaCategoryService extends JpaWebContentService<Category> implements CategoryService {
 
   @Override
   public List<Category> getCategory() {

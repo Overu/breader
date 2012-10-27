@@ -3,7 +3,7 @@
  */
 package com.goodow.web.reader.jpa;
 
-import com.goodow.web.core.jpa.JpaEntityService;
+import com.goodow.web.core.jpa.JpaWebContentService;
 import com.goodow.web.reader.shared.Library;
 import com.goodow.web.reader.shared.LibraryService;
 
@@ -18,7 +18,7 @@ import javax.annotation.Generated;
  * Documentation 22.
  */
 @Generated("cloudlet")
-public class JpaLibraryService extends JpaEntityService<Library> implements LibraryService {
+public class JpaLibraryService extends JpaWebContentService<Library> implements LibraryService {
   @Override
   public Library getMyLibrary() {
     List<Library> result =

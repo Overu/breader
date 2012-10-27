@@ -3,9 +3,9 @@ package com.goodow.web.core.shared;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlType
+@XmlRootElement
 @Entity
 @Table(name = "t_user")
 public class User extends WebContent {

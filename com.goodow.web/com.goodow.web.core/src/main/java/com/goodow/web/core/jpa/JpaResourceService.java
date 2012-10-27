@@ -11,7 +11,7 @@ import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.UUID;
 
-public class JpaResourceService extends JpaEntityService<Resource> implements ResourceService {
+public class JpaResourceService extends JpaWebContentService<Resource> implements ResourceService {
 
   @Override
   @Transactional
