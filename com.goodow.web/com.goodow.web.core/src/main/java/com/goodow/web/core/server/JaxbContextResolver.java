@@ -10,7 +10,6 @@ import javax.xml.bind.JAXBContext;
 import org.glassfish.jersey.jettison.JettisonConfiguration;
 import org.glassfish.jersey.jettison.JettisonJaxbContext;
 
-import com.goodow.web.core.shared.Feed;
 import com.goodow.web.core.shared.Group;
 import com.goodow.web.core.shared.User;
 
@@ -25,7 +24,7 @@ public final class JaxbContextResolver implements ContextResolver<JAXBContext> {
 		jsonXml2JsonNs.put("http://www.w3.org/2001/XMLSchema-instance", "xsi");
 		this.context = new JettisonJaxbContext(JettisonConfiguration
 				.mappedJettison().xml2JsonNs(jsonXml2JsonNs).build(),
-				Feed.class, User.class, Group.class);
+				User.class, Group.class);
 	}
 
 	@Override
