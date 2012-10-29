@@ -102,7 +102,6 @@ public class DataGridView extends BaseViewBrowser {
         final Element parent, final Boolean value, final NativeEvent event,
         final ValueUpdater<Boolean> valueUpdater) {
       String type = event.getType();
-
       boolean enterPressed =
           BrowserEvents.KEYDOWN.equals(type) && event.getKeyCode() == KeyCodes.KEY_ENTER;
       if (BrowserEvents.CHANGE.equals(type) || enterPressed) {
@@ -129,13 +128,14 @@ public class DataGridView extends BaseViewBrowser {
     @Override
     public void render(final com.google.gwt.cell.client.Cell.Context context, final Boolean value,
         final SafeHtmlBuilder sb) {
+      Object key = context.getKey();
       if (isClearChecked()) {
         setClearChecked(false);
         sb.append(INPUT_UNCHECKED);
+        clearViewData(key);
         return;
       }
 
-      Object key = context.getKey();
       Boolean viewData = getViewData(key);
       if (viewData != null && viewData.equals(value)) {
         clearViewData(key);
