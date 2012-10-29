@@ -3,7 +3,7 @@
  */
 package com.goodow.web.reader.jpa;
 
-import com.goodow.web.core.jpa.JpaEntityService;
+import com.goodow.web.core.jpa.JpaWebContentService;
 import com.goodow.web.core.jpa.JpaResourceService;
 import com.goodow.web.core.servlet.ServletMessage;
 import com.goodow.web.core.shared.Resource;
@@ -30,7 +30,7 @@ import nl.siegmann.epublib.epub.EpubReader;
  * Documentation 22.
  */
 @Generated("cloudlet")
-public class JpaBookService extends JpaEntityService<Book> implements BookService {
+public class JpaBookService extends JpaWebContentService<Book> implements BookService {
 
   @Inject
   JpaResourceService resService;
