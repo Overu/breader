@@ -9,6 +9,8 @@ public interface BookService extends WebContentService<Book> {
 
   Book extract(Resource resource);
 
+  List<Book> getBookByTitl(String title);
+
   List<Book> getMyBooks();
 
   List<Book> getSelectedBooks();

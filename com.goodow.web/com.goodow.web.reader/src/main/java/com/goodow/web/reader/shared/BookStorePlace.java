@@ -10,10 +10,12 @@ import com.goodow.web.reader.client.RecommendedBookList;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.google.inject.Singleton;
 
 import com.googlecode.mgwt.ui.client.MGWTStyle;
 import com.googlecode.mgwt.ui.client.theme.MGWTClientBundle;
 
+@Singleton
 public class BookStorePlace extends WebPlace {
 
   public final WebPlace recommendedPlace;
@@ -25,7 +27,7 @@ public class BookStorePlace extends WebPlace {
   public final WebPlace mostViewedPlace;
 
   public final WebPlace categorizedPlace;
-
+  
   @Inject
   public BookStorePlace(final WebPlace recommendedPlace, final WebPlace favoritesPlace,
       final WebPlace discountedPlace, final WebPlace mostViewedPlace,

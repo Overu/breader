@@ -5,6 +5,8 @@ import com.goodow.web.core.shared.Receiver;
 import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
@@ -53,6 +55,7 @@ public abstract class AbstractBookList extends ScrollView implements Receiver<Li
 
     container.add(bookList);
     main.add(container);
+    main.addStyleName(BooksBrowser.bundle.booksAppCss().main());
 
     new Timer() {
       @Override
@@ -61,5 +64,4 @@ public abstract class AbstractBookList extends ScrollView implements Receiver<Li
       }
     }.schedule(1);
   }
-
 }

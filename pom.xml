@@ -15,12 +15,12 @@
 
 	<properties>
 		<!-- Convenience property to set the GWT version -->
-		<jersey.version>2.0-SNAPSHOT</jersey.version>
-		<gwt.version>2.5.0-rc2</gwt.version>
+		<jersey.version>2.0-m09-1</jersey.version>
+		<gwt.version>2.5.0-rc1</gwt.version>
 		<guice.version>3.0</guice.version>
 		<gin.version>2.0.0</gin.version>
 
-		<gae.version>1.6.5</gae.version>
+		<gae.version>1.7.3</gae.version>
 		<gae-test.version>1.6.5</gae-test.version>
 		<gae.home>${user.home}/.m2/repository/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
 
@@ -109,13 +109,6 @@
 				<artifactId>json</artifactId>
 				<version>20090211</version>
 			</dependency>
-			<!-- GXT -->
-			<dependency>
-				<groupId>com.sencha.gxt</groupId>
-				<artifactId>gxt</artifactId>
-				<version>3.0.1</version>
-			</dependency>
-
 
 			<!-- GIN and Guice for IoC / DI -->
 			<dependency>
@@ -282,7 +275,8 @@
 						</execution>
 					</executions>
 
-					<!-- Plugin configuration. There are many available options, see gwt-maven-plugin documentation at codehaus.org -->
+					<!-- Plugin configuration. There are many available options, see gwt-maven-plugin 
+						documentation at codehaus.org -->
 					<configuration>
 						<!-- Ask GWT to create the Story of Your Compile (SOYC) (gwt:compile) -->
 						<compileReport>false</compileReport>
@@ -297,9 +291,10 @@
 					</configuration>
 				</plugin>
 
-				<!-- requestfactory-apt runs an annotation processor (APT) to instrument its service interfaces so that RequestFactoryServer can decode client 
-					requests. Normally you would just have a dependency on requestfactory-apt with <scope>provided</scope>, but that won't work in eclipse due to 
-					m2e bug https://bugs.eclipse.org/bugs/show_bug.cgi?id=335036 -->
+				<!-- requestfactory-apt runs an annotation processor (APT) to instrument 
+					its service interfaces so that RequestFactoryServer can decode client requests. 
+					Normally you would just have a dependency on requestfactory-apt with <scope>provided</scope>, 
+					but that won't work in eclipse due to m2e bug https://bugs.eclipse.org/bugs/show_bug.cgi?id=335036 -->
 				<plugin>
 					<groupId>org.bsc.maven</groupId>
 					<artifactId>maven-processor-plugin</artifactId>
@@ -314,9 +309,11 @@
 								<goal>process</goal>
 							</goals>
 							<phase>generate-sources</phase>
-							<!-- <configuration> <optionMap> <verbose>true</verbose> </optionMap> </configuration> -->
+							<!-- <configuration> <optionMap> <verbose>true</verbose> </optionMap> 
+								</configuration> -->
 						</execution>
-						<!-- <execution> <id>process-test</id> <goals> <goal>process-test</goal> </goals> <phase>generate-test-sources</phase> </execution> -->
+						<!-- <execution> <id>process-test</id> <goals> <goal>process-test</goal> 
+							</goals> <phase>generate-test-sources</phase> </execution> -->
 					</executions>
 					<dependencies>
 						<dependency>
@@ -326,8 +323,8 @@
 						</dependency>
 					</dependencies>
 				</plugin>
-				<!-- Google Plugin for Eclipse (GPE) won't see the source generated above by requestfactory-apt unless it is exposed as an additional source 
-					dir -->
+				<!-- Google Plugin for Eclipse (GPE) won't see the source generated above 
+					by requestfactory-apt unless it is exposed as an additional source dir -->
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>build-helper-maven-plugin</artifactId>
@@ -345,8 +342,9 @@
 								</sources>
 							</configuration>
 						</execution>
-						<!-- <execution> <id>add-test-source</id> <phase>generate-test-sources</phase> <goals> <goal>add-test-source</goal> </goals> <configuration> 
-							<sources> <source>${project.build.directory}/generated-sources/apt-test</source> </sources> </configuration> </execution> -->
+						<!-- <execution> <id>add-test-source</id> <phase>generate-test-sources</phase> 
+							<goals> <goal>add-test-source</goal> </goals> <configuration> <sources> <source>${project.build.directory}/generated-sources/apt-test</source> 
+							</sources> </configuration> </execution> -->
 					</executions>
 				</plugin>
 
@@ -380,11 +378,13 @@
 							<version>[${gae.version}, )</version>
 							<type>pom</type>
 						</dependency>
-						<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> <version>5.1.18</version> </dependency> -->
+						<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
+							<version>5.1.18</version> </dependency> -->
 					</dependencies>
 				</plugin>
 
-				<!-- Required by m2e for import into eclipse. No effect on command line builds -->
+				<!-- Required by m2e for import into eclipse. No effect on command line 
+					builds -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -457,7 +457,8 @@
 					</configuration>
 				</plugin>
 
-				<!-- Add source folders to test classpath in order to run gwt-tests as normal junit-tests -->
+				<!-- Add source folders to test classpath in order to run gwt-tests as 
+					normal junit-tests -->
 				<plugin>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.5</version>

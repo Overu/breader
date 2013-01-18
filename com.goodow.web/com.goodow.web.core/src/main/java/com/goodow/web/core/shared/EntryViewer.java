@@ -2,7 +2,7 @@ package com.goodow.web.core.shared;
 
 public enum EntryViewer implements ViewType {
 
-  EDIT;
+  EDIT, BOOKDETAIL;
 
   @Override
   public boolean acceptsFeed() {

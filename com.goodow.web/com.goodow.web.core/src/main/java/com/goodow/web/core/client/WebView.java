@@ -14,7 +14,6 @@ import com.googlecode.mgwt.mvp.client.AnimatableDisplay;
 import com.googlecode.mgwt.mvp.client.Animation;
 import com.googlecode.mgwt.mvp.client.AnimationEndCallback;
 import com.googlecode.mgwt.ui.client.MGWTStyle;
-import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 
 public abstract class WebView<T extends Widget> extends Composite implements AcceptsOneWidget {
 
@@ -75,20 +74,14 @@ public abstract class WebView<T extends Widget> extends Composite implements Acc
 
       setChildWidget(display);
 
-      IsWidget target;
 
       Widget w = widget.asWidget();
-      if (w instanceof ScrollPanel || w instanceof ScrollView) {
-        w.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
-            .fillPanelExpandChild());
-        SimplePanel fillPanel = new SimplePanel();
-        fillPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
-            .fillPanel());
-        fillPanel.setWidget(w);
-        target = fillPanel;
-      } else {
-        target = widget;
-      }
+      w.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss().fillPanelExpandChild());
+      SimplePanel target = new SimplePanel();
+      target.setHeight("100%");
+      target.setWidth("100%");
+      target.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss().fillPanel());
+      target.setWidget(w);
 
       currentIsFirst = !currentIsFirst;
       if (currentIsFirst) {

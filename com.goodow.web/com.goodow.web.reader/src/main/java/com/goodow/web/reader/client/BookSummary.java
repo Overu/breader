@@ -1,5 +1,7 @@
 package com.goodow.web.reader.client;
 
+import com.goodow.web.core.shared.EntryViewer;
+import com.goodow.web.core.shared.WebPlaceManager;
 import com.goodow.web.reader.client.style.ReadResources;
 import com.goodow.web.reader.shared.Book;
 
@@ -18,6 +20,10 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
+
+import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.googlecode.mgwt.ui.client.widget.touch.TouchPanel;
 
 public class BookSummary extends Composite {
 
@@ -47,13 +53,12 @@ public class BookSummary extends Composite {
   static {
     INSTANCE = GWT.create(Bundle.class);
     INSTANCE.landscape().ensureInjected();
-    String portraitCss =
-        "@media only screen and (orientation:portrait) {" + INSTANCE.protrait().getText() + "}";
+    String portraitCss = "@media only screen and (orientation:portrait) {" + INSTANCE.protrait().getText() + "}";
     StyleInjector.injectAtEnd(portraitCss);
   }
 
   @UiField
-  HTMLPanel root;
+  TouchPanel root;
 
   @UiField(provided = true)
   Image bookImage;
@@ -75,21 +80,30 @@ public class BookSummary extends Composite {
   @UiField
   DivElement originalPrice;
 
+  @Inject
+  WebPlaceManager placeManager;
+
   private Book book;
 
-  @Inject
   public BookSummary() {
     bookImage = new Image(ReadResources.INSTANCE().cover());
     Widget widget = uiBinder.createAndBindUi(this);
     initWidget(widget);
+    root.addTapHandler(new TapHandler() {
+
+      @Override
+      public void onTap(TapEvent event) {
+        placeManager.goTo(book, EntryViewer.BOOKDETAIL);
+      }
+    });
   }
 
   public void refresh() {
     if (book == null) {
       return;
     } else {
-      bookImage.getElement().getStyle().setBackgroundImage(
-          "url(\"" + GWT.getModuleBaseURL() + "resources/" + book.getCover().getId() + "\")");
+      // bookImage.getElement().getStyle().setBackgroundImage(
+      // "url(\"" + GWT.getModuleBaseURL() + "resources/" + book.getCover().getId() + "\")");
       titleLabel.setText(book.getTitle());
       authorLabel.setText(book.getAuthor());
       descLabel.setText(book.getDescription());

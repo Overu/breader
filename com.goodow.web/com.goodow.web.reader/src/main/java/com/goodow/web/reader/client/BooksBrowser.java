@@ -52,22 +52,22 @@ public class BooksBrowser extends FlowView {
   @Override
   public void setPlace(final WebPlace place) {
     super.setPlace(place);
-    leftPanel.setPlace(place);
+    // leftPanel.setPlace(place);
   }
 
   @Override
   protected void start() {
 
-    centerPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss()
-        .fillPanelExpandChild());
-
-    leftPanel.addRightWidget(centerPanel);
+    centerPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss().fillPanelExpandChild());
 
     main.addStyleName(bundle.booksAppCss().main());
+    
     // bannerPanel.addStyleName(bundle.booksAppCss().bannerPanel());
-    leftPanel.addStyleName(bundle.booksAppCss().placeList());
+    
+    // leftPanel.addRightWidget(centerPanel);
+    // leftPanel.addStyleName(bundle.booksAppCss().placeList());
 
-    main.add(leftPanel);
+    main.add(centerPanel);
   }
 
 }

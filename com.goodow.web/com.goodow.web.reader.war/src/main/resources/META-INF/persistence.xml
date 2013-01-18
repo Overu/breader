@@ -5,6 +5,8 @@
   version="1.0">
   <persistence-unit name="persist.jpaUnit" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <!-- <jar-file>file:${project.build.directory}/com.goodow.web.reader.war-1.0.0-SNAPSHOT/WEB-INF/lib/com.goodow.web.core.jar</jar-file>
+    <jar-file>file:${project.build.directory}/com.goodow.web.reader.war-1.0.0-SNAPSHOT/WEB-INF/lib/com.goodow.web.reader.jar</jar-file> -->
     <jar-file>file:WEB-INF/lib/com.goodow.web.core.jar</jar-file>
     <jar-file>file:WEB-INF/lib/com.goodow.web.reader.jar</jar-file>
     <properties>
@@ -13,8 +15,8 @@
       <property name="hibernate.connection.url"
         value="jdbc:mysql://localhost:3306/reader?useUnicode=true&amp;characterEncoding=UTF-8" />
       <property name="hibernate.connection.username" value="root" />
-      <property name="hibernate.connection.password" value="ROOT" />
-      <property name="hibernate.hbm2ddl.auto " value="none" />
+      <property name="hibernate.connection.password" value="passw0rd" />
+      <property name="hibernate.hbm2ddl.auto " value="update" />
       <property name="hibernate.show_sql" value="true" />
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.HashtableCacheProvider" />
     </properties>

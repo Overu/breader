@@ -15,24 +15,24 @@ import java.util.logging.Logger;
 
 public class CoreServerModule extends AbstractModule {
 
-  @Singleton
-  public static class Binder {
-    @Inject
-    public Binder(final JSONObjectProvider<WebObject> provider) {
-      CorePackage.WebObject.as().addReader(JSONObject.class, provider);
-      CorePackage.WebObject.as().addWriter(JSONObject.class, provider);
-    }
-  }
+	@Singleton
+	public static class Binder {
+		@Inject
+		public Binder(final JSONObjectProvider<WebObject> provider) {
+			CorePackage.WebObject.as().addReader(JSONObject.class, provider);
+			CorePackage.WebObject.as().addWriter(JSONObject.class, provider);
+		}
+	}
 
-  private final Logger logger = Logger.getLogger(getClass().getName());
+	private final Logger logger = Logger.getLogger(getClass().getName());
 
-  @Override
-  protected void configure() {
-    logger.finest("Install JpaServiceModule begin");
-    requestStaticInjection(WebPlatform.class);
-    bind(Message.class).to(ServerMessage.class);
-    bind(Binder.class).asEagerSingleton();
-    logger.finest("Install JpaServiceModule end");
-  }
+	@Override
+	protected void configure() {
+		logger.finest("Install JpaServiceModule begin");
+		requestStaticInjection(WebPlatform.class);
+		bind(Message.class).to(ServerMessage.class);
+		bind(Binder.class).asEagerSingleton();
+		logger.finest("Install JpaServiceModule end");
+	}
 
 }

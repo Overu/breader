@@ -25,7 +25,8 @@ public class GuiceComponentProvider implements ComponentProvider {
 
 		@Override
 		public T provide() {
-			return WebPlatform.getInstance().getInjector().getInstance(clz);
+//			return WebPlatform.getInstance().getInjector().getInstance(clz);
+			return null;
 		}
 
 		@Override

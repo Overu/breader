@@ -137,8 +137,7 @@ public class BookStore extends Composite implements AcceptsOneWidget, PlaceChang
   @Override
   public void setWidget(final IsWidget w) {
     tabContainer.setWidget(w);
-    w.asWidget().addStyleName(
-        MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss().fillPanelExpandChild());
+    w.asWidget().addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss().fillPanelExpandChild());
   }
 
 }

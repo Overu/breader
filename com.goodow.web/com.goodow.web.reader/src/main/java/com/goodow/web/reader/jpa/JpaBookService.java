@@ -53,16 +53,12 @@ public class JpaBookService extends JpaWebContentService<Book> implements BookSe
       book.setTitle(b.getTitle());
       nl.siegmann.epublib.domain.Resource cover = b.getCoverImage();
 
-      Resource coverRes =
-          ServletMessage.createResource(cover.getInputStream(), cover.getTitle(), cover
-              .getMediaType().toString());
+      Resource coverRes = ServletMessage.createResource(cover.getInputStream(), cover.getTitle(), cover.getMediaType().toString());
 
       int i = 0;
       for (TOCReference toc : b.getTableOfContents().getTocReferences()) {
         nl.siegmann.epublib.domain.Resource tocRes = toc.getResource();
-        Resource sectionRes =
-            ServletMessage.createResource(tocRes.getInputStream(), tocRes.getTitle(), tocRes
-                .getMediaType().toString());
+        Resource sectionRes = ServletMessage.createResource(tocRes.getInputStream(), tocRes.getTitle(), tocRes.getMediaType().toString());
         resService.save(sectionRes);
 
         Section section = new Section();
@@ -89,18 +85,23 @@ public class JpaBookService extends JpaWebContentService<Book> implements BookSe
   }
 
   @Override
-  public List<Book> getMyBooks() {
+  public List<Book> getBookByTitl(String title) {
     List<Book> result =
-        em().createQuery("select b from Book b order by b.dateCreated desc", Book.class)
-            .getResultList();
+        em().createQuery("select b from Book b where b.title like :title order by b.dateCreated desc", Book.class).setParameter("title",
+            "%" + title + "%").getResultList();
+    return result;
+  }
+
+  @Override
+  public List<Book> getMyBooks() {
+    List<Book> result = em().createQuery("select b from Book b order by b.dateCreated desc", Book.class).getResultList();
     return result;
   }
 
   @Override
   public List<Book> getSelectedBooks() {
     List<Book> result =
-        em().createQuery("select b from Book b where b.selected=true order by b.dateCreated desc",
-            Book.class).getResultList();
+        em().createQuery("select b from Book b where b.selected=true order by b.dateCreated desc", Book.class).getResultList();
     return result;
   }
 

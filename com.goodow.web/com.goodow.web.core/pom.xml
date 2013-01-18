@@ -82,7 +82,7 @@
 		<dependency>
 			<groupId>com.googlecode.mgwt</groupId>
 			<artifactId>mgwt</artifactId>
-			<version>1.1.2-SNAPSHOT</version>
+			<version>1.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.googlecode.gwtphonegap</groupId>
@@ -142,7 +142,7 @@
 		<dependency>
 			<groupId>nl.siegmann.epublib</groupId>
 			<artifactId>epublib-core</artifactId>
-			<version>3.0-SNAPSHOT</version>
+			<version>3.1</version>
 		</dependency>
 
 		<!-- Test -->

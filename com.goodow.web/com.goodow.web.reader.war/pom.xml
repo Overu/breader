@@ -48,7 +48,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
 				<configuration>
-					<module>com.goodow.web.reader.Reader</module>
+					<module>com.goodow.web.reader.Mobile</module>
 				</configuration>
 			</plugin>
 		</plugins>

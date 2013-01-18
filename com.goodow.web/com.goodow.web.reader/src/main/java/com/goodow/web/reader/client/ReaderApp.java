@@ -105,7 +105,7 @@ public class ReaderApp extends FlowView {
 
     main.addStyleName(BooksBrowser.bundle.booksAppCss().main());
 
-    main.add(bannerPanel);
+    // main.add(bannerPanel);
     main.add(centerPanel);
   }
 }

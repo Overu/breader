@@ -30,24 +30,32 @@ public final class ReaderClientModule extends AbstractGinModule {
   @Singleton
   public static class Bind {
     @Inject
-    public Bind(final Provider<TextResourceEditor> textEditor, final UIManager registry,
-        final Provider<BooksBrowser> booksBrowser, final Provider<BookForm> bookForm,
-        final Provider<MyBookList> mybooksList, final Provider<SelectedBookList> selectedBooks,
-        final Provider<SectionsExplorer> sectionsExplorer, final ReaderApp readerApp,
-        @HomePlace final WebPlace homePlace, final WebPlace editGridPlace,
-        final WebPlace cellListDragPlace, final EditGridPanel editGridPanel,
-        final Provider<CellListDrag> cellListDrag, final BooksViewBrowser booksViewBrowser) {
+    public Bind(final Provider<TextResourceEditor> textEditor, final UIManager registry, final Provider<BooksBrowser> booksBrowser,
+        final Provider<BookForm> bookForm, final Provider<MyBookList> mybooksList, final Provider<SelectedBookList> selectedBooks,
+        final Provider<SectionsExplorer> sectionsExplorer, final ReaderApp readerApp, @HomePlace final WebPlace homePlace,
+        final WebPlace editGridPlace, final WebPlace cellListDragPlace, final EditGridPanel editGridPanel,
+        final Provider<CellListDrag> cellListDrag, final Provider<BooksViewBrowser> booksViewBrowser,
+        final Provider<RecommendedBookList> recommend, final Provider<FavoriteBooks> favorite, final Provider<DiscountBookList> discount,
+        final Provider<MostViewedBookList> mostViewed, final Provider<CategorizedBookList> categorized,
+        final Provider<BookDetail> bookDetail, final Provider<SearchBookList> searchBookList) {
 
       ReaderPackage.Library.as().addViewer(ContainerViewer.ENTRY, readerApp);
 
       CorePackage.Section.as().addViewer(ContainerViewer.FEED, sectionsExplorer);
 
       ReaderPackage.Book.as().addViewer(EntryViewer.EDIT, sectionsExplorer);
+      ReaderPackage.Book.as().addViewer(EntryViewer.BOOKDETAIL, bookDetail);
 
       ReaderPackage.Book.as().addViewer(ContainerViewer.FEED, booksBrowser);
       ReaderPackage.Book.as().addViewer(FeedViewer.NEW, bookForm);
       ReaderPackage.Book.as().addViewer(FeedViewer.MY_CONTENT, booksViewBrowser);
       ReaderPackage.Book.as().addViewer(FeedViewer.SELECTED_CONTENT, selectedBooks);
+      ReaderPackage.Book.as().addViewer(FeedViewer.RECOMMEND, recommend);
+      ReaderPackage.Book.as().addViewer(FeedViewer.FAVORITES, favorite);
+      ReaderPackage.Book.as().addViewer(FeedViewer.MOSTVIEWED, mostViewed);
+      ReaderPackage.Book.as().addViewer(FeedViewer.DISCOUNTED, discount);
+      ReaderPackage.Book.as().addViewer(FeedViewer.CATEGORIZED, categorized);
+      ReaderPackage.Book.as().addViewer(FeedViewer.BOOKSEARCH, searchBookList);
 
       homePlace.setWidget(readerApp);
 

@@ -13,12 +13,12 @@ public class WebPlatform {
 	@Inject
 	private static WebPlatform instance;
 
-	@Inject
-	private Injector injector;
-
-	public Injector getInjector() {
-		return injector;
-	}
+//	@Inject
+//	private Injector injector;
+//	
+//	public Injector getInjector() {
+//		return injector;
+//	}
 
 	public static WebPlatform getInstance() {
 		return instance;
