@@ -61,9 +61,9 @@ public class BooksBrowser extends FlowView {
     centerPanel.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss().fillPanelExpandChild());
 
     main.addStyleName(bundle.booksAppCss().main());
-    
+
     // bannerPanel.addStyleName(bundle.booksAppCss().bannerPanel());
-    
+
     // leftPanel.addRightWidget(centerPanel);
     // leftPanel.addStyleName(bundle.booksAppCss().placeList());
 

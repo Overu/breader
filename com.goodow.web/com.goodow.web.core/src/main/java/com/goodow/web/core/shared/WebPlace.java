@@ -312,6 +312,8 @@ public class WebPlace extends Place {
     }
     if (widget == null && widgetProvider == null && asyncWidgetProvider == null) {
       widget = new SimplePanel();
+      widget.asWidget().setHeight("100%");
+      widget.asWidget().setWidth("100%");
     }
     if (widget != null) {
       showWidget(panel, callback);
@@ -322,9 +324,7 @@ public class WebPlace extends Place {
       asyncWidgetProvider.get(new AsyncCallback<IsWidget>() {
         @Override
         public void onFailure(final Throwable caught) {
-          String msg =
-              "Network connection cloud be lost. Failed to load widget for " + this
-                  + " asynchronously.\r\n" + caught.getMessage();
+          String msg = "Network connection cloud be lost. Failed to load widget for " + this + " asynchronously.\r\n" + caught.getMessage();
           logger.severe(msg);
           showError(panel, msg);
           if (callback != null) {
@@ -365,8 +365,7 @@ public class WebPlace extends Place {
     panel.setWidget(label);
   }
 
-  private void showWidget(final AcceptsOneWidget panel,
-      final AsyncCallback<AcceptsOneWidget> callback) {
+  private void showWidget(final AcceptsOneWidget panel, final AsyncCallback<AcceptsOneWidget> callback) {
     panel.setWidget(widget);
     if (widget instanceof WebView) {
       WebView view = (WebView) widget;

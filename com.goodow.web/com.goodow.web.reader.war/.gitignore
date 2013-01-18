@@ -1,2 +1,4 @@
 /.gwt
 /extras
+/scr/main/gwt-unitCache
+/scr/main/webapp/reader

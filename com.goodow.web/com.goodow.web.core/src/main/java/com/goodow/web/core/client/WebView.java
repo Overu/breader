@@ -74,7 +74,6 @@ public abstract class WebView<T extends Widget> extends Composite implements Acc
 
       setChildWidget(display);
 
-
       Widget w = widget.asWidget();
       w.addStyleName(MGWTStyle.getTheme().getMGWTClientBundle().getLayoutCss().fillPanelExpandChild());
       SimplePanel target = new SimplePanel();

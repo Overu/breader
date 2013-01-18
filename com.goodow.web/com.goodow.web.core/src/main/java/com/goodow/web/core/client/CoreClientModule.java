@@ -92,8 +92,7 @@ public class CoreClientModule extends AbstractGinModule {
     private void start() {
       ViewPort viewPort = new MGWTSettings.ViewPort();
       viewPort.setTargetDensity(DENSITY.MEDIUM);
-      viewPort.setUserScaleAble(false).setMinimumScale(1.0).setMinimumScale(1.0).setMaximumScale(
-          1.0);
+      viewPort.setUserScaleAble(false).setMinimumScale(1.0).setMinimumScale(1.0).setMaximumScale(1.0);
 
       MGWTSettings settings = new MGWTSettings();
       settings.setViewPort(viewPort);
@@ -146,11 +145,9 @@ public class CoreClientModule extends AbstractGinModule {
 
   @Provides
   @Singleton
-  MGWTPlaceHistoryHandler placeHistoryHandlerProvider(final PlaceHistoryMapper historyMapper,
-      final PlaceController placeController, final EventBus eventBus,
-      final AppHistoryObserver historyObserver, @HomePlace final WebPlace homePlace) {
-    MGWTPlaceHistoryHandler placeHistoryHandler =
-        new MGWTPlaceHistoryHandler(historyMapper, historyObserver);
+  MGWTPlaceHistoryHandler placeHistoryHandlerProvider(final PlaceHistoryMapper historyMapper, final PlaceController placeController,
+      final EventBus eventBus, final AppHistoryObserver historyObserver, @HomePlace final WebPlace homePlace) {
+    MGWTPlaceHistoryHandler placeHistoryHandler = new MGWTPlaceHistoryHandler(historyMapper, historyObserver);
     placeHistoryHandler.register(placeController, eventBus, homePlace);
     return placeHistoryHandler;
   }
