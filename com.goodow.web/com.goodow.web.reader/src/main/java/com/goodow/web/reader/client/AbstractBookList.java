@@ -18,6 +18,10 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.ui.client.widget.event.scroll.BeforeScrollEndEvent;
 import com.googlecode.mgwt.ui.client.widget.event.scroll.BeforeScrollStartEvent;
+import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollAnimationEndEvent;
+import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollAnimationStartEvent;
+import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollEndEvent;
+import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollStartEvent;
 import com.googlecode.mgwt.ui.client.widget.touch.TouchPanel;
 
 import java.util.List;
@@ -71,17 +75,17 @@ public abstract class AbstractBookList extends ScrollView implements Receiver<Li
   protected void start() {
     container = new TouchPanel();
     bookList = new HTMLPanel("");
-    main.addBeforeScrollStartHandler(new BeforeScrollStartEvent.Handler() {
+    main.addScrollAnimationStartHandler(new ScrollAnimationStartEvent.Handler() {
 
       @Override
-      public void onBeforeScrollStart(BeforeScrollStartEvent event) {
+      public void onScrollAnimationStart(ScrollAnimationStartEvent event) {
         conflit = true;
       }
     });
-    main.addBeforeScrollEndHandler(new BeforeScrollEndEvent.Handler() {
+    main.addScrollAnimationEndHandler(new ScrollAnimationEndEvent.Handler() {
 
       @Override
-      public void onBeforeScrollStart(BeforeScrollEndEvent event) {
+      public void onScrollAnimationEnd(ScrollAnimationEndEvent event) {
         conflit = false;
       }
     });

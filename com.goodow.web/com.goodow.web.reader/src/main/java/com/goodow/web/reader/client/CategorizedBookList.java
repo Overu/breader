@@ -18,6 +18,8 @@ import com.google.inject.Provider;
 import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.event.scroll.BeforeScrollEndEvent;
 import com.googlecode.mgwt.ui.client.widget.event.scroll.BeforeScrollStartEvent;
+import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollAnimationEndEvent;
+import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollAnimationStartEvent;
 
 import java.util.List;
 
@@ -77,17 +79,17 @@ public class CategorizedBookList extends WebView<HTMLPanel> implements Receiver<
     scrollPanel.setWidget(bookList);
     scrollPanel.setScrollingEnabledX(false);
     scrollPanel.setScrollingEnabledY(true);
-    scrollPanel.addBeforeScrollStartHandler(new BeforeScrollStartEvent.Handler() {
+    scrollPanel.addScrollAnimationStartHandler(new ScrollAnimationStartEvent.Handler() {
 
       @Override
-      public void onBeforeScrollStart(BeforeScrollStartEvent event) {
+      public void onScrollAnimationStart(ScrollAnimationStartEvent event) {
         conflit = true;
       }
     });
-    scrollPanel.addBeforeScrollEndHandler(new BeforeScrollEndEvent.Handler() {
+    scrollPanel.addScrollAnimationEndHandler(new ScrollAnimationEndEvent.Handler() {
 
       @Override
-      public void onBeforeScrollStart(BeforeScrollEndEvent event) {
+      public void onScrollAnimationEnd(ScrollAnimationEndEvent event) {
         conflit = false;
       }
     });
