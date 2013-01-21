@@ -7,6 +7,9 @@ import com.goodow.web.reader.shared.Book;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.EventTarget;
+import com.google.gwt.dom.client.Node;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.resources.client.ClientBundle;
@@ -21,8 +24,16 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
+import com.googlecode.mgwt.dom.client.event.tap.Tap;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.googlecode.mgwt.dom.client.event.touch.Touch;
+import com.googlecode.mgwt.dom.client.event.touch.TouchCancelEvent;
+import com.googlecode.mgwt.dom.client.event.touch.TouchEndEvent;
+import com.googlecode.mgwt.dom.client.event.touch.TouchHandler;
+import com.googlecode.mgwt.dom.client.event.touch.TouchMoveEvent;
+import com.googlecode.mgwt.dom.client.event.touch.TouchStartEvent;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.touch.TouchPanel;
 
 public class BookSummary extends Composite {
@@ -80,8 +91,8 @@ public class BookSummary extends Composite {
   @UiField
   DivElement originalPrice;
 
-  @Inject
-  WebPlaceManager placeManager;
+  // @Inject
+  // WebPlaceManager placeManager;
 
   private Book book;
 
@@ -89,13 +100,14 @@ public class BookSummary extends Composite {
     bookImage = new Image(ReadResources.INSTANCE().cover());
     Widget widget = uiBinder.createAndBindUi(this);
     initWidget(widget);
-    root.addTapHandler(new TapHandler() {
 
-      @Override
-      public void onTap(TapEvent event) {
-        placeManager.goTo(book, EntryViewer.BOOKDETAIL);
-      }
-    });
+    // root.addTapHandler(new TapHandler() {
+    //
+    // @Override
+    // public void onTap(TapEvent event) {
+    // placeManager.goTo(book, EntryViewer.BOOKDETAIL);
+    // }
+    // });
   }
 
   public void refresh() {

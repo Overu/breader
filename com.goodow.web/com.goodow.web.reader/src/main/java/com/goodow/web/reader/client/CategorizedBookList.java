@@ -1,17 +1,23 @@
 package com.goodow.web.reader.client;
 
 import com.goodow.web.core.client.WebView;
+import com.goodow.web.core.shared.EntryViewer;
 import com.goodow.web.core.shared.Receiver;
+import com.goodow.web.core.shared.WebPlaceManager;
 import com.goodow.web.reader.client.style.ReadResources;
 import com.goodow.web.reader.shared.AsyncBookService;
 import com.goodow.web.reader.shared.Book;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
+import com.googlecode.mgwt.ui.client.widget.event.scroll.BeforeScrollEndEvent;
+import com.googlecode.mgwt.ui.client.widget.event.scroll.BeforeScrollStartEvent;
 
 import java.util.List;
 
@@ -23,15 +29,28 @@ public class CategorizedBookList extends WebView<HTMLPanel> implements Receiver<
   AsyncBookService bookService;
   @Inject
   Provider<BookSummary> bookSummaryProvider;
+  @Inject
+  WebPlaceManager placeManager;
 
   CategoryListView categoryListView;
+
+  private boolean conflit = false;
 
   @Override
   public void onSuccess(final List<Book> result) {
     bookList.clear();
-    for (Book book : result) {
+    for (final Book book : result) {
       BookSummary view = bookSummaryProvider.get();
       view.setLandscape(setBookSummaryLandscapeCss());
+      view.addDomHandler(new ClickHandler() {
+        @Override
+        public void onClick(ClickEvent event) {
+          if (conflit) {
+            return;
+          }
+          placeManager.goTo(book, EntryViewer.BOOKDETAIL);
+        }
+      }, ClickEvent.getType());
       view.setBook(book);
       bookList.add(view);
     }
@@ -58,6 +77,20 @@ public class CategorizedBookList extends WebView<HTMLPanel> implements Receiver<
     scrollPanel.setWidget(bookList);
     scrollPanel.setScrollingEnabledX(false);
     scrollPanel.setScrollingEnabledY(true);
+    scrollPanel.addBeforeScrollStartHandler(new BeforeScrollStartEvent.Handler() {
+
+      @Override
+      public void onBeforeScrollStart(BeforeScrollStartEvent event) {
+        conflit = true;
+      }
+    });
+    scrollPanel.addBeforeScrollEndHandler(new BeforeScrollEndEvent.Handler() {
+
+      @Override
+      public void onBeforeScrollStart(BeforeScrollEndEvent event) {
+        conflit = false;
+      }
+    });
 
     main.add(categoryListView);
     main.add(scrollPanel);
