@@ -1,15 +1,14 @@
 /*
  * Copyright 2012 Goodow.com
  * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may
+ * obtain a copy of the License at
  * 
  * http://www.apache.org/licenses/LICENSE-2.0
  * 
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
+ * and limitations under the License.
  */
 package com.goodow.web.reader.client;
 
@@ -20,7 +19,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
-import com.google.gwt.safehtml.client.SafeHtmlTemplates.Template;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
@@ -87,8 +85,8 @@ public class TextAreaCell extends AbstractInputCell<String, TextAreaCell.ViewDat
   }
 
   @Override
-  public void onBrowserEvent(final Context context, final Element parent, final String value,
-      final NativeEvent event, final ValueUpdater<String> valueUpdater) {
+  public void onBrowserEvent(final Context context, final Element parent, final String value, final NativeEvent event,
+      final ValueUpdater<String> valueUpdater) {
     super.onBrowserEvent(context, parent, value, event, valueUpdater);
 
     // Ignore events that don't target the input.
@@ -114,8 +112,7 @@ public class TextAreaCell extends AbstractInputCell<String, TextAreaCell.ViewDat
   }
 
   @Override
-  public void render(final com.google.gwt.cell.client.Cell.Context context, final String value,
-      final SafeHtmlBuilder sb) {
+  public void render(final com.google.gwt.cell.client.Cell.Context context, final String value, final SafeHtmlBuilder sb) {
     Object key = context.getKey();
     ViewData viewData = getViewData(key);
     if (viewData != null && viewData.getCurrentValue().equals(value)) {
@@ -132,8 +129,7 @@ public class TextAreaCell extends AbstractInputCell<String, TextAreaCell.ViewDat
   }
 
   @Override
-  protected void finishEditing(final Element parent, final String value, final Object key,
-      final ValueUpdater<String> valueUpdater) {
+  protected void finishEditing(final Element parent, final String value, final Object key, final ValueUpdater<String> valueUpdater) {
     String newValue = getInputElement(parent).getValue();
 
     // Get the view data.

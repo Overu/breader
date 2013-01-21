@@ -14,14 +14,8 @@ import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
-import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
-import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
-import com.googlecode.mgwt.ui.client.widget.event.scroll.BeforeScrollEndEvent;
-import com.googlecode.mgwt.ui.client.widget.event.scroll.BeforeScrollStartEvent;
 import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollAnimationEndEvent;
 import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollAnimationStartEvent;
-import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollEndEvent;
-import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollStartEvent;
 import com.googlecode.mgwt.ui.client.widget.touch.TouchPanel;
 
 import java.util.List;

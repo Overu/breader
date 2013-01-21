@@ -11,7 +11,6 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.EventTarget;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
-import com.google.gwt.safehtml.client.SafeHtmlTemplates.Template;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.inject.Inject;
@@ -33,8 +32,8 @@ public class BookHyperlinkCell extends AbstractCell<Book> {
   }
 
   @Override
-  public void onBrowserEvent(final Context context, final Element parent, final Book value,
-      final NativeEvent event, final ValueUpdater<Book> valueUpdater) {
+  public void onBrowserEvent(final Context context, final Element parent, final Book value, final NativeEvent event,
+      final ValueUpdater<Book> valueUpdater) {
     super.onBrowserEvent(context, parent, value, event, valueUpdater);
     if ("click".equals(event.getType())) {
       EventTarget eventTarget = event.getEventTarget();
@@ -49,14 +48,13 @@ public class BookHyperlinkCell extends AbstractCell<Book> {
   }
 
   @Override
-  public void render(final com.google.gwt.cell.client.Cell.Context context, final Book value,
-      final SafeHtmlBuilder sb) {
+  public void render(final com.google.gwt.cell.client.Cell.Context context, final Book value, final SafeHtmlBuilder sb) {
     sb.append(template.a(value.getId(), value.getTitle()));
   }
 
   @Override
-  protected void onEnterKeyDown(final Context context, final Element parent, final Book value,
-      final NativeEvent event, final ValueUpdater<Book> valueUpdater) {
+  protected void onEnterKeyDown(final Context context, final Element parent, final Book value, final NativeEvent event,
+      final ValueUpdater<Book> valueUpdater) {
     placeManager.goTo(value, EntryViewer.EDIT);
   }
 }

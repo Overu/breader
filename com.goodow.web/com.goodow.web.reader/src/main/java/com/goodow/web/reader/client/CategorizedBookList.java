@@ -16,8 +16,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 import com.googlecode.mgwt.ui.client.widget.ScrollPanel;
-import com.googlecode.mgwt.ui.client.widget.event.scroll.BeforeScrollEndEvent;
-import com.googlecode.mgwt.ui.client.widget.event.scroll.BeforeScrollStartEvent;
 import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollAnimationEndEvent;
 import com.googlecode.mgwt.ui.client.widget.event.scroll.ScrollAnimationStartEvent;
 

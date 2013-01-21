@@ -10,7 +10,6 @@ import com.google.gwt.dom.client.InputElement;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.safehtml.client.SafeHtmlTemplates;
-import com.google.gwt.safehtml.client.SafeHtmlTemplates.Template;
 import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 
@@ -50,8 +49,8 @@ public class EditTextFocusCell extends AbstractEditableCell<String, EditTextFocu
         return false;
       }
       ViewData vd = (ViewData) o;
-      return equalsOrBothNull(original, vd.original) && equalsOrBothNull(text, vd.text)
-          && isEditing == vd.isEditing && isEditingAgain == vd.isEditingAgain;
+      return equalsOrBothNull(original, vd.original) && equalsOrBothNull(text, vd.text) && isEditing == vd.isEditing
+          && isEditingAgain == vd.isEditingAgain;
     }
 
     public String getOriginal() {
@@ -106,16 +105,14 @@ public class EditTextFocusCell extends AbstractEditableCell<String, EditTextFocu
   }
 
   @Override
-  public boolean isEditing(final com.google.gwt.cell.client.Cell.Context context,
-      final Element parent, final String value) {
+  public boolean isEditing(final com.google.gwt.cell.client.Cell.Context context, final Element parent, final String value) {
     ViewData viewData = getViewData(context.getKey());
     return viewData == null ? false : viewData.isEditing();
   }
 
   @Override
-  public void onBrowserEvent(final com.google.gwt.cell.client.Cell.Context context,
-      final Element parent, final String value, final NativeEvent event,
-      final ValueUpdater<String> valueUpdater) {
+  public void onBrowserEvent(final com.google.gwt.cell.client.Cell.Context context, final Element parent, final String value,
+      final NativeEvent event, final ValueUpdater<String> valueUpdater) {
     Object key = context.getKey();
     ViewData viewData = getViewData(key);
     if (viewData != null && viewData.isEditing()) {
@@ -137,12 +134,10 @@ public class EditTextFocusCell extends AbstractEditableCell<String, EditTextFocu
   }
 
   @Override
-  public void render(final com.google.gwt.cell.client.Cell.Context context, final String value,
-      final SafeHtmlBuilder sb) {
+  public void render(final com.google.gwt.cell.client.Cell.Context context, final String value, final SafeHtmlBuilder sb) {
     Object key = context.getKey();
     ViewData viewData = getViewData(key);
-    if (viewData != null && !viewData.isEditing() && value != null
-        && value.equals(viewData.getText())) {
+    if (viewData != null && !viewData.isEditing() && value != null && value.equals(viewData.getText())) {
       clearViewData(key);
       viewData = null;
     }
@@ -185,8 +180,7 @@ public class EditTextFocusCell extends AbstractEditableCell<String, EditTextFocu
                                                 $doc.selection.clear();
                                                 }-*/;
 
-  private void commit(final Context context, final Element parent, final ViewData viewData,
-      final ValueUpdater<String> valueUpdater) {
+  private void commit(final Context context, final Element parent, final ViewData viewData, final ValueUpdater<String> valueUpdater) {
     String value = updateViewData(parent, viewData, false);
     // clearInput(getInputElement(parent));
     setValue(context, parent, viewData.getOriginal());
@@ -195,8 +189,8 @@ public class EditTextFocusCell extends AbstractEditableCell<String, EditTextFocu
     }
   }
 
-  private void editEvent(final Context context, final Element parent, final String value,
-      final ViewData viewData, final NativeEvent event, final ValueUpdater<String> valueUpdater) {
+  private void editEvent(final Context context, final Element parent, final String value, final ViewData viewData, final NativeEvent event,
+      final ValueUpdater<String> valueUpdater) {
     String type = event.getType();
     boolean keyUp = "keyup".equals(type);
     boolean keyDown = "keydown".equals(type);
@@ -234,8 +228,7 @@ public class EditTextFocusCell extends AbstractEditableCell<String, EditTextFocu
     return parent.getFirstChild().<InputElement> cast();
   }
 
-  private String updateViewData(final Element parent, final ViewData viewData,
-      final boolean isEditing) {
+  private String updateViewData(final Element parent, final ViewData viewData, final boolean isEditing) {
     InputElement input = (InputElement) parent.getFirstChild();
     String value = input.getValue();
     viewData.setText(value);
